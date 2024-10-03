@@ -90,35 +90,58 @@ header nav .nav-link:hover {
   overflow: hidden;
 }
 
-/* HEADER */
+/* TO-DO HEADER */
 .todo-card__header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  column-gap: 0.5em;
   width: 100%;
-  height: 2.2em;
-  padding: 0.4em;
+  height: 2.5em;
+  padding: 0.5em;
+  padding-right: 0.8em;
   color: white;
   background: rgb(83, 172, 255);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
 }
-/* HEADER CHECKBOX */
-.todo-card__header img {
+.todo-card__title-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+}
+/* TO-DO HEADER CHECKBOX */
+.todo-card__title-wrapper img {
   height: 1.5em;
 }
-.todo-card__header img:hover {
+.todo-card__title-wrapper img:hover {
   content: url(../../public/icons/checkbox.png);
   opacity: 0.5;
   cursor: pointer;
 }
-.todo-card__header img:active {
+.todo-card__title-wrapper img:active {
   opacity: 1;
 }
-/* HEADER TITLE */
+/* TO-DO HEADER TITLE */
 .todo-card__title {
   font-size: 1.3em;
-  font-weight: 400;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+/* TO-DO HEADER BUTTONS */
+.todo-card__buttons button {
+  height: 2em;
+  margin: 0 0.2em;
+  padding: 0.05em;
+  background: none;
+  border: 2px solid white;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.todo-card__buttons img {
+  height: 1.5em;
+}
+.todo-card__buttons button:hover {
+  transform: scale(1.1);
 }
 
 /* TO-DO BODY */
@@ -126,12 +149,12 @@ header nav .nav-link:hover {
   padding: 0.1em 0.7em;
   background: white;
 }
-.todo-card__body-preview {
+.todo-card__preview {
   display: flex;
   gap: 1em;
   margin-top: 0.7em;
 }
-/* BODY DESCRIPTION */
+/* TO-DO BODY DESCRIPTION */
 .todo-card__description {
   padding: 0.3em 0.6em;
   font-size: 1rem;
@@ -140,6 +163,7 @@ header nav .nav-link:hover {
   border: 1px dashed rgba(83, 172, 255, 0.5);
   border-radius: 0.9em;
 }
+/* TO-DO BODY DUE DATE */
 .todo-card__due-date {
   display: flex;
   flex-direction: column;
@@ -152,6 +176,51 @@ header nav .nav-link:hover {
 .todo-card__due-date--number {
   font-size: 1.5rem;
   font-weight: 600;
+}
+/* TO-DO BODY CHECKLIST */
+.todo-card__checklist {
+  width: 100%;
+  min-width: 50%;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background: rgb(83, 172, 255);
+  border: 3px solid rgb(83, 172, 255);
+  border-radius: 0.9em;
+}
+.todo-card__checklist-title {
+  margin: 0 0 0.1em 0.7em;
+  font-size: 1.2em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: white;
+}
+.todo-card__checklist-body {
+  padding: 0.5em 1em;
+  background: white;
+  border: 1px solid rgb(83, 172, 255);
+  border-radius: 0.9em;
+}
+
+/* TO-DO BODY FOOTER */
+.todo-card__footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7em 0.5em 0.3em;
+}
+.todo-card__creation-date {
+  width: fit-content;
+  padding: 0.1em 0.5em;
+  font-size: 0.9rem;
+  background: rgba(83, 172, 255, 0.3);
+  border-radius: 0.9em;
+}
+.todo-card__footer img {
+  height: 1.8em;
+  margin-right: 1em;
+}
+.todo-card__footer img:hover {
+  animation: levitate 2s ease-in-out infinite alternate;
+  cursor: pointer;
 }
 
 /*** FONTS *****************************/
@@ -175,4 +244,27 @@ header nav .nav-link:hover {
   font-optical-sizing: auto;
   font-weight: 600;
   font-style: normal;
+}
+
+/*** HELPERS ***************************/
+.hidden {
+  display: none;
+}
+
+/*** PSUEDO ***************************/
+::selection {
+  color: rgb(104, 104, 104);
+  background: rgba(255, 164, 44, 0.5);
+}
+
+@keyframes levitate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

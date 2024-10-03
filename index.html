@@ -30,18 +30,27 @@
           <!-- TO-DO CARD (nested) -->
           <div class="todo-card">
             <div class="todo-card__header">
-              <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" />
-              <div class="todo-card__title">Card Title</div>
-              <div class="project-card__buttons">
-                <button class="btn-add-task" title="Add task">+</button>
-                <button class="btn-settings" title="Settings">...</button>
+              <div class="todo-card__title-wrapper">
+                <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
+                <!-- PRE-LOADED IMG (hidden) -->
+                <img src="./public/icons/checkbox.png" alt="Blank checkbox" class="hidden" />
+                <div class="todo-card__title">Card Title</div>
+              </div>
+
+              <div class="todo-card__buttons">
+                <button class="btn-add-task">
+                  <img src="./public/icons/edit.png" alt="Edit task" />
+                </button>
+                <button class="btn-settings">
+                  <img src="./public/icons/delete.png" alt="Delete task" />
+                </button>
               </div>
             </div>
 
             <!-- TO-DO CARD BODY -->
             <div class="todo-card__body">
               <!-- TO-DO CARD PREVIEW -->
-              <div class="todo-card__body-preview">
+              <div class="todo-card__preview">
                 <div class="todo-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                 <div class="todo-card__due-date">
                   <span class="todo-card__due-date--number">2</span>
@@ -50,12 +59,23 @@
               </div>
 
               <!-- TO-DO CARD CHECKLIST OPTION -->
-              <!-- <div class="todo-card__checklist">
-                <div class="todo-card__checklist-item">
-                  <input type="checkbox" name="{LISTNAME}" id="{LISTID}" />
-                  <label for="{LISTID}">Some task</label>
+              <div class="todo-card__checklist">
+                <div class="todo-card__checklist-title">Checklist title</div>
+                <div class="todo-card__checklist-body">
+                  <div class="todo-card__checklist-item">
+                    <input type="checkbox" name="{LISTNAME}" id="{LISTID}" />
+                    <label for="{LISTID}">Some task</label>
+                  </div>
+                  <div class="todo-card__checklist-item">
+                    <input type="checkbox" name="{LISTNAME}" id="{LISTID}" />
+                    <label for="{LISTID}">Some task</label>
+                  </div>
+                  <div class="todo-card__checklist-item">
+                    <input type="checkbox" name="{LISTNAME}" id="{LISTID}" />
+                    <label for="{LISTID}">Some task</label>
+                  </div>
                 </div>
-              </div> -->
+              </div>
 
               <!-- TO-DO CARD NOTE OPTION -->
               <!-- <div class="todo-card__note">
@@ -65,8 +85,11 @@
                 </p>
               </div> -->
 
-              <!-- TO-DO CREATED ON -->
-              <div class="todo-card__creation-date">{DATE}</div>
+              <!-- TO-DO FOOTER -->
+              <div class="todo-card__footer">
+                <div class="todo-card__creation-date">Created: 10/02/2024</div>
+                <img src="./public/icons/expand.png" alt="Expand button" class="expand-btn" />
+              </div>
             </div>
           </div>
         </div>
