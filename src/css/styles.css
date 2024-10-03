@@ -54,6 +54,7 @@ header nav .nav-link:hover {
 
 .project-card {
   flex: 1 1 calc(33.333% - 2em);
+  max-width: calc(33.333% - 2em);
   border: 4px solid black;
 }
 .project-card__header {
@@ -79,6 +80,53 @@ header nav .nav-link:hover {
 }
 .project-card__body {
   padding: 1.5em 1.3em;
+}
+
+/*** ADD PROJECT ****************************/
+.add-project {
+  flex: 1 1 calc(33.333% - 2em);
+  max-width: calc(33.333% - 2em);
+  border: 4px dashed rgb(112, 112, 112);
+  /* opacity: 0.2; */
+  transition: opacity 0.2s ease-in;
+  z-index: 1;
+}
+.add-project .project-card__header {
+  background: rgb(112, 112, 112);
+}
+.add-project:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.add-project h2 {
+  width: 1.2em;
+  margin: 0 0.1em;
+  font-size: 1.5rem;
+  border: 2px solid white;
+  opacity: 0;
+}
+.add-project__body-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  margin: auto;
+}
+.add-project__body {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  border: 5px solid rgb(112, 112, 112);
+  border-radius: 0.9em;
+}
+.add-project__body:hover {
+  opacity: 1;
+  z-index: 10;
+}
+.add-project__body h3 {
+  font-size: 2rem;
+  font-family: 'Abril Fatface', serif;
+  color: rgb(112, 112, 112);
 }
 
 /*** TO-DO CARD ****************************/
@@ -149,10 +197,13 @@ header nav .nav-link:hover {
   padding: 0.1em 0.7em;
   background: white;
 }
+/* TO-DO BODY PREVIEW */
 .todo-card__preview {
   display: flex;
   gap: 1em;
   margin-top: 0.7em;
+  padding-bottom: 0.7em;
+  border-bottom: 2px solid rgba(83, 172, 255, 0.5);
 }
 /* TO-DO BODY DESCRIPTION */
 .todo-card__description {
@@ -177,8 +228,9 @@ header nav .nav-link:hover {
   font-size: 1.5rem;
   font-weight: 600;
 }
-/* TO-DO BODY CHECKLIST */
-.todo-card__checklist {
+/* TO-DO BODY CHECKLIST & NOTE */
+.todo-card__checklist,
+.todo-card__note {
   width: 100%;
   min-width: 50%;
   margin: 1em 0;
@@ -187,24 +239,39 @@ header nav .nav-link:hover {
   border: 3px solid rgb(83, 172, 255);
   border-radius: 0.9em;
 }
-.todo-card__checklist-title {
+.todo-card__checklist-header,
+.todo-card__note-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.3em;
+}
+.todo-card__checklist-title,
+.todo-card__note-title {
   margin: 0 0 0.1em 0.7em;
   font-size: 1.2em;
   font-weight: 500;
   letter-spacing: 0.1em;
   color: white;
 }
-.todo-card__checklist-body {
+.todo-card__checklist-body,
+.todo-card__note-body {
   padding: 0.5em 1em;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
   background: white;
   border: 1px solid rgb(83, 172, 255);
   border-radius: 0.9em;
+}
+.todo-card__checklist-body input[type='checkbox']:checked + label {
+  text-decoration: line-through;
+  color: rgb(163, 163, 163);
 }
 
 /* TO-DO BODY FOOTER */
 .todo-card__footer {
   display: flex;
   justify-content: space-between;
+  margin: 0.5em 0;
   padding: 0.7em 0.5em 0.3em;
 }
 .todo-card__creation-date {
@@ -230,7 +297,6 @@ header nav .nav-link:hover {
   font-weight: 400;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'Urbanist';
   src: url(../fonts/Urbanist-VariableFont_wght.ttf);
@@ -253,16 +319,16 @@ header nav .nav-link:hover {
 
 /*** PSUEDO ***************************/
 ::selection {
-  color: rgb(104, 104, 104);
-  background: rgba(255, 164, 44, 0.5);
+  background: rgb(255, 224, 177);
 }
 
+/*** ANIMATIONS ************************/
 @keyframes levitate {
   0% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-7px);
+    transform: translateY(-5px);
   }
   100% {
     transform: translateY(0);
