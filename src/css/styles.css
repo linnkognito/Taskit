@@ -87,15 +87,14 @@ header nav .nav-link:hover {
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
   border: 4px dashed rgb(112, 112, 112);
-  /* opacity: 0.2; */
+  opacity: 0.2;
   transition: opacity 0.2s ease-in;
-  z-index: 1;
 }
 .add-project .project-card__header {
   background: rgb(112, 112, 112);
 }
 .add-project:hover {
-  opacity: 0.5;
+  opacity: 1;
   cursor: pointer;
 }
 .add-project h2 {
@@ -116,17 +115,20 @@ header nav .nav-link:hover {
   display: flex;
   align-items: center;
   padding: 0.5em;
-  border: 5px solid rgb(112, 112, 112);
+  border: 5px solid black;
   border-radius: 0.9em;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in;
+  transition: transform 0.2s ease-in;
 }
 .add-project__body:hover {
+  transform: scale(1.01);
   opacity: 1;
-  z-index: 10;
 }
 .add-project__body h3 {
   font-size: 2rem;
   font-family: 'Abril Fatface', serif;
-  color: rgb(112, 112, 112);
+  color: black;
 }
 
 /*** TO-DO CARD ****************************/
