@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.5;
+  font-family: 'Urbanist', serif;
+}
+
+/*** HEADER ****************************/
+header {
+  display: flex;
+  width: 100%;
+  height: auto;
+  font-family: 'Abril Fatface', serif;
+  color: white;
+  background: rgb(0, 0, 0);
+}
+header h1 {
+  padding: 0.5em 1em;
+  font-size: 3rem;
+  /* letter-spacing: 0.1em; */
+}
+header h1:hover {
+  cursor: pointer;
+}
+header nav {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+header nav .nav-link {
+  margin: 0 1.7em;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+header nav .nav-link:hover {
+  text-decoration: underline;
+}
+
+/*** PROJECT CARD ****************************/
+#projects {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2em;
+  width: 100%;
+  margin: auto;
+  padding: 2em;
+  border: 1px solid black;
+}
+
+.project-card {
+  flex: 1 1 calc(33.333% - 2em);
+  border: 4px solid black;
+}
+.project-card__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7em;
+  font-size: 1.2rem;
+  font-family: 'Abril Fatface', serif;
+  color: white;
+  background: rgb(0, 0, 0);
+}
+.project-card__header button {
+  width: 1.2em;
+  margin: 0 0.1em;
+  font-size: 1.5rem;
+  color: white;
+  background: none;
+  border: 2px solid white;
+  cursor: pointer;
+}
+.project-card__header button:hover {
+  transform: scale(1.1);
+}
+.project-card__body {
+  padding: 1.5em 1.3em;
+}
+
+/*** TO-DO CARD ****************************/
+.todo-card {
+  width: 100%;
+  background: rgb(83, 172, 255);
+  border: 3px solid rgb(83, 172, 255);
+  border-radius: 0.9em;
+  overflow: hidden;
+}
+
+/* HEADER */
+.todo-card__header {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+  width: 100%;
+  height: 2.2em;
+  padding: 0.4em;
+  color: white;
+  background: rgb(83, 172, 255);
+  border: 0;
+  border-radius: 0.9em 0.9em 0 0;
+}
+/* HEADER CHECKBOX */
+.todo-card__header img {
+  height: 1.5em;
+}
+.todo-card__header img:hover {
+  content: url(../../public/icons/checkbox.png);
+  opacity: 0.5;
+  cursor: pointer;
+}
+.todo-card__header img:active {
+  opacity: 1;
+}
+/* HEADER TITLE */
+.todo-card__title {
+  font-size: 1.3em;
+  font-weight: 400;
+}
+
+/* TO-DO BODY */
+.todo-card__body {
+  padding: 0.1em 0.7em;
+  background: white;
+}
+.todo-card__body-preview {
+  display: flex;
+  gap: 1em;
+  margin-top: 0.7em;
+}
+/* BODY DESCRIPTION */
+.todo-card__description {
+  padding: 0.3em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(62, 104, 143);
+  border: 1px dashed rgba(83, 172, 255, 0.5);
+  border-radius: 0.9em;
+}
+.todo-card__due-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 15%;
+  background: rgba(83, 172, 255, 0.5);
+  border-radius: 0.9em;
+}
+.todo-card__due-date--number {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/*** FONTS *****************************/
+@font-face {
+  font-family: 'Abril Fatface';
+  src: url(../fonts/AbrilFatface-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  src: url(../fonts/Urbanist-VariableFont_wght.ttf);
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Urbanist Italic';
+  src: url(../fonts/Urbanist-Italic-VariableFont_wght.ttf);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
