@@ -3,7 +3,6 @@ import './css/styles.css';
 const projects = document.querySelector('#projects');
 const addBtn = document.querySelector('.add-project__body');
 const title = document.querySelector('.project-card__title');
-const titleInput = document.querySelector('.project-card__title-input');
 
 const projectsArr = [];
 const titleEvents = ['click', 'keydown'];
@@ -39,14 +38,15 @@ class Project {
 
   renderProjectCard() {
     projects.insertAdjacentHTML('afterbegin', this.markup());
+
+    const titleInput = document.querySelector('.project-card__title-input');
     titleInput.focus();
   }
 }
 
+// ADD NEW PRODUCT CARD //
 addBtn.addEventListener('click', (e) => {
   const id = projectsArr.length;
-  console.log('ID:', id);
   const newProjectCard = new Project(null, id);
-  console.log('PROJECT:', newProjectCard);
   newProjectCard.renderProjectCard();
 });

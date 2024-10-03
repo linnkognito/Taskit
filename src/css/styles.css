@@ -53,7 +53,6 @@ header nav .nav-link:hover {
   padding: 2em;
   border: 1px solid black;
 }
-
 .project-card {
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
@@ -62,11 +61,27 @@ header nav .nav-link:hover {
 .project-card__header {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 0.7em;
-  font-size: 1.2rem;
+  background: rgb(0, 0, 0);
+}
+.project-card__header h2 {
+  padding: 0.1em;
+  font-size: 1.6rem;
   font-family: 'Abril Fatface', serif;
   color: white;
-  background: rgb(0, 0, 0);
+}
+.project-card__header input[type='text'] {
+  width: 80%;
+  padding: 0.1em;
+  font-size: 1.6rem;
+  font-family: 'Abril Fatface', serif;
+}
+.project-card__header input[type='text']::placeholder {
+  color: lightgray;
+}
+.project-card__header input[type='text']:active {
+  color: black;
 }
 .project-card__header button {
   width: 1.2em;
@@ -224,7 +239,7 @@ header nav .nav-link:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 15%;
+  min-width: 20%;
   background: rgba(83, 172, 255, 0.5);
   border-radius: 0.9em;
 }
