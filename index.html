@@ -16,11 +16,25 @@
     </header>
 
     <div id="projects">
+      <!-- ADD PROJECT -->
+      <div class="add-project project-card">
+        <div class="project-card__header">
+          <h2>Add</h2>
+          <div class="project-card__buttons"></div>
+        </div>
+
+        <div class="add-project__body-wrapper">
+          <div class="add-project__body">
+            <h3>Add project</h3>
+            <img src="./public/icons/add-project.png" alt="Add project button" />
+          </div>
+        </div>
+      </div>
       <!-- PROJECT CARD 1 -->
       <div class="project-card">
         <div class="project-card__header">
           <h2 class="project-card__title">Project title</h2>
-          <input type="text" id="project-title" placeholder="Untitled project" class="project-card__title-input hidden" />
+          <input type="text" id="project-title" placeholder="Untitled project" class="hidden" />
           <div class="project-card__buttons">
             <button class="btn-add-task" title="Add task">+</button>
             <button class="btn-settings" title="Settings">...</button>
@@ -29,7 +43,14 @@
 
         <div class="project-card__body">
           <!-- TO-DO CARD (nested) -->
-          <div class="todo-card">
+          <!-- <div class="add-task__body-wrapper">
+            <div class="add-task__body">
+              <h3>New task</h3>
+              <img src="./public/icons/add-project.png" alt="Add task button" />
+            </div>
+          </div> -->
+
+          <div class="todo-card hidden">
             <div class="todo-card__header">
               <div class="todo-card__title-wrapper">
                 <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
@@ -72,20 +93,6 @@
         </div>
       </div>
 
-      <!-- ADD PROJECT -->
-      <div class="add-project">
-        <div class="project-card__header">
-          <h2>Add</h2>
-          <div class="project-card__buttons"></div>
-        </div>
-
-        <div class="add-project__body-wrapper">
-          <div class="add-project__body">
-            <h3>Add project</h3>
-            <img src="./public/icons/add-project.png" alt="Add project button" />
-          </div>
-        </div>
-      </div>
       <!-- END OF ADD PROJECT -->
     </div>
   </body>

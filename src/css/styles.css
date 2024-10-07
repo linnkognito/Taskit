@@ -56,6 +56,8 @@ header nav .nav-link:hover {
 .project-card {
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
+  min-height: 50vh;
+  margin-bottom: 2.5em;
   border: 4px solid black;
 }
 .project-card__header {
@@ -112,7 +114,6 @@ header nav .nav-link:hover {
 }
 .add-project:hover {
   opacity: 1;
-  cursor: pointer;
 }
 .add-project h2 {
   width: 1.2em;
@@ -121,14 +122,16 @@ header nav .nav-link:hover {
   border: 2px solid white;
   opacity: 0;
 }
-.add-project__body-wrapper {
+.add-project__body-wrapper,
+.add-task__body-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50%;
   margin: auto;
 }
-.add-project__body {
+.add-project__body,
+.add-task__body {
   display: flex;
   align-items: center;
   padding: 0.5em;
@@ -138,11 +141,14 @@ header nav .nav-link:hover {
   transition: opacity 0.2s ease-in;
   transition: transform 0.2s ease-in;
 }
-.add-project__body:hover {
+.add-project__body:hover,
+.add-task__body:hover {
   transform: scale(1.01);
   opacity: 1;
+  cursor: pointer;
 }
-.add-project__body h3 {
+.add-project__body h3,
+.add-task__body h3 {
   font-size: 2rem;
   font-family: 'Abril Fatface', serif;
   color: black;
