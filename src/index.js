@@ -3,14 +3,21 @@ import './js/init';
 import { showElement, hideElement } from './js/helpers';
 
 export const projects = document.querySelector('#projects');
+const titleInput = document.querySelector('#project-title');
 const addBtn = document.querySelector('.add-project__body');
-const titleInput = document.getElementById('project-title');
-const projectsArr = [];
+const projectTitle = document.querySelector('.project-card__title');
+const projectsArr = [{ title: 'Test project 💻' }];
 
 class Project {
   constructor(title, id) {
     this.title = title;
     this.id = id;
+  }
+
+  get projectTitle() {}
+
+  changeTitle() {
+    hideElement();
   }
 
   addNewTask() {
@@ -28,13 +35,8 @@ class Project {
 class App {
   constructor() {
     addBtn.addEventListener('click', this.renderProjectCard.bind(this));
-    document.addEventListener('keydown', (e) => {
-      const enter = e.key === 'Enter';
-      const input = e.target.id === 'project-title';
-      if (enter && input) {
-        this.saveProject(e.target);
-      }
-    });
+    projectTitle.addEventListener('click', (e) => this.checkClickTitle(e));
+    document.addEventListener('keydown', (e) => this.checkKeydown(e));
   }
 
   get titleInput() {
@@ -57,11 +59,35 @@ class App {
     `;
   }
 
+  checkClickTitle(e) {
+    if (e.target !== projectTitle) return;
+    const project = e.target.closest('.project-card');
+    const id = project.dataset.id;
+    this.editProjectTitle(id);
+  }
+
+  checkKeydown(e) {
+    const enter = e.key === 'Enter';
+    const input = e.target.id === 'project-title';
+
+    if (enter && input) {
+      this.saveProject(e.target);
+    }
+  }
+
   renderProjectCard() {
     const id = projectsArr.length;
     projects.firstElementChild.insertAdjacentHTML('afterend', this.markup(id));
 
     projectsArr.push({ title: '' });
+    titleInput.focus();
+  }
+
+  editProjectTitle(i) {
+    hideElement(projectTitle);
+    showElement(titleInput);
+    console.log('index:', projectsArr[i]);
+    titleInput.placeholder = projectsArr[i].title;
     titleInput.focus();
   }
 
@@ -78,28 +104,11 @@ class App {
     projectsArr[id].title = title;
     titleEl.textContent = title;
 
+    console.log(projectsArr[id]);
+
+    if (projectsArr[id]) return;
     const newProject = new Project(title, id);
   }
 }
 
-// SET PRODUCT CARD TITLE //
-/*
-const titleInput = document.getElementById('project-title');
-if (titleInput) {
-  let val;
-
-  document.addEventListener('click', (e) => {
-    if (e.target !== titleInput) {
-      val = titleInput.value;
-      //console.log('val:', val);
-      // let index = titleInput.getAttribute('data-id');
-      // console.log('index:', index);
-
-      // hideElement(titleInput);
-      // showElement(title);
-      // projectsArr[index].title = val;
-    }
-  });
-}
-*/
 const app = new App();
