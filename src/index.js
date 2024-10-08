@@ -34,7 +34,6 @@ class App {
   constructor() {
     addBtn.addEventListener('click', this.renderProjectCard.bind(this));
     document.addEventListener('click', (e) => this.clickedTitle(e));
-    //document.addEventListener('keydown', (e) => this.checkKeydown(e));
   }
 
   //-- GETTERS ------------------------------------------------//
@@ -78,22 +77,13 @@ class App {
 
   //-- METHODS ----------------------------------------------//
   clickedTitle(e) {
-    if (e.target.classList.contains('project-card__title')) {
-      const title = e.target;
-      const project = this.getActiveProject(title);
-      const id = this.getProjectId(project);
+    if (!e.target.classList.contains('project-card__title')) return;
 
-      this.editProjectTitle(id, title);
-    }
-  }
+    const title = e.target;
+    const project = this.getActiveProject(title);
+    const id = this.getProjectId(project);
 
-  checkKeydown(e) {
-    const enter = e.key === 'Enter';
-    const input = e.target.id === 'project-title-input';
-
-    if (enter && input) {
-      this.saveProjectTitle(e.target);
-    }
+    this.editProjectTitle(id, title);
   }
 
   //-- HANDLERS --------------------------------------------//
