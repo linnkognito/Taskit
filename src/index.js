@@ -4,15 +4,23 @@ import { showElement, hideElement } from './js/helpers';
 
 export const projects = document.querySelector('#projects');
 const addBtn = document.querySelector('.add-project__body');
-const title = document.querySelector('.project-card__title');
 const titleInput = document.getElementById('project-title');
-const titleEvents = ['click', 'keydown'];
-
 const projectsArr = [];
 
 class Project {
-  constructor(title = 'Untitled project', id) {
+  constructor(title, id) {
     this.title = title;
+    this.id = id;
+  }
+
+  addNewTask() {
+    return `
+
+    `;
+  }
+
+  addTask() {
+    showElement();
   }
 }
 
@@ -20,18 +28,25 @@ class Project {
 class App {
   constructor() {
     addBtn.addEventListener('click', this.renderProjectCard.bind(this));
+    document.addEventListener('keydown', (e) => {
+      const enter = e.key === 'Enter';
+      const input = e.target.id === 'project-title';
+      if (enter && input) {
+        this.saveProject(e.target);
+      }
+    });
   }
 
   get titleInput() {
     return document.getElementById('project-title');
   }
 
-  markup() {
+  markup(id) {
     return `
-    <div class="project-card">
+    <div class="project-card" data-id="${id}">
       <div class="project-card__header">
         <h2 class="project-card__title hidden"></h2>
-        <input type="text" id="project-title" placeholder="Untitled project" data-id="" />
+        <input type="text" id="project-title" placeholder="Untitled project" />
         <div class="project-card__buttons">
           <button class="btn-add-task" title="Add task">+</button>
           <button class="btn-settings" title="Settings">...</button>
@@ -43,8 +58,27 @@ class App {
   }
 
   renderProjectCard() {
-    projects.firstElementChild.insertAdjacentHTML('afterend', this.markup());
+    const id = projectsArr.length;
+    projects.firstElementChild.insertAdjacentHTML('afterend', this.markup(id));
+
+    projectsArr.push({ title: '' });
     titleInput.focus();
+  }
+
+  saveProject(target) {
+    const project = target.closest('.project-card');
+    const id = project.dataset.id;
+    const titleEl = project.querySelector('.project-card__title');
+    let title = target.value;
+
+    hideElement(target);
+    showElement(titleEl);
+
+    title === '' ? (title = `Untitled project #${id}`) : title;
+    projectsArr[id].title = title;
+    titleEl.textContent = title;
+
+    const newProject = new Project(title, id);
   }
 }
 
