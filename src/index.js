@@ -33,29 +33,29 @@ class Project {
 class App {
   constructor() {
     addBtn.addEventListener('click', this.renderProjectCard.bind(this));
-    document.addEventListener('click', (e) => this.clickedTitle(e));
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
+    });
+    // document.addEventListener('click', (e) => this.editProjectTitle(e));
   }
 
   //-- GETTERS ------------------------------------------------//
   get titleInput() {
     return document.getElementById('project-title-input');
   }
-  get activeInputEl() {
-    return document.activeElement.id === 'project-title-input';
-  }
 
   //-- HELPERS ----------------------------------------------//
-  getActiveProject(el) {
-    return el.closest('.project-card');
+  getId(el) {
+    return el.closest('.project-card').dataset.id;
   }
-  getActiveInputEl(parent) {
+  getProject(id) {
+    return document.querySelector(`.project-card[data-id="${id}"]`);
+  }
+  getTitleEl(parent) {
+    return parent.querySelector('.project-card__title');
+  }
+  getInputEl(parent) {
     return parent.querySelector('#project-title-input');
-  }
-  getProjectId(p) {
-    return p.dataset.id;
-  }
-  getProjectTitle(p) {
-    return p.querySelector('.project-card__title');
   }
 
   //-- MARKUP ------------------------------------------------//
@@ -76,61 +76,50 @@ class App {
   }
 
   //-- METHODS ----------------------------------------------//
-  clickedTitle(e) {
-    if (!e.target.classList.contains('project-card__title')) return;
-
-    const title = e.target;
-    const project = this.getActiveProject(title);
-    const id = this.getProjectId(project);
-
-    this.editProjectTitle(id, title);
-  }
-
-  //-- HANDLERS --------------------------------------------//
   renderProjectCard() {
     const id = projectsArr.length;
     projects.firstElementChild.insertAdjacentHTML('afterend', this.markup(id));
 
+    // Get active input element
+    const project = this.getProject(id);
+    const inputEl = this.getInputEl(project);
+    const titleEl = this.getTitleEl(project);
+
     projectsArr.push({ title: '' });
-    this.titleInput.focus();
+    inputEl.focus();
+    this.editProjectTitle(titleEl);
   }
 
-  editProjectTitle(id, title) {
-    const project = document.querySelector(`.project-card[data-id="${id}"]`);
-    const input = this.getActiveInputEl(project);
-    input.value = title.textContent;
+  editProjectTitle(titleEl) {
+    const id = this.getId(titleEl);
+    const project = this.getProject(id);
+    const inputEl = this.getInputEl(project);
 
-    hideElement(title);
-    showElement(input);
+    // Keep original title name as placeholder //
+    inputEl.value = titleEl.textContent;
 
-    input.textContent = projectsArr[id].title;
-    input.focus();
+    hideElement(titleEl);
+    showElement(inputEl);
+    inputEl.focus();
 
-    input.addEventListener('blur', () => this.saveProjectTitle(input), { once: true });
-    input.addEventListener('keydown', (e) => {
+    // Listen for save //
+    inputEl.addEventListener('blur', () => this.saveProjectTitle(id, inputEl, titleEl), { once: true });
+    inputEl.addEventListener('keydown', (e) => {
       const enter = e.key === 'Enter';
-      if (enter && input) this.saveProjectTitle(e.target);
+      if (enter && inputEl) this.saveProjectTitle(id, inputEl, titleEl);
     });
   }
 
-  saveProjectTitle(input) {
-    // const project = input.closest('.project-card');
-    // const id = project.dataset.id;
-    // const titleEl = project.querySelector('.project-card__title');
-    const project = this.getActiveProject(input);
-    const id = this.getProjectId(project);
-    const titleEl = this.getProjectTitle(project);
-    let title = input.value;
-
-    hideElement(input);
-    showElement(titleEl);
-
+  saveProjectTitle(id, inputEl, titleEl) {
+    let title = inputEl.value;
     title === '' ? (title = `Untitled project #${id}`) : title;
     projectsArr[id].title = title;
     titleEl.textContent = title;
 
-    if (projectsArr[id]) return;
-    const newProject = new Project(title, id);
+    hideElement(inputEl);
+    showElement(titleEl);
+
+    if (!projectsArr[id]) new Project(title, id);
   }
 }
 
