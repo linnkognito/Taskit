@@ -1,56 +1,26 @@
 import './css/styles.css';
 import './js/init';
+import { Project } from './js/project';
 import { showElement, hideElement } from './js/helpers';
 
-export const projects = document.querySelector('#projects');
-const addBtn = document.querySelector('.add-project__body');
-const projectsArr = [{ title: 'Test project 💻' }];
+export class App {
+  //-- CLASS PROPERTIES -------------------------------------//
+  projects = document.querySelector('#projects');
+  addBtn = document.querySelector('.add-project__body');
+  projectsArr = [{ title: 'Test project 💻' }];
 
-class Project {
-  constructor(title, id) {
-    this.title = title;
-    this.id = id;
-  }
-
-  // get projectTitle() {}
-
-  // changeTitle() {
-  //   hideElement();
-  // }
-
-  // addNewTask() {
-  //   return `
-
-  //   `;
-  // }
-
-  // addTask() {
-  //   showElement();
-  // }
-}
-
-// APPLICATION ARCHITECTURE //////////////////////////////////////
-class App {
   constructor() {
-    addBtn.addEventListener('click', this.renderProjectCard.bind(this));
+    this.addBtn.addEventListener('click', this.renderProjectCard.bind(this));
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
     });
   }
 
   //-- HELPERS ----------------------------------------------//
-  getId(el) {
-    return el.closest('.project-card').dataset.id;
-  }
-  getProject(id) {
-    return document.querySelector(`.project-card[data-id="${id}"]`);
-  }
-  getTitleEl(parent) {
-    return parent.querySelector('.project-card__title');
-  }
-  getInputEl(parent) {
-    return parent.querySelector('#project-title-input');
-  }
+  getId = (el) => el.closest('.project-card').dataset.id;
+  getProject = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
+  getTitleEl = (parent) => parent.querySelector('.project-card__title');
+  getInputEl = (parent) => parent.querySelector('#project-title-input');
 
   //-- MARKUP ------------------------------------------------//
   markup(id) {
@@ -71,15 +41,15 @@ class App {
 
   //-- METHODS ----------------------------------------------//
   renderProjectCard() {
-    const id = projectsArr.length;
-    projects.firstElementChild.insertAdjacentHTML('afterend', this.markup(id));
+    const id = this.projectsArr.length;
+    this.projects.firstElementChild.insertAdjacentHTML('afterend', this.markup(id));
 
     // Get active input element
     const project = this.getProject(id);
     const inputEl = this.getInputEl(project);
     const titleEl = this.getTitleEl(project);
 
-    projectsArr.push({ title: '' });
+    this.projectsArr.push({ title: '' });
     inputEl.focus();
     this.editProjectTitle(titleEl);
   }
@@ -107,14 +77,12 @@ class App {
   saveProjectTitle(id, inputEl, titleEl) {
     let title = inputEl.value;
     title === '' ? (title = `Untitled project #${id}`) : title;
-    projectsArr[id].title = title;
+    this.projectsArr[id].title = title;
     titleEl.textContent = title;
 
     hideElement(inputEl);
     showElement(titleEl);
 
-    if (!projectsArr[id]) new Project(title, id);
+    if (!this.projectsArr[id]) new Project(title, id);
   }
 }
-
-const app = new App();
