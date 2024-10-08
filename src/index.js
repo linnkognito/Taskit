@@ -3,9 +3,7 @@ import './js/init';
 import { showElement, hideElement } from './js/helpers';
 
 export const projects = document.querySelector('#projects');
-const titleInput = document.querySelector('#project-title-input');
 const addBtn = document.querySelector('.add-project__body');
-const projectTitle = document.querySelector('.project-card__title');
 const projectsArr = [{ title: 'Test project 💻' }];
 
 class Project {
@@ -14,29 +12,29 @@ class Project {
     this.id = id;
   }
 
-  get projectTitle() {}
+  // get projectTitle() {}
 
-  changeTitle() {
-    hideElement();
-  }
+  // changeTitle() {
+  //   hideElement();
+  // }
 
-  addNewTask() {
-    return `
+  // addNewTask() {
+  //   return `
 
-    `;
-  }
+  //   `;
+  // }
 
-  addTask() {
-    showElement();
-  }
+  // addTask() {
+  //   showElement();
+  // }
 }
 
 // APPLICATION ARCHITECTURE //////////////////////////////////////
 class App {
   constructor() {
     addBtn.addEventListener('click', this.renderProjectCard.bind(this));
-    document.addEventListener('click', (e) => this.checkClick(e));
-    document.addEventListener('keydown', (e) => this.checkKeydown(e));
+    document.addEventListener('click', (e) => this.clickedTitle(e));
+    //document.addEventListener('keydown', (e) => this.checkKeydown(e));
   }
 
   //-- GETTERS ------------------------------------------------//
@@ -44,15 +42,21 @@ class App {
     return document.getElementById('project-title-input');
   }
   get activeInputEl() {
-    return document.activeElement.id === 'project-title-input' ? document.activeElement : false;
+    return document.activeElement.id === 'project-title-input';
   }
 
   //-- HELPERS ----------------------------------------------//
   getActiveProject(el) {
     return el.closest('.project-card');
   }
+  getActiveInputEl(parent) {
+    return parent.querySelector('#project-title-input');
+  }
   getProjectId(p) {
     return p.dataset.id;
+  }
+  getProjectTitle(p) {
+    return p.querySelector('.project-card__title');
   }
 
   //-- MARKUP ------------------------------------------------//
@@ -73,21 +77,13 @@ class App {
   }
 
   //-- METHODS ----------------------------------------------//
-  checkClick(e) {
-    const activeInput = this.activeInputEl;
-
+  clickedTitle(e) {
     if (e.target.classList.contains('project-card__title')) {
       const title = e.target;
       const project = this.getActiveProject(title);
       const id = this.getProjectId(project);
 
       this.editProjectTitle(id, title);
-    }
-
-    if (activeInput && e.target !== activeInput) {
-      const id = activeInput.closest('.project-card').dataset.id;
-      const text = activeInput.textContent;
-      this.editProjectTitle(id, text);
     }
   }
 
@@ -111,19 +107,29 @@ class App {
 
   editProjectTitle(id, title) {
     const project = document.querySelector(`.project-card[data-id="${id}"]`);
-    const input = project.querySelector('#project-title-input');
+    const input = this.getActiveInputEl(project);
+    input.value = title.textContent;
 
     hideElement(title);
     showElement(input);
 
     input.textContent = projectsArr[id].title;
     input.focus();
+
+    input.addEventListener('blur', () => this.saveProjectTitle(input), { once: true });
+    input.addEventListener('keydown', (e) => {
+      const enter = e.key === 'Enter';
+      if (enter && input) this.saveProjectTitle(e.target);
+    });
   }
 
   saveProjectTitle(input) {
-    const project = input.closest('.project-card');
-    const id = project.dataset.id;
-    const titleEl = project.querySelector('.project-card__title');
+    // const project = input.closest('.project-card');
+    // const id = project.dataset.id;
+    // const titleEl = project.querySelector('.project-card__title');
+    const project = this.getActiveProject(input);
+    const id = this.getProjectId(project);
+    const titleEl = this.getProjectTitle(project);
     let title = input.value;
 
     hideElement(input);
