@@ -36,12 +36,6 @@ class App {
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
     });
-    // document.addEventListener('click', (e) => this.editProjectTitle(e));
-  }
-
-  //-- GETTERS ------------------------------------------------//
-  get titleInput() {
-    return document.getElementById('project-title-input');
   }
 
   //-- HELPERS ----------------------------------------------//
