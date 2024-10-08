@@ -54,6 +54,9 @@ header nav .nav-link:hover {
   border: 1px solid black;
 }
 .project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
   min-height: 50vh;
@@ -99,6 +102,17 @@ header nav .nav-link:hover {
 }
 .project-card__body {
   padding: 1.5em 1.3em;
+}
+
+/*** PROJECT CARD SETTINGS DROPDOWN *********/
+.project-card__settings-dropdown {
+  position: absolute;
+  display: flex;
+  align-self: end;
+  top: calc(0 -);
+  min-width: 50%;
+  min-height: 50%;
+  border: 2px solid black;
 }
 
 /*** ADD PROJECT ****************************/
