@@ -1,29 +1,40 @@
-export class Project {
-  btnSettings = document.querySelectorAll('.btn-settings');
+import { app } from '../index';
+import { showElement, hideElement, containsClass } from './helpers';
 
+export class Project {
   constructor(title, id) {
     this.title = title;
     this.id = id;
-
-    this.btnSettings.forEach((btn) =>
-      btn.addEventListener('click', (e) => {
-        console.log('btn clicked');
-        this.openSettings(e);
-      })
-    );
   }
 
   //-- HELPERS ----------------------------------------------//
-  //-- SETTINGS ---------------------------------------------//
-  openSettings(e) {
-    const btn = e.target;
-    const projectId = btn.closest('.project-card').dataset.id;
-    const header = btn.closest('.project-card__header');
-
-    const markup = `
-    <div class="project-card__settings-dropdown">Hello</div>
+  //-- MARKUP -----------------------------------------------//
+  dropdownMarkup() {
+    return `
+    <div class="settings-dropdown">Hello</div>
     `;
+  }
+
+  //-- SETTINGS ---------------------------------------------//
+  openSettings(btn) {
+    const header = app.getHeaderEl(btn);
+    const headerHeight = header.getBoundingClientRect().height;
+    const project = app.getProject(this.id);
+    const markup = this.dropdownMarkup();
 
     header.insertAdjacentHTML('afterend', markup);
+
+    const dropdown = project.querySelector('.settings-dropdown');
+
+    // Dropdown placement //
+    dropdown.style.top = `calc(${headerHeight}px)`;
+
+    // Close dropdown //
+    dropdown.addEventListener('mouseleave', () => hideElement(dropdown));
   }
 }
+
+// getId = (el) => el.closest('.project-card').dataset.id;
+// getProject = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
+// getTitleEl = (parent) => parent.querySelector('.project-card__title');
+// getInputEl = (parent) => parent.querySelector('#project-title-input');
