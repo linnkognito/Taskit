@@ -6,14 +6,7 @@
 
 body {
   line-height: 1.5;
-  font-family: 'Urbanist', sans-serif;
-}
-
-:root {
-  --primary: rgb(213, 207, 204);
-  --prio1: rgb(197, 182, 173);
-  --prio2: rgb(197, 182, 173);
-  --prio3: rgb(197, 182, 173);
+  font-family: var(--font-body);
 }
 
 /*** HEADER ****************************/
@@ -21,14 +14,14 @@ header {
   display: flex;
   width: 100%;
   height: auto;
-  font-family: 'Urbanist', sans-serif;
+  font-family: var(--font-body);
   color: white;
   background: var(--primary);
 }
 header h1 {
   padding: 0.5em 1em;
   font-size: 3rem;
-  font-family: 'Arizonia', sans-serif;
+  font-family: var(--font-h1);
   transition: transform 0.2s ease-in;
 }
 header h1:hover {
@@ -51,161 +44,11 @@ header nav .nav-link:hover {
   transform: scale(1.1);
 }
 
-/*** PROJECT CARD ****************************/
-#projects {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 2em;
-  width: 100%;
-  margin: auto;
-  padding: 2em;
-  /* border: 1px solid black; */
-}
-.project-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 calc(33.333% - 2em);
-  max-width: calc(33.333% - 2em);
-  min-height: 50vh;
-  margin-bottom: 2.5em;
-  border: 2px solid var(--primary);
-}
-.project-card__header {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 0.7em;
-  background: var(--primary);
-}
-.project-card__header h2,
-.add-project h2 {
-  padding: 0.1em;
-  font-size: 1.6rem;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: normal;
-  color: white;
-}
-.project-card__header input[type='text'] {
-  width: 80%;
-  padding: 0.1em;
-  font-size: 1.6rem;
-  font-family: 'Urbanist', sans-serif;
-}
-.project-card__header input[type='text']::placeholder {
-  color: lightgray;
-}
-.project-card__header input[type='text']:active {
-  color: var(--primary);
-}
-.project-card__header button {
-  width: 1.2em;
-  margin: 0 0.1em;
-  font-size: 1.5rem;
-  color: white;
-  background: none;
-  border: 2px solid white;
-  cursor: pointer;
-}
-.project-card__header button:hover {
-  transform: scale(1.1);
-}
-.project-card__body {
-  padding: 1.5em 1.3em;
-}
-
-/*** PROJECT CARD SETTINGS DROPDOWN *********/
-.settings-dropdown {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4em;
-  align-self: end;
-  width: 60%;
-  min-width: 50%;
-  height: auto;
-  min-height: 25%;
-  margin-top: 4em; /* TEMPORARY FOR DEVELOPMENT */
-  font-family: 'Urbanist', sans-serif;
-  font-size: 1.2rem;
-  color: white;
-  background: var(--primary);
-}
-.settings-dropdown__li {
-  padding: 0.4em;
-  transition: all 0.2s ease-in;
-}
-.settings-dropdown__li:hover {
-  color: var(--primary);
-  background: white;
-  cursor: pointer;
-}
-.settings-dropdown__li:active {
-  color: white;
-  background: var(--primary);
-}
-
-/*** ADD PROJECT ****************************/
-.add-project {
-  flex: 1 1 calc(33.333% - 2em);
-  max-width: calc(33.333% - 2em);
-  border: 2px dashed var(--primary);
-  opacity: 0.2;
-  transition: opacity 0.2s ease-in;
-}
-.add-project .project-card__header {
-  background: var(--primary);
-}
-.add-project:hover {
-  opacity: 1;
-}
-.add-project h2 {
-  opacity: 0;
-}
-.add-project__body-wrapper,
-.add-task__body-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50%;
-  margin: auto;
-}
-.add-project__body,
-.add-task__body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5em;
-  background: var(--primary);
-  border: 2px solid var(--primary);
-  border-radius: 0.9em;
-  opacity: 0.5;
-  transition: opacity 0.2s ease-in;
-  transition: transform 0.2s ease-in;
-}
-.add-project__body:hover,
-.add-task__body:hover {
-  transform: scale(1.01);
-  opacity: 1;
-  cursor: pointer;
-}
-.add-project__body h3,
-.add-task__body h3 {
-  font-size: 1.5rem;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: normal;
-  color: white;
-}
-.add-project__body img {
-  width: 25%;
-  height: 25%;
-}
-
 /*** TO-DO CARD ****************************/
 .todo-card {
   width: 100%;
-  background: rgb(83, 172, 255);
-  border: 3px solid rgb(83, 172, 255);
+  background: var(--prio3);
+  border: 1px solid var(--prio3);
   border-radius: 0.9em;
   overflow: hidden;
 }
@@ -220,7 +63,7 @@ header nav .nav-link:hover {
   padding: 0.5em;
   padding-right: 0.8em;
   color: white;
-  background: rgb(83, 172, 255);
+  background: var(--prio3);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
 }
@@ -243,17 +86,17 @@ header nav .nav-link:hover {
 }
 /* TO-DO HEADER TITLE */
 .todo-card__title {
-  font-size: 1.3em;
-  font-weight: 600;
+  font-size: 1.25em;
   letter-spacing: 0.1em;
 }
 /* TO-DO HEADER BUTTONS */
 .todo-card__buttons button {
+  width: 2em;
   height: 2em;
-  margin: 0 0.2em;
-  padding: 0.05em;
+  margin: 0 0.1em;
+  padding: 0.13em 0.06em;
   background: none;
-  border: 2px solid white;
+  border: 1px solid white;
   border-radius: 0.5em;
   cursor: pointer;
 }
@@ -261,7 +104,11 @@ header nav .nav-link:hover {
   height: 1.5em;
 }
 .todo-card__buttons button:hover {
-  transform: scale(1.1);
+  box-shadow: 0 0 2px white;
+  transform: scale(1.05);
+}
+.todo-card__buttons button:active {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* TO-DO BODY */
@@ -275,15 +122,14 @@ header nav .nav-link:hover {
   gap: 1em;
   margin-top: 0.7em;
   padding-bottom: 0.7em;
-  border-bottom: 2px solid rgba(83, 172, 255, 0.5);
 }
 /* TO-DO BODY DESCRIPTION */
 .todo-card__description {
   padding: 0.3em 0.6em;
   font-size: 1rem;
   font-style: italic;
-  color: rgb(62, 104, 143);
-  border: 1px dashed rgba(83, 172, 255, 0.5);
+  color: var(--color-secondary);
+  border: 1px dashed var(--prio3-dark);
   border-radius: 0.9em;
 }
 /* TO-DO BODY DUE DATE */
@@ -293,7 +139,8 @@ header nav .nav-link:hover {
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  background: rgba(83, 172, 255, 0.5);
+  color: var(--color-secondary);
+  background: var(--prio3-light);
   border-radius: 0.9em;
 }
 .todo-card__due-date--number {
@@ -307,8 +154,8 @@ header nav .nav-link:hover {
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: rgb(83, 172, 255);
-  border: 3px solid rgb(83, 172, 255);
+  background: var(--prio3);
+  border: 1px solid var(--prio3);
   border-radius: 0.9em;
 }
 .todo-card__checklist-header,
@@ -331,7 +178,7 @@ header nav .nav-link:hover {
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   background: white;
-  border: 1px solid rgb(83, 172, 255);
+  border: 1px solid var(--prio3);
   border-radius: 0.9em;
 }
 .todo-card__checklist-body input[type='checkbox']:checked + label {
@@ -347,10 +194,13 @@ header nav .nav-link:hover {
   padding: 0.7em 0.5em 0.3em;
 }
 .todo-card__creation-date {
+  display: flex;
+  align-items: center;
   width: fit-content;
   padding: 0.1em 0.5em;
-  font-size: 0.9rem;
-  background: rgba(83, 172, 255, 0.3);
+  font-size: 0.8rem;
+  color: var(--color-secondary);
+  background: var(--prio3-light);
   border-radius: 0.9em;
 }
 .todo-card__footer img {
@@ -362,28 +212,6 @@ header nav .nav-link:hover {
   cursor: pointer;
 }
 
-/*** FONTS *****************************/
-@font-face {
-  font-family: 'Arizonia';
-  src: url(../fonts/Arizonia-Regular.ttf);
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Urbanist';
-  src: url(../fonts/Urbanist-VariableFont_wght.ttf);
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Urbanist Italic';
-  src: url(../fonts/Urbanist-Italic-VariableFont_wght.ttf);
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-}
-
 /*** HELPERS ***************************/
 .hidden {
   display: none;
@@ -391,29 +219,5 @@ header nav .nav-link:hover {
 
 /*** PSUEDO ***************************/
 ::selection {
-  background: rgb(255, 224, 177);
-}
-
-/*** ANIMATIONS ************************/
-@keyframes levitate {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+  background: var(--color-selection);
 }

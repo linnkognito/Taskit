@@ -1,0 +1,56 @@
+/*** ADD PROJECT ****************************/
+.add-project {
+  flex: 1 1 calc(33.333% - 2em);
+  max-width: calc(33.333% - 2em);
+  border: 2px dashed var(--primary);
+  opacity: 0.2;
+  transition: opacity 0.2s ease-in;
+}
+.add-project .project-card__header {
+  background: var(--primary);
+}
+.add-project:hover {
+  opacity: 1;
+}
+.add-project h2 {
+  opacity: 0;
+}
+.add-project__body-wrapper,
+.add-task__body-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* background: white; */
+}
+.add-project__body,
+.add-task__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+  background: var(--primary);
+  border: 2px solid white;
+  border-radius: 0.9em;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in;
+  transition: transform 0.2s ease-in;
+}
+.add-project__body:hover,
+.add-task__body:hover {
+  box-shadow: 0 0 1px white;
+  transform: scale(1.01);
+  opacity: 1;
+  cursor: pointer;
+}
+.add-project__body h3,
+.add-task__body h3 {
+  font-size: 1.5rem;
+  font-family: var(--font-body);
+  font-weight: normal;
+  color: white;
+}
+.add-project__body img {
+  width: 25%;
+  height: 25%;
+}

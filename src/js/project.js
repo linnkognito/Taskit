@@ -11,7 +11,13 @@ export class Project {
   //-- MARKUP -----------------------------------------------//
   dropdownMarkup() {
     return `
-    <div class="settings-dropdown">Hello</div>
+    <div class="settings-dropdown">
+      <div class="settings-dropdown__li">Edit title</div>
+      <div class="settings-dropdown__li">Clone project</div>
+      <div class="settings-dropdown__li">Mark all task complete</div>
+      <div class="settings-dropdown__li">Delete expired tasks</div>
+      <div class="settings-dropdown__li">Delete project</div>
+    </div>
     `;
   }
 
@@ -31,6 +37,7 @@ export class Project {
 
     // Close dropdown //
     dropdown.addEventListener('mouseleave', () => hideElement(dropdown));
+    // dropdown.addEventListener('mouseout', () => hideElement(dropdown));
   }
 }
 
