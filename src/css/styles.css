@@ -8,6 +8,27 @@ body {
   line-height: 1.5;
   font-family: var(--font-body);
 }
+input[type='text'] {
+  width: 80%;
+  padding: 0.2em 0.5em;
+  font-family: var(--font-body);
+  color: var(--color-secondary);
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 0.9em;
+  outline: none;
+}
+input[type='text']:focus {
+  border: none;
+  outline: none;
+  box-shadow: var(--box-glow);
+}
+input[type='text']::placeholder {
+  color: var(--color-secondary);
+}
+input[type='text']:focus::placeholder {
+  color: var(--color-secondary-op);
+}
 
 /*** HEADER ****************************/
 header {
@@ -44,9 +65,12 @@ header nav .nav-link:hover {
   transform: scale(1.1);
 }
 
+/*** TO-DO FORM ****************************/
+
 /*** TO-DO CARD ****************************/
 .todo-card {
   width: 100%;
+  margin-bottom: 1em;
   background: var(--prio3);
   border: 1px solid var(--prio3);
   border-radius: 0.9em;
@@ -59,7 +83,6 @@ header nav .nav-link:hover {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 2.5em;
   padding: 0.5em;
   padding-right: 0.8em;
   color: white;
@@ -215,6 +238,9 @@ header nav .nav-link:hover {
 /*** HELPERS ***************************/
 .hidden {
   display: none;
+}
+.invisible {
+  opacity: 0;
 }
 
 /*** PSUEDO ***************************/

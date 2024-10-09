@@ -23,6 +23,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  min-height: 10%;
   padding: 0.5em 0.7em;
   background: var(--primary);
   border-radius: 0.9em;
@@ -36,8 +37,8 @@
   color: white;
 }
 .project-card__header input[type='text'] {
-  width: 80%;
-  padding: 0.1em;
+  width: 70%;
+  /* padding: 0.1em; */
   font-size: 1.6rem;
   font-family: var(--font-body);
 }

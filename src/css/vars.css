@@ -1,6 +1,7 @@
 /*** COLORS ****************************/
 :root {
   --primary: rgba(213, 207, 204, 1);
+  --primary-op: rgba(213, 207, 204, 0.5);
 
   --prio1: rgba(232, 214, 214, 1);
   --prio1-light: rgba(232, 214, 214, 0.5);
@@ -17,6 +18,7 @@
 
 :root {
   --color-secondary: rgba(158, 158, 158, 1);
+  --color-secondary-op: rgba(158, 158, 158, 0.35);
   --color-selection: rgba(232, 232, 232, 1);
 }
 
@@ -25,4 +27,9 @@
   --font-h1: 'Arizonia', sans-serif;
   --font-body: 'Urbanist', sans-serif;
   --font-body-it: 'Urbanist Italic', sans-serif;
+}
+
+/*** EFFECTS ***************************/
+:root {
+  --box-glow: 0 0 4px white;
 }
