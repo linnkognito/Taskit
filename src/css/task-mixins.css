@@ -34,7 +34,6 @@ input[type='text']:focus::placeholder {
   color: vars.$col-secondary-op;
 }
 */
-/** TASK *********************************/
 /*
 @mixin () {}
 @mixin () {}

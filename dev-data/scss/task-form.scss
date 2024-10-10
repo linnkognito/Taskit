@@ -30,12 +30,14 @@
           height: 1.5em;
         }
         .task-form__btn--icon:hover {
-          box-shadow: 0 0 2px white;
           transform: scale(1.05);
         }
         .task-form__btn--icon:active {
           background: vars.$col-btn-active;
         }
+      }
+      .task-form__btn:hover {
+        box-shadow: vars.$box-glow-mid;
       }
     }
   } // [X] END OF HEADER [X]
@@ -89,7 +91,7 @@
       }
     } // [X] END OF PRIO [X]
 
-    // BODY TOP / PREVIEW (BODY) //
+    // BODY TOP (BODY) //
     .task-form__body-top {
       @include task-mixins.body-top;
 

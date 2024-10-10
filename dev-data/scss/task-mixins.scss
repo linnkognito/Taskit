@@ -1,7 +1,7 @@
 @use './vars';
 @use './mixins';
 
-/** TASK *********************************/
+// TASK //
 @mixin card() {
   width: 100%;
   margin-bottom: 1em;
@@ -10,6 +10,8 @@
   border-radius: 0.9em;
   overflow: hidden;
 }
+
+// HEADER //
 @mixin header() {
   display: flex;
   justify-content: space-between;
@@ -36,6 +38,8 @@
   border-radius: 0.5em;
   cursor: pointer;
 }
+
+// BODY //
 @mixin body() {
   padding: 0.1em 0.7em;
   background: white;

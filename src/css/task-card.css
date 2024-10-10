@@ -34,7 +34,6 @@ input[type='text']:focus::placeholder {
   color: vars.$col-secondary-op;
 }
 */
-/** TASK *********************************/
 /*
 @mixin () {}
 @mixin () {}
@@ -83,7 +82,7 @@ input[type='text']:focus::placeholder {
   font-size: 1.25em;
   letter-spacing: 0.1em;
 }
-.task-card .task-card__header .task-card__btn {
+.task-card .task-card__header .task-card__buttons .task-card__btn {
   width: 2em;
   height: 2em;
   margin: 0 0.1em;
@@ -93,15 +92,17 @@ input[type='text']:focus::placeholder {
   border-radius: 0.5em;
   cursor: pointer;
 }
-.task-card .task-card__header .task-card__btn .task-card__btn--icon {
+.task-card .task-card__header .task-card__buttons .task-card__btn .task-card__btn--icon {
   height: 1.5em;
 }
-.task-card .task-card__header .task-card__btn .task-card__btn--icon:hover {
-  box-shadow: 0 0 2px white;
+.task-card .task-card__header .task-card__buttons .task-card__btn .task-card__btn--icon:hover {
   transform: scale(1.05);
 }
-.task-card .task-card__header .task-card__btn .task-card__btn--icon:active {
+.task-card .task-card__header .task-card__buttons .task-card__btn .task-card__btn--icon:active {
   background: rgba(255, 255, 255, 0.5);
+}
+.task-card .task-card__header .task-card__buttons .task-card__btn:hover {
+  box-shadow: 0 0 2px white;
 }
 .task-card .task-card__body {
   padding: 0.1em 0.7em;

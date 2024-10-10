@@ -33,18 +33,22 @@
     }
 
     // BUTTONS (HEADER) //
-    .task-card__btn {
-      @include task-mixins.btn-header;
+    .task-card__buttons {
+      .task-card__btn {
+        @include task-mixins.btn-header;
 
-      .task-card__btn--icon {
-        height: 1.5em;
+        .task-card__btn--icon {
+          height: 1.5em;
+        }
+        .task-card__btn--icon:hover {
+          transform: scale(1.05);
+        }
+        .task-card__btn--icon:active {
+          background: vars.$col-btn-active;
+        }
       }
-      .task-card__btn--icon:hover {
-        box-shadow: 0 0 2px white;
-        transform: scale(1.05);
-      }
-      .task-card__btn--icon:active {
-        background: vars.$col-btn-active;
+      .task-card__btn:hover {
+        box-shadow: vars.$box-glow-mid;
       }
     }
   } // [X] END OF HEADER [X]

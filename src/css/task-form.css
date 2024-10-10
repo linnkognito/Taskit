@@ -34,7 +34,6 @@ input[type='text']:focus::placeholder {
   color: vars.$col-secondary-op;
 }
 */
-/** TASK *********************************/
 /*
 @mixin () {}
 @mixin () {}
@@ -93,11 +92,13 @@ input[type='text']:focus::placeholder {
   height: 1.5em;
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn .task-form__btn--icon:hover {
-  box-shadow: 0 0 2px white;
   transform: scale(1.05);
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn .task-form__btn--icon:active {
   background: rgba(255, 255, 255, 0.5);
+}
+.task-form .task-form__header .task-form__buttons .task-form__btn:hover {
+  box-shadow: 0 0 2px white;
 }
 .task-form .task-form__body {
   padding: 0.1em 0.7em;
