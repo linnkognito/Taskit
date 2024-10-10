@@ -1,0 +1,79 @@
+@use './vars';
+@use './mixins';
+
+/** TASK *********************************/
+@mixin card() {
+  width: 100%;
+  margin-bottom: 1em;
+  background: vars.$col-prio3;
+  border: 1px solid vars.$col-prio3;
+  border-radius: 0.9em;
+  overflow: hidden;
+}
+@mixin header() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em;
+  color: white;
+  background: vars.$col-prio3;
+  border: 0;
+  border-radius: 0.9em 0.9em 0 0;
+}
+@mixin title-wrapper() {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+}
+@mixin btn-header() {
+  width: 2em;
+  height: 2em;
+  margin: 0 0.1em;
+  padding: 0.13em 0.06em;
+  background: none;
+  border: 1px solid white;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+@mixin body() {
+  padding: 0.1em 0.7em;
+  background: white;
+}
+@mixin body-top() {
+  display: flex;
+  gap: 1em;
+  margin-top: 0.7em;
+  padding-bottom: 0.7em;
+  background: white;
+}
+@mixin description() {
+  padding: 0.3em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: vars.$col-secondary;
+  border: 1px dashed vars.$col-prio3-dark;
+  border-radius: 0.9em;
+}
+@mixin due-date() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  color: vars.$col-secondary;
+  background: vars.$col-prio3-light;
+  border-radius: 0.9em;
+}
+@mixin due-date-val() {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+/*
+@mixin () {}
+@mixin () {}
+@mixin () {}
+@mixin () {}
+@mixin () {}
+@mixin () {}
+*/

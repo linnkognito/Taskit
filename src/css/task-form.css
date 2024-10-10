@@ -19,7 +19,6 @@ vars.
 /** FLEX *********************************/
 /** INPUT ********************************/
 /** PROJECT ******************************/
-/** TASK *********************************/
 /*
 input[type='text']:focus {
   border: none;
@@ -35,6 +34,15 @@ input[type='text']:focus::placeholder {
   color: vars.$col-secondary-op;
 }
 */
+/** TASK *********************************/
+/*
+@mixin () {}
+@mixin () {}
+@mixin () {}
+@mixin () {}
+@mixin () {}
+@mixin () {}
+*/
 .task-form {
   width: 100%;
   margin-bottom: 1em;
@@ -49,20 +57,19 @@ input[type='text']:focus::placeholder {
   align-items: center;
   width: 100%;
   padding: 0.5em;
-  padding-right: 0.8em;
   color: white;
   background: rgb(204, 223, 240);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
+  padding-right: 0.8em;
+  padding-left: 0.8em;
 }
 .task-form .task-form__header .task-form__title-wrapper {
   display: flex;
   align-items: center;
   column-gap: 0.5em;
 }
-
-/** FORM HEADER **************************/
-.task-form__title-input {
+.task-form .task-form__header .task-form__title-wrapper .task-form__title-input {
   padding: 0.2em 0.5em;
   font-size: 1.6rem;
   font-family: "Urbanist", sans-serif;
@@ -73,10 +80,31 @@ input[type='text']:focus::placeholder {
   font-size: 1.25rem;
   border: none;
 }
-
-/*****************************************/
-/** FORM PRIO BUTTONS ********************/
-.task-form__prio {
+.task-form .task-form__header .task-form__buttons .task-form__btn {
+  width: 2em;
+  height: 2em;
+  margin: 0 0.1em;
+  padding: 0.13em 0.06em;
+  background: none;
+  border: 1px solid white;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.task-form .task-form__header .task-form__buttons .task-form__btn .task-form__btn--icon {
+  height: 1.5em;
+}
+.task-form .task-form__header .task-form__buttons .task-form__btn .task-form__btn--icon:hover {
+  box-shadow: 0 0 2px white;
+  transform: scale(1.05);
+}
+.task-form .task-form__header .task-form__buttons .task-form__btn .task-form__btn--icon:active {
+  background: rgba(255, 255, 255, 0.5);
+}
+.task-form .task-form__body {
+  padding: 0.1em 0.7em;
+  background: white;
+}
+.task-form .task-form__body .task-form__prio {
   display: flex;
   gap: 0.5em;
   margin-top: 0.7em;
@@ -85,13 +113,11 @@ input[type='text']:focus::placeholder {
   background: rgba(204, 223, 240, 0.5);
   border-radius: 0.9em;
 }
-
-.task-form__prio-buttons {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons {
   display: flex;
   gap: 0.5em;
 }
-
-.prio-btn {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-btn {
   margin: 0 0.1em;
   padding: 0.1em 0.5em;
   font-family: "Urbanist", sans-serif;
@@ -102,31 +128,30 @@ input[type='text']:focus::placeholder {
   cursor: pointer;
   transition: all 0.1s ease-in;
 }
-
-.prio-btn:hover {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 0 4px white;
 }
-
-.task-form__prio-buttons .prio-top-btn {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-top-btn {
   background: rgb(232, 214, 214);
 }
-
-.task-form__prio-buttons .prio-mid-btn {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-mid-btn {
   background: rgb(215, 232, 221);
 }
-
-.task-form__prio-buttons .prio-low-btn {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-low-btn {
   background: rgb(204, 223, 240);
 }
-
-.task-form__prio-buttons .prio-none-btn {
+.task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-none-btn {
   background: rgba(213, 207, 204, 0.5);
 }
-
-/*****************************************/
-/** FORM DESCRIPTION *********************/
-.task-form__description-input {
+.task-form .task-form__body .task-form__body-top {
+  display: flex;
+  gap: 1em;
+  margin-top: 0.7em;
+  padding-bottom: 0.7em;
+  background: white;
+}
+.task-form .task-form__body .task-form__body-top .task-form__description-input {
   padding: 0.2em 0.5em;
   font-size: 1.6rem;
   font-family: "Urbanist", sans-serif;
@@ -135,11 +160,32 @@ input[type='text']:focus::placeholder {
   border-radius: 0.9em;
   outline: none;
   padding: 0.3em 0.6em;
+  font-size: 1rem;
   font-style: italic;
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
 }
-
-/*****************************************/
+.task-form .task-form__body .task-form__body-top .task-form__description {
+  padding: 0.3em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(186, 203, 219);
+  border-radius: 0.9em;
+}
+.task-form .task-form__body .task-form__body-top .task-form__due-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  color: rgb(158, 158, 158);
+  background: rgba(204, 223, 240, 0.5);
+  border-radius: 0.9em;
+}
+.task-form .task-form__body .task-form__body-top .task-form__due-date .task-card__due-date--number {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
 
 /*# sourceMappingURL=task-form.css.map */

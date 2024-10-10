@@ -4,6 +4,7 @@ import './css/project.css';
 import './css/add-project.css';
 import './css/vars.css';
 import './css/styles.css';
+import './css/task-card.css';
 import './css/task-form.css';
 import { App } from './js/app';
 

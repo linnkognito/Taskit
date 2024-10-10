@@ -1,0 +1,144 @@
+@use './vars';
+@use './mixins';
+@use './task-mixins';
+
+//// TASK CARD /////////////////////////////
+.task-card {
+  @include task-mixins.card;
+
+  // HEADER (TASK CARD) //
+  .task-card__header {
+    @include task-mixins.header;
+    padding-right: 0.8em;
+
+    // TITLE & CHECKBOX (HEADER) //
+    .task-card__title-wrapper {
+      @include task-mixins.title-wrapper;
+
+      .checkbox {
+        height: 1.5em;
+      }
+      .checkbox:hover {
+        content: url(../../public/icons/checkbox.png);
+        opacity: 0.5;
+        cursor: pointer;
+      }
+      .checkbox:active {
+        opacity: 1;
+      }
+      .task-card__title {
+        font-size: 1.25em;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    // BUTTONS (HEADER) //
+    .task-card__btn {
+      @include task-mixins.btn-header;
+
+      .task-card__btn--icon {
+        height: 1.5em;
+      }
+      .task-card__btn--icon:hover {
+        box-shadow: 0 0 2px white;
+        transform: scale(1.05);
+      }
+      .task-card__btn--icon:active {
+        background: vars.$col-btn-active;
+      }
+    }
+  } // [X] END OF HEADER [X]
+
+  // BODY //
+  .task-card__body {
+    @include task-mixins.body;
+
+    // BODY TOP (BODY) //
+    .task-card__body-top {
+      @include task-mixins.body-top;
+
+      // DESCRIPTION (BODY TOP) //
+      .task-card__description {
+        @include task-mixins.description;
+      }
+
+      // DUE DATE (BODY TOP) //
+      .task-card__due-date {
+        @include task-mixins.due-date;
+
+        .task-card__due-date--number {
+          @include task-mixins.due-date-val;
+        }
+      }
+    } // [X] END OF TOP SECTION [X]
+
+    // FOOTER (BODY) //
+    .task-card__footer {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5em 0;
+      padding: 0.7em 0.5em 0.3em;
+
+      // CREATION DATE (FOOTER) //
+      .task-card__creation-date {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        padding: 0.1em 0.5em;
+        font-size: 0.8rem;
+        color: vars.$col-secondary;
+        background: vars.$col-prio3-light;
+        border-radius: 0.9em;
+      }
+
+      .expand-btn {
+        height: 1.8em;
+        margin-right: 1em;
+      }
+      .expand-btn:hover {
+        animation: levitate 2s ease-in-out infinite alternate;
+        cursor: pointer;
+      }
+    }
+  } // [X] END OF BODY [X]
+}
+
+///////////////// DEV TO FIX ////////////////////////////
+// BODY CHECKLIST & NOTE //
+.task-card__checklist,
+.task-card__note {
+  width: 100%;
+  min-width: 50%;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background: vars.$col-prio3;
+  border: 1px solid vars.$col-prio3;
+  border-radius: 0.9em;
+}
+.task-card__checklist-header,
+.task-card__note-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.3em;
+}
+.task-card__checklist-title,
+.task-card__note-title {
+  margin: 0 0 0.1em 0.7em;
+  font-size: 1.2em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: white;
+}
+.task-card__checklist-body,
+.task-card__note-body {
+  padding: 0.5em 1em;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: white;
+  border: 1px solid vars.$col-prio3;
+  border-radius: 0.9em;
+}
+.task-card__checklist-body input[type='checkbox']:checked + label {
+  text-decoration: line-through;
+  color: rgb(163, 163, 163);
+}

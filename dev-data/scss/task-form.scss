@@ -1,77 +1,119 @@
 @use './vars';
 @use './mixins';
+@use './task-mixins';
 
 .task-form {
-  @include mixins.task-card;
+  @include task-mixins.card;
 
+  // HEADER (FORM) //
   .task-form__header {
-    @include mixins.task-header;
+    @include task-mixins.header;
+    padding-right: 0.8em;
+    padding-left: 0.8em;
 
     .task-form__title-wrapper {
-      @include mixins.task-title-wrapper;
+      @include task-mixins.title-wrapper;
+
+      .task-form__title-input {
+        @include mixins.input-text(vars.$col-secondary);
+        font-size: 1.25rem;
+        border: none;
+      }
     }
-  }
-}
 
-/** FORM HEADER **************************/
-.task-form__title-input {
-  @include mixins.input-text(vars.$col-secondary);
-  font-size: 1.25rem;
-  border: none;
-}
-/*****************************************/
+    // BUTTONS (HEADER) // !!!!!!! DUPLICATE CODE !!!!!!!!!!
+    .task-form__buttons {
+      .task-form__btn {
+        @include task-mixins.btn-header;
 
-/** FORM PRIO BUTTONS ********************/
-.task-form__prio {
-  display: flex;
-  gap: 0.5em;
-  margin-top: 0.7em;
-  padding: 0.4em 0.6em;
-  color: vars.$col-secondary;
-  background: vars.$col-prio3-light;
-  border-radius: vars.$br-primary;
-}
-.task-form__prio-buttons {
-  display: flex;
-  gap: 0.5em;
-}
+        .task-form__btn--icon {
+          height: 1.5em;
+        }
+        .task-form__btn--icon:hover {
+          box-shadow: 0 0 2px white;
+          transform: scale(1.05);
+        }
+        .task-form__btn--icon:active {
+          background: vars.$col-btn-active;
+        }
+      }
+    }
+  } // [X] END OF HEADER [X]
 
-.prio-btn {
-  margin: 0 0.1em;
-  padding: 0.1em 0.5em;
-  font-family: vars.$font-body;
-  color: white;
-  background: vars.$col-primary;
-  border: none;
-  border-radius: 0.5em;
-  cursor: pointer;
-  transition: all 0.1s ease-in;
-}
-.prio-btn:hover {
-  transform: scale(1.1);
-  box-shadow: vars.$box-glow;
-}
+  // BODY (FORM //
+  .task-form__body {
+    @include task-mixins.body;
 
-.task-form__prio-buttons .prio-top-btn {
-  background: vars.$col-prio1;
-}
-.task-form__prio-buttons .prio-mid-btn {
-  background: vars.$col-prio2;
-}
-.task-form__prio-buttons .prio-low-btn {
-  background: vars.$col-prio3;
-}
-.task-form__prio-buttons .prio-none-btn {
-  background: vars.$col-primary-op;
-}
-/*****************************************/
+    // PRIO SELECTION (BODY) //
+    .task-form__prio {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.7em;
+      padding: 0.4em 0.6em;
+      color: vars.$col-secondary;
+      background: vars.$col-prio3-light;
+      border-radius: vars.$br-primary;
 
-/** FORM DESCRIPTION *********************/
-.task-form__description-input {
-  @include mixins.input-text(vars.$col-secondary);
-  padding: 0.3em 0.6em;
-  font-style: italic;
-  border: 1px dashed vars.$col-prio3-dark;
-  border-radius: 0.9em;
-}
-/*****************************************/
+      // PRIO BUTTONS (PRIO) //
+      .task-form__prio-buttons {
+        display: flex;
+        gap: 0.5em;
+
+        .prio-btn {
+          margin: 0 0.1em;
+          padding: 0.1em 0.5em;
+          font-family: vars.$font-body;
+          color: white;
+          background: vars.$col-primary;
+          border: none;
+          border-radius: 0.5em;
+          cursor: pointer;
+          transition: all 0.1s ease-in;
+        }
+        .prio-btn:hover {
+          transform: scale(1.1);
+          box-shadow: vars.$box-glow;
+        }
+        .prio-top-btn {
+          background: vars.$col-prio1;
+        }
+        .prio-mid-btn {
+          background: vars.$col-prio2;
+        }
+        .prio-low-btn {
+          background: vars.$col-prio3;
+        }
+        .prio-none-btn {
+          background: vars.$col-primary-op;
+        }
+      }
+    } // [X] END OF PRIO [X]
+
+    // BODY TOP / PREVIEW (BODY) //
+    .task-form__body-top {
+      @include task-mixins.body-top;
+
+      // DESCRIPTION (BODY TOP) //
+      .task-form__description-input {
+        @include mixins.input-text(vars.$col-secondary);
+        padding: 0.3em 0.6em;
+        font-size: 1rem;
+        font-style: italic;
+        border: 1px dashed vars.$col-prio3-dark;
+        border-radius: 0.9em;
+      }
+      .task-form__description {
+        @include task-mixins.description;
+      }
+
+      // DUE DATE (BODY TOP) //
+      .task-form__due-date {
+        @include task-mixins.due-date;
+
+        .task-card__due-date--number {
+          @include task-mixins.due-date-val;
+        }
+      }
+    } // [X] END OF BODY TOP [X]
+  } // [X] END OF BODY [X]
+} // [X] END OF TASK FORM [X]
