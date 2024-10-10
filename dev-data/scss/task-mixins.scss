@@ -70,13 +70,14 @@
   padding-bottom: 0.7em;
   background: white;
 }
-@mixin description() {
-  padding: 0.3em 0.6em;
+@mixin description($padding: 0.35em 0.6em) {
+  width: 100%;
+  padding: $padding;
   font-size: 1rem;
   font-style: italic;
   color: vars.$col-secondary;
   border: 1px dashed vars.$col-prio3-dark;
-  border-radius: 0.9em;
+  border-radius: vars.$br-primary;
 }
 @mixin due-date() {
   display: flex;
@@ -86,7 +87,7 @@
   min-width: 20%;
   color: vars.$col-secondary;
   background: vars.$col-prio3-light;
-  border-radius: 0.9em;
+  border-radius: vars.$br-primary;
 }
 @mixin due-date-val() {
   font-size: 1.5rem;
@@ -101,7 +102,7 @@
   padding: 0.5em 1em;
   background: vars.$col-prio3;
   border: 1px solid vars.$col-prio3;
-  border-radius: 0.9em;
+  border-radius: vars.$br-primary;
 }
 @mixin item-header() {
   display: flex;
@@ -121,5 +122,10 @@
   letter-spacing: 0.05em;
   background: white;
   border: 1px solid vars.$col-prio3;
-  border-radius: 0.9em;
+  border-radius: vars.$br-primary;
+}
+
+// TASK FORM //
+@mixin textarea() {
+  @include description();
 }

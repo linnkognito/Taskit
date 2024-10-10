@@ -117,23 +117,18 @@
   padding-bottom: 0.7em;
   background: white;
 }
-.task-form .task-form__body .task-form__body-top .task-form__description-input {
-  padding: 0.3em 0.6em;
+.task-form .task-form__body .task-form__body-top .task-form__description-textarea {
+  width: 100%;
+  padding: 0.35em 0.6em;
   font-size: 1rem;
   font-style: italic;
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
-  padding: 0.2em 0.5em;
-  font-family: "Urbanist", sans-serif;
-  color: rgb(158, 158, 158);
-  letter-spacing: 0.05em;
-  border-radius: 0.9em;
-  outline: none;
-  width: 100%;
 }
 .task-form .task-form__body .task-form__body-top .task-form__description {
-  padding: 0.3em 0.6em;
+  width: 100%;
+  padding: 0.35em 0.6em;
   font-size: 1rem;
   font-style: italic;
   color: rgb(158, 158, 158);

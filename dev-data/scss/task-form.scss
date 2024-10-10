@@ -82,10 +82,8 @@
       @include task-mixins.body-top;
 
       // DESCRIPTION (BODY TOP) //
-      .task-form__description-input {
-        @include task-mixins.description;
-        @include mixins.input-text(vars.$col-secondary);
-        width: 100%;
+      .task-form__description-textarea {
+        @include task-mixins.textarea;
       }
       .task-form__description {
         @include task-mixins.description;
