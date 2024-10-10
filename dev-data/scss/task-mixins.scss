@@ -1,5 +1,5 @@
+// tasks-mixins.scss
 @use './vars';
-@use './mixins';
 
 // TASK //
 @mixin card() {
@@ -123,9 +123,4 @@
   background: white;
   border: 1px solid vars.$col-prio3;
   border-radius: vars.$br-primary;
-}
-
-// TASK FORM //
-@mixin textarea() {
-  @include description();
 }

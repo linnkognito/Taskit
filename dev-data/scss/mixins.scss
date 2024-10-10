@@ -1,4 +1,12 @@
+// mixin.scss
+
 @use './vars';
+@use './task-mixins' as *;
+@use './btn-mixins';
+
+@forward './vars';
+@forward './task-mixins';
+@forward './btn-mixins';
 
 /** FLEX *********************************/
 @mixin flex-center-all() {
@@ -9,13 +17,34 @@
 
 /** INPUT ********************************/
 
-@mixin input-text($color) {
+@mixin input-text($color: vars.$col-secondary, $fs: 1.25rem) {
   padding: 0.2em 0.5em;
+  font-size: $fs;
   font-family: vars.$font-body;
   color: $color;
   letter-spacing: vars.$ls-primary;
   border-radius: vars.$br-primary;
   outline: none;
+}
+@mixin input-text-focus($color) {
+  color: $color;
+  border: none;
+  outline: none;
+  box-shadow: vars.$box-glow;
+}
+@mixin input-text-placeholder($color: vars.$col-secondary) {
+  color: $color;
+}
+@mixin input-text-focus-placeholder($color: vars.$col-secondary-op) {
+  color: $color;
+}
+
+/** TEXTAREA *****************************/
+@mixin textarea() {
+  @include description; // here
+}
+@mixin textarea-focus() {
+  @include description; // here
 }
 
 /** PROJECT ******************************/

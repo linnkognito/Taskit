@@ -1,36 +1,40 @@
-@use './vars';
 @use './mixins';
-@use './task-mixins';
-@use './btn-mixins';
+@use './vars';
 
 .task-form {
-  @include task-mixins.card;
+  @include mixins.card;
 
   // HEADER (FORM) //
   .task-form__header {
-    @include task-mixins.header;
+    @include mixins.header;
     padding-right: 0.8em;
     padding-left: 0.8em;
 
     .task-form__title-wrapper {
-      @include task-mixins.title-wrapper;
+      @include mixins.title-wrapper;
 
       .task-form__title-input {
         @include mixins.input-text(vars.$col-secondary);
         font-size: 1.25rem;
         border: none;
       }
+      .task-form__title-input::placeholder {
+        @include mixins.input-text-placeholder;
+      }
+      .task-form__title-input:focus::placeholder {
+        @include mixins.input-text-focus-placeholder;
+      }
     }
 
     // BUTTONS (HEADER) //
     .task-form__buttons {
-      @include task-mixins.buttons-header('form');
+      @include mixins.buttons-header('form');
     }
   } // [X] END OF HEADER [X]
 
   // BODY (FORM //
   .task-form__body {
-    @include task-mixins.body;
+    @include mixins.body;
 
     // PRIO SELECTION (BODY) //
     .task-form__prio {
@@ -79,28 +83,28 @@
 
     // BODY TOP (BODY) //
     .task-form__body-top {
-      @include task-mixins.body-top;
+      @include mixins.body-top;
 
-      // DESCRIPTION (BODY TOP) //
+      // DESCRIPTION TEXT AREA (BODY TOP) //
       .task-form__description-textarea {
-        @include task-mixins.textarea;
+        @include mixins.textarea;
       }
+      .task-form__description-textarea:focus {
+        @include mixins.textarea-focus;
+      }
+      // DESCRIPTION (BODY TOP) //
       .task-form__description {
-        @include task-mixins.description;
+        @include mixins.description;
       }
 
       // DUE DATE (BODY TOP) //
       .task-form__due-date {
-        @include task-mixins.due-date;
+        @include mixins.due-date;
 
         .task-card__due-date--number {
-          @include task-mixins.due-date-val;
+          @include mixins.due-date-val;
         }
       }
     } // [X] END OF BODY TOP [X]
-
-    .task-form__btn-add-task {
-      @include btn-mixins.btn-task-wide(vars.$col-prio3-light);
-    }
   } // [X] END OF BODY [X]
 } // [X] END OF TASK FORM [X]

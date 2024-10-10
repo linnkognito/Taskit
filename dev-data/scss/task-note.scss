@@ -1,17 +1,19 @@
-@use 'task-mixins';
+// task-note.scss
+
+@use './mixins';
 
 .task-card__note {
-  @include task-mixins.item;
+  @include mixins.item;
 }
 
 .task-card__note-header {
-  @include task-mixins.item-header;
+  @include mixins.item-header;
 }
 
 .task-card__note-title {
-  @include task-mixins.item-title;
+  @include mixins.item-title;
 }
 
 .task-card__note-body {
-  @include task-mixins.item-body;
+  @include mixins.item-body;
 }

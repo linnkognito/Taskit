@@ -1,27 +1,25 @@
-@use 'vars';
-@use 'mixins';
-@use 'task-mixins';
+@use './mixins';
 
 // CHECKLIST //
 .task-card__checklist {
-  @include task-mixins.item;
+  @include mixins.item;
 
   // HEADER (CHECKLIST) //
   .task-card__checklist-header {
-    @include task-mixins.item-header;
+    @include mixins.item-header;
 
     .task-card__checklist-title {
-      @include task-mixins.item-title;
+      @include mixins.item-title;
     }
     // BUTTONS (HEADER) //
     .task-card__buttons {
-      @include task-mixins.buttons-header('card');
+      @include mixins.buttons-header('card');
     }
   }
 
   // BODY (CHECKLIST) //
   .task-card__checklist-body {
-    @include task-mixins.item-body;
+    @include mixins.item-body;
 
     .task-card__checklist-body input[type='checkbox']:checked + label {
       text-decoration: line-through;

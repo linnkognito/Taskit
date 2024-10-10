@@ -1,6 +1,4 @@
 @use './vars';
-@use './mixins';
-@use './task-mixins';
 
 @mixin btn-task-wide($col) {
   width: 100%;

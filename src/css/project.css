@@ -6,6 +6,7 @@
 /*** BORDERS ***************************/
 /** FLEX *********************************/
 /** INPUT ********************************/
+/** TEXTAREA *****************************/
 /** PROJECT ******************************/
 /*** PROJECT CARD ****************************/
 #projects {
@@ -57,6 +58,7 @@
   font-weight: normal;
   letter-spacing: 0.05em;
   padding: 0.2em 0.5em;
+  font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
@@ -67,11 +69,7 @@
   border: none;
 }
 
-.project-card__header input[type=text]::placeholder {
-  color: lightgray;
-}
-
-.project-card__header input[type=text]:active {
+.project-card__header input[type=text]:focus {
   color: rgb(213, 207, 204);
 }
 
@@ -102,6 +100,17 @@
   background: white;
   border-bottom-left-radius: 0.9em;
   border-bottom-right-radius: 0.9em;
+}
+
+/*** PROJECT CARD ADD TASK *********/
+.project-card__btn-add-task {
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  background: rgba(204, 223, 240, 0.5);
+  border: none;
+  border-radius: 0.9em;
 }
 
 /*** PROJECT CARD SETTINGS DROPDOWN *********/

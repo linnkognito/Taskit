@@ -6,6 +6,7 @@
 /*** BORDERS ***************************/
 /** FLEX *********************************/
 /** INPUT ********************************/
+/** TEXTAREA *****************************/
 /** PROJECT ******************************/
 .task-form {
   width: 100%;
@@ -35,6 +36,7 @@
 }
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input {
   padding: 0.2em 0.5em;
+  font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
@@ -42,6 +44,12 @@
   outline: none;
   font-size: 1.25rem;
   border: none;
+}
+.task-form .task-form__header .task-form__title-wrapper .task-form__title-input::placeholder {
+  color: rgb(158, 158, 158);
+}
+.task-form .task-form__header .task-form__title-wrapper .task-form__title-input:focus::placeholder {
+  color: rgba(158, 158, 158, 0.35);
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn {
   width: 2em;
@@ -126,6 +134,15 @@
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
 }
+.task-form .task-form__body .task-form__body-top .task-form__description-textarea:focus {
+  width: 100%;
+  padding: 0.35em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(186, 203, 219);
+  border-radius: 0.9em;
+}
 .task-form .task-form__body .task-form__body-top .task-form__description {
   width: 100%;
   padding: 0.35em 0.6em;
@@ -148,15 +165,6 @@
 .task-form .task-form__body .task-form__body-top .task-form__due-date .task-card__due-date--number {
   font-size: 1.5rem;
   font-weight: 600;
-}
-.task-form .task-form__body .task-form__btn-add-task {
-  width: 100%;
-  padding: 0.5em;
-  font-size: 1.2rem;
-  letter-spacing: 0.05em;
-  background: rgba(204, 223, 240, 0.5);
-  border: none;
-  border-radius: 0.9em;
 }
 
 /*# sourceMappingURL=task-form.css.map */

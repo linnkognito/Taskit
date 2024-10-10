@@ -1,23 +1,36 @@
 @use './vars';
 @use './mixins';
 
+// GLOBAL //
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+body,
+input,
+textarea,
+button {
   font-family: vars.$font-body;
   line-height: 1.5;
   color: vars.$col-secondary;
 }
 
-button {
-  font-family: vars.$font-body;
+// PSUEDO //
+::selection {
+  background: vars.$col-selection;
 }
 
-/*** HEADER ****************************/
+// HELPERS //
+.hidden {
+  display: none;
+}
+.invisible {
+  opacity: 0;
+}
+
+// HEADER //
 header {
   display: flex;
   width: 100%;
@@ -53,18 +66,4 @@ header {
       transform: scale(1.1);
     }
   }
-}
-
-/*** HELPERS ***************************/
-.hidden {
-  display: none;
-}
-
-.invisible {
-  opacity: 0;
-}
-
-/*** PSUEDO ***************************/
-::selection {
-  background: vars.$col-selection;
 }
