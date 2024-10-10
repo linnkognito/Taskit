@@ -10,7 +10,6 @@
 /** INPUT ********************************/
 @mixin input-text($color) {
   padding: 0.2em 0.5em;
-  font-size: vars.$fs-project-title;
   font-family: vars.$font-body;
   color: $color;
   letter-spacing: vars.$ls-primary;

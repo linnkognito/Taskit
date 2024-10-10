@@ -40,7 +40,7 @@
   @include mixins.h2-project;
   @include mixins.input-text(vars.$col-secondary);
   width: 70%;
-  font-family: vars.$font-body;
+  font-size: vars.$fs-project-title;
   border: none;
 }
 .project-card__header input[type='text']::placeholder {

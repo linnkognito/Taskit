@@ -108,6 +108,7 @@ input[type='text']:focus::placeholder {
   background: white;
 }
 .task-card .task-card__body .task-card__body-top {
+  width: 100%;
   display: flex;
   gap: 1em;
   margin-top: 0.7em;
