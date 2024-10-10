@@ -78,6 +78,11 @@
 .project-card__btn-add-task {
   @include btn-mixins.btn-task-wide(vars.$col-prio3-light);
 }
+.project-card__btn-add-task:hover {
+  box-shadow: vars.$box-glow;
+  transform: scale(1.01);
+  cursor: pointer;
+}
 
 /*** PROJECT CARD SETTINGS DROPDOWN *********/
 .settings-dropdown {

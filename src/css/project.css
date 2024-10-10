@@ -109,6 +109,12 @@
   border-radius: 0.9em;
 }
 
+.project-card__btn-add-task:hover {
+  box-shadow: 0 0 4px white;
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
 /*** PROJECT CARD SETTINGS DROPDOWN *********/
 .settings-dropdown {
   position: absolute;

@@ -145,7 +145,7 @@
   color: rgb(158, 158, 158);
 }
 .task-form .task-form__body .task-form__body-top textarea:focus::placeholder {
-  color: rgba(158, 158, 158, 0.35);
+  color: rgb(213, 207, 204);
 }
 .task-form .task-form__body .task-form__body-top .task-form__description {
   width: 100%;

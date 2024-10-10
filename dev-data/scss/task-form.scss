@@ -95,10 +95,10 @@
         outline: none;
       }
       textarea::placeholder {
-        @include mixins.textarea-plh;
+        color: vars.$col-secondary;
       }
       textarea:focus::placeholder {
-        @include mixins.textarea-focus-plh;
+        color: vars.$col-primary;
       }
 
       // DESCRIPTION (BODY TOP) //
