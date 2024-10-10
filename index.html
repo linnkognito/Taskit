@@ -19,36 +19,34 @@
     <div id="projects">
       <!-- ADD PROJECT ------------------------------------------------------>
       <div class="add-project project-card">
-        <div class="project-card__header">
-          <h2>Add project</h2>
-          <div class="project-card__buttons"></div>
-        </div>
-        <div class="add-project__body-wrapper">
-          <div class="add-project__body">
-            <h3>+ New project</h3>
-          </div>
+        <div class="add-project__body">
+          <h3 class="add-project__h3">+ New project</h3>
         </div>
       </div>
 
-      <!-- TEST PROJECT CARD ----------------------------------------------->
+      <!-- PROJECT CARD ---------------------------------------------------->
       <div class="project-card" data-id="0">
+        <!-- PROJECT HEADER -->
         <div class="project-card__header">
           <h2 class="project-card__title">Test project 💻</h2>
-          <input type="text" id="project-title-input" placeholder="Test project 💻" class="hidden" />
+          <input type="text" id="project-title-input" placeholder="Test project 💻" class="project-card__title-input hidden" />
           <div class="project-card__buttons">
             <button class="btn-add-task" title="Add task">+</button>
             <button class="btn-settings" title="Settings">...</button>
           </div>
         </div>
 
-        <!-- <div class="settings-dropdown hidden">
+        <!-- SETTINGS DROPDOWN ----------------------------------------------->
+        <div class="settings-dropdown hidden">
           <div class="settings-dropdown__li">Edit title</div>
           <div class="settings-dropdown__li">Clone project</div>
           <div class="settings-dropdown__li">Mark all task complete</div>
           <div class="settings-dropdown__li">Delete expired tasks</div>
           <div class="settings-dropdown__li">Delete project</div>
-        </div> -->
+        </div>
+        <!-- END OF SETTINGS DROPDOWN ----------------------------------- X -->
 
+        <!-- PROJECT BODY -->
         <div class="project-card__body">
           <!-- TO-DO CARD (nested) ------------------------------------------>
           <div class="todo-card">
@@ -91,17 +89,17 @@
           </div>
           <!-- END OF TO-DO CARD BODY ---------------------------------- X -->
 
-          <!-- TO-DO CARD FORM ---------------------------------------------->
-          <div class="todo-form todo-card">
+          <!-- TASK FORM  --------------------------------------------------->
+          <div class="task-form">
             <!-- TO-DO CARD HEADER ------------------------------------------>
-            <div class="todo-form__header todo-card__header">
-              <div class="todo-form__title-wrapper todo-card__title-wrapper">
-                <input type="text" id="input-todo-title" placeholder="Title" class="todo-form__title-input" />
+            <div class="task-form__header">
+              <div class="task-form__title-wrapper">
+                <input type="text" id="input-todo-title" placeholder="Title" class="task-form__title-input" />
 
                 <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox hidden" />
-                <div class="todo-form__title todo-card__title hidden">Card Title</div>
+                <div class="task-form__title todo-card__title hidden">Card Title</div>
               </div>
-              <div class="todo-form__buttons todo-card__buttons">
+              <div class="task-form__buttons todo-card__buttons">
                 <button class="btn-save">
                   <img src="./public/icons/save.png" alt="Save task" title="Save task" />
                 </button>
@@ -110,11 +108,11 @@
             <!-- END OF TO-DO CARD HEADER ----------------------------- X -->
 
             <!-- TO-DO CARD BODY ------------------------------------------->
-            <div class="todo-form__body todo-card__body">
+            <div class="task-form__body todo-card__body">
               <!-- TO-DO CARD PREVIEW -------------------------------------->
-              <div class="todo-form__prio">
-                <div class="todo-form__prio-label">Priority level:</div>
-                <div class="todo-form__prio-buttons">
+              <div class="task-form__prio">
+                <div class="task-form__prio-label">Priority level:</div>
+                <div class="task-form__prio-buttons">
                   <button class="prio-btn prio-top-btn">Top</button>
                   <button class="prio-btn prio-mid-btn">Mid</button>
                   <button class="prio-btn prio-low-btn">Low</button>
@@ -122,23 +120,23 @@
                 </div>
               </div>
 
-              <div class="todo-form__preview todo-card__preview">
-                <input type="text" id="input-todo-description" placeholder="Add a description (optional)" class="todo-form__description-input" />
+              <div class="task-form__preview todo-card__preview">
+                <input type="text" id="input-todo-description" placeholder="Add a description (optional)" class="task-form__description-input" />
 
-                <div class="todo-form__description todo-card__description hidden">
+                <div class="task-form__description todo-card__description hidden">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </div>
 
-                <div class="todo-form__due-date todo-card__due-date">
-                  <span class="todo-form__due-date--number todo-card__due-date--number">2</span>
-                  <span class="todo-form__due-date--unit todo-card__due-date--unit">days</span>
+                <div class="task-form__due-date todo-card__due-date">
+                  <span class="task-form__due-date--number todo-card__due-date--number">2</span>
+                  <span class="task-form__due-date--unit todo-card__due-date--unit">days</span>
                 </div>
               </div>
               <!-- END OF TO-DO CARD PREVIEW -------------------------- X -->
 
               <!-- TO-DO FOOTER --------------------------------------------->
-              <div class="todo-form__footer todo-card__footer">
-                <!-- <div class="todo-form todo-card__creation-date">Created: 10/02/2024</div> -->
+              <div class="task-form__footer todo-card__footer">
+                <!-- <div class="task-form todo-card__creation-date">Created: 10/02/2024</div> -->
                 <!-- <img src="./public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" /> -->
               </div>
               <!-- END OF TO-DO FOOTER --------------------------------- X -->
@@ -153,11 +151,3 @@
     </div>
   </body>
 </html>
-
-<!---------------------------------------------------------------------------
-<div class="add-task__body-wrapper">
-  <div class="add-task__body">
-    <h3>New task</h3>
-    <img src="./public/icons/add-project.png" alt="Add task button" />
-  </div>
-</div> --------------------------------------------------------------------->

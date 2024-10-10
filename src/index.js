@@ -1,10 +1,10 @@
-import './css/add-project.css';
 import './css/animations.css';
 import './css/fonts.css';
 import './css/project.css';
+import './css/add-project.css';
 import './css/vars.css';
 import './css/styles.css';
-import './css/todo-form.css';
+import './css/task-form.css';
 import { App } from './js/app';
 
 let app;

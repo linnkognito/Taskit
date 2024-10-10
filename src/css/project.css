@@ -1,3 +1,40 @@
+/*** COLORS ****************************/
+/*** FONTS *****************************/
+/*** FONT SIZES ************************/
+/*** FONT STYLES ***********************/
+/*** EFFECTS ***************************/
+/*** BORDERS ***************************/
+/*
+vars.$br-primary
+vars.$transform-ease-in
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+
+*/
+/** FLEX *********************************/
+/** INPUT ********************************/
+/** PROJECT ******************************/
+/** TASK *********************************/
+/*
+input[type='text']:focus {
+  border: none;
+  outline: none;
+  box-shadow: vars.$box-glow;
+}
+
+input[type='text']::placeholder {
+  color: vars.$col-secondary;
+}
+
+input[type='text']:focus::placeholder {
+  color: vars.$col-secondary-op;
+}
+*/
 /*** PROJECT CARD ****************************/
 #projects {
   display: flex;
@@ -7,6 +44,7 @@
   margin: auto;
   padding: 2em;
 }
+
 .project-card {
   position: relative;
   display: flex;
@@ -15,44 +53,62 @@
   max-width: calc(33.333% - 2em);
   min-height: 50vh;
   margin-bottom: 2.5em;
-  background: var(--primary);
-  border: 2px solid var(--primary);
+  background: rgb(213, 207, 204);
+  border: 2px solid rgb(213, 207, 204);
   border-radius: 0.9em;
 }
+
 .project-card__header {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 10%;
   padding: 0.5em 0.7em;
-  background: var(--primary);
+  background: rgb(213, 207, 204);
   border-radius: 0.9em;
 }
-.project-card__header h2,
-.add-project h2 {
-  padding: 0.1em;
+
+.project-card__header h2 {
+  padding: 0.2em 0.5em;
   font-size: 1.6rem;
-  font-family: var(--font-body);
+  font-family: "Urbanist", sans-serif;
   font-weight: normal;
+  letter-spacing: 0.05em;
   color: white;
 }
-.project-card__header input[type='text'] {
-  width: 70%;
-  /* padding: 0.1em; */
+
+.project-card__header .project-card__title-input {
+  padding: 0.2em 0.5em;
   font-size: 1.6rem;
-  font-family: var(--font-body);
+  font-family: "Urbanist", sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  padding: 0.2em 0.5em;
+  font-size: 1.6rem;
+  font-family: "Urbanist", sans-serif;
+  color: rgb(158, 158, 158);
+  letter-spacing: 0.05em;
+  border-radius: 0.9em;
+  outline: none;
+  width: 70%;
+  font-family: "Urbanist", sans-serif;
+  border: none;
 }
-.project-card__header input[type='text']::placeholder {
+
+.project-card__header input[type=text]::placeholder {
   color: lightgray;
 }
-.project-card__header input[type='text']:active {
-  color: var(--primary);
+
+.project-card__header input[type=text]:active {
+  color: rgb(213, 207, 204);
 }
+
 .project-card__buttons {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .project-card__header button {
   width: 1.2em;
   margin: 0 0.15em;
@@ -62,10 +118,12 @@
   border: 1px solid white;
   cursor: pointer;
 }
+
 .project-card__header button:hover {
   box-shadow: 0 0 2px white;
   transform: scale(1.05);
 }
+
 .project-card__body {
   height: 100%;
   padding: 1.5em 1.3em;
@@ -85,22 +143,27 @@
   min-width: 50%;
   height: auto;
   min-height: 25%;
-  font-family: var(--font-body);
+  font-family: "Urbanist", sans-serif;
   font-size: 1.2rem;
   color: white;
-  background: var(--primary);
+  background: rgb(213, 207, 204);
   border-top: 1px solid white;
 }
+
 .settings-dropdown__li {
   padding: 0.4em;
   transition: all 0.2s ease-in;
 }
+
 .settings-dropdown__li:hover {
-  color: var(--primary);
+  color: rgb(213, 207, 204);
   background: white;
   cursor: pointer;
 }
+
 .settings-dropdown__li:active {
   color: white;
-  background: var(--primary);
+  background: rgb(213, 207, 204);
 }
+
+/*# sourceMappingURL=project.css.map */

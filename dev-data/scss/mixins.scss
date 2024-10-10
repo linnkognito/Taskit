@@ -1,0 +1,70 @@
+@use './vars';
+
+/** FLEX *********************************/
+@mixin flex-center-all() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/** INPUT ********************************/
+@mixin input-text($color) {
+  padding: 0.2em 0.5em;
+  font-size: vars.$fs-project-title;
+  font-family: vars.$font-body;
+  color: $color;
+  letter-spacing: vars.$ls-primary;
+  border-radius: vars.$br-primary;
+  outline: none;
+}
+
+/** PROJECT ******************************/
+@mixin h2-project() {
+  padding: 0.2em 0.5em;
+  font-size: vars.$fs-project-title;
+  font-family: vars.$font-body;
+  font-weight: normal;
+  letter-spacing: vars.$ls-primary;
+}
+
+/** TASK *********************************/
+@mixin task-card() {
+  width: 100%;
+  margin-bottom: 1em;
+  background: vars.$col-prio3;
+  border: 1px solid vars.$col-prio3;
+  border-radius: 0.9em;
+  overflow: hidden;
+}
+@mixin task-header() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em;
+  padding-right: 0.8em;
+  color: white;
+  background: vars.$col-prio3;
+  border: 0;
+  border-radius: 0.9em 0.9em 0 0;
+}
+@mixin task-title-wrapper() {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+}
+/*
+input[type='text']:focus {
+  border: none;
+  outline: none;
+  box-shadow: vars.$box-glow;
+}
+
+input[type='text']::placeholder {
+  color: vars.$col-secondary;
+}
+
+input[type='text']:focus::placeholder {
+  color: vars.$col-secondary-op;
+}
+*/

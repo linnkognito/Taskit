@@ -1,0 +1,38 @@
+@use './vars';
+@use './mixins';
+
+/*** ADD PROJECT ****************************/
+.add-project {
+  flex: 1 1 calc(33.333% - 2em);
+  max-width: calc(33.333% - 2em);
+  opacity: 0.3;
+  transition: vars.$op-ease-in;
+
+  .add-project__body {
+    @include mixins.flex-center-all;
+    margin-top: 20%;
+    border-radius: vars.$br-primary;
+    opacity: 0.5;
+    transition: vars.$op-ease-in;
+  }
+  .add-project__body:hover {
+    opacity: 1;
+  }
+
+  .add-project__h3 {
+    @include mixins.h2-project;
+    color: white;
+    border: 2px solid white;
+    border-radius: vars.$br-primary;
+    transition: vars.$transform-ease-in;
+  }
+  .add-project__h3:hover {
+    box-shadow: vars.$box-glow;
+    transform: scale(1.01);
+    animation: pulse 2s ease-in-out infinite alternate;
+    cursor: pointer;
+  }
+}
+.add-project:hover {
+  opacity: 1;
+}

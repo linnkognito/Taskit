@@ -1,3 +1,40 @@
+/*** COLORS ****************************/
+/*** FONTS *****************************/
+/*** FONT SIZES ************************/
+/*** FONT STYLES ***********************/
+/*** EFFECTS ***************************/
+/*** BORDERS ***************************/
+/*
+vars.$br-primary
+vars.$transform-ease-in
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+
+*/
+/** FLEX *********************************/
+/** INPUT ********************************/
+/** PROJECT ******************************/
+/** TASK *********************************/
+/*
+input[type='text']:focus {
+  border: none;
+  outline: none;
+  box-shadow: vars.$box-glow;
+}
+
+input[type='text']::placeholder {
+  color: vars.$col-secondary;
+}
+
+input[type='text']:focus::placeholder {
+  color: vars.$col-secondary-op;
+}
+*/
 * {
   margin: 0;
   padding: 0;
@@ -6,28 +43,7 @@
 
 body {
   line-height: 1.5;
-  font-family: var(--font-body);
-}
-input[type='text'] {
-  width: 80%;
-  padding: 0.2em 0.5em;
-  font-family: var(--font-body);
-  color: var(--color-secondary);
-  letter-spacing: 0.1em;
-  border: none;
-  border-radius: 0.9em;
-  outline: none;
-}
-input[type='text']:focus {
-  border: none;
-  outline: none;
-  box-shadow: var(--box-glow);
-}
-input[type='text']::placeholder {
-  color: var(--color-secondary);
-}
-input[type='text']:focus::placeholder {
-  color: var(--color-secondary-op);
+  font-family: "Urbanist", sans-serif;
 }
 
 /*** HEADER ****************************/
@@ -35,14 +51,14 @@ header {
   display: flex;
   width: 100%;
   height: auto;
-  font-family: var(--font-body);
+  font-family: "Urbanist", sans-serif;
   color: white;
-  background: var(--primary);
+  background: rgb(213, 207, 204);
 }
 header h1 {
-  padding: 0.5em 1em;
-  font-size: 3rem;
-  font-family: var(--font-h1);
+  padding: 0.1em 1em;
+  font-size: 4rem;
+  font-family: "Arizonia", sans-serif;
   transition: transform 0.2s ease-in;
 }
 header h1:hover {
@@ -65,14 +81,12 @@ header nav .nav-link:hover {
   transform: scale(1.1);
 }
 
-/*** TO-DO FORM ****************************/
-
 /*** TO-DO CARD ****************************/
 .todo-card {
   width: 100%;
   margin-bottom: 1em;
-  background: var(--prio3);
-  border: 1px solid var(--prio3);
+  background: rgb(204, 223, 240);
+  border: 1px solid rgb(204, 223, 240);
   border-radius: 0.9em;
   overflow: hidden;
 }
@@ -86,32 +100,38 @@ header nav .nav-link:hover {
   padding: 0.5em;
   padding-right: 0.8em;
   color: white;
-  background: var(--prio3);
+  background: rgb(204, 223, 240);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
 }
+
 .todo-card__title-wrapper {
   display: flex;
   align-items: center;
   column-gap: 0.5em;
 }
+
 /* TO-DO HEADER CHECKBOX */
 .todo-card__title-wrapper img {
   height: 1.5em;
 }
+
 .todo-card__title-wrapper img:hover {
   content: url(../../public/icons/checkbox.png);
   opacity: 0.5;
   cursor: pointer;
 }
+
 .todo-card__title-wrapper img:active {
   opacity: 1;
 }
+
 /* TO-DO HEADER TITLE */
 .todo-card__title {
   font-size: 1.25em;
   letter-spacing: 0.1em;
 }
+
 /* TO-DO HEADER BUTTONS */
 .todo-card__buttons button {
   width: 2em;
@@ -123,13 +143,16 @@ header nav .nav-link:hover {
   border-radius: 0.5em;
   cursor: pointer;
 }
+
 .todo-card__buttons img {
   height: 1.5em;
 }
+
 .todo-card__buttons button:hover {
   box-shadow: 0 0 2px white;
   transform: scale(1.05);
 }
+
 .todo-card__buttons button:active {
   background: rgba(255, 255, 255, 0.5);
 }
@@ -139,6 +162,7 @@ header nav .nav-link:hover {
   padding: 0.1em 0.7em;
   background: white;
 }
+
 /* TO-DO BODY PREVIEW */
 .todo-card__preview {
   display: flex;
@@ -146,15 +170,17 @@ header nav .nav-link:hover {
   margin-top: 0.7em;
   padding-bottom: 0.7em;
 }
+
 /* TO-DO BODY DESCRIPTION */
 .todo-card__description {
   padding: 0.3em 0.6em;
   font-size: 1rem;
   font-style: italic;
-  color: var(--color-secondary);
-  border: 1px dashed var(--prio3-dark);
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
 }
+
 /* TO-DO BODY DUE DATE */
 .todo-card__due-date {
   display: flex;
@@ -162,14 +188,16 @@ header nav .nav-link:hover {
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  color: var(--color-secondary);
-  background: var(--prio3-light);
+  color: rgb(158, 158, 158);
+  background: rgba(204, 223, 240, 0.5);
   border-radius: 0.9em;
 }
+
 .todo-card__due-date--number {
   font-size: 1.5rem;
   font-weight: 600;
 }
+
 /* TO-DO BODY CHECKLIST & NOTE */
 .todo-card__checklist,
 .todo-card__note {
@@ -177,16 +205,18 @@ header nav .nav-link:hover {
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: var(--prio3);
-  border: 1px solid var(--prio3);
+  background: rgb(204, 223, 240);
+  border: 1px solid rgb(204, 223, 240);
   border-radius: 0.9em;
 }
+
 .todo-card__checklist-header,
 .todo-card__note-header {
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.3em;
 }
+
 .todo-card__checklist-title,
 .todo-card__note-title {
   margin: 0 0 0.1em 0.7em;
@@ -195,16 +225,18 @@ header nav .nav-link:hover {
   letter-spacing: 0.1em;
   color: white;
 }
+
 .todo-card__checklist-body,
 .todo-card__note-body {
   padding: 0.5em 1em;
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   background: white;
-  border: 1px solid var(--prio3);
+  border: 1px solid rgb(204, 223, 240);
   border-radius: 0.9em;
 }
-.todo-card__checklist-body input[type='checkbox']:checked + label {
+
+.todo-card__checklist-body input[type=checkbox]:checked + label {
   text-decoration: line-through;
   color: rgb(163, 163, 163);
 }
@@ -216,20 +248,23 @@ header nav .nav-link:hover {
   margin: 0.5em 0;
   padding: 0.7em 0.5em 0.3em;
 }
+
 .todo-card__creation-date {
   display: flex;
   align-items: center;
   width: fit-content;
   padding: 0.1em 0.5em;
   font-size: 0.8rem;
-  color: var(--color-secondary);
-  background: var(--prio3-light);
+  color: rgb(158, 158, 158);
+  background: rgba(204, 223, 240, 0.5);
   border-radius: 0.9em;
 }
+
 .todo-card__footer img {
   height: 1.8em;
   margin-right: 1em;
 }
+
 .todo-card__footer img:hover {
   animation: levitate 2s ease-in-out infinite alternate;
   cursor: pointer;
@@ -239,11 +274,14 @@ header nav .nav-link:hover {
 .hidden {
   display: none;
 }
+
 .invisible {
   opacity: 0;
 }
 
 /*** PSUEDO ***************************/
 ::selection {
-  background: var(--color-selection);
+  background: rgb(232, 232, 232);
 }
+
+/*# sourceMappingURL=styles.css.map */

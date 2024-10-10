@@ -1,0 +1,77 @@
+@use './vars';
+@use './mixins';
+
+.task-form {
+  @include mixins.task-card;
+
+  .task-form__header {
+    @include mixins.task-header;
+
+    .task-form__title-wrapper {
+      @include mixins.task-title-wrapper;
+    }
+  }
+}
+
+/** FORM HEADER **************************/
+.task-form__title-input {
+  @include mixins.input-text(vars.$col-secondary);
+  font-size: 1.25rem;
+  border: none;
+}
+/*****************************************/
+
+/** FORM PRIO BUTTONS ********************/
+.task-form__prio {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.7em;
+  padding: 0.4em 0.6em;
+  color: vars.$col-secondary;
+  background: vars.$col-prio3-light;
+  border-radius: vars.$br-primary;
+}
+.task-form__prio-buttons {
+  display: flex;
+  gap: 0.5em;
+}
+
+.prio-btn {
+  margin: 0 0.1em;
+  padding: 0.1em 0.5em;
+  font-family: vars.$font-body;
+  color: white;
+  background: vars.$col-primary;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+.prio-btn:hover {
+  transform: scale(1.1);
+  box-shadow: vars.$box-glow;
+}
+
+.task-form__prio-buttons .prio-top-btn {
+  background: vars.$col-prio1;
+}
+.task-form__prio-buttons .prio-mid-btn {
+  background: vars.$col-prio2;
+}
+.task-form__prio-buttons .prio-low-btn {
+  background: vars.$col-prio3;
+}
+.task-form__prio-buttons .prio-none-btn {
+  background: vars.$col-primary-op;
+}
+/*****************************************/
+
+/** FORM DESCRIPTION *********************/
+.task-form__description-input {
+  @include mixins.input-text(vars.$col-secondary);
+  padding: 0.3em 0.6em;
+  font-style: italic;
+  border: 1px dashed vars.$col-prio3-dark;
+  border-radius: 0.9em;
+}
+/*****************************************/

@@ -1,0 +1,145 @@
+/*** COLORS ****************************/
+/*** FONTS *****************************/
+/*** FONT SIZES ************************/
+/*** FONT STYLES ***********************/
+/*** EFFECTS ***************************/
+/*** BORDERS ***************************/
+/*
+vars.$br-primary
+vars.$transform-ease-in
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+
+*/
+/** FLEX *********************************/
+/** INPUT ********************************/
+/** PROJECT ******************************/
+/** TASK *********************************/
+/*
+input[type='text']:focus {
+  border: none;
+  outline: none;
+  box-shadow: vars.$box-glow;
+}
+
+input[type='text']::placeholder {
+  color: vars.$col-secondary;
+}
+
+input[type='text']:focus::placeholder {
+  color: vars.$col-secondary-op;
+}
+*/
+.task-form {
+  width: 100%;
+  margin-bottom: 1em;
+  background: rgb(204, 223, 240);
+  border: 1px solid rgb(204, 223, 240);
+  border-radius: 0.9em;
+  overflow: hidden;
+}
+.task-form .task-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em;
+  padding-right: 0.8em;
+  color: white;
+  background: rgb(204, 223, 240);
+  border: 0;
+  border-radius: 0.9em 0.9em 0 0;
+}
+.task-form .task-form__header .task-form__title-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5em;
+}
+
+/** FORM HEADER **************************/
+.task-form__title-input {
+  padding: 0.2em 0.5em;
+  font-size: 1.6rem;
+  font-family: "Urbanist", sans-serif;
+  color: rgb(158, 158, 158);
+  letter-spacing: 0.05em;
+  border-radius: 0.9em;
+  outline: none;
+  font-size: 1.25rem;
+  border: none;
+}
+
+/*****************************************/
+/** FORM PRIO BUTTONS ********************/
+.task-form__prio {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.7em;
+  padding: 0.4em 0.6em;
+  color: rgb(158, 158, 158);
+  background: rgba(204, 223, 240, 0.5);
+  border-radius: 0.9em;
+}
+
+.task-form__prio-buttons {
+  display: flex;
+  gap: 0.5em;
+}
+
+.prio-btn {
+  margin: 0 0.1em;
+  padding: 0.1em 0.5em;
+  font-family: "Urbanist", sans-serif;
+  color: white;
+  background: rgb(213, 207, 204);
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+.prio-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 4px white;
+}
+
+.task-form__prio-buttons .prio-top-btn {
+  background: rgb(232, 214, 214);
+}
+
+.task-form__prio-buttons .prio-mid-btn {
+  background: rgb(215, 232, 221);
+}
+
+.task-form__prio-buttons .prio-low-btn {
+  background: rgb(204, 223, 240);
+}
+
+.task-form__prio-buttons .prio-none-btn {
+  background: rgba(213, 207, 204, 0.5);
+}
+
+/*****************************************/
+/** FORM DESCRIPTION *********************/
+.task-form__description-input {
+  padding: 0.2em 0.5em;
+  font-size: 1.6rem;
+  font-family: "Urbanist", sans-serif;
+  color: rgb(158, 158, 158);
+  letter-spacing: 0.05em;
+  border-radius: 0.9em;
+  outline: none;
+  padding: 0.3em 0.6em;
+  font-style: italic;
+  border: 1px dashed rgb(186, 203, 219);
+  border-radius: 0.9em;
+}
+
+/*****************************************/
+
+/*# sourceMappingURL=task-form.css.map */
