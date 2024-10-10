@@ -1,6 +1,7 @@
 @use './vars';
 @use './mixins';
 @use './task-mixins';
+@use './btn-mixins';
 
 .task-form {
   @include task-mixins.card;
@@ -99,5 +100,9 @@
         }
       }
     } // [X] END OF BODY TOP [X]
+
+    .task-form__btn-add-task {
+      @include btn-mixins.btn-task-wide(vars.$col-prio3-light);
+    }
   } // [X] END OF BODY [X]
 } // [X] END OF TASK FORM [X]

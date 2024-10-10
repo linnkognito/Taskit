@@ -14,8 +14,12 @@
 }
 
 body {
-  color: rgb(158, 158, 158);
+  font-family: "Urbanist", sans-serif;
   line-height: 1.5;
+  color: rgb(158, 158, 158);
+}
+
+button {
   font-family: "Urbanist", sans-serif;
 }
 

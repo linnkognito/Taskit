@@ -8,8 +8,12 @@
 }
 
 body {
-  color: vars.$col-secondary;
+  font-family: vars.$font-body;
   line-height: 1.5;
+  color: vars.$col-secondary;
+}
+
+button {
   font-family: vars.$font-body;
 }
 
