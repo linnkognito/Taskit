@@ -4,10 +4,6 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-/** FLEX *********************************/
-/** INPUT ********************************/
-/** TEXTAREA *****************************/
-/** PROJECT ******************************/
 .task-form {
   width: 100%;
   margin-bottom: 1em;
@@ -125,7 +121,7 @@
   padding-bottom: 0.7em;
   background: white;
 }
-.task-form .task-form__body .task-form__body-top .task-form__description-textarea {
+.task-form .task-form__body .task-form__body-top textarea {
   width: 100%;
   padding: 0.35em 0.6em;
   font-size: 1rem;
@@ -134,7 +130,7 @@
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
 }
-.task-form .task-form__body .task-form__body-top .task-form__description-textarea:focus {
+.task-form .task-form__body .task-form__body-top textarea:focus {
   width: 100%;
   padding: 0.35em 0.6em;
   font-size: 1rem;
@@ -142,6 +138,14 @@
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
+  color: rgba(213, 207, 204, 0.5);
+  outline: none;
+}
+.task-form .task-form__body .task-form__body-top textarea::placeholder {
+  color: rgb(158, 158, 158);
+}
+.task-form .task-form__body .task-form__body-top textarea:focus::placeholder {
+  color: rgba(158, 158, 158, 0.35);
 }
 .task-form .task-form__body .task-form__body-top .task-form__description {
   width: 100%;

@@ -86,12 +86,21 @@
       @include mixins.body-top;
 
       // DESCRIPTION TEXT AREA (BODY TOP) //
-      .task-form__description-textarea {
-        @include mixins.textarea;
+      textarea {
+        @include mixins.description;
       }
-      .task-form__description-textarea:focus {
-        @include mixins.textarea-focus;
+      textarea:focus {
+        @include mixins.description;
+        color: vars.$col-primary-op;
+        outline: none;
       }
+      textarea::placeholder {
+        @include mixins.textarea-plh;
+      }
+      textarea:focus::placeholder {
+        @include mixins.textarea-focus-plh;
+      }
+
       // DESCRIPTION (BODY TOP) //
       .task-form__description {
         @include mixins.description;

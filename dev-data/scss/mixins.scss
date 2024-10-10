@@ -8,14 +8,14 @@
 @forward './task-mixins';
 @forward './btn-mixins';
 
-/** FLEX *********************************/
+// FLEX //
 @mixin flex-center-all() {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/** INPUT ********************************/
+// INPUT //
 
 @mixin input-text($color: vars.$col-secondary, $fs: 1.25rem) {
   padding: 0.2em 0.5em;
@@ -26,7 +26,7 @@
   border-radius: vars.$br-primary;
   outline: none;
 }
-@mixin input-text-focus($color) {
+@mixin input-text-focus($color: vars.$col-primary) {
   color: $color;
   border: none;
   outline: none;
@@ -39,15 +39,15 @@
   color: $color;
 }
 
-/** TEXTAREA *****************************/
-@mixin textarea() {
-  @include description; // here
+// TEXTAREA //
+@mixin textarea-plh() {
+  color: vars.$col-secondary;
 }
-@mixin textarea-focus() {
-  @include description; // here
+@mixin textarea-focus-plh() {
+  color: vars.$col-secondary-op;
 }
 
-/** PROJECT ******************************/
+// PROJECT //
 @mixin h2-project() {
   padding: 0.2em 0.5em;
   font-size: vars.$fs-project-title;
