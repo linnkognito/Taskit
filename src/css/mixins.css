@@ -4,35 +4,8 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-/*
-vars.$br-primary
-vars.$transform-ease-in
-vars.
-vars.
-vars.
-vars.
-vars.
-vars.
-vars.
-
-*/
 /** FLEX *********************************/
 /** INPUT ********************************/
 /** PROJECT ******************************/
-/*
-input[type='text']:focus {
-  border: none;
-  outline: none;
-  box-shadow: vars.$box-glow;
-}
-
-input[type='text']::placeholder {
-  color: vars.$col-secondary;
-}
-
-input[type='text']:focus::placeholder {
-  color: vars.$col-secondary-op;
-}
-*/
 
 /*# sourceMappingURL=mixins.css.map */

@@ -3,6 +3,10 @@ $col-black: rgba(0, 0, 0, 1);
 $col-primary: rgba(213, 207, 204, 1);
 $col-primary-op: rgba(213, 207, 204, 0.5);
 
+$col-secondary: rgba(158, 158, 158, 1);
+$col-secondary-op: rgba(158, 158, 158, 0.35);
+$col-selection: rgba(232, 232, 232, 1);
+
 $col-prio1: rgba(232, 214, 214, 1);
 $col-prio1-light: rgba(232, 214, 214, 0.5);
 $col-prio1-dark: rgb(181, 169, 169);
@@ -14,10 +18,6 @@ $col-prio2-dark: rgba(178, 186, 181, 1);
 $col-prio3: rgba(204, 223, 240, 1);
 $col-prio3-light: rgba(204, 223, 240, 0.5);
 $col-prio3-dark: rgba(186, 203, 219, 1);
-
-$col-secondary: rgba(158, 158, 158, 1);
-$col-secondary-op: rgba(158, 158, 158, 0.35);
-$col-selection: rgba(232, 232, 232, 1);
 
 $col-btn-active: rgba(255, 255, 255, 0.5);
 
@@ -41,16 +41,3 @@ $transform-ease-in: transform 0.2s ease-in;
 
 /*** BORDERS ***************************/
 $br-primary: 0.9em;
-
-/*
-vars.$br-primary
-vars.$transform-ease-in
-vars.
-vars.
-vars.
-vars.
-vars.
-vars.
-vars.
-
-*/

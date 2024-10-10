@@ -8,6 +8,7 @@
 }
 
 /** INPUT ********************************/
+
 @mixin input-text($color) {
   padding: 0.2em 0.5em;
   font-family: vars.$font-body;
@@ -25,19 +26,3 @@
   font-weight: normal;
   letter-spacing: vars.$ls-primary;
 }
-
-/*
-input[type='text']:focus {
-  border: none;
-  outline: none;
-  box-shadow: vars.$box-glow;
-}
-
-input[type='text']::placeholder {
-  color: vars.$col-secondary;
-}
-
-input[type='text']:focus::placeholder {
-  color: vars.$col-secondary-op;
-}
-*/

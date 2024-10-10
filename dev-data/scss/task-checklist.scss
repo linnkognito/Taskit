@@ -13,6 +13,10 @@
     .task-card__checklist-title {
       @include task-mixins.item-title;
     }
+    // BUTTONS (HEADER) //
+    .task-card__buttons {
+      @include task-mixins.buttons-header('card');
+    }
   }
 
   // BODY (CHECKLIST) //
