@@ -34,22 +34,7 @@
 
     // BUTTONS (HEADER) //
     .task-card__buttons {
-      .task-card__btn {
-        @include task-mixins.btn-header;
-
-        .task-card__btn--icon {
-          height: 1.5em;
-        }
-        .task-card__btn--icon:hover {
-          transform: scale(1.05);
-        }
-        .task-card__btn--icon:active {
-          background: vars.$col-btn-active;
-        }
-      }
-      .task-card__btn:hover {
-        box-shadow: vars.$box-glow-mid;
-      }
+      @include task-mixins.buttons-header('card');
     }
   } // [X] END OF HEADER [X]
 
@@ -105,44 +90,4 @@
       }
     }
   } // [X] END OF BODY [X]
-}
-
-///////////////// DEV TO FIX ////////////////////////////
-// BODY CHECKLIST & NOTE //
-.task-card__checklist,
-.task-card__note {
-  width: 100%;
-  min-width: 50%;
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  background: vars.$col-prio3;
-  border: 1px solid vars.$col-prio3;
-  border-radius: 0.9em;
-}
-.task-card__checklist-header,
-.task-card__note-header {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.3em;
-}
-.task-card__checklist-title,
-.task-card__note-title {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2em;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: white;
-}
-.task-card__checklist-body,
-.task-card__note-body {
-  padding: 0.5em 1em;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  background: white;
-  border: 1px solid vars.$col-prio3;
-  border-radius: 0.9em;
-}
-.task-card__checklist-body input[type='checkbox']:checked + label {
-  text-decoration: line-through;
-  color: rgb(163, 163, 163);
-}
+} // [X] END OF TASK CARD [X]

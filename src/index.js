@@ -6,6 +6,8 @@ import './css/vars.css';
 import './css/styles.css';
 import './css/task-card.css';
 import './css/task-form.css';
+import './css/task-checklist.css';
+import './css/task-note.css';
 import { App } from './js/app';
 
 let app;

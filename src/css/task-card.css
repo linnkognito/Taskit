@@ -34,14 +34,6 @@ input[type='text']:focus::placeholder {
   color: vars.$col-secondary-op;
 }
 */
-/*
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-*/
 .task-card {
   width: 100%;
   margin-bottom: 1em;
@@ -161,48 +153,6 @@ input[type='text']:focus::placeholder {
 .task-card .task-card__body .task-card__footer .expand-btn:hover {
   animation: levitate 2s ease-in-out infinite alternate;
   cursor: pointer;
-}
-
-.task-card__checklist,
-.task-card__note {
-  width: 100%;
-  min-width: 50%;
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  background: rgb(204, 223, 240);
-  border: 1px solid rgb(204, 223, 240);
-  border-radius: 0.9em;
-}
-
-.task-card__checklist-header,
-.task-card__note-header {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 0.3em;
-}
-
-.task-card__checklist-title,
-.task-card__note-title {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2em;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: white;
-}
-
-.task-card__checklist-body,
-.task-card__note-body {
-  padding: 0.5em 1em;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  background: white;
-  border: 1px solid rgb(204, 223, 240);
-  border-radius: 0.9em;
-}
-
-.task-card__checklist-body input[type=checkbox]:checked + label {
-  text-decoration: line-through;
-  color: rgb(163, 163, 163);
 }
 
 /*# sourceMappingURL=task-card.css.map */

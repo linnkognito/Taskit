@@ -21,24 +21,9 @@
       }
     }
 
-    // BUTTONS (HEADER) // !!!!!!! DUPLICATE CODE !!!!!!!!!!
+    // BUTTONS (HEADER) //
     .task-form__buttons {
-      .task-form__btn {
-        @include task-mixins.btn-header;
-
-        .task-form__btn--icon {
-          height: 1.5em;
-        }
-        .task-form__btn--icon:hover {
-          transform: scale(1.05);
-        }
-        .task-form__btn--icon:active {
-          background: vars.$col-btn-active;
-        }
-      }
-      .task-form__btn:hover {
-        box-shadow: vars.$box-glow-mid;
-      }
+      @include task-mixins.buttons-header('form');
     }
   } // [X] END OF HEADER [X]
 

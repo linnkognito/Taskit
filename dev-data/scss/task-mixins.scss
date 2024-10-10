@@ -38,6 +38,24 @@
   border-radius: 0.5em;
   cursor: pointer;
 }
+@mixin buttons-header($cls) {
+  .task-#{$cls}__btn {
+    @include btn-header;
+
+    .task-#{$cls}__btn--icon {
+      height: 1.5em;
+    }
+    .task-#{$cls}__btn--icon:hover {
+      transform: scale(1.05);
+    }
+    .task-#{$cls}__btn--icon:active {
+      background: vars.$col-btn-active;
+    }
+  }
+  .task-#{$cls}__btn:hover {
+    box-shadow: vars.$box-glow-mid;
+  }
+}
 
 // BODY //
 @mixin body() {
@@ -74,11 +92,34 @@
   font-size: 1.5rem;
   font-weight: 600;
 }
-/*
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-*/
+
+// CHECKLISTS & NOTES //
+@mixin item() {
+  width: 100%;
+  min-width: 50%;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background: vars.$col-prio3;
+  border: 1px solid vars.$col-prio3;
+  border-radius: 0.9em;
+}
+@mixin item-header() {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.3em;
+}
+@mixin item-title() {
+  margin: 0 0 0.1em 0.7em;
+  font-size: 1.2em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: white;
+}
+@mixin item-body() {
+  padding: 0.5em 1em;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: white;
+  border: 1px solid vars.$col-prio3;
+  border-radius: 0.9em;
+}

@@ -1,0 +1,17 @@
+@use 'task-mixins';
+
+.task-card__note {
+  @include task-mixins.item;
+}
+
+.task-card__note-header {
+  @include task-mixins.item-header;
+}
+
+.task-card__note-title {
+  @include task-mixins.item-title;
+}
+
+.task-card__note-body {
+  @include task-mixins.item-body;
+}

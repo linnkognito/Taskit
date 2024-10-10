@@ -1,0 +1,71 @@
+/*** COLORS ****************************/
+/*** FONTS *****************************/
+/*** FONT SIZES ************************/
+/*** FONT STYLES ***********************/
+/*** EFFECTS ***************************/
+/*** BORDERS ***************************/
+/*
+vars.$br-primary
+vars.$transform-ease-in
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+vars.
+
+*/
+/** FLEX *********************************/
+/** INPUT ********************************/
+/** PROJECT ******************************/
+/*
+input[type='text']:focus {
+  border: none;
+  outline: none;
+  box-shadow: vars.$box-glow;
+}
+
+input[type='text']::placeholder {
+  color: vars.$col-secondary;
+}
+
+input[type='text']:focus::placeholder {
+  color: vars.$col-secondary-op;
+}
+*/
+.task-card__checklist {
+  width: 100%;
+  min-width: 50%;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background: rgb(204, 223, 240);
+  border: 1px solid rgb(204, 223, 240);
+  border-radius: 0.9em;
+}
+.task-card__checklist .task-card__checklist-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.3em;
+}
+.task-card__checklist .task-card__checklist-header .task-card__checklist-title {
+  margin: 0 0 0.1em 0.7em;
+  font-size: 1.2em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: white;
+}
+.task-card__checklist .task-card__checklist-body {
+  padding: 0.5em 1em;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: white;
+  border: 1px solid rgb(204, 223, 240);
+  border-radius: 0.9em;
+}
+.task-card__checklist .task-card__checklist-body .task-card__checklist-body input[type=checkbox]:checked + label {
+  text-decoration: line-through;
+  color: rgb(163, 163, 163);
+}
+
+/*# sourceMappingURL=task-checklist.css.map */

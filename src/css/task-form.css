@@ -34,14 +34,6 @@ input[type='text']:focus::placeholder {
   color: vars.$col-secondary-op;
 }
 */
-/*
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-@mixin () {}
-*/
 .task-form {
   width: 100%;
   margin-bottom: 1em;
