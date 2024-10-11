@@ -1,0 +1,37 @@
+<!-- TASK CARD ------------------------------------------------->
+<div class="task-card">
+  <!-- HEADER -->
+  <div class="task-card__header">
+    <div class="task-card__title-wrapper">
+      <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
+      <div class="task-card__title">{%TASKCARD_TITLE%}</div>
+    </div>
+    <div class="task-card__buttons">
+      <button class="task-card__btn btn-add-task">
+        <img src="./public/icons/edit.png" alt="Edit task" class="task-card__btn--icon" />
+      </button>
+      <button class="task-card__btn btn-settings">
+        <img src="./public/icons/delete.png" alt="Delete task" class="task-card__btn--icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="task-card__body">
+    <!-- PREVIEW / BODY TOP -->
+    <div class="task-card__body-top">
+      <div class="task-card__description">{%TASKCARD_DESCRIPTION%}</div>
+      <div class="task-card__due-date">
+        <span class="task-card__due-date--number">{%TASKCARD_DUE_VAL%}</span>
+        <span class="task-card__due-date--unit">{%TASKCARD_DUE_UNIT%}</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="task-card__footer">
+      <div class="task-card__creation-date">Created: {%TASKCARD_CREATED%}</div>
+      <img src="./public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
+    </div>
+  </div>
+</div>
+<!-- END OF TASK CARD ------------------------------------- X -->
