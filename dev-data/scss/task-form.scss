@@ -39,11 +39,11 @@
     // PRIO SELECTION (BODY) //
     .task-form__prio {
       display: flex;
-      gap: 0.5em;
-      margin-top: 0.7em;
-      padding: 0.4em 0.6em;
+      justify-content: space-evenly;
+      margin: 0.7em 0;
+      padding: 0.4em 0.7em;
       color: vars.$col-secondary;
-      background: vars.$col-prio3-light;
+      background: vars.$col-primary-low-op;
       border-radius: vars.$br-primary;
 
       // PRIO BUTTONS (PRIO) //
@@ -88,6 +88,8 @@
       // DESCRIPTION TEXT AREA (BODY TOP) //
       textarea {
         @include mixins.description;
+        min-height: calc(1.5rem * 3);
+        resize: vertical;
       }
       textarea:focus {
         @include mixins.description;
@@ -110,12 +112,11 @@
       .task-form__btn-due-date {
         @include mixins.due-date;
         text-align: center;
-        color: vars.$col-secondary-op;
         transition: vars.$ease-in;
       }
       .task-form__btn-due-date:hover {
         color: vars.$col-secondary;
-        background: vars.$col-prio3;
+        background: vars.$col-primary-op;
         transform: scale(1.02);
         cursor: pointer;
       }

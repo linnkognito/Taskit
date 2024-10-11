@@ -7,8 +7,8 @@
 .task-card {
   width: 100%;
   margin-bottom: 1em;
-  background: rgb(204, 223, 240);
-  border: 1px solid rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   overflow: hidden;
 }
@@ -19,7 +19,7 @@
   width: 100%;
   padding: 0.5em;
   color: white;
-  background: rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.4);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
   padding-right: 0.8em;
@@ -84,7 +84,7 @@
   font-size: 1rem;
   font-style: italic;
   color: rgb(158, 158, 158);
-  border: 1px dashed rgb(186, 203, 219);
+  border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
 }
 .task-card .task-card__body .task-card__body-top .task-card__due-date {
@@ -93,8 +93,8 @@
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  color: rgb(158, 158, 158);
-  background: rgba(204, 223, 240, 0.5);
+  color: white;
+  background: rgb(213, 207, 204);
   border-radius: 0.9em;
 }
 .task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--number {

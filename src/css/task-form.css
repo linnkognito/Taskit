@@ -7,8 +7,8 @@
 .task-form {
   width: 100%;
   margin-bottom: 1em;
-  background: rgb(204, 223, 240);
-  border: 1px solid rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   overflow: hidden;
 }
@@ -19,7 +19,7 @@
   width: 100%;
   padding: 0.5em;
   color: white;
-  background: rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.4);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
   padding-right: 0.8em;
@@ -75,11 +75,11 @@
 }
 .task-form .task-form__body .task-form__prio {
   display: flex;
-  gap: 0.5em;
-  margin-top: 0.7em;
-  padding: 0.4em 0.6em;
+  justify-content: space-evenly;
+  margin: 0.7em 0;
+  padding: 0.4em 0.7em;
   color: rgb(158, 158, 158);
-  background: rgba(204, 223, 240, 0.5);
+  background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
 .task-form .task-form__body .task-form__prio .task-form__prio-buttons {
@@ -127,8 +127,10 @@
   font-size: 1rem;
   font-style: italic;
   color: rgb(158, 158, 158);
-  border: 1px dashed rgb(186, 203, 219);
+  border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
+  min-height: 4.5rem;
+  resize: vertical;
 }
 .task-form .task-form__body .task-form__body-top textarea:focus {
   width: 100%;
@@ -136,7 +138,7 @@
   font-size: 1rem;
   font-style: italic;
   color: rgb(158, 158, 158);
-  border: 1px dashed rgb(186, 203, 219);
+  border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
   color: rgba(213, 207, 204, 0.7);
   outline: none;
@@ -153,7 +155,7 @@
   font-size: 1rem;
   font-style: italic;
   color: rgb(158, 158, 158);
-  border: 1px dashed rgb(186, 203, 219);
+  border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
 }
 .task-form .task-form__body .task-form__body-top .task-form__btn-due-date {
@@ -162,16 +164,15 @@
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  color: rgb(158, 158, 158);
-  background: rgba(204, 223, 240, 0.5);
+  color: white;
+  background: rgb(213, 207, 204);
   border-radius: 0.9em;
   text-align: center;
-  color: rgba(158, 158, 158, 0.35);
   transition: all 0.2s ease-in;
 }
 .task-form .task-form__body .task-form__body-top .task-form__btn-due-date:hover {
   color: rgb(158, 158, 158);
-  background: rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.7);
   transform: scale(1.02);
   cursor: pointer;
 }
@@ -181,8 +182,8 @@
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  color: rgb(158, 158, 158);
-  background: rgba(204, 223, 240, 0.5);
+  color: white;
+  background: rgb(213, 207, 204);
   border-radius: 0.9em;
 }
 .task-form .task-form__body .task-form__body-top .task-form__due-date .task-form__due-date--number {

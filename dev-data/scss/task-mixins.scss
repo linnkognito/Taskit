@@ -2,24 +2,24 @@
 @use './vars';
 
 // TASK //
-@mixin card() {
+@mixin card($bg: vars.$col-primary-low-op) {
   width: 100%;
   margin-bottom: 1em;
-  background: vars.$col-prio3;
-  border: 1px solid vars.$col-prio3;
+  background: $bg;
+  border: 1px solid $bg;
   border-radius: 0.9em;
   overflow: hidden;
 }
 
 // HEADER //
-@mixin header() {
+@mixin header($bg: vars.$col-primary-low-op) {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0.5em;
   color: white;
-  background: vars.$col-prio3;
+  background: $bg;
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
 }
@@ -70,23 +70,23 @@
   padding-bottom: 0.7em;
   background: white;
 }
-@mixin description($padding: 0.35em 0.6em) {
+@mixin description($padding: 0.35em 0.6em, $bdr-col: vars.$col-primary) {
   width: 100%;
   padding: $padding;
   font-size: 1rem;
   font-style: italic;
   color: vars.$col-secondary;
-  border: 1px dashed vars.$col-prio3-dark;
+  border: 1px dashed $bdr-col;
   border-radius: vars.$br-primary;
 }
-@mixin due-date() {
+@mixin due-date($bg: vars.$col-primary) {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-width: 20%;
-  color: vars.$col-secondary;
-  background: vars.$col-prio3-light;
+  color: white;
+  background: $bg;
   border-radius: vars.$br-primary;
 }
 @mixin due-date-val() {
