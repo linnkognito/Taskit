@@ -63,10 +63,8 @@
 
     // FOOTER (BODY) //
     .task-card__footer {
-      display: flex;
-      justify-content: space-between;
-      margin: 0.5em 0;
-      padding: 0.7em 0.5em 0.3em;
+      @include mixins.item-footer;
+      padding: 0.2em 0.5em 0;
 
       // CREATION DATE (FOOTER) //
       .task-card__creation-date {

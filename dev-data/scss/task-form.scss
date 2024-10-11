@@ -106,14 +106,71 @@
         @include mixins.description;
       }
 
+      // DUE DATE BUTTON (BODY TOP) //
+      .task-form__btn-due-date {
+        @include mixins.due-date;
+        text-align: center;
+        color: vars.$col-secondary-op;
+        transition: vars.$ease-in;
+      }
+      .task-form__btn-due-date:hover {
+        color: vars.$col-secondary;
+        background: vars.$col-prio3;
+        transform: scale(1.02);
+        cursor: pointer;
+      }
+
       // DUE DATE (BODY TOP) //
       .task-form__due-date {
         @include mixins.due-date;
 
-        .task-card__due-date--number {
+        .task-form__due-date--number {
           @include mixins.due-date-val;
         }
       }
     } // [X] END OF BODY TOP [X]
+
+    .task-form__add-item-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5em;
+      margin: 0.5em 0;
+
+      .btn-add-item {
+        @include mixins.btn-medium;
+        min-width: calc(50% - 0.5em);
+      }
+      .btn-add-item:hover {
+        @include mixins.btn-medium-hover;
+      }
+    }
   } // [X] END OF BODY [X]
+  // FOOTER //
+  .task-form__footer {
+    @include mixins.item-footer;
+    background: white;
+
+    .task-form__footer--buttons {
+      display: flex;
+      justify-content: end;
+      gap: 0.5em;
+      width: 100%;
+      padding: 0.5em;
+      background: vars.$col-primary-low-op;
+
+      .btn-form-footer {
+        @include mixins.btn-small;
+      }
+      .btn-form-footer:hover {
+        @include mixins.btn-hover(1.05);
+        box-shadow: vars.$box-glow;
+      }
+      .btn-cancel:hover {
+        background: vars.$col-prio1;
+      }
+      .btn-save:hover {
+        background: vars.$col-prio2;
+      }
+    }
+  }
 } // [X] END OF TASK FORM [X]

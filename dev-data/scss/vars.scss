@@ -1,7 +1,8 @@
 /*** COLORS ****************************/
 $col-black: rgba(0, 0, 0, 1);
 $col-primary: rgba(213, 207, 204, 1);
-$col-primary-op: rgba(213, 207, 204, 0.5);
+$col-primary-op: rgba(213, 207, 204, 0.7);
+$col-primary-low-op: rgba(213, 207, 204, 0.4);
 
 $col-secondary: rgba(158, 158, 158, 1);
 $col-secondary-op: rgba(158, 158, 158, 0.35);
@@ -37,6 +38,7 @@ $ls-primary: 0.05em;
 $box-glow: 0 0 4px white;
 $box-glow-mid: 0 0 2px white;
 $box-glow-thin: 0 0 1px white;
+$ease-in: all 0.2s ease-in;
 $op-ease-in: opacity 0.2s ease-in;
 $transform-ease-in: transform 0.2s ease-in;
 

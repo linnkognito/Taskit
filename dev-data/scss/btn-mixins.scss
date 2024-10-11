@@ -1,11 +1,43 @@
 @use './vars';
 
+@mixin btn-border() {
+  border: none;
+  border-radius: vars.$br-primary;
+}
+@mixin btn-hover($sc: 1.02) {
+  transform: scale($sc);
+  cursor: pointer;
+}
+
+// LARGE BUTTON //
 @mixin btn-task-wide($col) {
   width: 100%;
   padding: 0.5em;
   font-size: 1.2rem;
   letter-spacing: vars.$ls-primary;
   background: $col;
-  border: none;
-  border-radius: vars.$br-primary;
+  @include btn-border();
+}
+
+// MEDIUM BUTTON //
+@mixin btn-medium($col: white, $bg: vars.$col-primary-op) {
+  padding: 0.5em;
+  letter-spacing: vars.$ls-primary;
+  color: $col;
+  background: $bg;
+  @include btn-border();
+  transition: vars.$ease-in;
+}
+@mixin btn-medium-hover($bg: vars.$col-primary) {
+  background: $bg;
+  @include btn-hover;
+}
+
+// SMALL BUTTON //
+@mixin btn-small($col: vars.$col-secondary, $bg: white) {
+  padding: 0.1em 0.6em;
+  color: $col;
+  background: $bg;
+  transition: vars.$transform-ease-in;
+  @include btn-border();
 }

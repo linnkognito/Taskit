@@ -70,7 +70,7 @@
   box-shadow: 0 0 2px white;
 }
 .task-form .task-form__body {
-  padding: 0.1em 0.7em;
+  padding: 0.1em 0.7em 0.6em;
   background: white;
 }
 .task-form .task-form__body .task-form__prio {
@@ -111,7 +111,7 @@
   background: rgb(204, 223, 240);
 }
 .task-form .task-form__body .task-form__prio .task-form__prio-buttons .prio-none-btn {
-  background: rgba(213, 207, 204, 0.5);
+  background: rgba(213, 207, 204, 0.7);
 }
 .task-form .task-form__body .task-form__body-top {
   width: 100%;
@@ -138,7 +138,7 @@
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
-  color: rgba(213, 207, 204, 0.5);
+  color: rgba(213, 207, 204, 0.7);
   outline: none;
 }
 .task-form .task-form__body .task-form__body-top textarea::placeholder {
@@ -156,6 +156,25 @@
   border: 1px dashed rgb(186, 203, 219);
   border-radius: 0.9em;
 }
+.task-form .task-form__body .task-form__body-top .task-form__btn-due-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  color: rgb(158, 158, 158);
+  background: rgba(204, 223, 240, 0.5);
+  border-radius: 0.9em;
+  text-align: center;
+  color: rgba(158, 158, 158, 0.35);
+  transition: all 0.2s ease-in;
+}
+.task-form .task-form__body .task-form__body-top .task-form__btn-due-date:hover {
+  color: rgb(158, 158, 158);
+  background: rgb(204, 223, 240);
+  transform: scale(1.02);
+  cursor: pointer;
+}
 .task-form .task-form__body .task-form__body-top .task-form__due-date {
   display: flex;
   flex-direction: column;
@@ -166,9 +185,63 @@
   background: rgba(204, 223, 240, 0.5);
   border-radius: 0.9em;
 }
-.task-form .task-form__body .task-form__body-top .task-form__due-date .task-card__due-date--number {
+.task-form .task-form__body .task-form__body-top .task-form__due-date .task-form__due-date--number {
   font-size: 1.5rem;
   font-weight: 600;
+}
+.task-form .task-form__body .task-form__add-item-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+  margin: 0.5em 0;
+}
+.task-form .task-form__body .task-form__add-item-buttons .btn-add-item {
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+  color: white;
+  background: rgba(213, 207, 204, 0.7);
+  border: none;
+  border-radius: 0.9em;
+  transition: all 0.2s ease-in;
+  min-width: calc(50% - 0.5em);
+}
+.task-form .task-form__body .task-form__add-item-buttons .btn-add-item:hover {
+  background: rgb(213, 207, 204);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+.task-form .task-form__footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background: white;
+}
+.task-form .task-form__footer .task-form__footer--buttons {
+  display: flex;
+  justify-content: end;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.5em;
+  background: rgba(213, 207, 204, 0.4);
+}
+.task-form .task-form__footer .task-form__footer--buttons .btn-form-footer {
+  padding: 0.1em 0.6em;
+  color: rgb(158, 158, 158);
+  background: white;
+  transition: transform 0.2s ease-in;
+  border: none;
+  border-radius: 0.9em;
+}
+.task-form .task-form__footer .task-form__footer--buttons .btn-form-footer:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  box-shadow: 0 0 4px white;
+}
+.task-form .task-form__footer .task-form__footer--buttons .btn-cancel:hover {
+  background: rgb(232, 214, 214);
+}
+.task-form .task-form__footer .task-form__footer--buttons .btn-save:hover {
+  background: rgb(215, 232, 221);
 }
 
 /*# sourceMappingURL=task-form.css.map */

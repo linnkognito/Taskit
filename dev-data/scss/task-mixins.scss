@@ -59,7 +59,7 @@
 
 // BODY //
 @mixin body() {
-  padding: 0.1em 0.7em;
+  padding: 0.1em 0.7em 0.6em;
   background: white;
 }
 @mixin body-top() {
@@ -123,4 +123,11 @@
   background: white;
   border: 1px solid vars.$col-prio3;
   border-radius: vars.$br-primary;
+}
+
+// FOOTER //
+@mixin item-footer() {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }

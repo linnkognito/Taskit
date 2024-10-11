@@ -67,7 +67,7 @@
   box-shadow: 0 0 2px white;
 }
 .task-card .task-card__body {
-  padding: 0.1em 0.7em;
+  padding: 0.1em 0.7em 0.6em;
   background: white;
 }
 .task-card .task-card__body .task-card__body-top {
@@ -102,10 +102,10 @@
   font-weight: 600;
 }
 .task-card .task-card__body .task-card__footer {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 0.5em 0;
-  padding: 0.7em 0.5em 0.3em;
+  padding: 0.2em 0.5em 0;
 }
 .task-card .task-card__body .task-card__footer .task-card__creation-date {
   display: flex;

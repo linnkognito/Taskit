@@ -121,17 +121,20 @@
               <div class="task-form__body-top">
                 <!-- DESCRIPTION -->
                 <textarea rows="3" id="input-task-description" name="input-task-description" placeholder="Add a description (optional)"></textarea>
-
                 <div class="task-form__description hidden">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+
                 <!-- DUE DATE -->
-                <div class="task-form__due-date task-card__due-date">
-                  <span class="task-form__due-date--number task-card__due-date--number">2</span>
-                  <span class="task-form__due-date--unit task-card__due-date--unit">days</span>
-                </div>
+                <div class="task-form__btn-due-date">Add due date</div>
+              </div>
+
+              <!-- ADD ITEM BUTTONS -->
+              <div class="task-form__add-item-buttons">
+                <button class="btn-add-item">Add checklist</button>
+                <button class="btn-add-item">Add note</button>
               </div>
 
               <!-- CHECKLIST ---------------------------------------------------->
-              <div class="task-card__checklist">
+              <div class="task-card__checklist hidden">
                 <div class="task-card__checklist-header">
                   <div class="task-card__checklist-title">Checklist title</div>
                   <div class="task-card__buttons">
@@ -159,18 +162,18 @@
                 </div>
               </div>
               <!-- END OF CHECKLIST ---------------------------------------- X -->
-
-              <!-- ADD TASK BUTTON -->
-              <!-- <div class="task-form__btn-add-task"></div>-->
-
-              <!-- FORM FOOTER -->
-              <div class="task-form__footer task-card__footer">
-                <!-- <div class="task-form task-card__creation-date">Created: 10/02/2024</div> -->
-                <!-- <img src="./public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" /> -->
+            </div>
+            <!-- FORM FOOTER -->
+            <div class="task-form__footer">
+              <div class="task-form__footer--buttons">
+                <button class="btn-form-footer btn-cancel">Cancel</button>
+                <button class="btn-form-footer btn-save">Save</button>
               </div>
             </div>
           </div>
           <!-- END OF TASK FORM ---------------------------------------- X -->
+
+          <!-- ADD TASK BUTTON (PROJECT) -->
           <button class="project-card__btn-add-task">+ Add task</button>
         </div>
         <!-- END OF PROJECT CARD BODY -------------------------------- X -->
