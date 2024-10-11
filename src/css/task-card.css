@@ -45,6 +45,7 @@
   letter-spacing: 0.1em;
 }
 .task-card .task-card__header .task-card__buttons .task-card__btn {
+  display: flex;
   width: 2em;
   height: 2em;
   margin: 0 0.1em;
@@ -65,7 +66,7 @@
   height: 100%;
 }
 .task-card .task-card__body {
-  padding: 0.1em 0.7em 0.6em;
+  padding: 0.6em 0.7em;
   background: white;
 }
 .task-card .task-card__body .task-card__body-top {

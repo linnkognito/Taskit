@@ -16,6 +16,7 @@
 .task-card__checklist .task-card__checklist-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 0.3em;
 }
 .task-card__checklist .task-card__checklist-header .task-card__checklist-title {
@@ -26,6 +27,7 @@
   color: white;
 }
 .task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn {
+  display: flex;
   width: 2em;
   height: 2em;
   margin: 0 0.1em;
@@ -54,6 +56,83 @@
   border-radius: 0.9em;
 }
 .task-card__checklist .task-card__checklist-body .task-card__checklist-body input[type=checkbox]:checked + label {
+  text-decoration: line-through;
+  color: rgb(163, 163, 163);
+}
+
+.task-form__checklist {
+  width: 100%;
+  min-width: 50%;
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  background: rgb(204, 223, 240);
+  border: 1px solid rgb(204, 223, 240);
+  border-radius: 0.9em;
+}
+.task-form__checklist .task-form__checklist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.3em;
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-input-title {
+  padding: 0.2em 0.5em;
+  font-size: 1.25rem;
+  font-family: "Urbanist", sans-serif;
+  color: rgb(158, 158, 158);
+  letter-spacing: 0.05em;
+  border-radius: 0.9em;
+  outline: none;
+  margin-bottom: 0.1em;
+  font-size: 1.2rem;
+  border: none;
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-input-title::placeholder {
+  color: rgb(158, 158, 158);
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-input-title:focus::placeholder {
+  color: rgba(158, 158, 158, 0.35);
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-title {
+  margin: 0 0 0.1em 0.7em;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: white;
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn {
+  display: flex;
+  width: 2em;
+  height: 2em;
+  margin: 0 0.1em;
+  padding: 0.13em 0.06em;
+  background: none;
+  border: 1px solid white;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: transform 0.2s ease-in;
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 2px white;
+  cursor: pointer;
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn--icon {
+  width: 100%;
+  height: 100%;
+}
+.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn {
+  margin: auto;
+}
+.task-form__checklist .task-form__checklist-body {
+  padding: 0.5em 1em;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: white;
+  border: 1px solid rgb(204, 223, 240);
+  border-radius: 0.9em;
+}
+.task-form__checklist .task-form__checklist-body .task-form__checklist-body input[type=checkbox]:checked + label {
   text-decoration: line-through;
   color: rgb(163, 163, 163);
 }

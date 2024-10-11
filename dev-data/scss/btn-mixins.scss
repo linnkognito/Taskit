@@ -20,7 +20,7 @@
 }
 
 // MEDIUM BUTTON //
-@mixin btn-medium($col: white, $bg: vars.$col-primary-op) {
+@mixin btn-medium($col: vars.$col-secondary, $bg: vars.$col-primary-op) {
   padding: 0.5em;
   letter-spacing: vars.$ls-primary;
   color: $col;
@@ -29,6 +29,7 @@
   transition: vars.$ease-in;
 }
 @mixin btn-medium-hover($bg: vars.$col-primary) {
+  // color: vars.$col-black;
   background: $bg;
   @include btn-hover;
 }

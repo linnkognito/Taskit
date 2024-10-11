@@ -48,6 +48,7 @@
   color: rgba(158, 158, 158, 0.35);
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn {
+  display: flex;
   width: 2em;
   height: 2em;
   margin: 0 0.1em;
@@ -68,13 +69,13 @@
   height: 100%;
 }
 .task-form .task-form__body {
-  padding: 0.1em 0.7em 0.6em;
+  padding: 0.6em 0.7em;
   background: white;
 }
 .task-form .task-form__body .task-form__prio {
   display: flex;
   justify-content: space-evenly;
-  margin: 0.7em 0;
+  margin-bottom: 0.7em;
   padding: 0.4em 0.7em;
   color: rgb(158, 158, 158);
   background: rgba(213, 207, 204, 0.4);
@@ -138,7 +139,7 @@
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
-  color: rgba(213, 207, 204, 0.7);
+  color: rgb(158, 158, 158);
   outline: none;
 }
 .task-form .task-form__body .task-form__body-top textarea::placeholder {
@@ -163,7 +164,7 @@
   align-items: center;
   min-width: 20%;
   color: white;
-  background: rgb(213, 207, 204);
+  background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   text-align: center;
   transition: all 0.2s ease-in;
@@ -173,7 +174,7 @@
 }
 .task-form .task-form__body .task-form__body-top .task-form__btn-due-date:hover {
   color: rgb(158, 158, 158);
-  background: rgba(213, 207, 204, 0.7);
+  background: rgb(213, 207, 204);
   transform: scale(1.02);
   cursor: pointer;
 }
@@ -200,7 +201,7 @@
 .task-form .task-form__body .task-form__add-item-buttons .btn-add-item {
   padding: 0.5em;
   letter-spacing: 0.05em;
-  color: white;
+  color: rgb(158, 158, 158);
   background: rgba(213, 207, 204, 0.7);
   border: none;
   border-radius: 0.9em;
@@ -237,7 +238,6 @@
 .task-form .task-form__footer .task-form__footer--buttons .btn-form-footer:hover {
   transform: scale(1.05);
   cursor: pointer;
-  box-shadow: 0 0 4px white;
 }
 .task-form .task-form__footer .task-form__footer--buttons .btn-cancel:hover {
   background: rgb(232, 214, 214);

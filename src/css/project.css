@@ -131,9 +131,8 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 0.4em;
   align-self: end;
-  width: 60%;
+  width: 55%;
   min-width: 50%;
   height: auto;
   min-height: 25%;
@@ -141,6 +140,8 @@
   font-size: 1.2rem;
   color: white;
   background: rgb(213, 207, 204);
+  border-left: 2px solid rgb(213, 207, 204);
+  border-bottom: 2px solid rgb(213, 207, 204);
   border-top: 1px solid white;
 }
 

@@ -28,21 +28,10 @@
   align-items: center;
   column-gap: 0.5em;
 }
-// @mixin btn-header() {
-//   width: 2em;
-//   height: 2em;
-//   margin: 0 0.1em;
-//   padding: 0.13em 0.06em;
-//   background: none;
-//   border: 1px solid white;
-//   border-radius: 0.5em;
-//   cursor: pointer;
-//   transition: vars.$transform-ease-in;
-// }
 
 @mixin buttons-header($cls) {
   .task-#{$cls}__btn {
-    // @include btn-header;
+    display: flex;
     width: 2em;
     height: 2em;
     margin: 0 0.1em;
@@ -66,7 +55,7 @@
 
 // BODY //
 @mixin body() {
-  padding: 0.1em 0.7em 0.6em;
+  padding: 0.6em 0.7em;
   background: white;
 }
 @mixin body-top() {
@@ -114,6 +103,7 @@
 @mixin item-header() {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 0.3em;
 }
 @mixin item-title() {

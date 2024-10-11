@@ -1,3 +1,4 @@
+@use './vars';
 @use './mixins';
 
 // CHECKLIST //
@@ -22,6 +23,50 @@
     @include mixins.item-body;
 
     .task-card__checklist-body input[type='checkbox']:checked + label {
+      text-decoration: line-through;
+      color: rgb(163, 163, 163);
+    }
+  }
+}
+
+// CHECKLIST FORM //
+.task-form__checklist {
+  @include mixins.item;
+
+  // HEADER (CHECKLIST) //
+  .task-form__checklist-header {
+    @include mixins.item-header;
+
+    .task-form__checklist-input-title {
+      @include mixins.input-text(vars.$col-secondary);
+      margin-bottom: 0.1em;
+      font-size: 1.2rem;
+      border: none;
+    }
+    .task-form__checklist-input-title::placeholder {
+      @include mixins.input-text-placeholder;
+    }
+    .task-form__checklist-input-title:focus::placeholder {
+      @include mixins.input-text-focus-placeholder;
+    }
+    .task-form__checklist-title {
+      @include mixins.item-title;
+    }
+    // BUTTONS (HEADER) //
+    .task-form__checklist-buttons {
+      @include mixins.buttons-header('form');
+
+      .task-form__btn {
+        margin: auto;
+      }
+    }
+  }
+
+  // BODY (CHECKLIST) //
+  .task-form__checklist-body {
+    @include mixins.item-body;
+
+    .task-form__checklist-body input[type='checkbox']:checked + label {
       text-decoration: line-through;
       color: rgb(163, 163, 163);
     }

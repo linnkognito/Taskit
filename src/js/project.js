@@ -24,23 +24,23 @@ export class Project {
     return `
       <div class='dropdown-project sort-dropdown'>
         <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./public/icons/sort-prio.png' alt='Prio icon' class='icon-dropdown icon-swap' />
+          <img src='./icons/sort-prio.png' alt='Prio icon' class='icon-dropdown icon-swap' />
           <span>Priority</span>
         </div>
         <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./public/icons/sort-due-date.png' alt='Due icon' class='icon-dropdown icon-due' />
+          <img src='./icons/sort-due-date.png' alt='Due icon' class='icon-dropdown icon-due' />
           <span>Due date</span>
         </div>
         <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./public/icons/sort-alpha.png' alt='Sort alphabetically icon' class='icon-dropdown icon-alpha' />
+          <img src='./icons/sort-alpha.png' alt='Sort alphabetically icon' class='icon-dropdown icon-alpha' />
           <span>Alphabetically</span>
         </div>
         <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./public/icons/sort-created.png' alt='Created icon' class='icon-dropdown icon-created' />
+          <img src='./icons/sort-created.png' alt='Created icon' class='icon-dropdown icon-created' />
           <span>Created</span>
         </div>
-      </div>;
-            `;
+      </div>
+      `;
   }
 
   //-- SETTINGS ---------------------------------------------//
@@ -55,13 +55,13 @@ export class Project {
       markup = this.settingsMarkup();
       header.insertAdjacentHTML('afterend', markup);
       dropdown = project.querySelector('.settings-dropdown');
-      console.log(dropdown);
     }
     if (btn.classList.contains('btn-sort-tasks')) {
       markup = this.sortMarkup();
       header.insertAdjacentHTML('afterend', markup);
       dropdown = project.querySelector('.sort-dropdown');
       console.log(dropdown);
+      console.log(markup);
     }
     dropdown.style.top = `calc(${headerHeight}px)`; // Dropdown placement
 

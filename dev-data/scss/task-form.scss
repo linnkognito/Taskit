@@ -40,7 +40,7 @@
     .task-form__prio {
       display: flex;
       justify-content: space-evenly;
-      margin: 0.7em 0;
+      margin-bottom: 0.7em;
       padding: 0.4em 0.7em;
       color: vars.$col-secondary;
       background: vars.$col-primary-low-op;
@@ -93,7 +93,7 @@
       }
       textarea:focus {
         @include mixins.description;
-        color: vars.$col-primary-op;
+        color: vars.$col-secondary;
         outline: none;
       }
       textarea::placeholder {
@@ -110,7 +110,7 @@
 
       // DUE DATE BUTTON (BODY TOP) //
       .task-form__btn-due-date {
-        @include mixins.due-date;
+        @include mixins.due-date(vars.$col-primary-low-op);
         text-align: center;
         transition: vars.$ease-in;
 
@@ -120,7 +120,7 @@
       }
       .task-form__btn-due-date:hover {
         color: vars.$col-secondary;
-        background: vars.$col-primary-op;
+        background: vars.$col-primary;
         transform: scale(1.02);
         cursor: pointer;
       }
@@ -168,7 +168,6 @@
       }
       .btn-form-footer:hover {
         @include mixins.btn-hover(1.05);
-        box-shadow: vars.$box-glow;
       }
       .btn-cancel:hover {
         background: vars.$col-prio1;
