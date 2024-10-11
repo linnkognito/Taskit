@@ -34,6 +34,33 @@
         gap: 1em;
         margin: 1em 0;
       }
+
+      .due-date__selection {
+        display: flex;
+        align-items: center;
+
+        .label-due {
+          padding: 0.2em 0.4em;
+          color: white;
+          background: vars.$col-primary-dark-op;
+          border-radius: vars.$br-primary;
+        }
+
+        .input-due {
+          padding: 0.5em 0.7em;
+          border: 1px solid vars.$col-primary;
+          border-radius: vars.$br-primary;
+          transform: vars.$transform-ease-in;
+        }
+        .input-due:hover {
+          cursor: pointer;
+        }
+        .input-due:focus {
+          outline: none;
+          box-shadow: 0 0 3px vars.$col-primary;
+          transform: scale(1.02);
+        }
+      }
     }
 
     // FOOTER (CONTAINER) //

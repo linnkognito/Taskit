@@ -10,11 +10,29 @@
 @forward './mixins-buttons';
 @forward './mixins-modals.scss';
 
+//-- EFFECTS ------------------------------------//
+
+// SCALE //
+// @mixin scale($val:1.01) {
+//   transform: ;
+// }
+
 // FLEX //
 @mixin flex-center-all() {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+//-- TEXT ----------------------------------------//
+
+// HEADINGS //
+@mixin h2-project() {
+  padding: 0.2em 0.5em;
+  font-size: vars.$fs-project-title;
+  font-family: vars.$font-body;
+  font-weight: normal;
+  letter-spacing: vars.$ls-primary;
 }
 
 // INPUT //
@@ -39,17 +57,6 @@
 @mixin input-text-focus-placeholder($color: vars.$col-secondary-op) {
   color: $color;
 }
-
-// HEADINGS //
-@mixin h2-project() {
-  padding: 0.2em 0.5em;
-  font-size: vars.$fs-project-title;
-  font-family: vars.$font-body;
-  font-weight: normal;
-  letter-spacing: vars.$ls-primary;
-}
-
-// CONTAINERS //
 
 // FOOTER //
 @mixin footer-save-del($cls, $cls-btn) {

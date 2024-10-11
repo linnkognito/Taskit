@@ -1,3 +1,5 @@
+// app.js
+
 import { Project } from './project';
 import { showElement, hideElement } from './helpers';
 
@@ -21,6 +23,10 @@ export class App {
         if (dropdown) hideElement(dropdown);
         this.projectsArr[id].openSettings(btn);
       }
+    });
+    document.addEventListener('click', (e) => {
+      const modal = document.querySelector('.modal');
+      if (modal && e.target === modal) hideElement(modal);
     });
   }
 
