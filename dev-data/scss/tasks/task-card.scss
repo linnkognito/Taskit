@@ -1,5 +1,5 @@
-@use './vars';
-@use './mixins';
+@use '../vars';
+@use '../mixins';
 @use './task-mixins';
 
 //// TASK CARD /////////////////////////////
@@ -19,7 +19,7 @@
         height: 1.5em;
       }
       .checkbox:hover {
-        content: url(../../public/icons/checkbox.png);
+        content: url(../../../public/icons/checkbox.png);
         opacity: 0.5;
         cursor: pointer;
       }

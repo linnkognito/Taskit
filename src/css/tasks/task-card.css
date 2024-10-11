@@ -33,7 +33,7 @@
   height: 1.5em;
 }
 .task-card .task-card__header .task-card__title-wrapper .checkbox:hover {
-  content: url(../../public/icons/checkbox.png);
+  content: url(../../../public/icons/checkbox.png);
   opacity: 0.5;
   cursor: pointer;
 }

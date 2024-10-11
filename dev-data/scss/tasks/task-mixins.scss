@@ -1,5 +1,5 @@
 // tasks-mixins.scss
-@use './vars';
+@use '../vars';
 
 // TASK //
 @mixin card($bg: vars.$col-primary-low-op) {
