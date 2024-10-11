@@ -1,0 +1,5 @@
+@use '../utilities/mixins.scss';
+
+.modal-due-date {
+  @include mixins.modal;
+}

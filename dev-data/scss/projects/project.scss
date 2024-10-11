@@ -1,6 +1,6 @@
 @use '../utilities/vars';
 @use '../utilities/mixins';
-@use '../utilities/btn-mixins';
+@use '../utilities/mixins-buttons';
 
 /*** PROJECT CARD ****************************/
 #projects {
@@ -82,7 +82,7 @@
 }
 /*** PROJECT CARD ADD TASK *********/
 .project-card__btn-add-task {
-  @include btn-mixins.btn-task-wide(vars.$col-prio3-light);
+  @include mixins-buttons.btn-task-wide(vars.$col-prio3-light);
 }
 .project-card__btn-add-task:hover {
   box-shadow: vars.$box-glow;

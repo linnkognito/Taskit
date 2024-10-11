@@ -2,11 +2,13 @@
 
 @use './vars';
 @use '../tasks/task-mixins' as *;
-@use './btn-mixins';
+@use './mixins-buttons';
+@use './mixins-modals.scss';
 
 @forward './vars';
 @forward '../tasks/task-mixins';
-@forward './btn-mixins';
+@forward './mixins-buttons';
+@forward './mixins-modals.scss';
 
 // FLEX //
 @mixin flex-center-all() {
@@ -38,7 +40,7 @@
   color: $color;
 }
 
-// PROJECT //
+// HEADINGS //
 @mixin h2-project() {
   padding: 0.2em 0.5em;
   font-size: vars.$fs-project-title;
