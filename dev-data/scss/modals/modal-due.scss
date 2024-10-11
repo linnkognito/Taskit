@@ -1,5 +1,44 @@
-@use '../utilities/mixins.scss';
+@use '../utilities/vars';
+@use '../utilities/mixins';
 
 .modal-due-date {
   @include mixins.modal;
+
+  // CONTAINER //
+  .due-date__container {
+    @include mixins.modal-contrainer;
+    min-width: 40%;
+    margin-top: 20%;
+    box-shadow: 0 0 2em vars.$col-primary-dark;
+
+    // HEADER (CONTAINER) //
+    .due-date__header {
+      @include mixins.modal-header;
+      padding: 0.2em 0.5em 0;
+      background: vars.$col-primary-op;
+
+      .due-date__heading {
+        @include mixins.h2-project;
+      }
+    }
+
+    // BODY (CONTAINER) //
+    .due-date__body {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5em 4em;
+
+      .due-date__date,
+      .due-date__time {
+        display: flex;
+        gap: 1em;
+        margin: 1em 0;
+      }
+    }
+
+    // FOOTER (CONTAINER) //
+    .due-date__footer {
+      @include mixins.footer-save-del('due-date', 'due');
+    }
+  }
 }

@@ -16,6 +16,36 @@
       </nav>
     </header>
 
+    <!-- MODAL: DUE DATE -->
+    <div class="modal-due-date">
+      <div class="due-date__container">
+        <!-- HEADER -->
+        <div class="due-date__header">
+          <h2 class="due-date__heading">Pick a due date</h2>
+        </div>
+        <div class="due-date__body">
+          <!-- DATE PICKER -->
+          <div class="due-date__date">
+            <label for="date">Choose a date:</label>
+            <input type="date" id="date" name="date" />
+          </div>
+          <!-- TIME PICKER -->
+          <div class="due-date__time">
+            <label for="time">Choose a time:</label>
+            <input type="time" id="time" name="time" />
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="due-date__footer">
+          <div class="due-date__footer--buttons">
+            <button class="btn-due-footer btn-cancel">Cancel</button>
+            <button class="btn-due-footer btn-save">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="projects">
       <!-- ADD PROJECT ----------------------------------------------------->
       <div class="add-project project-card">
@@ -85,35 +115,6 @@
                 <!-- DUE DATE -->
                 <div class="task-form__btn-due-date">
                   <img src="./public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="icon-calendar" />
-                </div>
-                <!-- MODAL: DUE DATE -->
-                <div class="modal-due-date">
-                  <div class="due-date__container">
-                    <!-- HEADER -->
-                    <div class="due-date__header">
-                      <h2 class="due-date__heading">Pick a due date</h2>
-                    </div>
-                    <div class="due-date__body">
-                      <!-- DATE PICKER -->
-                      <div class="due-date__date">
-                        <label for="date">Choose a date:</label>
-                        <input type="date" id="date" name="date" />
-                      </div>
-                      <!-- TIME PICKER -->
-                      <div class="due-date__time">
-                        <label for="time">Choose a time:</label>
-                        <input type="time" id="time" name="time" />
-                      </div>
-                    </div>
-
-                    <!-- FOOTER -->
-                    <div class="due-date__footer">
-                      <div class="due-date__footer--buttons">
-                        <button class="btn-due-footer btn-cancel">Cancel</button>
-                        <button class="btn-due-footer btn-save">Save</button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 

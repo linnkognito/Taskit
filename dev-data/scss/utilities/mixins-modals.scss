@@ -1,5 +1,23 @@
+@use './vars.scss';
+
 @mixin modal() {
   position: absolute;
+  display: flex;
+  justify-content: center;
   width: 100vw;
   height: 100%;
+  backdrop-filter: blur(0.4em);
+  z-index: 100;
+}
+@mixin modal-contrainer($bg: white) {
+  height: fit-content;
+  background: $bg;
+  border: none;
+  border-radius: vars.$br-primary;
+}
+@mixin modal-header() {
+  display: flex;
+  align-items: center;
+  border-top-left-radius: vars.$br-primary;
+  border-top-right-radius: vars.$br-primary;
 }

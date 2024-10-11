@@ -6,8 +6,79 @@
 /*** BORDERS ***************************/
 .modal-due-date {
   position: absolute;
+  display: flex;
+  justify-content: center;
   width: 100vw;
   height: 100%;
+  backdrop-filter: blur(0.4em);
+  z-index: 100;
+}
+.modal-due-date .due-date__container {
+  height: fit-content;
+  background: white;
+  border: none;
+  border-radius: 0.9em;
+  min-width: 40%;
+  margin-top: 20%;
+  box-shadow: 0 0 2em rgb(165, 160, 158);
+}
+.modal-due-date .due-date__container .due-date__header {
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 0.9em;
+  border-top-right-radius: 0.9em;
+  padding: 0.2em 0.5em 0;
+  background: rgba(213, 207, 204, 0.7);
+}
+.modal-due-date .due-date__container .due-date__header .due-date__heading {
+  padding: 0.2em 0.5em;
+  font-size: 1.6rem;
+  font-family: "Urbanist", sans-serif;
+  font-weight: normal;
+  letter-spacing: 0.05em;
+}
+.modal-due-date .due-date__container .due-date__body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5em 4em;
+}
+.modal-due-date .due-date__container .due-date__body .due-date__date,
+.modal-due-date .due-date__container .due-date__body .due-date__time {
+  display: flex;
+  gap: 1em;
+  margin: 1em 0;
+}
+.modal-due-date .due-date__container .due-date__footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons {
+  display: flex;
+  justify-content: end;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.5em 1em;
+  background: rgba(213, 207, 204, 0.4);
+}
+.modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-due-footer {
+  padding: 0.1em 0.6em;
+  color: rgb(158, 158, 158);
+  background: white;
+  transition: transform 0.2s ease-in;
+  border: none;
+  border-radius: 0.9em;
+  margin: 0.1em 0;
+}
+.modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-due-footer:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+.modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-cancel:hover {
+  background: rgb(232, 214, 214);
+}
+.modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-save:hover {
+  background: rgb(215, 232, 221);
 }
 
 /*# sourceMappingURL=modal-due.css.map */

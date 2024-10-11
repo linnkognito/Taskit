@@ -48,3 +48,35 @@
   font-weight: normal;
   letter-spacing: vars.$ls-primary;
 }
+
+// CONTAINERS //
+
+// FOOTER //
+@mixin footer-save-del($cls, $cls-btn) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .#{$cls}__footer--buttons {
+    display: flex;
+    justify-content: end;
+    gap: 0.5em;
+    width: 100%;
+    padding: 0.5em 1em;
+    background: vars.$col-primary-low-op;
+
+    .btn-#{$cls-btn}-footer {
+      @include mixins-buttons.btn-small;
+      margin: 0.1em 0;
+    }
+    .btn-#{$cls-btn}-footer:hover {
+      @include mixins-buttons.btn-hover(1.05);
+    }
+    .btn-cancel:hover {
+      background: vars.$col-prio1;
+    }
+    .btn-save:hover {
+      background: vars.$col-prio2;
+    }
+  }
+}
