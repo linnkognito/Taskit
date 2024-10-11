@@ -17,8 +17,7 @@
   flex-direction: column;
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
-  height: 100%;
-  min-height: 50vh;
+  min-height: 30vh;
   margin-bottom: 2.5em;
   background: vars.$col-primary;
   border: 2px solid vars.$col-primary;

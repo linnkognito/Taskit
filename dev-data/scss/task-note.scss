@@ -4,16 +4,58 @@
 
 .task-card__note {
   @include mixins.item;
+
+  // HEADER ///////////////////////////
+  .task-card__note-header {
+    @include mixins.item-header;
+
+    .task-card__note-title {
+      @include mixins.item-title;
+    }
+    .task-card__buttons {
+      @include mixins.buttons-header('card');
+    }
+  } //////////////////////////////////
+
+  //  BODY ///////////////////////////
+  .task-card__note-body {
+    @include mixins.item-body;
+  } //////////////////////////////////
 }
 
-.task-card__note-header {
-  @include mixins.item-header;
-}
+// NOTE FORM //
+.task-form__note {
+  @include mixins.item;
 
-.task-card__note-title {
-  @include mixins.item-title;
-}
+  // HEADER ///////////////////////////
+  .task-form__note-header {
+    @include mixins.item-header;
 
-.task-card__note-body {
-  @include mixins.item-body;
+    .task-form__note-input-title {
+      @include mixins.input-text;
+      margin-bottom: 0.1em;
+      border: none;
+    }
+    .task-form__note-input-title::placeholder {
+      @include mixins.input-text-placeholder;
+    }
+    .task-form__note-input-title:focus::placeholder {
+      @include mixins.input-text-focus-placeholder;
+    }
+    .task-form__note-title {
+      @include mixins.item-title;
+    }
+    .task-form__note-title {
+      @include mixins.item-title;
+    }
+    .task-form__note-buttons {
+      @include mixins.buttons-header('form');
+    }
+  } //////////////////////////////////
+
+  //  BODY ///////////////////////////
+  .task-form__note-body {
+    @include mixins.item-body;
+    font-size: 1rem;
+  } //////////////////////////////////
 }

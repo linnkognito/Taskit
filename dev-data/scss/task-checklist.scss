@@ -66,9 +66,19 @@
   .task-form__checklist-body {
     @include mixins.item-body;
 
-    .task-form__checklist-body input[type='checkbox']:checked + label {
+    .task-form__checklist-item input[type='checkbox']:checked + label {
       text-decoration: line-through;
       color: rgb(163, 163, 163);
+    }
+
+    .btn-add-checklist-item {
+      @include mixins.btn-small(vars.$col-secondary, vars.$col-prio3-light);
+      margin-top: 0.5em;
+    }
+    .btn-add-checklist-item:hover {
+      @include mixins.btn-hover(1.05);
+      color: white;
+      background: vars.$col-prio3;
     }
   }
 }

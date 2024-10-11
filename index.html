@@ -78,9 +78,9 @@
         <!-- PROJECT BODY -->
         <div class="project-card__body">
           <!-- TASK CARD ----------------------------------------------------->
-          <!-- <div class="task-card"> -->
-          <!-- HEADER -->
-          <!-- <div class="task-card__header">
+          <div class="task-card">
+            <!-- HEADER -->
+            <div class="task-card__header">
               <div class="task-card__title-wrapper">
                 <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
                 <div class="task-card__title">Card Title</div>
@@ -93,30 +93,30 @@
                   <img src="./public/icons/delete.png" alt="Delete task" class="task-card__btn--icon" />
                 </button>
               </div>
-            </div> -->
+            </div>
 
-          <!-- BODY -->
-          <!-- <div class="task-card__body"> -->
-          <!-- PREVIEW / BODY TOP -->
-          <!-- <div class="task-card__body-top">
+            <!-- BODY -->
+            <div class="task-card__body">
+              <!-- PREVIEW / BODY TOP -->
+              <div class="task-card__body-top">
                 <div class="task-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                 <div class="task-card__due-date">
                   <span class="task-card__due-date--number">2</span>
                   <span class="task-card__due-date--unit">days</span>
                 </div>
-              </div> -->
+              </div>
 
-          <!-- FOOTER -->
-          <!-- <div class="task-card__footer">
+              <!-- FOOTER -->
+              <div class="task-card__footer">
                 <div class="task-card__creation-date">Created: 10/02/2024</div>
                 <img src="./public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
               </div>
             </div>
-          </div>  -->
+          </div>
           <!-- END OF TASK CARD ---------------------------------------- X -->
 
           <!-- TASK FORM  --------------------------------------------------->
-          <div class="task-form">
+          <div class="task-form hidden">
             <!-- FORM HEADER -->
             <div class="task-form__header">
               <div class="task-form__title-wrapper">
@@ -170,26 +170,40 @@
                   <!-- <div class="task-form__checklist-title">{#CHECKLIST_TITLE#}</div> -->
                   <div class="task-form__checklist-buttons">
                     <button class="task-form__btn btn-save">
-                      <img src="./public/icons/save.png" alt="Save task" title="Save task" class="task-form__btn--icon" />
+                      <img src="./public/icons/save.png" alt="Save checklist" title="Save checklist" class="task-form__btn--icon" />
                     </button>
                   </div>
                 </div>
                 <div class="task-form__checklist-body">
                   <div class="task-form__checklist-item">
                     <input type="checkbox" name="{#CHECKLIST_NAME#}" id="{#CHECKLIST_ID#}" />
-                    <label for="{#CHECKLIST_ID#}">{#CHECKLIST_VALUE#}</label>
+                    <label for="{#CHECKLIST_ID#}">Water plants</label>
                   </div>
-                  <div class="task-form__checklist-item">
-                    <input type="checkbox" name="{#CHECKLIST_NAME#}" id="{#CHECKLIST_ID#}" />
-                    <label for="{#CHECKLIST_ID#}">{#CHECKLIST_VALUE#}</label>
-                  </div>
-                  <div class="task-form__checklist-item">
-                    <input type="checkbox" name="{#CHECKLIST_NAME#}" id="{#CHECKLIST_ID#}" />
-                    <label for="{#CHECKLIST_ID#}">{#CHECKLIST_VALUE#}</label>
-                  </div>
+
+                  <button class="btn-add-checklist-item">+ Add item</button>
                 </div>
               </div>
               <!-- END OF CHECKLIST ---------------------------------------- X -->
+
+              <!-- TO-DO CARD NOTE OPTION -->
+              <div class="task-form__note">
+                <div class="task-form__note-header">
+                  <input type="text" class="task-form__note-input-title" placeholder="Add note" />
+                  <!-- <div class="task-form__note-title">Note title</div> -->
+                  <div class="task-form__note-buttons">
+                    <button class="task-form__btn btn-save">
+                      <img src="./public/icons/save.png" alt="Save checklist" title="Save checklist" class="task-form__btn--icon" />
+                    </button>
+                  </div>
+                </div>
+                <div class="task-form__note-body">
+                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  <p>
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
+                </div>
+              </div>
             </div>
             <!-- FORM FOOTER -->
             <div class="task-form__footer">

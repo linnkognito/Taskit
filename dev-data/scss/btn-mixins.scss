@@ -29,7 +29,6 @@
   transition: vars.$ease-in;
 }
 @mixin btn-medium-hover($bg: vars.$col-primary) {
-  // color: vars.$col-black;
   background: $bg;
   @include btn-hover;
 }

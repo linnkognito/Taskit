@@ -27,7 +27,6 @@
   color: white;
 }
 .task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn {
-  display: flex;
   width: 2em;
   height: 2em;
   margin: 0 0.1em;
@@ -101,7 +100,6 @@
   color: white;
 }
 .task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn {
-  display: flex;
   width: 2em;
   height: 2em;
   margin: 0 0.1em;
@@ -132,9 +130,24 @@
   border: 1px solid rgb(204, 223, 240);
   border-radius: 0.9em;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-body input[type=checkbox]:checked + label {
+.task-form__checklist .task-form__checklist-body .task-form__checklist-item input[type=checkbox]:checked + label {
   text-decoration: line-through;
   color: rgb(163, 163, 163);
+}
+.task-form__checklist .task-form__checklist-body .btn-add-checklist-item {
+  padding: 0.1em 0.6em;
+  color: rgb(158, 158, 158);
+  background: rgba(204, 223, 240, 0.5);
+  transition: transform 0.2s ease-in;
+  border: none;
+  border-radius: 0.9em;
+  margin-top: 0.5em;
+}
+.task-form__checklist .task-form__checklist-body .btn-add-checklist-item:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+  color: white;
+  background: rgb(204, 223, 240);
 }
 
 /*# sourceMappingURL=task-checklist.css.map */

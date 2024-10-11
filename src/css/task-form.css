@@ -48,7 +48,6 @@
   color: rgba(158, 158, 158, 0.35);
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn {
-  display: flex;
   width: 2em;
   height: 2em;
   margin: 0 0.1em;

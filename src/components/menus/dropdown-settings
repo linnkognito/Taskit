@@ -1,0 +1,20 @@
+<!-- SETTINGS DROPDOWN ----------------------------------------------->
+<div class="dropdown-project sort-dropdown hidden">
+  <div class="dropdown-project__li sort-dropdown__li">
+    <img src="./public/icons/sort-prio.png" alt="Prio icon" class="icon-dropdown icon-swap" />
+    <span>Priority</span>
+  </div>
+  <div class="dropdown-project__li sort-dropdown__li">
+    <img src="./public/icons/sort-due-date.png" alt="Due icon" class="icon-dropdown icon-due" />
+    <span>Due date</span>
+  </div>
+  <div class="dropdown-project__li sort-dropdown__li">
+    <img src="./public/icons/sort-alpha.png" alt="Sort alphabetically icon" class="icon-dropdown icon-alpha" />
+    <span>Alphabetically</span>
+  </div>
+  <div class="dropdown-project__li sort-dropdown__li">
+    <img src="./public/icons/sort-created.png" alt="Created icon" class="icon-dropdown icon-created" />
+    <span>Created</span>
+  </div>
+</div>
+<!-- END OF SETTINGS DROPDOWN ----------------------------------- X -->
