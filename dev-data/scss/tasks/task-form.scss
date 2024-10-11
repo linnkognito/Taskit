@@ -1,5 +1,5 @@
-@use '../mixins';
-@use '../vars';
+@use '../utilities/mixins';
+@use '../utilities/vars';
 
 .task-form {
   @include mixins.card;

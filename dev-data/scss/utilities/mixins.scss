@@ -1,11 +1,11 @@
 // mixin.scss
 
 @use './vars';
-@use './tasks/task-mixins' as *;
+@use '../tasks/task-mixins' as *;
 @use './btn-mixins';
 
 @forward './vars';
-@forward './tasks/task-mixins';
+@forward '../tasks/task-mixins';
 @forward './btn-mixins';
 
 // FLEX //

@@ -1,6 +1,6 @@
 // task-note.scss
 
-@use '../mixins';
+@use '../utilities/mixins';
 
 .task-card__note {
   @include mixins.item;

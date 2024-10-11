@@ -2,7 +2,7 @@ import './css/animations/animations.css';
 import './css/assets/fonts.css';
 import './css/projects/project.css';
 import './css/projects/add-project.css';
-import './css/vars.css';
+import './css/utilities/vars.css';
 import './css/styles.css';
 import './css/tasks/task-card.css';
 import './css/tasks/task-form.css';
