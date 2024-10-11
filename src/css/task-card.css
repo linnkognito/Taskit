@@ -57,10 +57,11 @@
 }
 .task-card .task-card__header .task-card__buttons .task-card__btn:hover {
   transform: scale(1.05);
-  cursor: pointer;
   box-shadow: 0 0 2px white;
+  cursor: pointer;
 }
 .task-card .task-card__header .task-card__buttons .task-card__btn--icon {
+  width: 100%;
   height: 100%;
 }
 .task-card .task-card__body {

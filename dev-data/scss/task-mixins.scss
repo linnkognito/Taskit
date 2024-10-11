@@ -42,7 +42,7 @@
 
 @mixin buttons-header($cls) {
   .task-#{$cls}__btn {
-    // @include mixins.flex-center-all;
+    // @include btn-header;
     width: 2em;
     height: 2em;
     margin: 0 0.1em;
@@ -53,14 +53,13 @@
     cursor: pointer;
     transition: vars.$transform-ease-in;
   }
-
   .task-#{$cls}__btn:hover {
     transform: scale(1.05);
-    cursor: pointer;
     box-shadow: vars.$box-glow-mid;
+    cursor: pointer;
   }
-
   .task-#{$cls}__btn--icon {
+    width: 100%;
     height: 100%;
   }
 }

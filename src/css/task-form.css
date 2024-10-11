@@ -60,10 +60,11 @@
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn:hover {
   transform: scale(1.05);
-  cursor: pointer;
   box-shadow: 0 0 2px white;
+  cursor: pointer;
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn--icon {
+  width: 100%;
   height: 100%;
 }
 .task-form .task-form__body {
