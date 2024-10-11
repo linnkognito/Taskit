@@ -13,9 +13,12 @@ export class App {
       if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
     });
     projects.addEventListener('click', (e) => {
-      if (e.target.classList.contains('btn-settings')) {
-        const btn = e.target;
-        const id = this.getId(e.target);
+      let btn = e.target.closest('.project-card__btn');
+      const dropdown = document.querySelector('.dropdown-project');
+
+      if (btn) {
+        const id = this.getId(btn);
+        if (dropdown) hideElement(dropdown);
         this.projectsArr[id].openSettings(btn);
       }
     });

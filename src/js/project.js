@@ -9,7 +9,7 @@ export class Project {
 
   //-- HELPERS ----------------------------------------------//
   //-- MARKUP -----------------------------------------------//
-  dropdownMarkup() {
+  settingsMarkup() {
     return `
     <div class="settings-dropdown">
       <div class="settings-dropdown__li">Edit title</div>
@@ -20,24 +20,64 @@ export class Project {
     </div>
     `;
   }
+  sortMarkup() {
+    return `
+      <div class='dropdown-project sort-dropdown'>
+        <div class='dropdown-project__li sort-dropdown__li'>
+          <img src='./public/icons/sort-prio.png' alt='Prio icon' class='icon-dropdown icon-swap' />
+          <span>Priority</span>
+        </div>
+        <div class='dropdown-project__li sort-dropdown__li'>
+          <img src='./public/icons/sort-due-date.png' alt='Due icon' class='icon-dropdown icon-due' />
+          <span>Due date</span>
+        </div>
+        <div class='dropdown-project__li sort-dropdown__li'>
+          <img src='./public/icons/sort-alpha.png' alt='Sort alphabetically icon' class='icon-dropdown icon-alpha' />
+          <span>Alphabetically</span>
+        </div>
+        <div class='dropdown-project__li sort-dropdown__li'>
+          <img src='./public/icons/sort-created.png' alt='Created icon' class='icon-dropdown icon-created' />
+          <span>Created</span>
+        </div>
+      </div>;
+            `;
+  }
 
   //-- SETTINGS ---------------------------------------------//
   openSettings(btn) {
     const header = app.getHeaderEl(btn);
     const headerHeight = header.getBoundingClientRect().height;
     const project = app.getProject(this.id);
-    const markup = this.dropdownMarkup();
+    let markup;
+    let dropdown;
 
-    header.insertAdjacentHTML('afterend', markup);
+    if (btn.classList.contains('btn-settings')) {
+      markup = this.settingsMarkup();
+      header.insertAdjacentHTML('afterend', markup);
+      dropdown = project.querySelector('.settings-dropdown');
+      console.log(dropdown);
+    }
+    if (btn.classList.contains('btn-sort-tasks')) {
+      markup = this.sortMarkup();
+      header.insertAdjacentHTML('afterend', markup);
+      dropdown = project.querySelector('.sort-dropdown');
+      console.log(dropdown);
+    }
+    dropdown.style.top = `calc(${headerHeight}px)`; // Dropdown placement
 
+    dropdown.addEventListener('mouseleave', () => hideElement(dropdown)); // Close dropdown
+
+    /*
     const dropdown = project.querySelector('.settings-dropdown');
+    dropdown.style.top = `calc(${headerHeight}px)`; // Dropdown placement
+    dropdown.addEventListener('mouseleave', () => hideElement(dropdown)); // Close dropdown
+    */
+  }
 
-    // Dropdown placement //
-    dropdown.style.top = `calc(${headerHeight}px)`;
-
-    // Close dropdown //
-    dropdown.addEventListener('mouseleave', () => hideElement(dropdown));
-    // dropdown.addEventListener('mouseout', () => hideElement(dropdown));
+  //-- EFFECTS ---------------------------------------------//
+  swapIcon(btn) {
+    const header = app.getHeaderEl(btn);
+    const headerHeight = header.getBoundingClientRect().height;
   }
 }
 

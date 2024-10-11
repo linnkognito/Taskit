@@ -63,6 +63,7 @@
   color: white;
   background: none;
   border: 1px solid white;
+  transition: vars.$transform-ease-in;
   cursor: pointer;
 }
 .project-card__header button:hover {
@@ -93,8 +94,7 @@
 /*** PROJECT CARD SETTINGS DROPDOWN *********/
 .settings-dropdown,
 .dropdown-project {
-  margin-top: 4em; ///////////////    [!] DEV TEMPORARY [!]    ////////////////////////
-
+  //margin-top: 4em; //    [!] DEV TEMPORARY [!]    //
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -133,7 +133,7 @@
 
   .icon-dropdown {
     height: 1em;
-    margin: 0.3em 0 0.5em;
+    margin: 0.3em 0.5em 0.3em 0.25em;
     vertical-align: middle;
   }
 }
