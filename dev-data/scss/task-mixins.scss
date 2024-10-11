@@ -28,32 +28,40 @@
   align-items: center;
   column-gap: 0.5em;
 }
-@mixin btn-header() {
-  width: 2em;
-  height: 2em;
-  margin: 0 0.1em;
-  padding: 0.13em 0.06em;
-  background: none;
-  border: 1px solid white;
-  border-radius: 0.5em;
-  cursor: pointer;
-}
+// @mixin btn-header() {
+//   width: 2em;
+//   height: 2em;
+//   margin: 0 0.1em;
+//   padding: 0.13em 0.06em;
+//   background: none;
+//   border: 1px solid white;
+//   border-radius: 0.5em;
+//   cursor: pointer;
+//   transition: vars.$transform-ease-in;
+// }
+
 @mixin buttons-header($cls) {
   .task-#{$cls}__btn {
-    @include btn-header;
-
-    .task-#{$cls}__btn--icon {
-      height: 1.5em;
-    }
-    .task-#{$cls}__btn--icon:hover {
-      transform: scale(1.05);
-    }
-    .task-#{$cls}__btn--icon:active {
-      background: vars.$col-btn-active;
-    }
+    // @include mixins.flex-center-all;
+    width: 2em;
+    height: 2em;
+    margin: 0 0.1em;
+    padding: 0.13em 0.06em;
+    background: none;
+    border: 1px solid white;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: vars.$transform-ease-in;
   }
+
   .task-#{$cls}__btn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
     box-shadow: vars.$box-glow-mid;
+  }
+
+  .task-#{$cls}__btn--icon {
+    height: 100%;
   }
 }
 

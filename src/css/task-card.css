@@ -53,18 +53,15 @@
   border: 1px solid white;
   border-radius: 0.5em;
   cursor: pointer;
-}
-.task-card .task-card__header .task-card__buttons .task-card__btn .task-card__btn--icon {
-  height: 1.5em;
-}
-.task-card .task-card__header .task-card__buttons .task-card__btn .task-card__btn--icon:hover {
-  transform: scale(1.05);
-}
-.task-card .task-card__header .task-card__buttons .task-card__btn .task-card__btn--icon:active {
-  background: rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s ease-in;
 }
 .task-card .task-card__header .task-card__buttons .task-card__btn:hover {
+  transform: scale(1.05);
+  cursor: pointer;
   box-shadow: 0 0 2px white;
+}
+.task-card .task-card__header .task-card__buttons .task-card__btn--icon {
+  height: 100%;
 }
 .task-card .task-card__body {
   padding: 0.1em 0.7em 0.6em;

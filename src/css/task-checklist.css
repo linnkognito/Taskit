@@ -34,18 +34,15 @@
   border: 1px solid white;
   border-radius: 0.5em;
   cursor: pointer;
-}
-.task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn .task-card__btn--icon {
-  height: 1.5em;
-}
-.task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn .task-card__btn--icon:hover {
-  transform: scale(1.05);
-}
-.task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn .task-card__btn--icon:active {
-  background: rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s ease-in;
 }
 .task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn:hover {
+  transform: scale(1.05);
+  cursor: pointer;
   box-shadow: 0 0 2px white;
+}
+.task-card__checklist .task-card__checklist-header .task-card__buttons .task-card__btn--icon {
+  height: 100%;
 }
 .task-card__checklist .task-card__checklist-body {
   padding: 0.5em 1em;
