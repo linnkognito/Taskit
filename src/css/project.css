@@ -125,7 +125,9 @@
 }
 
 /*** PROJECT CARD SETTINGS DROPDOWN *********/
-.settings-dropdown {
+.settings-dropdown,
+.dropdown-project {
+  margin-top: 4em;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -142,20 +144,33 @@
   border-top: 1px solid white;
 }
 
-.settings-dropdown__li {
+.settings-dropdown__li,
+.dropdown-project__li {
   padding: 0.4em;
   transition: all 0.2s ease-in;
 }
 
-.settings-dropdown__li:hover {
+.settings-dropdown__li:hover,
+.dropdown-project__li:hover {
   color: rgb(213, 207, 204);
   background: white;
   cursor: pointer;
 }
 
-.settings-dropdown__li:active {
+.settings-dropdown__li:active,
+.dropdown-project__li:active {
   color: white;
   background: rgb(213, 207, 204);
+}
+
+.sort-dropdown__li {
+  display: flex;
+  align-items: center;
+}
+.sort-dropdown__li .icon-dropdown {
+  height: 1em;
+  margin: 0.3em 0 0.5em;
+  vertical-align: middle;
 }
 
 /*# sourceMappingURL=project.css.map */
