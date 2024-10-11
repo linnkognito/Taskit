@@ -170,6 +170,9 @@
   text-align: center;
   transition: all 0.2s ease-in;
 }
+.task-form .task-form__body .task-form__body-top .task-form__btn-due-date .icon-calendar {
+  width: 80%;
+}
 .task-form .task-form__body .task-form__body-top .task-form__btn-due-date:hover {
   color: rgb(158, 158, 158);
   background: rgba(213, 207, 204, 0.7);

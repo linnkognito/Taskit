@@ -113,6 +113,10 @@
         @include mixins.due-date;
         text-align: center;
         transition: vars.$ease-in;
+
+        .icon-calendar {
+          width: 80%;
+        }
       }
       .task-form__btn-due-date:hover {
         color: vars.$col-secondary;

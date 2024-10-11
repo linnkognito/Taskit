@@ -55,7 +55,9 @@
   align-items: center;
 }
 .project-card__header button {
+  @include mixins.flex-center-all;
   width: 1.2em;
+  height: 70%;
   margin: 0 0.15em;
   font-size: 1.5rem;
   color: white;
@@ -66,6 +68,10 @@
 .project-card__header button:hover {
   box-shadow: 0 0 2px white;
   transform: scale(1.05);
+}
+.project-card__header button img {
+  display: flex;
+  width: 90%;
 }
 .project-card__body {
   height: 100%;
