@@ -1,11 +1,10 @@
 // app.js
 
 import { Project } from './project';
-import { Helper } from './helpers';
+import { helper } from '../index';
 
 export class App {
   //-- CLASS PROPERTIES -------------------------------------//
-  helper = new Helper();
   projects = document.querySelector('#projects');
   addBtn = document.querySelector('.add-project__body');
   projectsArr = [new Project('Test project 💻', 0)];
@@ -20,13 +19,19 @@ export class App {
       let btn = e.target.closest('.project-card__btn');
       const id = this.getId(btn);
 
-      if (btn && btn.classList.contains('btn-add-task')) return this.projectsArr[id].addTask();
-      if (btn) this.projectsArr[id].openSettings(btn);
+      // ADD TASK BTN is clicked:
+      if (btn && btn.classList.contains('btn-add-task')) {
+        return this.projectsArr[id].addTask();
+      }
+      // SETTINGS BTN or SORT BTN is clicked:
+      if (btn && !btn.classList.contains('btn-add-task')) {
+        this.projectsArr[id].openSettings(btn);
+      }
     });
 
     document.addEventListener('click', (e) => {
       const modal = document.querySelector('.modal');
-      if (modal && e.target === modal) hideElement(modal);
+      if (modal && e.target === modal) helper.hideElement(modal);
     });
   }
 
@@ -78,8 +83,8 @@ export class App {
     // Keep original title name as placeholder //
     inputEl.value = titleEl.textContent;
 
-    this.helper.hideElement(titleEl);
-    this.helper.showElement(inputEl);
+    helper.hideElement(titleEl);
+    helper.showElement(inputEl);
     inputEl.focus();
 
     // Listen for save //
@@ -96,8 +101,8 @@ export class App {
     this.projectsArr[id].title = title;
     titleEl.textContent = title;
 
-    hideElement(inputEl);
-    showElement(titleEl);
+    helper.hideElement(inputEl);
+    helper.showElement(titleEl);
 
     this.projectsArr[id].title = title;
   }

@@ -1,16 +1,39 @@
 // project.js
 
-import { app } from '../index';
+import { app, helper } from '../index';
 import { Task } from './task';
-import { Helper } from './helpers';
+
+//-- TEMPLATES -------------------------------------------//
+import taskFormMarkup from '../components/tasks/forms/task-form.html';
 
 export class Project {
-  helper = new Helper();
   tasksArr = [];
 
   constructor(title, id) {
     this.title = title;
     this.id = id;
+
+    //this.eventListeners();
+  }
+
+  // eventListeners() {
+  //   this.projectEl().addEventListener('click', (e) => {
+  //     e.target.classList.contains('.btn-save');
+  //   });
+  // }
+
+  //-- HELPERS ----------------------------------------------//
+  getTaskId = (el) => el.closest('.task-form').dataset.id;
+
+  //-- GETTERS ----------------------------------------------//
+  get projectEl() {
+    return app.getProject(this.id);
+  }
+  get projectBody() {
+    return this.projectEl.querySelector('.project-card__body');
+  }
+  get taskEl() {
+    return document.querySelector(`.project-card[data-id="${this.id}"]`);
   }
 
   //-- MARKUP -----------------------------------------------//
@@ -63,24 +86,32 @@ export class Project {
       header.insertAdjacentHTML('afterend', this.sortMarkup());
       dropdown = project.querySelector('.sort-dropdown');
     }
-    // if (dropdown) {
+
     dropdown.style.top = `calc(${headerHeight}px)`; // placement
-    dropdown.addEventListener('mouseleave', () => this.helper.hideElement(dropdown)); // close}
-    // }
+    dropdown.addEventListener('mouseleave', () => helper.hideElement(dropdown)); // close}
   }
 
   //-- TASKS -----------------------------------------------//
   addTask() {
-    // Generate TASK FORM markup
-    const markup = this.helper.fetchMarkup('./components/tasks/forms/task-form.html');
-    console.log('addTask markup variable', markup);
-
-    // Make project pass itself to Task //
-    //const taskId = this.tasksArr.length;
-    //const newTask = new Task(taskId, title, prio, description, dueDate, dueTime, this);
-
-    //this.tasksArr.push(newTask);
+    this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
   }
+
+  newTask() {
+    const taskId = this.tasksArr.length;
+
+    // Grab all values
+
+    // Check if Task already exists
+    if (this.tasksArr[taskId]) saveTask();
+
+    // Create new Task instance & pass project (this)
+    const newTask = new Task(taskId, title, prio, description, dueDate, dueTime, this);
+
+    // Store instance in array
+    this.tasksArr.push(newTask);
+  }
+
+  saveTask() {}
 
   // deleteTask(id) {
   //   this.tasksArr.splice(id, 1);
