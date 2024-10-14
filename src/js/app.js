@@ -1,10 +1,11 @@
 // app.js
 
 import { Project } from './project';
-import { showElement, hideElement } from './helpers';
+import { Helper } from './helpers';
 
 export class App {
   //-- CLASS PROPERTIES -------------------------------------//
+  helper = new Helper();
   projects = document.querySelector('#projects');
   addBtn = document.querySelector('.add-project__body');
   projectsArr = [new Project('Test project 💻', 0)];
@@ -14,16 +15,15 @@ export class App {
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
     });
+
     projects.addEventListener('click', (e) => {
       let btn = e.target.closest('.project-card__btn');
-      const dropdown = document.querySelector('.dropdown-project');
+      const id = this.getId(btn);
 
-      if (btn) {
-        const id = this.getId(btn);
-        if (dropdown) hideElement(dropdown);
-        this.projectsArr[id].openSettings(btn);
-      }
+      if (btn && btn.classList.contains('btn-add-task')) return this.projectsArr[id].addTask();
+      if (btn) this.projectsArr[id].openSettings(btn);
     });
+
     document.addEventListener('click', (e) => {
       const modal = document.querySelector('.modal');
       if (modal && e.target === modal) hideElement(modal);
@@ -64,7 +64,6 @@ export class App {
     const inputEl = this.getInputEl(project);
     const titleEl = this.getTitleEl(project);
 
-    console.log(1, this.projectsArr);
     const newProject = new Project(`Untitled project ${id}`, id);
     this.projectsArr.push(newProject);
     inputEl.focus();
@@ -79,8 +78,8 @@ export class App {
     // Keep original title name as placeholder //
     inputEl.value = titleEl.textContent;
 
-    hideElement(titleEl);
-    showElement(inputEl);
+    this.helper.hideElement(titleEl);
+    this.helper.showElement(inputEl);
     inputEl.focus();
 
     // Listen for save //

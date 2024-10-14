@@ -82,11 +82,12 @@
 }
 /*** PROJECT CARD ADD TASK *********/
 .project-card__btn-add-task {
-  @include mixins-buttons.btn-task-wide(vars.$col-prio3-light);
+  @include mixins-buttons.btn-task-wide(vars.$col-primary-low-op);
 }
 .project-card__btn-add-task:hover {
-  box-shadow: vars.$box-glow;
-  transform: scale(1.01);
+  color: white;
+  background: vars.$col-primary;
+  transform: scale(1.02);
   cursor: pointer;
 }
 

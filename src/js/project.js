@@ -1,13 +1,18 @@
+// project.js
+
 import { app } from '../index';
-import { showElement, hideElement, containsClass } from './helpers';
+import { Task } from './task';
+import { Helper } from './helpers';
 
 export class Project {
+  helper = new Helper();
+  tasksArr = [];
+
   constructor(title, id) {
     this.title = title;
     this.id = id;
   }
 
-  //-- HELPERS ----------------------------------------------//
   //-- MARKUP -----------------------------------------------//
   settingsMarkup() {
     return `
@@ -48,40 +53,48 @@ export class Project {
     const header = app.getHeaderEl(btn);
     const headerHeight = header.getBoundingClientRect().height;
     const project = app.getProject(this.id);
-    let markup;
     let dropdown;
 
     if (btn.classList.contains('btn-settings')) {
-      markup = this.settingsMarkup();
-      header.insertAdjacentHTML('afterend', markup);
+      header.insertAdjacentHTML('afterend', this.settingsMarkup());
       dropdown = project.querySelector('.settings-dropdown');
     }
     if (btn.classList.contains('btn-sort-tasks')) {
-      markup = this.sortMarkup();
-      header.insertAdjacentHTML('afterend', markup);
+      header.insertAdjacentHTML('afterend', this.sortMarkup());
       dropdown = project.querySelector('.sort-dropdown');
-      console.log(dropdown);
-      console.log(markup);
     }
-    dropdown.style.top = `calc(${headerHeight}px)`; // Dropdown placement
-
-    dropdown.addEventListener('mouseleave', () => hideElement(dropdown)); // Close dropdown
-
-    /*
-    const dropdown = project.querySelector('.settings-dropdown');
-    dropdown.style.top = `calc(${headerHeight}px)`; // Dropdown placement
-    dropdown.addEventListener('mouseleave', () => hideElement(dropdown)); // Close dropdown
-    */
+    // if (dropdown) {
+    dropdown.style.top = `calc(${headerHeight}px)`; // placement
+    dropdown.addEventListener('mouseleave', () => this.helper.hideElement(dropdown)); // close}
+    // }
   }
 
+  //-- TASKS -----------------------------------------------//
+  addTask() {
+    // Generate TASK FORM markup
+    const markup = this.helper.fetchMarkup('./components/tasks/forms/task-form.html');
+    console.log('addTask markup variable', markup);
+
+    // Make project pass itself to Task //
+    //const taskId = this.tasksArr.length;
+    //const newTask = new Task(taskId, title, prio, description, dueDate, dueTime, this);
+
+    //this.tasksArr.push(newTask);
+  }
+
+  // deleteTask(id) {
+  //   this.tasksArr.splice(id, 1);
+  //   // Check if it exists in the checkedTasks array & delete that too
+  //   // Re-render code from Array
+  // }
+
+  // moveChecked(task) {
+  //   this.tasksArr[task.id].checked = true; // do i need this or does the array instance point to the same thinf
+  //   this.tasksArr.forEach((task) => {
+  //     // sort checked and unchecked based on default (or current) sort option
+  //   });
+  // }
+
+  // moveChecked(task) { }
   //-- EFFECTS ---------------------------------------------//
-  swapIcon(btn) {
-    const header = app.getHeaderEl(btn);
-    const headerHeight = header.getBoundingClientRect().height;
-  }
 }
-
-// getId = (el) => el.closest('.project-card').dataset.id;
-// getProject = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
-// getTitleEl = (parent) => parent.querySelector('.project-card__title');
-// getInputEl = (parent) => parent.querySelector('#project-title-input');

@@ -17,6 +17,7 @@
   letter-spacing: vars.$ls-primary;
   background: $col;
   @include btn-border();
+  transition: vars.$ease-in;
 }
 
 // MEDIUM BUTTON //

@@ -3,13 +3,14 @@ import './css/assets/fonts.css';
 import './css/projects/project.css';
 import './css/projects/add-project.css';
 import './css/utilities/vars.css';
-// styles used to be here
 import './css/tasks/task-card.css';
 import './css/tasks/task-form.css';
 import './css/tasks/task-checklist.css';
 import './css/tasks/task-note.css';
 import './css/modals/modal-due.css';
 import './css/styles.css';
+
+////////////////////////////
 import { App } from './js/app';
 
 let app;
