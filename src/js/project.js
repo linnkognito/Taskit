@@ -1,10 +1,12 @@
 // project.js
 
-import { app, helper } from '../index';
+import { app } from '../index';
 import { Task } from './task';
 
 //-- TEMPLATES -------------------------------------------//
 import taskFormMarkup from '../components/tasks/forms/task-form.html';
+import checklistMarkup from '../components/tasks/items/item-checklist.html';
+import noteMarkup from '../components/tasks/items/item-note.html';
 
 export class Project {
   tasksArr = [];
@@ -12,18 +14,11 @@ export class Project {
   constructor(title, id) {
     this.title = title;
     this.id = id;
-
-    //this.eventListeners();
   }
-
-  // eventListeners() {
-  //   this.projectEl().addEventListener('click', (e) => {
-  //     e.target.classList.contains('.btn-save');
-  //   });
-  // }
 
   //-- HELPERS ----------------------------------------------//
   getTaskId = (el) => el.closest('.task-form').dataset.id;
+  hasClass = (cls, el) => el.classList.contains(cls);
 
   //-- GETTERS ----------------------------------------------//
   get projectEl() {
@@ -33,7 +28,7 @@ export class Project {
     return this.projectEl.querySelector('.project-card__body');
   }
   get taskEl() {
-    return document.querySelector(`.project-card[data-id="${this.id}"]`);
+    return document.querySelector(`.task-card[data-id="${this.id}"]`);
   }
 
   //-- MARKUP -----------------------------------------------//
@@ -75,7 +70,7 @@ export class Project {
   openSettings(btn) {
     const header = app.getHeaderEl(btn);
     const headerHeight = header.getBoundingClientRect().height;
-    const project = app.getProject(this.id);
+    const project = this.projectEl;
     let dropdown;
 
     if (btn.classList.contains('btn-settings')) {
@@ -94,24 +89,65 @@ export class Project {
   //-- TASKS -----------------------------------------------//
   addTask() {
     this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
+    this.newTask(this.projectEl);
   }
 
-  newTask() {
+  newTask(project) {
+    const els = {
+      addBtns: project.querySelector('.task-form__add-item-buttons'),
+      taskFormBody: project.querySelector('.task-form__body'),
+
+      taskTitle: {
+        input: project.querySelector('#input-task-title'),
+        val: project.querySelector('#input-task-title').value,
+      },
+      description: {
+        input: project.querySelector('#input-task-description'),
+        val: project.querySelector('#input-task-description').value,
+      },
+      checklist: {
+        checklist: () => project.querySelector('.task-form__checklist'),
+      },
+
+      checklistTitle: () => project.querySelector('.task-form__checklist-input-title'),
+      noteTitle: () => project.querySelector('.task-form__note-input-title'),
+    };
+
     const taskId = this.tasksArr.length;
+
+    const insert = (markup) => els.addBtns.insertAdjacentHTML('afterend', markup);
 
     // Grab all values
 
+    ////////// MOVE TO TASK CLASS /////////////////////
+    // Listens for clicks on checklist & note buttons
+    els.addBtns.addEventListener('click', (e) => {
+      // Add checklist btn clicked:
+      if (this.hasClass('btn-add-checklist', e.target)) {
+        insert(checklistMarkup);
+        els.checklistTitle().focus();
+      }
+
+      // Add note btn clicked:
+      if (this.hasClass('btn-add-note', e.target)) {
+        insert(noteMarkup);
+        els.noteTitle().focus();
+      }
+    });
+
     // Check if Task already exists
-    if (this.tasksArr[taskId]) saveTask();
+    if (this.tasksArr[taskId]) return saveTask();
 
     // Create new Task instance & pass project (this)
     const newTask = new Task(taskId, title, prio, description, dueDate, dueTime, this);
 
     // Store instance in array
-    this.tasksArr.push(newTask);
+    //this.tasksArr.push(newTask);
   }
 
-  saveTask() {}
+  saveTask() {
+    console.log('entered saveTask()');
+  }
 
   // deleteTask(id) {
   //   this.tasksArr.splice(id, 1);

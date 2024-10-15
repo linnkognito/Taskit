@@ -6,17 +6,22 @@ import { helper } from '../index';
 export class App {
   //-- CLASS PROPERTIES -------------------------------------//
   projects = document.querySelector('#projects');
+  projectBtns = document.querySelector('.project-card__buttons');
   addBtn = document.querySelector('.add-project__body');
   projectsArr = [new Project('Test project 💻', 0)];
 
   constructor() {
     this.addBtn.addEventListener('click', this.renderProjectCard.bind(this));
+
+    // CLICKS
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
     });
 
+    // CLICKS ON PROJECT HEADER BTNS:
     projects.addEventListener('click', (e) => {
       let btn = e.target.closest('.project-card__btn');
+      if (!btn) return;
       const id = this.getId(btn);
 
       // ADD TASK BTN is clicked:
@@ -29,6 +34,7 @@ export class App {
       }
     });
 
+    // CLICKS OUTSIDE OF MODAL:
     document.addEventListener('click', (e) => {
       const modal = document.querySelector('.modal');
       if (modal && e.target === modal) helper.hideElement(modal);
