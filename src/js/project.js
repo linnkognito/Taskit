@@ -143,11 +143,7 @@ export class Project {
       const lvl = btn.dataset.prio;
 
       // Apply styles to current button
-      // btn.style.background = 'rgba(208, 175, 175, 1)';
-      btn.style.background = `vars.$col-prio${lvl}-active`;
-      btn.style.border = '1px solid white';
-      btn.style.boxShadow = '0 0 5px white';
-      btn.style.transform = 'scale(1.1)';
+      btn.classList.add(`.prio${lvl}-color-profile`);
 
       // Remove styles to non-current button if other btn is clicked
 

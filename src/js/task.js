@@ -7,9 +7,38 @@ export class Task {
   taskForm = document.querySelector('.task-form');
   btnDueDate = document.querySelector('.task-form__btn-due-date');
 
-  prioLevels = [0, 1, 2, 3];
+  prioLevels = [
+    {
+      primary: 'vars.$col-primary',
+      light: 'vars.$col-primary-op',
+      lightest: 'vars.$col-primary-low-op',
+      dark: 'vars.$col-primary-dark',
+      selected: 'vars.$col-primary-selected',
+    },
+    {
+      primary: 'vars.$col-prio1',
+      light: 'vars.$col-prio1-light',
+      lightest: 'vars.$col-prio1-xlight',
+      dark: 'vars.$col-prio1-dark',
+      selected: 'vars.$col-prio1-selected',
+    },
+    {
+      primary: 'vars.$col-prio2',
+      light: 'vars.$col-prio2-light',
+      lightest: 'vars.$col-prio2-xlight',
+      dark: 'vars.$col-prio2-dark',
+      selected: 'vars.$col-prio2-selected',
+    },
+    {
+      primary: 'vars.$col-prio3',
+      light: 'vars.$col-prio3-light',
+      lightest: 'vars.$col-prio3-xlight',
+      dark: 'vars.$col-prio3-dark',
+      selected: 'vars.$col-prio3-selected',
+    },
+  ];
 
-  constructor(title, prio, description, dueDate, dueTime, project) {
+  constructor(id, title, prio, description, dueDate, dueTime, project) {
     this.id = id;
     this.title = title;
     this.prio = prio;

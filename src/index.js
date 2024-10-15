@@ -5,6 +5,7 @@ import './css/assets/fonts.css';
 import './css/projects/project.css';
 import './css/projects/add-project.css';
 import './css/utilities/vars.css';
+import './css/utilities/color-profiles.css';
 import './css/tasks/task-card.css';
 import './css/tasks/task-form.css';
 import './css/tasks/task-checklist.css';
