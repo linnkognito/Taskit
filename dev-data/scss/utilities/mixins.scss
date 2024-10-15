@@ -26,7 +26,7 @@
 
 // ACTIVE PRIO BTN //
 @mixin active-prio-btn($bg) {
-  background: $bg;
+  background: $bg !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);

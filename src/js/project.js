@@ -3,10 +3,8 @@
 import { app } from '../index';
 import { Task } from './task';
 
-//-- TEMPLATES -------------------------------------------//
+//-- TEMPLATES ----------------------------------//
 import taskFormMarkup from '../components/tasks/forms/task-form.html';
-import checklistMarkup from '../components/tasks/items/item-checklist.html';
-import noteMarkup from '../components/tasks/items/item-note.html';
 
 export class Project {
   tasksArr = [];
@@ -16,11 +14,10 @@ export class Project {
     this.id = id;
   }
 
-  //-- HELPERS ----------------------------------------------//
+  //-- HELPERS ----------------------------------//
   getTaskId = (el) => el.closest('.task-form').dataset.id;
-  hasClass = (cls, el) => el.classList.contains(cls);
 
-  //-- GETTERS ----------------------------------------------//
+  //-- GETTERS ---------------------------------//
   get projectEl() {
     return app.getProject(this.id);
   }
@@ -31,7 +28,7 @@ export class Project {
     return document.querySelector(`.task-card[data-id="${this.id}"]`);
   }
 
-  //-- MARKUP -----------------------------------------------//
+  //-- MARKUP ---------------------------------//
   settingsMarkup() {
     return `
     <div class="settings-dropdown">
@@ -66,7 +63,7 @@ export class Project {
       `;
   }
 
-  //-- SETTINGS ---------------------------------------------//
+  //-- SETTINGS ------------------------------//
   openSettings(btn) {
     const header = app.getHeaderEl(btn);
     const headerHeight = header.getBoundingClientRect().height;
@@ -83,80 +80,20 @@ export class Project {
     }
 
     dropdown.style.top = `calc(${headerHeight}px)`; // placement
-    dropdown.addEventListener('mouseleave', () => helper.hideElement(dropdown)); // close}
+    dropdown.addEventListener('mouseleave', () => helper.hideElement(dropdown)); // close
   }
 
-  //-- TASKS -----------------------------------------------//
+  //-- TASKS --------------------------------//
   addTask() {
+    const form = document.querySelector('.task-form');
+    if (form) return;
+
     this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
-    this.newTask(this.projectEl);
-  }
 
-  newTask(project) {
-    const els = {
-      addBtns: project.querySelector('.task-form__add-item-buttons'),
-      taskFormBody: project.querySelector('.task-form__body'),
-
-      taskTitle: {
-        input: project.querySelector('#input-task-title'),
-        val: project.querySelector('#input-task-title').value,
-      },
-      prioBtns: {
-        parent: project.querySelector('.task-form__prio'),
-        btn: project.querySelector('.prio-btn'),
-      },
-      description: {
-        input: project.querySelector('#input-task-description'),
-        val: project.querySelector('#input-task-description').value,
-      },
-      checklist: {
-        checklist: () => project.querySelector('.task-form__checklist'),
-      },
-
-      checklistTitle: () => project.querySelector('.task-form__checklist-input-title'),
-      noteTitle: () => project.querySelector('.task-form__note-input-title'),
-    };
-
-    const taskId = this.tasksArr.length;
-    const insert = (markup) => els.addBtns.insertAdjacentHTML('afterend', markup);
-
-    // Listens for clicks on checklist & note buttons
-    els.addBtns.addEventListener('click', (e) => {
-      // Add checklist btn clicked:
-      if (this.hasClass('btn-add-checklist', e.target)) {
-        insert(checklistMarkup);
-        els.checklistTitle().focus();
-      }
-      // Add note btn clicked:
-      if (this.hasClass('btn-add-note', e.target)) {
-        insert(noteMarkup);
-        els.noteTitle().focus();
-      }
-    });
-
-    // Grab data-prio value from clicked button
-    els.prioBtns.parent.addEventListener('click', (e) => {
-      const btn = e.target.closest('.prio-btn');
-      if (!btn) return;
-
-      // Determine what button was clicked
-      const lvl = btn.dataset.prio;
-
-      // Apply styles to current button
-      btn.classList.add(`.prio${lvl}-color-profile`);
-
-      // Remove styles to non-current button if other btn is clicked
-
-      // Change color profile of task form based on prio
-
-      // Store prio value
-    });
-
-    // Grab all values
-
-    // Create new Task instance & pass project (this)
-    //const newTask = new Task(taskId, els.taskTitle.val, prio, description, dueDate, dueTime, this);
-    //this.tasksArr.push(newTask);
+    const id = this.tasksArr.length;
+    const projectEl = this.projectEl;
+    const newTask = new Task(id, this, projectEl);
+    this.tasksArr.push(newTask);
   }
 
   // deleteTask(id) {
@@ -173,5 +110,5 @@ export class Project {
   // }
 
   // moveChecked(task) { }
-  //-- EFFECTS ---------------------------------------------//
+  //-- EFFECTS ----------------------------------//
 }

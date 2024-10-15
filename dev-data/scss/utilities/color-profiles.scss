@@ -1,47 +1,47 @@
 @use './vars';
 @use './mixins';
 
+.prio0-color-profile {
+  @include mixins.active-prio-btn(vars.$col-primary-selected);
+}
 .prio1-color-profile {
   @include mixins.active-prio-btn(vars.$col-prio1-selected);
 }
 .prio2-color-profile {
-  @include mixins.active-prio-btn(vars.$col-prio1-selected);
+  @include mixins.active-prio-btn(vars.$col-prio2-selected);
 }
 .prio3-color-profile {
-  @include mixins.active-prio-btn(vars.$col-prio1-selected);
-}
-.prio0-color-profile {
-  @include mixins.active-prio-btn(vars.$col-prio1-selected);
+  @include mixins.active-prio-btn(vars.$col-prio3-selected);
 }
 
-$prio1-color-profile: (
-  'primary': vars.$col-prio1,
-  'light': vars.$col-prio1-light,
-  'x-light': vars.$col-prio1-xlight,
-  'dark': vars.$col-prio1-dark,
-  'selected': vars.$col-prio1-selected,
-);
+// $prio1-color-profile: (
+// 'primary': vars.$col-prio1,
+// 'light': vars.$col-prio1-light,
+// 'x-light': vars.$col-prio1-xlight,
+// 'dark': vars.$col-prio1-dark,
+// 'selected': vars.$col-prio1-selected,
+// );
 
-$prio2-color-profile: (
-  'primary': vars.$col-prio2,
-  'light': vars.$col-prio2-light,
-  'x-light': vars.$col-prio2-xlight,
-  'dark': vars.$col-prio2-dark,
-  'selected': vars.$col-prio2-selected,
-);
+// $prio2-color-profile: (
+// 'primary': vars.$col-prio2,
+// 'light': vars.$col-prio2-light,
+// 'x-light': vars.$col-prio2-xlight,
+// 'dark': vars.$col-prio2-dark,
+// 'selected': vars.$col-prio2-selected,
+// );
 
-$prio3-color-profile: (
-  'primary': vars.$col-prio3,
-  'light': vars.$col-prio3-light,
-  'x-light': vars.$col-prio3-xlight,
-  'dark': vars.$col-prio3-dark,
-  'selected': vars.$col-prio3-selected,
-);
+// $prio3-color-profile: (
+// 'primary': vars.$col-prio3,
+// 'light': vars.$col-prio3-light,
+// 'x-light': vars.$col-prio3-xlight,
+// 'dark': vars.$col-prio3-dark,
+// 'selected': vars.$col-prio3-selected,
+// );
 
-$default-color-profile: (
-  'primary': vars.$col-primary,
-  'light': vars.$col-primary-op,
-  'x-light': vars.$col-primary-low-op,
-  'dark': vars.$col-primary-dark,
-  'selected': vars.$col-primary-selected,
-);
+// $default-color-profile: (
+// 'primary': vars.$col-primary,
+// 'light': vars.$col-primary-op,
+// 'x-light': vars.$col-primary-low-op,
+// 'dark': vars.$col-primary-dark,
+// 'selected': vars.$col-primary-selected,
+// );
