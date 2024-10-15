@@ -101,6 +101,10 @@ export class Project {
         input: project.querySelector('#input-task-title'),
         val: project.querySelector('#input-task-title').value,
       },
+      prioBtns: {
+        parent: project.querySelector('.task-form__prio'),
+        btn: project.querySelector('.prio-btn'),
+      },
       description: {
         input: project.querySelector('#input-task-description'),
         val: project.querySelector('#input-task-description').value,
@@ -114,12 +118,8 @@ export class Project {
     };
 
     const taskId = this.tasksArr.length;
-
     const insert = (markup) => els.addBtns.insertAdjacentHTML('afterend', markup);
 
-    // Grab all values
-
-    ////////// MOVE TO TASK CLASS /////////////////////
     // Listens for clicks on checklist & note buttons
     els.addBtns.addEventListener('click', (e) => {
       // Add checklist btn clicked:
@@ -127,7 +127,6 @@ export class Project {
         insert(checklistMarkup);
         els.checklistTitle().focus();
       }
-
       // Add note btn clicked:
       if (this.hasClass('btn-add-note', e.target)) {
         insert(noteMarkup);
@@ -135,18 +134,33 @@ export class Project {
       }
     });
 
-    // Check if Task already exists
-    if (this.tasksArr[taskId]) return saveTask();
+    // Grab data-prio value from clicked button
+    els.prioBtns.parent.addEventListener('click', (e) => {
+      const btn = e.target.closest('.prio-btn');
+      if (!btn) return;
+
+      // Determine what button was clicked
+      const lvl = btn.dataset.prio;
+
+      // Apply styles to current button
+      // btn.style.background = 'rgba(208, 175, 175, 1)';
+      btn.style.background = `vars.$col-prio${lvl}-active`;
+      btn.style.border = '1px solid white';
+      btn.style.boxShadow = '0 0 5px white';
+      btn.style.transform = 'scale(1.1)';
+
+      // Remove styles to non-current button if other btn is clicked
+
+      // Change color profile of task form based on prio
+
+      // Store prio value
+    });
+
+    // Grab all values
 
     // Create new Task instance & pass project (this)
-    const newTask = new Task(taskId, title, prio, description, dueDate, dueTime, this);
-
-    // Store instance in array
+    //const newTask = new Task(taskId, els.taskTitle.val, prio, description, dueDate, dueTime, this);
     //this.tasksArr.push(newTask);
-  }
-
-  saveTask() {
-    console.log('entered saveTask()');
   }
 
   // deleteTask(id) {

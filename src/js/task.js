@@ -1,11 +1,8 @@
 // task.js
 
-import { app } from '../index';
-import { Helper } from './helpers';
+import { app, helper } from '../index';
 
 export class Task {
-  helper = new Helper();
-
   body = document.querySelector('body');
   taskForm = document.querySelector('.task-form');
   btnDueDate = document.querySelector('.task-form__btn-due-date');
@@ -29,7 +26,13 @@ export class Task {
     });
   }
 
-  // HELPERS //
+  saveTask() {
+    console.log('entered saveTask()');
+  }
+
+  updateTask() {
+    console.log('entered updateTask()');
+  }
 
   // calcDate() {}
 
