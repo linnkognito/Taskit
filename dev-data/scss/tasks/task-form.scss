@@ -118,20 +118,22 @@
           width: 80%;
         }
       }
-      .task-form__btn-due-date:hover {
-        color: vars.$col-secondary;
-        background: vars.$col-primary;
-        transform: scale(1.02);
-        cursor: pointer;
-      }
 
       // DUE DATE (BODY TOP) //
       .task-form__due-date {
         @include mixins.due-date;
+        transition: vars.$ease-in;
 
         .task-form__due-date--number {
           @include mixins.due-date-val;
         }
+      }
+      .task-form__btn-due-date:hover,
+      .task-form__due-date:hover {
+        color: white;
+        background: vars.$col-primary;
+        transform: scale(1.02);
+        cursor: pointer;
       }
     } // [X] END OF BODY TOP [X]
 

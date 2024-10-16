@@ -92,7 +92,7 @@
   align-items: center;
   min-width: 20%;
   color: white;
-  background: rgb(213, 207, 204);
+  background: rgba(213, 207, 204, 0.7);
   border-radius: 0.9em;
 }
 .task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--number {

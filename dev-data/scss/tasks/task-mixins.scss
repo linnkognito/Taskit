@@ -75,7 +75,7 @@
   border: 1px dashed $bdr-col;
   border-radius: vars.$br-primary;
 }
-@mixin due-date($bg: vars.$col-primary) {
+@mixin due-date($bg: vars.$col-primary-op) {
   display: flex;
   flex-direction: column;
   justify-content: center;

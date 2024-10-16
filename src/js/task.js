@@ -18,7 +18,7 @@ export class Task {
     this.title = `Untitled Task #${id}`;
     this.prio = 0;
     this.description = '';
-    this.due = { date: null, time: null };
+    this.dueDate = null;
     this.checked = false;
     //this.created = this.formatDate(new Date());
 
@@ -37,10 +37,6 @@ export class Task {
       description: {
         input: this.projectEl.querySelector('#input-task-description'),
         val: this.projectEl.querySelector('#input-task-description').value,
-      },
-      due: {
-        date: this.projectEl.querySelector('.due-date__input-date'),
-        time: this.projectEl.querySelector('.due-date__input-time'),
       },
       checklist: {
         checklist: () => this.projectEl.querySelector('.task-form__checklist'),
@@ -63,17 +59,17 @@ export class Task {
       this.setPrio(btn);
     });
     this.els.addBtns.addEventListener('click', (e) => {
-      const insert = (markup) => els.addBtns.insertAdjacentHTML('afterend', markup);
+      const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
 
       // Add checklist btn clicked:
       if (this.hasClass('btn-add-checklist', e.target)) {
         insert(checklistMarkup);
-        els.checklistTitle().focus();
+        this.els.checklistTitle().focus();
       }
       // Add note btn clicked:
       if (this.hasClass('btn-add-note', e.target)) {
         insert(noteMarkup);
-        els.noteTitle().focus();
+        this.els.noteTitle().focus();
       }
     });
     this.els.taskTitle.input.addEventListener('blur', (e) => {
@@ -117,17 +113,69 @@ export class Task {
     helper.insertMarkupAdj(this.body, 'afterbegin', dueModal);
 
     const modal = document.querySelector('.modal');
+    const btnSave = document.querySelector('.btn-save');
+    const btnCancel = document.querySelector('.btn-cancel');
 
-    modal.addEventListener('click', (e) => this.closeModal(e));
+    modal.addEventListener('click', (e) => this.closeModal(e, modal));
+    btnCancel.addEventListener('click', (e) => this.closeModal(e, modal));
+    btnSave.addEventListener('click', () => this.saveDue(modal));
   }
 
-  saveDue() {
-    const date = this.els.due.date.value;
-    const time = this.els.due.time.value;
+  saveDue(modal) {
+    const inputDate = document.querySelector('.input-due-date').value;
+    const inputTime = document.querySelector('.input-due-time').value;
+
+    if (!inputDate && !inputTime) return alert('📅 Pick a future date or Cancel');
+
+    const date = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
+    const time = inputTime ? inputTime : cur.toTimeString().slice(0, 5);
+
+    const [h, min] = time.split(':');
+    date.setHours(h);
+    date.setMinutes(min);
+
+    // Make sure the time is in the future
+    this.calcTime(date);
+
+    this.dueDate = date;
+
+    helper.hideElement(modal);
   }
 
-  closeModal(e) {
-    if (this.hasClass('.modal', e.target)) this.helper.hideElement(modal);
+  parseDate(date) {
+    const [y, m, d] = date.split('-');
+    return new Date(y, m - 1, d);
+  }
+
+  calcTime(date) {
+    const ms = date - new Date();
+
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(ms / (1000 * 60 * 60));
+    const mins = Math.floor(ms / (1000 * 60 * 60));
+
+    if (days < 0 || hours < 0 || mins < 0) return alert('❗ The selected date and/or time must be in the future');
+
+    console.log('days:', diffDays);
+    console.log('hours:', diffHours);
+    console.log('minutes:', diffMins);
+  }
+
+  displayDue(d, t) {
+    if (!d && !t) return;
+
+    const calendarBtn = this.projectEl.querySelector('.task-form__btn-due-date');
+    const due = this.projectEl.querySelector('.task-form__due-date');
+    const num = this.projectEl.querySelector('.task-form__due-date--number');
+    const unit = this.projectEl.querySelector('.task-form__due-date--unit');
+
+    if (!t) t = this.calcTime();
+
+    // Calculate time
+  }
+
+  closeModal(e, modal) {
+    if (this.hasClass('modal', e.target) || this.hasClass('btn-cancel', e.target)) helper.hideElement(modal);
   }
 
   //-- TASK -----------------------------------------//
