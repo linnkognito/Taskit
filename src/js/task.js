@@ -1,6 +1,9 @@
 // task.js
-
 import { app, helper } from '../index';
+
+import checklistMarkup from '../components/tasks/items/item-checklist.html';
+import noteMarkup from '../components/tasks/items/item-note.html';
+import dueModal from '../components/tasks/forms/modal-date-picker.html';
 
 export class Task {
   body = document.querySelector('body');
@@ -16,7 +19,6 @@ export class Task {
     this.prio = 0;
     this.description = '';
     this.due = { date: null, time: null };
-
     this.checked = false;
     //this.created = this.formatDate(new Date());
 
@@ -36,9 +38,14 @@ export class Task {
         input: this.projectEl.querySelector('#input-task-description'),
         val: this.projectEl.querySelector('#input-task-description').value,
       },
+      due: {
+        date: this.projectEl.querySelector('.due-date__input-date'),
+        time: this.projectEl.querySelector('.due-date__input-time'),
+      },
       checklist: {
         checklist: () => this.projectEl.querySelector('.task-form__checklist'),
       },
+      taskFooter: document.querySelector('.task-form__footer'),
 
       checklistTitle: () => this.projectEl.querySelector('.task-form__checklist-input-title'),
       noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
@@ -69,6 +76,20 @@ export class Task {
         els.noteTitle().focus();
       }
     });
+    this.els.taskTitle.input.addEventListener('blur', (e) => {
+      if (!e.target.checkValidity()) e.target.reportValidity();
+    });
+    this.els.taskFooter.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-form-footer');
+      console.log(e.target);
+      if (!btn) return;
+
+      if (this.hasClass('btn-save', btn)) {
+        console.log('btn-save clicked');
+        //this.saveTask();
+      }
+      if (this.hasClass('btn-cancel', btn)) console.log('btn-cancel clicked');
+    });
   }
   //-- HELPERS -------------------------------------//
   hasClass = (cls, el) => el.classList.contains(cls);
@@ -77,7 +98,7 @@ export class Task {
 
   //-- PRIO -----------------------------------------//
   setPrio(btn) {
-    // Remove active styles for all Prio buttons
+    // Remove active style for all Prio buttons
     this.els.prioBtns.btns.forEach((b) => {
       this.removeClass(`prio${b.dataset.prio}-color-profile`, b);
     });
@@ -91,34 +112,54 @@ export class Task {
     // for changing prio color on click
   }
 
+  //-- DUE -----------------------------------------//
+  openDueModal() {
+    helper.insertMarkupAdj(this.body, 'afterbegin', dueModal);
+
+    const modal = document.querySelector('.modal');
+
+    modal.addEventListener('click', (e) => this.closeModal(e));
+  }
+
+  saveDue() {
+    const date = this.els.due.date.value;
+    const time = this.els.due.time.value;
+  }
+
+  closeModal(e) {
+    if (this.hasClass('.modal', e.target)) this.helper.hideElement(modal);
+  }
+
   //-- TASK -----------------------------------------//
   saveTask() {
-    console.log('entered saveTask()');
+    // Extract values
+    this.title = els.taskTitle.val;
+    this.description = els.description.val;
+
+    // Update instance properties w/ values
+
+    // Hide form
+
+    /* Generate task card with the values
+          - if description = '' hide desc el
+    */
+    //
+
+    // I don't think I have to update the array element (I believe they point to the same object?)
   }
 
   updateTask() {
     console.log('entered updateTask()');
   }
 
-  // calcDate() {}
+  //calcDate() {}
 
-  // formatDate(date) {
-  //   return date;
-  // }
+  formatDate(date) {
+    return date;
+  }
 
-  // isChecked(task) {
-  //   this.checked = true;
-  //   this.project.moveChecked(task);
-  // }
-
-  // POPUPS //
-  // openDueModal() {
-  //   const markup = fetchMarkup('../../src/tasks/forms/modal-date-picker.html');
-  //   this.helper.insertMarkupAdj(body, 'afterbegin', markup);
-
-  //   const modal = document.querySelector('.modal-due-date');
-  //   modal.addEventListener('click', (e) => {
-  //     if (e.target.contains('.modal')) this.helper.showElement(modal);
-  //   });
-  // }
+  isChecked(task) {
+    this.checked = true;
+    this.project.moveChecked(task);
+  }
 }
