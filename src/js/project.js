@@ -1,6 +1,6 @@
 // project.js
 
-import { app } from '../index';
+import { app, helper } from '../index';
 import { Task } from './task';
 
 //-- TEMPLATES ----------------------------------//
