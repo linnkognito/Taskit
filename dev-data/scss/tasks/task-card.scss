@@ -53,11 +53,25 @@
 
       // DUE DATE (BODY TOP) //
       .task-card__due-date {
-        @include task-mixins.due-date;
+        @include mixins.due-date;
+        transition: vars.$ease-in;
 
-        .task-card__due-date--number {
-          @include task-mixins.due-date-val;
+        .task-card__due-date--date {
+          @include mixins.due-btn-date;
         }
+        .task-card__due-date--month {
+          @include mixins.due-btn-month;
+        }
+        .task-card__due-date--year {
+          @include mixins.due-btn-year;
+        }
+      }
+      .task-card__btn-due-date:hover,
+      .task-card__due-date:hover {
+        color: white;
+        background: vars.$col-primary;
+        transform: scale(1.02);
+        cursor: pointer;
       }
     } // [X] END OF TOP SECTION [X]
 

@@ -125,6 +125,9 @@ export class Task {
     const inputDate = document.querySelector('.input-due-date').value;
     const inputTime = document.querySelector('.input-due-time').value;
 
+    // User clicks Save w/out any input BUT w/ previous input
+    if (this.dueDate) this.getDueValue();
+
     // User clicks Save w/out any input
     if (!inputDate && !inputTime) return alert('📅 Pick a future date or Cancel');
 
@@ -147,50 +150,57 @@ export class Task {
     this.displayDue();
   }
 
+  getDueValue() {
+    const y = this.dueDate.getFullYear();
+    const m = this.dueDate.getMonth() + 1;
+    const d = this.dueDate.getDate();
+    // console.log('ye');
+    // console.log('y', y);
+    // console.log('m', m);
+    // console.log('d', d);
+  }
+
   parseDate(date) {
     const [y, m, d] = date.split('-');
     return new Date(y, m - 1, d);
   }
 
-  // I can pass this.dueDate to this function whenever I want
-  // --> Good for rendering
+  // UNUSED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   calcTimeDiff(date) {
-    const ms = date - new Date();
-    const mins = Math.floor(ms / (1000 * 60));
-    const hours = Math.floor(ms / (1000 * 60 * 60));
-    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const diffMs = date.getTime() - new Date().getTime();
 
-    return { days, hours, mins };
+    const calcYear = diffMs / (1000 * 60 * 60 * 24 * 365.25);
+    const years = calcYear >= 0.9 ? Math.ceil(calcYear) : Math.floor(calcYear);
+    let remaining = diffMs % (1000 * 60 * 60 * 24 * 365.25);
+
+    const days = Math.round(remaining / (1000 * 60 * 60 * 24));
+    remaining = remaining % (1000 * 60 * 60 * 24);
+
+    const hours = Math.floor(remaining / (1000 * 60 * 60));
+    remaining = remaining % (1000 * 60 * 60);
+
+    const mins = Math.floor(remaining / (1000 * 60));
+    remaining = remaining % (1000 * 60);
+
+    return { years, days, hours, mins };
   }
 
   displayDue() {
     const calendarBtn = this.projectEl.querySelector('.task-form__btn-due-date');
-    const due = this.projectEl.querySelector('.task-form__due-date');
-    const num = this.projectEl.querySelector('.task-form__due-date--number');
-    const unit = this.projectEl.querySelector('.task-form__due-date--unit');
+    const dueDateEl = this.projectEl.querySelector('.task-form__due-date');
+    const month = this.projectEl.querySelector('.task-form__due-date--month');
+    const date = this.projectEl.querySelector('.task-form__due-date--date');
+    const year = this.projectEl.querySelector('.task-form__due-date--year');
 
     // Get diff object
     const diff = this.calcTimeDiff(this.dueDate);
 
     // DOM
     helper.hideElement(calendarBtn);
-    helper.showElement(due);
-    num.innerHTML = '';
-    unit.innerHTML = '';
-
-    // Update text content depending on time difference
-    if (diff.days <= 0 && !diff.hours <= 0 && diff.mins <= 59) {
-      num.textContent = diff.mins;
-      unit.textContent = diff.mins === 1 ? 'min' : 'mins';
-    }
-    if (diff.days <= 0 && diff.hours >= 1) {
-      num.textContent = diff.hours;
-      unit.textContent = diff.hours === 1 ? 'hour' : 'hours';
-    }
-    if (diff.days >= 1) {
-      num.textContent = diff.days;
-      unit.textContent = diff.days === 1 ? 'day' : 'days';
-    }
+    helper.showElement(dueDateEl);
+    month.innerHTML = '';
+    date.innerHTML = '';
+    year.innerHTML = '';
   }
 
   closeModal(e, modal) {

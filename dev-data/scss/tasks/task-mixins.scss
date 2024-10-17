@@ -78,16 +78,27 @@
 @mixin due-date($bg: vars.$col-primary-op) {
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
   align-items: center;
   min-width: 20%;
+  padding: 0.2em;
+  line-height: 1;
   color: white;
   background: $bg;
   border-radius: vars.$br-primary;
 }
-@mixin due-date-val() {
-  font-size: 1.5rem;
+@mixin due-btn-month() {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+@mixin due-btn-date() {
+  margin: 0.1em 0;
+  font-size: 2rem;
   font-weight: 600;
+}
+@mixin due-btn-year() {
+  font-size: 0.8rem;
 }
 
 // CHECKLISTS & NOTES //

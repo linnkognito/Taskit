@@ -159,9 +159,12 @@
 .task-form .task-form__body .task-form__body-top .task-form__btn-due-date {
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
   align-items: center;
   min-width: 20%;
+  padding: 0.2em;
+  line-height: 1;
   color: white;
   background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
@@ -174,17 +177,28 @@
 .task-form .task-form__body .task-form__body-top .task-form__due-date {
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
   align-items: center;
   min-width: 20%;
+  padding: 0.2em;
+  line-height: 1;
   color: white;
   background: rgba(213, 207, 204, 0.7);
   border-radius: 0.9em;
   transition: all 0.2s ease-in;
 }
-.task-form .task-form__body .task-form__body-top .task-form__due-date .task-form__due-date--number {
-  font-size: 1.5rem;
+.task-form .task-form__body .task-form__body-top .task-form__due-date .task-form__due-date--date {
+  margin: 0.1em 0;
+  font-size: 2rem;
   font-weight: 600;
+}
+.task-form .task-form__body .task-form__body-top .task-form__due-date .task-form__due-date--month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+.task-form .task-form__body .task-form__body-top .task-form__due-date .task-form__due-date--year {
+  font-size: 0.8rem;
 }
 .task-form .task-form__body .task-form__body-top .task-form__btn-due-date:hover,
 .task-form .task-form__body .task-form__body-top .task-form__due-date:hover {

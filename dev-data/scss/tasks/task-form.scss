@@ -124,8 +124,14 @@
         @include mixins.due-date;
         transition: vars.$ease-in;
 
-        .task-form__due-date--number {
-          @include mixins.due-date-val;
+        .task-form__due-date--date {
+          @include mixins.due-btn-date;
+        }
+        .task-form__due-date--month {
+          @include mixins.due-btn-month;
+        }
+        .task-form__due-date--year {
+          @include mixins.due-btn-year;
         }
       }
       .task-form__btn-due-date:hover,

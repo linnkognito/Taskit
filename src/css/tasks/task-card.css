@@ -88,16 +88,35 @@
 .task-card .task-card__body .task-card__body-top .task-card__due-date {
   display: flex;
   flex-direction: column;
+  gap: 0;
   justify-content: center;
   align-items: center;
   min-width: 20%;
+  padding: 0.2em;
+  line-height: 1;
   color: white;
   background: rgba(213, 207, 204, 0.7);
   border-radius: 0.9em;
+  transition: all 0.2s ease-in;
 }
-.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--number {
-  font-size: 1.5rem;
+.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--date {
+  margin: 0.1em 0;
+  font-size: 2rem;
   font-weight: 600;
+}
+.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--year {
+  font-size: 0.8rem;
+}
+.task-card .task-card__body .task-card__body-top .task-card__btn-due-date:hover,
+.task-card .task-card__body .task-card__body-top .task-card__due-date:hover {
+  color: white;
+  background: rgb(213, 207, 204);
+  transform: scale(1.02);
+  cursor: pointer;
 }
 .task-card .task-card__body .task-card__footer {
   width: 100%;
