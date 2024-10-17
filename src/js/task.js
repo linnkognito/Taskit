@@ -118,10 +118,10 @@ export class Task {
 
     modal.addEventListener('click', (e) => this.closeModal(e, modal));
     btnCancel.addEventListener('click', (e) => this.closeModal(e, modal));
-    btnSave.addEventListener('click', () => this.saveDue(modal));
+    btnSave.addEventListener('click', () => this.saveDueDate(modal));
   }
 
-  saveDue(modal) {
+  saveDueDate(modal) {
     const inputDate = document.querySelector('.input-due-date').value;
     const inputTime = document.querySelector('.input-due-time').value;
 
@@ -147,17 +147,7 @@ export class Task {
 
     // Handle DOM elements
     helper.hideElement(modal);
-    this.displayDue();
-  }
-
-  getDueValue() {
-    const y = this.dueDate.getFullYear();
-    const m = this.dueDate.getMonth() + 1;
-    const d = this.dueDate.getDate();
-    // console.log('ye');
-    // console.log('y', y);
-    // console.log('m', m);
-    // console.log('d', d);
+    this.displayDueDate();
   }
 
   parseDate(date) {
@@ -166,41 +156,44 @@ export class Task {
   }
 
   // UNUSED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  calcTimeDiff(date) {
-    const diffMs = date.getTime() - new Date().getTime();
+  // calcTimeDiff(date) {
+  //   const diffMs = date.getTime() - new Date().getTime();
 
-    const calcYear = diffMs / (1000 * 60 * 60 * 24 * 365.25);
-    const years = calcYear >= 0.9 ? Math.ceil(calcYear) : Math.floor(calcYear);
-    let remaining = diffMs % (1000 * 60 * 60 * 24 * 365.25);
+  //   const calcYear = diffMs / (1000 * 60 * 60 * 24 * 365.25);
+  //   const years = calcYear >= 0.9 ? Math.ceil(calcYear) : Math.floor(calcYear);
+  //   let remaining = diffMs % (1000 * 60 * 60 * 24 * 365.25);
 
-    const days = Math.round(remaining / (1000 * 60 * 60 * 24));
-    remaining = remaining % (1000 * 60 * 60 * 24);
+  //   const days = Math.round(remaining / (1000 * 60 * 60 * 24));
+  //   remaining = remaining % (1000 * 60 * 60 * 24);
 
-    const hours = Math.floor(remaining / (1000 * 60 * 60));
-    remaining = remaining % (1000 * 60 * 60);
+  //   const hours = Math.floor(remaining / (1000 * 60 * 60));
+  //   remaining = remaining % (1000 * 60 * 60);
 
-    const mins = Math.floor(remaining / (1000 * 60));
-    remaining = remaining % (1000 * 60);
+  //   const mins = Math.floor(remaining / (1000 * 60));
+  //   remaining = remaining % (1000 * 60);
 
-    return { years, days, hours, mins };
-  }
+  //   return { years, days, hours, mins };
+  // }
 
-  displayDue() {
+  displayDueDate() {
+    const monthsArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
     const calendarBtn = this.projectEl.querySelector('.task-form__btn-due-date');
     const dueDateEl = this.projectEl.querySelector('.task-form__due-date');
     const month = this.projectEl.querySelector('.task-form__due-date--month');
     const date = this.projectEl.querySelector('.task-form__due-date--date');
     const year = this.projectEl.querySelector('.task-form__due-date--year');
 
-    // Get diff object
-    const diff = this.calcTimeDiff(this.dueDate);
-
-    // DOM
     helper.hideElement(calendarBtn);
     helper.showElement(dueDateEl);
+
     month.innerHTML = '';
     date.innerHTML = '';
     year.innerHTML = '';
+
+    month.textContent = `${this.dueDate.getMonth()}`;
+    date.textContent = `${monthsArr[this.dueDate.getDate()]}`;
+    year.textContent = `${this.dueDate.getFullYear()}`;
   }
 
   closeModal(e, modal) {
@@ -208,31 +201,10 @@ export class Task {
   }
 
   //-- TASK -----------------------------------------//
-  saveTask() {
-    // Extract values
-    this.title = els.taskTitle.val;
-    this.description = els.description.val;
-
-    // Update instance properties w/ values
-
-    // Hide form
-
-    /* Generate task card with the values
-          - if description = '' hide desc el
-    */
-    //
-
-    // I don't think I have to update the array element (I believe they point to the same object?)
-  }
+  saveTask() {}
 
   updateTask() {
     console.log('entered updateTask()');
-  }
-
-  //calcDate() {}
-
-  formatDate(date) {
-    return date;
   }
 
   isChecked(task) {
