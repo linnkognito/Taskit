@@ -21,6 +21,7 @@ export class Task {
     this.description = '';
     this.dueDate = null;
     this.dueTime = null;
+    this.dueDateObj = null;
     this.checked = false;
     //this.created = new Date();
 
@@ -112,6 +113,8 @@ export class Task {
 
   //-- DUE -----------------------------------------//
   openDueModal() {
+    if (document.querySelector('.modal-due-date')) document.querySelector('.modal-due-date').remove();
+
     helper.insertMarkupAdj(this.body, 'afterbegin', dueModal);
 
     const modal = document.querySelector('.modal');
@@ -128,17 +131,9 @@ export class Task {
       timeInput.value = this.dueTime;
     }
 
-    modal.addEventListener('click', (e) => this.closeModal(e, modal));
-    btnCancel.addEventListener('click', (e) => this.closeModal(e, modal));
-    btnSave.addEventListener('click', () => this.saveDueDate(modal));
-  }
-
-  toAMPM(t) {
-    const [h24, m] = t.split(':');
-    let h12 = h24 % 12 || 12;
-    const per = h24 >= 12 ? 'PM' : 'AM';
-
-    return `${h12}:${m} ${per}`;
+    modal.addEventListener('click', (e) => this.closeModal(e, modal), { once: true });
+    btnCancel.addEventListener('click', (e) => this.closeModal(e, modal), { once: true });
+    btnSave.addEventListener('click', () => this.saveDueDate(modal), { once: true });
   }
 
   saveDueDate(modal) {
@@ -151,17 +146,22 @@ export class Task {
     // Capture time
     const date = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
     const time = inputTime ? inputTime : new Date().toTimeString().slice(0, 5);
-
-    // Make sure the time is in the future
-    const diff = this.getFullDate(new Date(date), time).getTime() - new Date().getTime();
-    if (diff <= 0) return alert('❗ The selected date and/or time must be in the future');
+    const fullDate = this.getFullDate(date, time);
 
     // Set time
     this.dueDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     this.dueTime = time;
+    this.dueDateObj = fullDate;
+
+    console.log('Saving dueDate:', this.dueDate, 'Saving dueTime:', this.dueTime); // Debugging log
+    console.log('Full Date:', fullDate);
+
+    // Make sure the time is in the future
+    const diff = this.dueDateObj.getTime() - new Date().getTime();
+    if (diff < 0) return alert('❗ The selected date and/or time must be in the future');
 
     // Handle DOM elements
-    helper.hideElement(modal);
+    modal.remove();
     this.displayDueDate('form');
   }
 
@@ -212,28 +212,32 @@ export class Task {
     dateEl.innerHTML = '';
     yearEl.innerHTML = '';
 
-    const [y, m, d] = this.dueDate.split('-');
-    const diff = this.calcTimeDiff(new Date(y, m - 1, d));
+    const diff = this.calcTimeDiff(new Date(this.dueDateObj));
+    console.log(diff);
 
-    if (!diff.years && !diff.days && diff.hours) {
+    if (!diff.years && !diff.days && diff.hours && !diff.mins) {
       dateEl.textContent = diff.hours;
       yearEl.textContent = diff.hours === 1 ? 'hour' : 'hours';
     }
+    if (!diff.years && !diff.days && diff.hours && diff.mins) {
+      dateEl.textContent = `${diff.hours}h`;
+      yearEl.textContent = `${diff.mins} ${diff.mins === 1 ? 'min' : 'mins'}`;
+    }
     if (!diff.years && !diff.days && !diff.hours) {
-      dateEl.textContent = diff.mins;
-      yearEl.textContent = diff.mins === 1 ? 'min' : 'mins';
+      dateEl.textContent = Math.ceil(diff.mins);
+      yearEl.textContent = Math.ceil(diff.mins) === 1 ? 'min' : 'mins';
     }
     if (diff.days || diff.years) {
-      monthEl.textContent = `${monthsArr[+m - 1].slice(0, 3)}`;
-      dateEl.textContent = d;
-      yearEl.textContent = y;
+      monthEl.textContent = `${monthsArr[this.dueDateObj.getMonth()].slice(0, 3)}`;
+      dateEl.textContent = `${this.dueDateObj.getDate()}`;
+      yearEl.textContent = `${this.dueDateObj.getFullYear()}`;
     }
 
     dueDateEl.addEventListener('click', () => this.openDueModal());
   }
 
   closeModal(e, modal) {
-    if (this.hasClass('modal', e.target) || this.hasClass('btn-cancel', e.target)) helper.hideElement(modal);
+    if (this.hasClass('modal', e.target) || this.hasClass('btn-cancel', e.target)) modal.remove();
   }
 
   //-- TASK -----------------------------------------//
@@ -246,7 +250,7 @@ export class Task {
     this.description = description;
 
     // Hide form
-    helper.hideElement(this.taskForm);
+    this.taskForm.remove();
 
     let taskCardMarkup = taskCardTemp.replace('{%TASKCARD_ID%}', this.id).replace('{%TASKCARD_TITLE%}', this.title);
 
