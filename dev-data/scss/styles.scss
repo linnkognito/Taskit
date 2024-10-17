@@ -24,7 +24,7 @@ button {
 
 // HELPERS //
 .hidden {
-  display: none;
+  display: none !important;
 }
 .invisible {
   opacity: 0;
