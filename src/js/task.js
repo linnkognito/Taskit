@@ -4,6 +4,7 @@ import { app, helper } from '../index';
 import checklistMarkup from '../components/tasks/items/item-checklist.html';
 import noteMarkup from '../components/tasks/items/item-note.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
+import taskCardTemp from '../components/tasks/task-card.html';
 
 export class Task {
   body = document.querySelector('body');
@@ -19,8 +20,9 @@ export class Task {
     this.prio = 0;
     this.description = '';
     this.dueDate = null;
+    this.dueTime = null;
     this.checked = false;
-    //this.created = this.formatDate(new Date());
+    //this.created = new Date();
 
     this.els = {
       addBtns: this.projectEl.querySelector('.task-form__add-item-buttons'),
@@ -116,17 +118,32 @@ export class Task {
     const btnSave = document.querySelector('.btn-save');
     const btnCancel = document.querySelector('.btn-cancel');
 
+    // If the user previously entered values
+    if (this.dueDate) {
+      const dateInput = modal.querySelector('.input-due-date');
+      const timeInput = modal.querySelector('.input-due-time');
+
+      // Insert stored values into input fields
+      dateInput.value = this.dueDate;
+      timeInput.value = this.dueTime;
+    }
+
     modal.addEventListener('click', (e) => this.closeModal(e, modal));
     btnCancel.addEventListener('click', (e) => this.closeModal(e, modal));
     btnSave.addEventListener('click', () => this.saveDueDate(modal));
   }
 
+  toAMPM(t) {
+    const [h24, m] = t.split(':');
+    let h12 = h24 % 12 || 12;
+    const per = h24 >= 12 ? 'PM' : 'AM';
+
+    return `${h12}:${m} ${per}`;
+  }
+
   saveDueDate(modal) {
     const inputDate = document.querySelector('.input-due-date').value;
     const inputTime = document.querySelector('.input-due-time').value;
-
-    // User clicks Save w/out any input BUT w/ previous input
-    if (this.dueDate) this.getDueValue();
 
     // User clicks Save w/out any input
     if (!inputDate && !inputTime) return alert('📅 Pick a future date or Cancel');
@@ -134,20 +151,25 @@ export class Task {
     // Capture time
     const date = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
     const time = inputTime ? inputTime : new Date().toTimeString().slice(0, 5);
-    const [h, min] = time.split(':');
-    date.setHours(h);
-    date.setMinutes(min);
 
     // Make sure the time is in the future
-    const diff = this.calcTimeDiff(date);
-    if (diff < 0) return alert('❗ The selected date and/or time must be in the future');
+    const diff = this.getFullDate(new Date(date), time).getTime() - new Date().getTime();
+    if (diff <= 0) return alert('❗ The selected date and/or time must be in the future');
 
     // Set time
-    this.dueDate = date;
+    this.dueDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    this.dueTime = time;
 
     // Handle DOM elements
     helper.hideElement(modal);
-    this.displayDueDate();
+    this.displayDueDate('form');
+  }
+
+  getFullDate(date, time) {
+    const [h, m] = time.split(':');
+    date.setHours(h);
+    date.setMinutes(m);
+    return date;
   }
 
   parseDate(date) {
@@ -155,45 +177,59 @@ export class Task {
     return new Date(y, m - 1, d);
   }
 
-  // UNUSED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // calcTimeDiff(date) {
-  //   const diffMs = date.getTime() - new Date().getTime();
+  calcTimeDiff(date) {
+    const diffMs = date.getTime() - new Date().getTime();
 
-  //   const calcYear = diffMs / (1000 * 60 * 60 * 24 * 365.25);
-  //   const years = calcYear >= 0.9 ? Math.ceil(calcYear) : Math.floor(calcYear);
-  //   let remaining = diffMs % (1000 * 60 * 60 * 24 * 365.25);
+    const calcYear = diffMs / (1000 * 60 * 60 * 24 * 365.25);
+    const years = calcYear >= 0.9 ? Math.ceil(calcYear) : Math.floor(calcYear);
+    let remaining = diffMs % (1000 * 60 * 60 * 24 * 365.25);
 
-  //   const days = Math.round(remaining / (1000 * 60 * 60 * 24));
-  //   remaining = remaining % (1000 * 60 * 60 * 24);
+    const days = Math.round(remaining / (1000 * 60 * 60 * 24));
+    remaining = remaining % (1000 * 60 * 60 * 24);
 
-  //   const hours = Math.floor(remaining / (1000 * 60 * 60));
-  //   remaining = remaining % (1000 * 60 * 60);
+    const hours = Math.floor(remaining / (1000 * 60 * 60));
+    remaining = remaining % (1000 * 60 * 60);
 
-  //   const mins = Math.floor(remaining / (1000 * 60));
-  //   remaining = remaining % (1000 * 60);
+    const mins = Math.floor(remaining / (1000 * 60));
+    remaining = remaining % (1000 * 60);
 
-  //   return { years, days, hours, mins };
-  // }
+    return { years, days, hours, mins };
+  }
 
-  displayDueDate() {
+  displayDueDate(cls) {
     const monthsArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    const calendarBtn = this.projectEl.querySelector('.task-form__btn-due-date');
-    const dueDateEl = this.projectEl.querySelector('.task-form__due-date');
-    const month = this.projectEl.querySelector('.task-form__due-date--month');
-    const date = this.projectEl.querySelector('.task-form__due-date--date');
-    const year = this.projectEl.querySelector('.task-form__due-date--year');
+    const calendarBtn = this.projectEl.querySelector(`.task-${cls}__btn-due-date`);
+    const dueDateEl = this.projectEl.querySelector(`.task-${cls}__due-date`);
+    const monthEl = this.projectEl.querySelector(`.task-${cls}__due-date--month`);
+    const dateEl = this.projectEl.querySelector(`.task-${cls}__due-date--date`);
+    const yearEl = this.projectEl.querySelector(`.task-${cls}__due-date--year`);
 
-    helper.hideElement(calendarBtn);
+    if (calendarBtn) helper.hideElement(calendarBtn);
     helper.showElement(dueDateEl);
 
-    month.innerHTML = '';
-    date.innerHTML = '';
-    year.innerHTML = '';
+    monthEl.innerHTML = '';
+    dateEl.innerHTML = '';
+    yearEl.innerHTML = '';
 
-    month.textContent = `${this.dueDate.getMonth()}`;
-    date.textContent = `${monthsArr[this.dueDate.getDate()]}`;
-    year.textContent = `${this.dueDate.getFullYear()}`;
+    const [y, m, d] = this.dueDate.split('-');
+    const diff = this.calcTimeDiff(new Date(y, m - 1, d));
+
+    if (!diff.years && !diff.days && diff.hours) {
+      dateEl.textContent = diff.hours;
+      yearEl.textContent = diff.hours === 1 ? 'hour' : 'hours';
+    }
+    if (!diff.years && !diff.days && !diff.hours) {
+      dateEl.textContent = diff.mins;
+      yearEl.textContent = diff.mins === 1 ? 'min' : 'mins';
+    }
+    if (diff.days || diff.years) {
+      monthEl.textContent = `${monthsArr[+m - 1].slice(0, 3)}`;
+      dateEl.textContent = d;
+      yearEl.textContent = y;
+    }
+
+    dueDateEl.addEventListener('click', () => this.openDueModal());
   }
 
   closeModal(e, modal) {
@@ -201,7 +237,29 @@ export class Task {
   }
 
   //-- TASK -----------------------------------------//
-  saveTask() {}
+  saveTask() {
+    // Grab value from title
+    const title = this.projectEl.querySelector('#input-task-title').value;
+    const description = this.projectEl.querySelector('#input-task-description').value;
+
+    this.title = title;
+    this.description = description;
+
+    // Hide form
+    helper.hideElement(this.taskForm);
+
+    let taskCardMarkup = taskCardTemp.replace('{%TASKCARD_ID%}', this.id).replace('{%TASKCARD_TITLE%}', this.title);
+
+    // Check if there's a description
+    taskCardMarkup.replace('{%TASKCARD_DESCRIPTION%}', description ? description : 'Add a description');
+
+    // Generate task card
+    helper.insertMarkupAdj(this.projectEl, 'afterbegin', taskCardMarkup);
+
+    // Grab and dislay due date values
+    this.displayDueDate('card');
+    console.log(this.project.taskArr);
+  }
 
   updateTask() {
     console.log('entered updateTask()');

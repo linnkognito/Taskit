@@ -1,17 +1,17 @@
-<!-- TASK CARD ------------------------------------------------->
-<div class="task-card">
+<!-- TASK CARD ----------------------------------------------------->
+<div class="task-card" data-id="{%TASKCARD_ID%}">
   <!-- HEADER -->
   <div class="task-card__header">
     <div class="task-card__title-wrapper">
-      <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
+      <img src="../../../public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
       <div class="task-card__title">{%TASKCARD_TITLE%}</div>
     </div>
     <div class="task-card__buttons">
       <button class="task-card__btn btn-add-task">
-        <img src="./public/icons/edit.png" alt="Edit task" class="task-card__btn--icon" />
+        <img src="../../../public/icons/edit.png" alt="Edit task" class="task-card__btn--icon" />
       </button>
       <button class="task-card__btn btn-settings">
-        <img src="./public/icons/delete.png" alt="Delete task" class="task-card__btn--icon" />
+        <img src="../../../public/icons/delete.png" alt="Delete task" class="task-card__btn--icon" />
       </button>
     </div>
   </div>
@@ -31,7 +31,46 @@
     <!-- FOOTER -->
     <div class="task-card__footer">
       <div class="task-card__creation-date">Created: {%TASKCARD_CREATED%}</div>
-      <img src="./public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
+      <img src="../../../public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
+    </div>
+  </div>
+</div>
+<!-- END OF TASK CARD ---------------------------------------- X -->
+
+<!-- TASK CARD ------------------------------------------------->
+<div class="task-card" data-id="{%TASKCARD_ID%}">
+  <!-- HEADER -->
+  <div class="task-card__header">
+    <div class="task-card__title-wrapper">
+      <img src="../../../public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
+      <div class="task-card__title">{%TASKCARD_TITLE%}</div>
+    </div>
+    <div class="task-card__buttons">
+      <button class="task-card__btn btn-add-task">
+        <img src="../../../public/icons/edit.png" alt="Edit task" class="task-card__btn--icon" />
+      </button>
+      <button class="task-card__btn btn-settings">
+        <img src="../../../public/icons/delete.png" alt="Delete task" class="task-card__btn--icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="task-card__body">
+    <!-- PREVIEW / BODY TOP -->
+    <div class="task-card__body-top">
+      <div class="task-card__description">{%TASKCARD_DESCRIPTION%}</div>
+      <div class="task-card__due-date">
+        <span class="task-form__due-date--month">{%TASKCARD_DUE_MONTH%}</span>
+        <span class="task-card__due-date--date">{%TASKCARD_DUE_DATE%}</span>
+        <span class="task-card__due-date--year">{%TASKCARD_DUE_YEAR%}</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="task-card__footer">
+      <div class="task-card__creation-date">Created: {%TASKCARD_CREATED%}</div>
+      <img src="../../../public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
     </div>
   </div>
 </div>
