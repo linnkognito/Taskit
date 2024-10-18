@@ -16,20 +16,20 @@ export class App {
     this.addBtn.addEventListener('click', this.createNewProject.bind(this));
 
     // CLICKS ON PROJECT HEADER BTNS:
-    projects.addEventListener('click', (e) => {
-      let btn = e.target.closest('.project-card__btn');
-      if (!btn) return;
-      const id = this.getId(btn);
+    // projects.addEventListener('click', (e) => {
+    //   let btn = e.target.closest('.project-card__btn');
+    //   if (!btn) return;
+    //   const id = this.getId(btn);
 
-      // ADD TASK BTN is clicked:
-      if (btn && btn.classList.contains('btn-add-task')) {
-        return this.projectsArr[id].addTask();
-      }
-      // SETTINGS BTN or SORT BTN is clicked:
-      if (btn && !btn.classList.contains('btn-add-task')) {
-        this.projectsArr[id].openSettings(btn);
-      }
-    });
+    //   // ADD TASK BTN is clicked:
+    //   if (btn && btn.classList.contains('btn-add-task')) {
+    //     return this.projectsArr[id].addTask();
+    //   }
+    //   // SETTINGS BTN or SORT BTN is clicked:
+    //   if (btn && !btn.classList.contains('btn-add-task')) {
+    //     this.projectsArr[id].openSettings(btn);
+    //   }
+    // });
 
     // CLICKS OUTSIDE OF MODAL:
     document.addEventListener('click', (e) => {
@@ -68,6 +68,7 @@ export class App {
 
     // Capture title
     inputEl.addEventListener('blur', () => newProject.saveProjectTitle());
+    console.log(newProject);
   }
 
   renderProjectCard(id) {

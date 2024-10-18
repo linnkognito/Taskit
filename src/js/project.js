@@ -14,7 +14,6 @@ export class Project {
   constructor(id) {
     this.id = id;
     this.title = `Untitled #${this.id}`;
-    this.projectEl = this.getProjectEl(this.id);
   }
 
   //-- EVENT HANDLERS ----------------------------//
@@ -30,10 +29,13 @@ export class Project {
   }
 
   //-- HELPERS ----------------------------------//
-  getProjectEl = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
+  // getProjectEl = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
   getTaskId = (el) => el.closest('.task-form').dataset.id;
 
   //-- GETTERS ---------------------------------//
+  get projectEl() {
+    return document.querySelector(`.project-card[data-id="${this.id}"]`);
+  }
   get projectBody() {
     return this.projectEl.querySelector('.project-card__body');
   }
