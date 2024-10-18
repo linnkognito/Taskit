@@ -23,7 +23,7 @@ export class Task {
     this.dueTime = null;
     this.dueDateObj = null;
     this.checked = false;
-    //this.created = new Date();
+    this.created = null;
 
     this.els = {
       addBtns: this.projectEl.querySelector('.task-form__add-item-buttons'),
@@ -84,10 +84,9 @@ export class Task {
       if (!btn) return;
 
       if (this.hasClass('btn-save', btn)) {
-        console.log('btn-save clicked');
-        //this.saveTask();
+        this.saveTask();
       }
-      if (this.hasClass('btn-cancel', btn)) console.log('btn-cancel clicked');
+      if (this.hasClass('btn-cancel', btn)) this.taskForm.remove();
     });
   }
   //-- HELPERS -------------------------------------//
@@ -205,6 +204,8 @@ export class Task {
     const dateEl = this.projectEl.querySelector(`.task-${cls}__due-date--date`);
     const yearEl = this.projectEl.querySelector(`.task-${cls}__due-date--year`);
 
+    if (!this.dueDateObj) return;
+
     if (calendarBtn) helper.hideElement(calendarBtn);
     helper.showElement(dueDateEl);
 
@@ -213,7 +214,6 @@ export class Task {
     yearEl.innerHTML = '';
 
     const diff = this.calcTimeDiff(new Date(this.dueDateObj));
-    console.log(diff);
 
     if (!diff.years && !diff.days && diff.hours && !diff.mins) {
       dateEl.textContent = diff.hours;
@@ -240,25 +240,50 @@ export class Task {
     if (this.hasClass('modal', e.target) || this.hasClass('btn-cancel', e.target)) modal.remove();
   }
 
+  formatDate(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, 0);
+    const d = String(date.getDate()).padStart(2, 0);
+
+    return `${m}/${d}/${y}`;
+  }
+
+  toAmPm(date) {
+    const time = date.toTimeString().slice(0, 5);
+    const [h24, min] = time.split(':');
+    const h12 = h24 % 12 || 12;
+    const per = h12 > 12 ? 'PM' : 'AM';
+
+    return `${h12}:${min} ${per}`;
+  }
+
   //-- TASK -----------------------------------------//
   saveTask() {
     // Grab value from title
-    const title = this.projectEl.querySelector('#input-task-title').value;
-    const description = this.projectEl.querySelector('#input-task-description').value;
+    const title = this.projectEl.querySelector('#input-task-title');
+    const description = this.projectEl.querySelector('#input-task-description');
 
-    this.title = title;
-    this.description = description;
+    this.title = title.value;
+    this.description = description.value;
+    this.created = new Date();
+
+    const createdStr = () => {
+      const d = this.formatDate(this.created);
+      const t = this.toAmPm(this.created);
+      return `${d}, ${t}`;
+    };
 
     // Hide form
     this.taskForm.remove();
-
-    let taskCardMarkup = taskCardTemp.replace('{%TASKCARD_ID%}', this.id).replace('{%TASKCARD_TITLE%}', this.title);
-
-    // Check if there's a description
-    taskCardMarkup.replace('{%TASKCARD_DESCRIPTION%}', description ? description : 'Add a description');
+    let taskCardMarkup = taskCardTemp
+      .replace('{%TASKCARD_ID%}', this.id)
+      .replace('{%TASKCARD_TITLE%}', this.title)
+      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
+      .replace('{%TASKCARD_CREATED%}', `${createdStr()}`);
 
     // Generate task card
-    helper.insertMarkupAdj(this.projectEl, 'afterbegin', taskCardMarkup);
+    const projectBody = this.projectEl.querySelector('.project-card__body');
+    helper.insertMarkupAdj(projectBody, 'afterbegin', taskCardMarkup);
 
     // Grab and dislay due date values
     this.displayDueDate('card');
