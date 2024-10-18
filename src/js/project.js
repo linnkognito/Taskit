@@ -5,62 +5,72 @@ import { Task } from './task';
 
 //-- TEMPLATES ----------------------------------//
 import taskFormMarkup from '../components/tasks/forms/task-form.html';
+import dropdownSort from '../components/menus/dropdown-sort.html';
+import dropdownSettings from '../components/menus/dropdown-settings.html';
 
 export class Project {
   tasksArr = [];
 
-  constructor(id, title) {
-    this.title = title;
+  constructor(id) {
     this.id = id;
+    this.title = `Untitled #${this.id}`;
+    this.projectEl = this.getProjectEl(this.id);
+  }
+
+  //-- EVENT HANDLERS ----------------------------//
+  initListeners() {
+    this.projectEl.addEventListener('click', (e) => this.addTask(e));
+    this.projectEl.addEventListener('click', (e) => this.clickedTitle(e));
+  }
+
+  clickedTitle(e) {
+    const title = e.target.closest('.project-card__title');
+    if (!title) return;
+    this.editProjectTitle(e.target);
   }
 
   //-- HELPERS ----------------------------------//
+  getProjectEl = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
   getTaskId = (el) => el.closest('.task-form').dataset.id;
 
   //-- GETTERS ---------------------------------//
-  get projectEl() {
-    return app.getProject(this.id);
-  }
   get projectBody() {
     return this.projectEl.querySelector('.project-card__body');
+  }
+  get titleEl() {
+    return this.projectEl.querySelector('.project-card__title');
+  }
+  get inputEl() {
+    return this.projectEl.querySelector('.project-card__title-input');
   }
   get taskEl() {
     return document.querySelector(`.task-card[data-id="${this.id}"]`);
   }
 
-  //-- MARKUP ---------------------------------//
-  settingsMarkup() {
-    return `
-    <div class="settings-dropdown">
-      <div class="settings-dropdown__li">Edit title</div>
-      <div class="settings-dropdown__li">Clone project</div>
-      <div class="settings-dropdown__li">Mark all task complete</div>
-      <div class="settings-dropdown__li">Delete expired tasks</div>
-      <div class="settings-dropdown__li">Delete project</div>
-    </div>
-    `;
+  //-- TITLE ---------------------------------//
+  saveProjectTitle() {
+    let inputEl = this.inputEl;
+    this.titleEl.textContent = this.title;
+
+    // Store new title or set default
+    this.title = inputEl.value.trim() || `Untitled #${this.id}`;
+
+    helper.hideAndShowEls(inputEl, this.titleEl);
   }
-  sortMarkup() {
-    return `
-      <div class='dropdown-project sort-dropdown'>
-        <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./icons/sort-prio.png' alt='Prio icon' class='icon-dropdown icon-swap' />
-          <span>Priority</span>
-        </div>
-        <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./icons/sort-due-date.png' alt='Due icon' class='icon-dropdown icon-due' />
-          <span>Due date</span>
-        </div>
-        <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./icons/sort-alpha.png' alt='Sort alphabetically icon' class='icon-dropdown icon-alpha' />
-          <span>Alphabetically</span>
-        </div>
-        <div class='dropdown-project__li sort-dropdown__li'>
-          <img src='./icons/sort-created.png' alt='Created icon' class='icon-dropdown icon-created' />
-          <span>Created</span>
-        </div>
-      </div>
-      `;
+
+  editProjectTitle() {
+    helper.hideAndShowEls(this.titleEl, this.inputEl);
+    this.inputEl.value = this.title;
+    this.inputEl.focus();
+
+    // Listen for save //
+    if (this.inputEl) {
+      this.inputEl.addEventListener('keydown', (e) => {
+        const enter = e.key === 'Enter';
+        if (enter && this.inputEl) this.saveProjectTitle();
+      });
+      this.inputEl.addEventListener('blur', () => this.saveProjectTitle());
+    }
   }
 
   //-- SETTINGS ------------------------------//
@@ -84,16 +94,18 @@ export class Project {
   }
 
   //-- TASKS --------------------------------//
-  addTask() {
+  addTask(e) {
     const form = document.querySelector('.task-form');
     if (form) return;
 
-    this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
+    const btn = e.target.closest('.btn-add-task');
 
-    const id = this.tasksArr.length;
-    const projectEl = this.projectEl;
-    const newTask = new Task(id, this, projectEl);
-    this.tasksArr.push(newTask);
+    if (btn) {
+      this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
+
+      const newTask = new Task(this.tasksArr.lengt + 1, this, this.projectEl);
+      this.tasksArr.push(newTask);
+    }
   }
 
   // deleteTask(id) {

@@ -10,15 +10,10 @@ export class App {
   projects = document.querySelector('#projects');
   projectBtns = document.querySelector('.project-card__buttons');
   addBtn = document.querySelector('.add-project__body');
-  projectsArr = [new Project('Test project 💻', 0)];
+  projectsArr = [];
 
   constructor() {
-    this.addBtn.addEventListener('click', this.renderProjectCard.bind(this));
-
-    // CLICKS
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('project-card__title')) this.editProjectTitle(e.target);
-    });
+    this.addBtn.addEventListener('click', this.createNewProject.bind(this));
 
     // CLICKS ON PROJECT HEADER BTNS:
     projects.addEventListener('click', (e) => {
@@ -51,12 +46,31 @@ export class App {
   getInputEl = (parent) => parent.querySelector('.project-card__title-input');
 
   //-- METHODS ----------------------------------------------//
-  renderProjectCard() {
+  createNewProject() {
+    // Remove any open task form
     const taskForm = document.querySelector('.task-form');
     if (taskForm) taskForm.remove();
 
-    const id = this.projectsArr.length - 1;
+    // Create ID & render markup
+    const id = this.projectsArr.length + 1;
+    this.renderProjectCard(id);
 
+    // Focus on title input element
+    const inputEl = this.getInputEl(this.getProject(id));
+    inputEl.focus();
+
+    // Create instance
+    const newProject = new Project(id);
+    this.projectsArr.push(newProject);
+
+    // Initialize event listeners
+    newProject.initListeners();
+
+    // Capture title
+    inputEl.addEventListener('blur', () => newProject.saveProjectTitle());
+  }
+
+  renderProjectCard(id) {
     // Update & insert markup
     const projectMarkup = projectTemp.replace('{%PROJECT_ID%}', id);
     this.projects.firstElementChild.insertAdjacentHTML('afterend', projectMarkup);
@@ -65,48 +79,5 @@ export class App {
     requestAnimationFrame(() => {
       this.getProject(id).classList.add('scale-up-center');
     });
-
-    // Create instance
-    const newProject = new Project(id, `Untitled project ${id}`);
-    this.projectsArr.push(newProject);
-
-    // Focus on title input element
-    const inputEl = this.getInputEl(this.getProject(id));
-    inputEl.focus();
-
-    // Capture title
-    inputEl.addEventListener('blur', () => (newProject.title = inputEl.value));
-  }
-
-  editProjectTitle(titleEl) {
-    const id = this.getId(titleEl);
-    const project = this.getProject(id);
-    const inputEl = this.getInputEl(project);
-
-    // Keep original title name as placeholder //
-    inputEl.value = titleEl.textContent;
-
-    helper.hideElement(titleEl);
-    helper.showElement(inputEl);
-    inputEl.focus();
-
-    // Listen for save //
-
-    inputEl.addEventListener('keydown', (e) => {
-      const enter = e.key === 'Enter';
-      if (enter && inputEl) this.saveProjectTitle(id, inputEl, titleEl);
-    });
-  }
-
-  saveProjectTitle(id, inputEl, titleEl) {
-    let title = inputEl.value;
-    title === '' ? (title = `Untitled project #${id}`) : title;
-    this.projectsArr[id].title = title;
-    titleEl.textContent = title;
-
-    helper.hideElement(inputEl);
-    helper.showElement(titleEl);
-
-    this.projectsArr[id].title = title;
   }
 }

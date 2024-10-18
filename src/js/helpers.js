@@ -8,8 +8,15 @@ export class Helper {
   hideElement(el) {
     return el.classList.add('hidden');
   }
+  hideAndShowEls(el1, el2) {
+    this.hideElement(el1);
+    this.showElement(el2);
+  }
   containsClass(el, cls) {
     return el.classList.contains(cls);
+  }
+  hasClass(el, cls) {
+    return el.classList.contain(cls);
   }
 
   //-- MARKUP -----------------------------------------------//
