@@ -18,7 +18,7 @@ export class Task {
 
     this.title = `Untitled Task #${id}`;
     this.prio = 0;
-    this.description = '';
+    this.description = 'Click to add a description';
     this.dueDate = null;
     this.dueTime = null;
     this.dueDateObj = null;
@@ -50,17 +50,20 @@ export class Task {
       noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
     };
 
+    // FORM: OPEN DUE DATE MODAL
     this.taskForm.addEventListener('click', (e) => {
       const dueBtn = e.target.closest('.task-form__btn-due-date');
       if (!dueBtn) return;
 
       this.openDueModal();
     });
+    // FORM: SET PRIO
     this.els.prioBtns.parent.addEventListener('click', (e) => {
       const btn = e.target.closest('.prio-btn');
       if (!btn) return;
       this.setPrio(btn);
     });
+    // FORM: ADD CHECKLIST OR NOTE
     this.els.addBtns.addEventListener('click', (e) => {
       const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
 
@@ -78,17 +81,19 @@ export class Task {
     this.els.taskTitle.input.addEventListener('blur', (e) => {
       if (!e.target.checkValidity()) e.target.reportValidity();
     });
-    this.els.taskFooter.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-form-footer');
-      console.log(e.target);
+
+    // FORM: SAVE & CANCEL
+    this.taskForm.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-form-footer') || e.target.closest('.task-form__btn');
       if (!btn) return;
 
-      if (this.hasClass('btn-save', btn)) {
-        this.saveTask();
-      }
+      if (this.hasClass('btn-save', btn)) this.saveTask();
       if (this.hasClass('btn-cancel', btn)) this.taskForm.remove();
     });
   }
+
+  //-- EVENT LISTENERS ------------------------------//
+
   //-- HELPERS -------------------------------------//
   hasClass = (cls, el) => el.classList.contains(cls);
   addClass = (cls, el) => el.classList.add(cls);
@@ -204,7 +209,11 @@ export class Task {
     const dateEl = this.projectEl.querySelector(`.task-${cls}__due-date--date`);
     const yearEl = this.projectEl.querySelector(`.task-${cls}__due-date--year`);
 
-    if (!this.dueDateObj) return;
+    if (!this.dueDateObj) {
+      helper.hideElement(dueDateEl);
+      helper.showElement(calendarBtn);
+      return;
+    }
 
     if (calendarBtn) helper.hideElement(calendarBtn);
     helper.showElement(dueDateEl);
@@ -252,7 +261,7 @@ export class Task {
     const time = date.toTimeString().slice(0, 5);
     const [h24, min] = time.split(':');
     const h12 = h24 % 12 || 12;
-    const per = h12 > 12 ? 'PM' : 'AM';
+    const per = h24 >= 12 ? 'PM' : 'AM';
 
     return `${h12}:${min} ${per}`;
   }
@@ -263,9 +272,12 @@ export class Task {
     const title = this.projectEl.querySelector('#input-task-title');
     const description = this.projectEl.querySelector('#input-task-description');
 
+    // Title & creation date
     this.title = title.value;
-    this.description = description.value;
     this.created = new Date();
+
+    // Set description
+    if (description.value.trim()) this.description = description.value;
 
     const createdStr = () => {
       const d = this.formatDate(this.created);
@@ -275,6 +287,8 @@ export class Task {
 
     // Hide form
     this.taskForm.remove();
+
+    // Set task card values
     let taskCardMarkup = taskCardTemp
       .replace('{%TASKCARD_ID%}', this.id)
       .replace('{%TASKCARD_TITLE%}', this.title)
@@ -285,9 +299,14 @@ export class Task {
     const projectBody = this.projectEl.querySelector('.project-card__body');
     helper.insertMarkupAdj(projectBody, 'afterbegin', taskCardMarkup);
 
-    // Grab and dislay due date values
+    // If default description --> change color
+    const taskCard = document.querySelector('.task-card');
+    const taskDesc = taskCard.querySelector('.task-card__description');
+
+    if (!description.value) taskDesc.classList.add('task-card__description--default');
+
+    // Get due date values & display
     this.displayDueDate('card');
-    console.log(this.project.taskArr);
   }
 
   updateTask() {

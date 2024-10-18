@@ -85,6 +85,27 @@
   border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
 }
+.task-card .task-card__body .task-card__body-top .task-card__description--default {
+  color: rgba(213, 207, 204, 0.7);
+}
+.task-card .task-card__body .task-card__body-top .task-card__btn-due-date {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(213, 207, 204, 0.4);
+  border-radius: 0.9em;
+  text-align: center;
+  transition: all 0.2s ease-in;
+}
+.task-card .task-card__body .task-card__body-top .task-card__btn-due-date .icon-calendar {
+  width: 80%;
+}
 .task-card .task-card__body .task-card__body-top .task-card__due-date {
   display: flex;
   flex-direction: column;
@@ -129,10 +150,16 @@
   align-items: center;
   width: fit-content;
   padding: 0.1em 0.5em;
-  font-size: 0.8rem;
-  color: rgb(158, 158, 158);
-  background: rgba(204, 223, 240, 0.5);
+  font-size: 0.7rem;
+  color: rgba(165, 160, 158, 0.6);
+  background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
+  transform: all 0.2s ease-in;
+}
+.task-card .task-card__body .task-card__footer .task-card__creation-date:hover {
+  color: rgb(165, 160, 158);
+  background: rgba(213, 207, 204, 0.7);
+  transform: scale(1.01);
 }
 .task-card .task-card__body .task-card__footer .expand-btn {
   height: 1.8em;

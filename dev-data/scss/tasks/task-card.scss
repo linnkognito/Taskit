@@ -50,6 +50,20 @@
       .task-card__description {
         @include task-mixins.description;
       }
+      .task-card__description--default {
+        color: vars.$col-primary-op;
+      }
+
+      // DUE DATE BUTTON (BODY TOP) //
+      .task-card__btn-due-date {
+        @include mixins.due-date(vars.$col-primary-low-op);
+        text-align: center;
+        transition: vars.$ease-in;
+
+        .icon-calendar {
+          width: 80%;
+        }
+      }
 
       // DUE DATE (BODY TOP) //
       .task-card__due-date {
@@ -66,6 +80,7 @@
           @include mixins.due-btn-year;
         }
       }
+
       .task-card__btn-due-date:hover,
       .task-card__due-date:hover {
         color: white;
@@ -86,10 +101,16 @@
         align-items: center;
         width: fit-content;
         padding: 0.1em 0.5em;
-        font-size: 0.8rem;
-        color: vars.$col-secondary;
-        background: vars.$col-prio3-light;
+        font-size: 0.7rem;
+        color: vars.$col-primary-dark-op;
+        background: vars.$col-primary-low-op;
         border-radius: 0.9em;
+        transform: vars.$ease-in;
+      }
+      .task-card__creation-date:hover {
+        color: vars.$col-primary-dark;
+        background: vars.$col-primary-op;
+        transform: scale(1.01);
       }
 
       .expand-btn {
