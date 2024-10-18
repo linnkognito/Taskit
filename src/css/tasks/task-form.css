@@ -31,7 +31,7 @@
   column-gap: 0.5em;
 }
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input {
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
@@ -42,10 +42,10 @@
   border: none;
 }
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input::placeholder {
-  color: rgb(158, 158, 158);
+  color: rgb(213, 207, 204);
 }
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input:focus::placeholder {
-  color: rgba(158, 158, 158, 0.35);
+  color: rgba(213, 207, 204, 0.4);
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn {
   width: 2em;

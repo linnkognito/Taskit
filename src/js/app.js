@@ -3,7 +3,7 @@
 import { Project } from './project';
 import { helper } from '../index';
 
-import projectCardMarkup from '../components/projects/project-card.html';
+import projectTemp from '../components/projects/project-card.html';
 
 export class App {
   //-- CLASS PROPERTIES -------------------------------------//
@@ -50,38 +50,32 @@ export class App {
   getTitleEl = (parent) => parent.querySelector('.project-card__title');
   getInputEl = (parent) => parent.querySelector('.project-card__title-input');
 
-  //-- MARKUP ------------------------------------------------//
-  markup(id) {
-    return `
-    <div class="project-card" data-id="${id}">
-    <div class="project-card__header">
-    <h2 class="project-card__title hidden"></h2>
-    <input type="text" id="project-title-input" placeholder="Untitled project" />
-    <div class="project-card__buttons">
-    <button class="btn-add-task" title="Add task">+</button>
-    <button class="btn-settings" title="Settings">...</button>
-    </div>
-    </div>
-    <div class="project-card__body"></div>
-    </div>
-    `;
-  }
-
   //-- METHODS ----------------------------------------------//
   renderProjectCard() {
-    this.projects.firstElementChild.insertAdjacentHTML('afterend', projectCardMarkup);
+    const taskForm = document.querySelector('.task-form');
+    if (taskForm) taskForm.remove();
 
-    const id = this.projectsArr.length;
+    const id = this.projectsArr.length - 1;
 
-    // Get active input element
-    const project = this.getProject(id);
-    const inputEl = this.getInputEl(project);
-    const titleEl = this.getTitleEl(project);
+    // Update & insert markup
+    const projectMarkup = projectTemp.replace('{%PROJECT_ID%}', id);
+    this.projects.firstElementChild.insertAdjacentHTML('afterend', projectMarkup);
 
-    const newProject = new Project(`Untitled project ${id}`, id);
+    // Apply animation
+    requestAnimationFrame(() => {
+      this.getProject(id).classList.add('scale-up-center');
+    });
+
+    // Create instance
+    const newProject = new Project(id, `Untitled project ${id}`);
     this.projectsArr.push(newProject);
+
+    // Focus on title input element
+    const inputEl = this.getInputEl(this.getProject(id));
     inputEl.focus();
-    this.editProjectTitle(titleEl);
+
+    // Capture title
+    inputEl.addEventListener('blur', () => (newProject.title = inputEl.value));
   }
 
   editProjectTitle(titleEl) {
@@ -97,7 +91,7 @@ export class App {
     inputEl.focus();
 
     // Listen for save //
-    inputEl.addEventListener('blur', () => this.saveProjectTitle(id, inputEl, titleEl), { once: true });
+
     inputEl.addEventListener('keydown', (e) => {
       const enter = e.key === 'Enter';
       if (enter && inputEl) this.saveProjectTitle(id, inputEl, titleEl);

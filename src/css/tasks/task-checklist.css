@@ -75,7 +75,7 @@
   padding-bottom: 0.3em;
 }
 .task-form__checklist .task-form__checklist-header .task-form__checklist-input-title {
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
@@ -87,10 +87,10 @@
   border: none;
 }
 .task-form__checklist .task-form__checklist-header .task-form__checklist-input-title::placeholder {
-  color: rgb(158, 158, 158);
+  color: rgb(213, 207, 204);
 }
 .task-form__checklist .task-form__checklist-header .task-form__checklist-input-title:focus::placeholder {
-  color: rgba(158, 158, 158, 0.35);
+  color: rgba(213, 207, 204, 0.4);
 }
 .task-form__checklist .task-form__checklist-header .task-form__checklist-title {
   margin: 0 0 0.1em 0.7em;

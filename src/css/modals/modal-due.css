@@ -31,8 +31,8 @@
   background: rgba(213, 207, 204, 0.7);
 }
 .modal-due-date .due-date__container .due-date__header .due-date__heading {
-  padding: 0.2em 0.5em;
-  font-size: 1.6rem;
+  padding: 0.1em 0.5em;
+  font-size: 1.35rem;
   font-family: "Urbanist", sans-serif;
   font-weight: normal;
   letter-spacing: 0.05em;

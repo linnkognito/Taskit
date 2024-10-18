@@ -26,43 +26,58 @@
 }
 #projects .project-card .project-card__header {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
-  flex-wrap: wrap;
   min-height: fit-content;
   padding: 0.5em 0.7em;
   background: rgb(213, 207, 204);
   border-radius: 0.9em;
 }
 #projects .project-card .project-card__header .project-card__title {
-  padding: 0.2em 0.5em;
-  font-size: 1.6rem;
+  padding: 0.1em 0.5em;
+  font-size: 1.35rem;
   font-family: "Urbanist", sans-serif;
   font-weight: normal;
   letter-spacing: 0.05em;
+  flex-grow: 1;
+  flex-shrink: 1;
   color: white;
 }
 #projects .project-card .project-card__header .project-card__title-input {
-  padding: 0.2em 0.5em;
-  font-size: 1.6rem;
+  padding: 0.1em 0.5em;
+  font-size: 1.35rem;
   font-family: "Urbanist", sans-serif;
   font-weight: normal;
   letter-spacing: 0.05em;
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
   border-radius: 0.9em;
   outline: none;
-  width: 70%;
-  font-size: 1.6rem;
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 70%;
+  margin-right: 0.3em;
+  font-size: 1.35rem;
   border: none;
 }
 #projects .project-card .project-card__header .project-card__title-input:focus {
+  color: rgb(158, 158, 158);
+  border: none;
+  outline: none;
+  box-shadow: 0 0 4px white;
+}
+#projects .project-card .project-card__header .project-card__title-input::placeholder {
   color: rgb(213, 207, 204);
+}
+#projects .project-card .project-card__header .project-card__title-input:focus::placeholder {
+  color: rgba(213, 207, 204, 0.4);
 }
 #projects .project-card .project-card__header .project-card__buttons {
   display: flex;
+  flex-shrink: 1;
   gap: 0.3em;
   justify-content: center;
   align-items: center;
@@ -72,8 +87,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1.2em;
-  height: 1.3em;
+  flex-shrink: 1;
+  width: 33.333%;
+  max-width: 1.2em;
+  aspect-ratio: 1;
   padding: 0.1em;
   font-size: 1.5rem;
   color: white;
@@ -104,7 +121,7 @@
   text-align: center;
   width: 100%;
   padding: 0.5em;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   letter-spacing: 0.05em;
   background: rgba(213, 207, 204, 0.7);
   border: none;
@@ -118,6 +135,13 @@
   transform: scale(1.02);
   transform-origin: center;
   will-change: transform;
+}
+
+.scale-up-center {
+  transform-origin: center;
+  animation: scale-up-center 0.3s ease-out forwards;
+  transform: scale(0);
+  opacity: 0;
 }
 
 .settings-dropdown,

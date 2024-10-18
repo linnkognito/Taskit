@@ -12,10 +12,13 @@
 
 //-- EFFECTS ------------------------------------//
 
-// SCALE //
-// @mixin scale($val:1.01) {
-//   transform: ;
-// }
+// ANIMATIONS //
+@mixin scale-up-center() {
+  transform-origin: center;
+  animation: scale-up-center 0.2s ease-out forwards;
+  transform: scale(0);
+  opacity: 0;
+}
 
 // FLEX //
 @mixin flex-center-all() {
@@ -36,7 +39,7 @@
 
 // HEADINGS //
 @mixin h2-project() {
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.5em;
   font-size: vars.$fs-project-title;
   font-family: vars.$font-body;
   font-weight: normal;
@@ -45,7 +48,7 @@
 
 // INPUT //
 @mixin input-text($color: vars.$col-secondary, $fs: 1.25rem) {
-  padding: 0.2em 0.5em;
+  padding: 0.1em 0.5em;
   font-size: $fs;
   font-family: vars.$font-body;
   color: $color;
@@ -53,17 +56,17 @@
   border-radius: vars.$br-primary;
   outline: none;
 }
-@mixin input-text-focus($color: vars.$col-primary) {
+@mixin input-text-focus($color: vars.$col-secondary) {
   color: $color;
   border: none;
   outline: none;
   box-shadow: vars.$box-glow;
 }
-@mixin input-text-placeholder($color: vars.$col-secondary) {
+@mixin input-text-placeholder($color: vars.$col-primary) {
   color: $color;
 }
-@mixin input-text-focus-placeholder($color: vars.$col-secondary-op) {
-  color: $color;
+@mixin input-text-focus-placeholder($col: vars.$col-primary-low-op) {
+  color: $col;
 }
 
 // FOOTER //

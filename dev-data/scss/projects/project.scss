@@ -27,8 +27,8 @@
     // HEADER (PROJECT CARD) //
     .project-card__header {
       display: flex;
+      flex-wrap: nowrap;
       justify-content: space-between;
-      flex-wrap: wrap;
       min-height: fit-content;
       padding: 0.5em 0.7em;
       background: vars.$col-primary;
@@ -37,23 +37,35 @@
       // TITLE (HEADER) //
       .project-card__title {
         @include mixins.h2-project;
+        flex-grow: 1;
+        flex-shrink: 1;
         color: white;
       }
 
       .project-card__title-input {
         @include mixins.h2-project;
         @include mixins.input-text(vars.$col-secondary);
-        width: 70%;
+        flex-grow: 1;
+        flex-shrink: 1;
+        max-width: 70%;
+        margin-right: 0.3em;
         font-size: vars.$fs-project-title;
         border: none;
       }
       .project-card__title-input:focus {
-        color: vars.$col-primary;
+        @include mixins.input-text-focus;
+      }
+      .project-card__title-input::placeholder {
+        @include mixins.input-text-placeholder;
+      }
+      .project-card__title-input:focus::placeholder {
+        @include mixins.input-text-focus-placeholder;
       }
 
       // HEADER BUTTONS (HEADER) //
       .project-card__buttons {
         display: flex;
+        flex-shrink: 1;
         gap: 0.3em;
         justify-content: center;
         align-items: center;
@@ -62,8 +74,12 @@
         // BUTTONS (HEADER BUTTONS) //
         .project-card__btn {
           @include mixins.flex-center-all;
-          width: 1.2em;
-          height: 1.3em;
+          flex-shrink: 1;
+          // width: 1.2em;
+          // height: 1.3em;
+          width: 33.333%;
+          max-width: 1.2em;
+          aspect-ratio: 1;
           padding: 0.1em;
           font-size: 1.5rem;
           color: white;
@@ -99,6 +115,14 @@
       }
     } // [X] END OF BODY [X] //
   } // [X] END OF PROJECT CARD [X] //
+}
+
+// ANIMATION //
+.scale-up-center {
+  transform-origin: center;
+  animation: scale-up-center 0.3s ease-out forwards;
+  transform: scale(0);
+  opacity: 0;
 }
 
 // DROPDOWNS //

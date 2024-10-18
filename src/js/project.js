@@ -9,7 +9,7 @@ import taskFormMarkup from '../components/tasks/forms/task-form.html';
 export class Project {
   tasksArr = [];
 
-  constructor(title, id) {
+  constructor(id, title) {
     this.title = title;
     this.id = id;
   }
