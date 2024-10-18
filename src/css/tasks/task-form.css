@@ -14,6 +14,7 @@
 }
 .task-form .task-form__header {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -29,8 +30,12 @@
   display: flex;
   align-items: center;
   column-gap: 0.5em;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input {
+  width: 100%;
+  margin-right: 0.4em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
@@ -38,6 +43,9 @@
   letter-spacing: 0.05em;
   border-radius: 0.9em;
   outline: none;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
   font-size: 1.25rem;
   border: none;
 }
@@ -47,10 +55,13 @@
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
 }
+.task-form .task-form__header .task-form__buttons {
+  flex-grow: 1;
+}
 .task-form .task-form__header .task-form__buttons .task-form__btn {
+  display: flex;
   width: 2em;
   height: 2em;
-  margin: 0 0.1em;
   padding: 0.13em 0.06em;
   background: none;
   border: 1px solid white;

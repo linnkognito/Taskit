@@ -48,7 +48,6 @@
         flex-grow: 1;
         flex-shrink: 1;
         max-width: 70%;
-        margin-right: 0.3em;
         font-size: vars.$fs-project-title;
         border: none;
       }
@@ -69,14 +68,11 @@
         gap: 0.3em;
         justify-content: center;
         align-items: center;
-        margin-left: 0.2em;
 
         // BUTTONS (HEADER BUTTONS) //
         .project-card__btn {
           @include mixins.flex-center-all;
           flex-shrink: 1;
-          // width: 1.2em;
-          // height: 1.3em;
           width: 33.333%;
           max-width: 1.2em;
           aspect-ratio: 1;

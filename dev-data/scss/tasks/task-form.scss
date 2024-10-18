@@ -12,9 +12,14 @@
 
     .task-form__title-wrapper {
       @include mixins.title-wrapper;
+      flex-grow: 1;
+      flex-shrink: 1;
 
       .task-form__title-input {
         @include mixins.input-text(vars.$col-secondary);
+        flex-grow: 1;
+        flex-shrink: 1;
+        width: 100%;
         font-size: 1.25rem;
         border: none;
       }
@@ -29,6 +34,7 @@
     // BUTTONS (HEADER) //
     .task-form__buttons {
       @include mixins.buttons-header('form');
+      flex-grow: 1;
     }
   } // [X] END OF HEADER [X]
 

@@ -49,6 +49,8 @@
   font-family: "Urbanist", sans-serif;
   font-weight: normal;
   letter-spacing: 0.05em;
+  width: 100%;
+  margin-right: 0.4em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
@@ -59,7 +61,6 @@
   flex-grow: 1;
   flex-shrink: 1;
   max-width: 70%;
-  margin-right: 0.3em;
   font-size: 1.35rem;
   border: none;
 }
@@ -81,7 +82,6 @@
   gap: 0.3em;
   justify-content: center;
   align-items: center;
-  margin-left: 0.2em;
 }
 #projects .project-card .project-card__header .project-card__buttons .project-card__btn {
   display: flex;

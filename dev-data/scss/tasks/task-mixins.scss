@@ -14,6 +14,7 @@
 // HEADER //
 @mixin header($bg: vars.$col-primary-low-op) {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -31,10 +32,9 @@
 
 @mixin buttons-header($cls) {
   .task-#{$cls}__btn {
-    // display: flex;
+    display: flex;
     width: 2em;
     height: 2em;
-    margin: 0 0.1em;
     padding: 0.13em 0.06em;
     background: none;
     border: 1px solid white;

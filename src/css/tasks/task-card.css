@@ -14,6 +14,7 @@
 }
 .task-card .task-card__header {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -45,9 +46,9 @@
   letter-spacing: 0.1em;
 }
 .task-card .task-card__header .task-card__buttons .task-card__btn {
+  display: flex;
   width: 2em;
   height: 2em;
-  margin: 0 0.1em;
   padding: 0.13em 0.06em;
   background: none;
   border: 1px solid white;
