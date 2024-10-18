@@ -89,8 +89,11 @@ export class Project {
   //-- SETTINGS ------------------------------//
   openSettings(btn) {
     // Check if dropdown is already open
-    console.log(this.openDropdown);
-    if (this.openDropdown) this.openDropdown.remove();
+    if (this.openDropdown) {
+      this.openDropdown.remove();
+      this.openDropdown = null;
+      return;
+    }
 
     // Variables
     const header = app.getHeaderEl(btn);
@@ -101,6 +104,7 @@ export class Project {
     if (btn.classList.contains('btn-settings')) {
       helper.insertMarkupAdj(header, 'afterend', dropdownSettings);
       dropdown = this.projectEl.querySelector('.settings-dropdown');
+
       this.openDropdown = dropdown;
     }
 
@@ -108,6 +112,7 @@ export class Project {
     if (btn.classList.contains('btn-sort-tasks')) {
       helper.insertMarkupAdj(header, 'afterend', dropdownSort);
       dropdown = this.projectEl.querySelector('.sort-dropdown');
+
       this.openDropdown = dropdown;
     }
 
@@ -122,8 +127,6 @@ export class Project {
     const events = ['mouseleave', 'click', 'keydown'];
     events.forEach((ev) => {
       this.projectEl.addEventListener(ev, (e) => {
-        console.log('ev:', ev, '/', e.target);
-
         if (ev === 'mouseleave') {
           return dropdown.remove();
         }
