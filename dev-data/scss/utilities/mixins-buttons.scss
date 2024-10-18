@@ -10,14 +10,26 @@
 }
 
 // LARGE BUTTON //
-@mixin btn-task-wide($col) {
+@mixin btn-wide($bg: vars.$col-primary-op) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   width: 100%;
   padding: 0.5em;
   font-size: 1.2rem;
   letter-spacing: vars.$ls-primary;
-  background: $col;
+  background: $bg;
   @include btn-border();
-  transition: vars.$ease-in;
+  transition: all 0.3s ease-in-out;
+}
+@mixin btn-wide-hover($col: white, $bg: vars.$col-primary) {
+  color: $col;
+  background: $bg;
+  cursor: pointer;
+  transform: scale(1.02);
+  transform-origin: center;
+  will-change: transform;
 }
 
 // MEDIUM BUTTON //

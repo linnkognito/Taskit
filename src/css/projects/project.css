@@ -4,7 +4,6 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-/*** PROJECT CARD ****************************/
 #projects {
   display: flex;
   flex-wrap: wrap;
@@ -13,8 +12,7 @@
   margin: auto;
   padding: 2em;
 }
-
-.project-card {
+#projects .project-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -26,8 +24,7 @@
   border: 2px solid rgb(213, 207, 204);
   border-radius: 0.9em;
 }
-
-.project-card__header {
+#projects .project-card .project-card__header {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -36,8 +33,7 @@
   background: rgb(213, 207, 204);
   border-radius: 0.9em;
 }
-
-.project-card__header h2 {
+#projects .project-card .project-card__header .project-card__title {
   padding: 0.2em 0.5em;
   font-size: 1.6rem;
   font-family: "Urbanist", sans-serif;
@@ -45,8 +41,7 @@
   letter-spacing: 0.05em;
   color: white;
 }
-
-.project-card__header .project-card__title-input {
+#projects .project-card .project-card__header .project-card__title-input {
   padding: 0.2em 0.5em;
   font-size: 1.6rem;
   font-family: "Urbanist", sans-serif;
@@ -63,70 +58,68 @@
   font-size: 1.6rem;
   border: none;
 }
-
-.project-card__header input[type=text]:focus {
+#projects .project-card .project-card__header .project-card__title-input:focus {
   color: rgb(213, 207, 204);
 }
-
-.project-card__buttons {
+#projects .project-card .project-card__header .project-card__buttons {
   display: flex;
+  gap: 0.3em;
   justify-content: center;
   align-items: center;
+  margin-left: 0.2em;
 }
-
-.project-card__header button {
+#projects .project-card .project-card__header .project-card__buttons .project-card__btn {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 1.2em;
-  height: 70%;
-  margin: 0 0.15em;
+  height: 1.3em;
+  padding: 0.1em;
   font-size: 1.5rem;
   color: white;
   background: none;
   border: 1px solid white;
+  border-radius: 0.3em;
   transition: transform 0.2s ease-in;
   cursor: pointer;
 }
-
-.project-card__header button:hover {
+#projects .project-card .project-card__header .project-card__buttons .project-card__btn:hover {
   box-shadow: 0 0 2px white;
   transform: scale(1.05);
 }
-
-.project-card__header button img {
-  display: flex;
+#projects .project-card .project-card__header .project-card__buttons .project-card__btn img {
   width: 90%;
 }
-
-.project-card__body {
+#projects .project-card .project-card__body {
   height: 100%;
   padding: 1.5em 1.3em;
   background: white;
   border-bottom-left-radius: 0.9em;
   border-bottom-right-radius: 0.9em;
 }
-
-/*** PROJECT CARD ADD TASK *********/
-.project-card__btn-add-task {
+#projects .project-card .project-card__body .project-card__btn-add-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   width: 100%;
   padding: 0.5em;
   font-size: 1.2rem;
   letter-spacing: 0.05em;
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.7);
   border: none;
   border-radius: 0.9em;
-  transition: all 0.2s ease-in;
+  transition: all 0.3s ease-in-out;
 }
-
-.project-card__btn-add-task:hover {
+#projects .project-card .project-card__body .project-card__btn-add-task:hover {
   color: white;
   background: rgb(213, 207, 204);
-  transform: scale(1.02);
   cursor: pointer;
+  transform: scale(1.02);
+  transform-origin: center;
+  will-change: transform;
 }
 
-/*** PROJECT CARD SETTINGS DROPDOWN *********/
 .settings-dropdown,
 .dropdown-project {
   position: absolute;
@@ -146,31 +139,35 @@
   border-top: 1px solid white;
   z-index: 1000;
 }
-
-.settings-dropdown__li,
-.dropdown-project__li {
+.settings-dropdown .settings-dropdown__li,
+.settings-dropdown .dropdown-project__li,
+.dropdown-project .settings-dropdown__li,
+.dropdown-project .dropdown-project__li {
   padding: 0.4em;
   transition: all 0.2s ease-in;
 }
-
-.settings-dropdown__li:hover,
-.dropdown-project__li:hover {
+.settings-dropdown .settings-dropdown__li:hover,
+.settings-dropdown .dropdown-project__li:hover,
+.dropdown-project .settings-dropdown__li:hover,
+.dropdown-project .dropdown-project__li:hover {
   color: rgb(213, 207, 204);
   background: white;
   cursor: pointer;
 }
-
-.settings-dropdown__li:active,
-.dropdown-project__li:active {
+.settings-dropdown .settings-dropdown__li:active,
+.settings-dropdown .dropdown-project__li:active,
+.dropdown-project .settings-dropdown__li:active,
+.dropdown-project .dropdown-project__li:active {
   color: white;
   background: rgb(213, 207, 204);
 }
-
-.sort-dropdown__li {
+.settings-dropdown .sort-dropdown__li,
+.dropdown-project .sort-dropdown__li {
   display: flex;
   align-items: center;
 }
-.sort-dropdown__li .icon-dropdown {
+.settings-dropdown .sort-dropdown__li .icon-dropdown,
+.dropdown-project .sort-dropdown__li .icon-dropdown {
   height: 1em;
   margin: 0.3em 0.5em 0.3em 0.25em;
   vertical-align: middle;

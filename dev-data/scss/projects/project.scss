@@ -2,7 +2,7 @@
 @use '../utilities/mixins';
 @use '../utilities/mixins-buttons';
 
-/*** PROJECT CARD ****************************/
+// PROJECTS (PARENT) //
 #projects {
   display: flex;
   flex-wrap: wrap;
@@ -10,88 +10,98 @@
   width: 100%;
   margin: auto;
   padding: 2em;
-}
-.project-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 calc(33.333% - 2em);
-  max-width: calc(33.333% - 2em);
-  min-height: 30vh;
-  margin-bottom: 2.5em;
-  background: vars.$col-primary;
-  border: 2px solid vars.$col-primary;
-  border-radius: vars.$br-primary;
-}
-.project-card__header {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  min-height: fit-content;
-  padding: 0.5em 0.7em;
-  background: vars.$col-primary;
-  border-radius: vars.$br-primary;
+
+  // PROJECT CARD //
+  .project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 calc(33.333% - 2em);
+    max-width: calc(33.333% - 2em);
+    min-height: 30vh;
+    margin-bottom: 2.5em;
+    background: vars.$col-primary;
+    border: 2px solid vars.$col-primary;
+    border-radius: vars.$br-primary;
+
+    // HEADER (PROJECT CARD) //
+    .project-card__header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      min-height: fit-content;
+      padding: 0.5em 0.7em;
+      background: vars.$col-primary;
+      border-radius: vars.$br-primary;
+
+      // TITLE (HEADER) //
+      .project-card__title {
+        @include mixins.h2-project;
+        color: white;
+      }
+
+      .project-card__title-input {
+        @include mixins.h2-project;
+        @include mixins.input-text(vars.$col-secondary);
+        width: 70%;
+        font-size: vars.$fs-project-title;
+        border: none;
+      }
+      .project-card__title-input:focus {
+        color: vars.$col-primary;
+      }
+
+      // HEADER BUTTONS (HEADER) //
+      .project-card__buttons {
+        display: flex;
+        gap: 0.3em;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0.2em;
+
+        // BUTTONS (HEADER BUTTONS) //
+        .project-card__btn {
+          @include mixins.flex-center-all;
+          width: 1.2em;
+          height: 1.3em;
+          padding: 0.1em;
+          font-size: 1.5rem;
+          color: white;
+          background: none;
+          border: 1px solid white;
+          border-radius: 0.3em;
+          transition: vars.$transform-ease-in;
+          cursor: pointer;
+        }
+        .project-card__btn:hover {
+          box-shadow: 0 0 2px white;
+          transform: scale(1.05);
+        }
+        .project-card__btn img {
+          width: 90%;
+        }
+      }
+    } // [X] END OF HEADER [X] //
+
+    // BODY (PROJECT CARD) //
+    .project-card__body {
+      height: 100%;
+      padding: 1.5em 1.3em;
+      background: white;
+      border-bottom-left-radius: 0.9em;
+      border-bottom-right-radius: 0.9em;
+
+      .project-card__btn-add-task {
+        @include mixins.btn-wide();
+      }
+      .project-card__btn-add-task:hover {
+        @include mixins.btn-wide-hover();
+      }
+    } // [X] END OF BODY [X] //
+  } // [X] END OF PROJECT CARD [X] //
 }
 
-.project-card__header h2 {
-  @include mixins.h2-project;
-  color: white;
-}
-.project-card__header .project-card__title-input {
-  @include mixins.h2-project;
-  @include mixins.input-text(vars.$col-secondary);
-  width: 70%;
-  font-size: vars.$fs-project-title;
-  border: none;
-}
-
-.project-card__header input[type='text']:focus {
-  color: vars.$col-primary;
-}
-.project-card__buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.project-card__header button {
-  @include mixins.flex-center-all;
-  width: 1.2em;
-  height: 70%;
-  margin: 0 0.15em;
-  font-size: 1.5rem;
-  color: white;
-  background: none;
-  border: 1px solid white;
-  transition: vars.$transform-ease-in;
-  cursor: pointer;
-}
-.project-card__header button:hover {
-  box-shadow: 0 0 2px white;
-  transform: scale(1.05);
-}
-.project-card__header button img {
-  display: flex;
-  width: 90%;
-}
-.project-card__body {
-  height: 100%;
-  padding: 1.5em 1.3em;
-  background: white;
-  border-bottom-left-radius: 0.9em;
-  border-bottom-right-radius: 0.9em;
-}
-/*** PROJECT CARD ADD TASK *********/
-.project-card__btn-add-task {
-  @include mixins-buttons.btn-task-wide(vars.$col-primary-low-op);
-}
-.project-card__btn-add-task:hover {
-  color: white;
-  background: vars.$col-primary;
-  transform: scale(1.02);
-  cursor: pointer;
-}
-
-/*** PROJECT CARD SETTINGS DROPDOWN *********/
+// DROPDOWNS //
 .settings-dropdown,
 .dropdown-project {
   position: absolute;
@@ -110,31 +120,34 @@
   border-bottom: 2px solid vars.$col-primary;
   border-top: 1px solid white;
   z-index: 1000;
-}
-.settings-dropdown__li,
-.dropdown-project__li {
-  padding: 0.4em;
-  transition: all 0.2s ease-in;
-}
-.settings-dropdown__li:hover,
-.dropdown-project__li:hover {
-  color: vars.$col-primary;
-  background: white;
-  cursor: pointer;
-}
-.settings-dropdown__li:active,
-.dropdown-project__li:active {
-  color: white;
-  background: vars.$col-primary;
-}
 
-.sort-dropdown__li {
-  display: flex;
-  align-items: center;
+  // SETTINGS (DROPDOWNS) //
+  .settings-dropdown__li,
+  .dropdown-project__li {
+    padding: 0.4em;
+    transition: all 0.2s ease-in;
+  }
+  .settings-dropdown__li:hover,
+  .dropdown-project__li:hover {
+    color: vars.$col-primary;
+    background: white;
+    cursor: pointer;
+  }
+  .settings-dropdown__li:active,
+  .dropdown-project__li:active {
+    color: white;
+    background: vars.$col-primary;
+  }
 
-  .icon-dropdown {
-    height: 1em;
-    margin: 0.3em 0.5em 0.3em 0.25em;
-    vertical-align: middle;
+  // SORT (DROPDOWNS) //
+  .sort-dropdown__li {
+    display: flex;
+    align-items: center;
+
+    .icon-dropdown {
+      height: 1em;
+      margin: 0.3em 0.5em 0.3em 0.25em;
+      vertical-align: middle;
+    }
   }
 }

@@ -1,5 +1,6 @@
 // task.js
 import { app, helper } from '../index';
+import { Checklist } from './task-items/checklist';
 
 import checklistMarkup from '../components/tasks/items/item-checklist.html';
 import noteMarkup from '../components/tasks/items/item-note.html';
@@ -24,6 +25,9 @@ export class Task {
     this.dueDateObj = null;
     this.checked = false;
     this.created = null;
+
+    this.checklists = [];
+    this.notes = [];
 
     this.els = {
       addBtns: this.projectEl.querySelector('.task-form__add-item-buttons'),
@@ -54,7 +58,6 @@ export class Task {
     this.taskForm.addEventListener('click', (e) => {
       const dueBtn = e.target.closest('.task-form__btn-due-date');
       if (!dueBtn) return;
-
       this.openDueModal();
     });
     // FORM: SET PRIO
@@ -63,36 +66,34 @@ export class Task {
       if (!btn) return;
       this.setPrio(btn);
     });
-    // FORM: ADD CHECKLIST OR NOTE
-    this.els.addBtns.addEventListener('click', (e) => {
-      const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
-
-      // Add checklist btn clicked:
-      if (this.hasClass('btn-add-checklist', e.target)) {
-        insert(checklistMarkup);
-        this.els.checklistTitle().focus();
-      }
-      // Add note btn clicked:
-      if (this.hasClass('btn-add-note', e.target)) {
-        insert(noteMarkup);
-        this.els.noteTitle().focus();
-      }
-    });
-    this.els.taskTitle.input.addEventListener('blur', (e) => {
-      if (!e.target.checkValidity()) e.target.reportValidity();
-    });
-
-    // FORM: SAVE & CANCEL
-    this.taskForm.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-form-footer') || e.target.closest('.task-form__btn');
-      if (!btn) return;
-
-      if (this.hasClass('btn-save', btn)) this.saveTask();
-      if (this.hasClass('btn-cancel', btn)) this.taskForm.remove();
-    });
+    // FORM: ADD NOTE OR CHECKLIST
+    this.els.addBtns.addEventListener('click', (e) => this.addFormItem(e));
+    // FORM: SAVE OR CANCEL
+    this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
   }
 
   //-- EVENT LISTENERS ------------------------------//
+  addFormItem(e) {
+    const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
+
+    // Add checklist btn clicked:
+    if (this.hasClass('btn-add-checklist', e.target)) {
+      insert(checklistMarkup);
+      this.els.checklistTitle().focus();
+    }
+    // Add note btn clicked:
+    if (this.hasClass('btn-add-note', e.target)) {
+      insert(noteMarkup);
+      this.els.noteTitle().focus();
+    }
+  }
+  saveOrCancelForm(e) {
+    const btn = e.target.closest('.btn-form-footer') || e.target.closest('.task-form__btn');
+    if (!btn) return;
+
+    if (this.hasClass('btn-save', btn)) this.saveTask();
+    if (this.hasClass('btn-cancel', btn)) this.taskForm.remove();
+  }
 
   //-- HELPERS -------------------------------------//
   hasClass = (cls, el) => el.classList.contains(cls);
@@ -169,18 +170,6 @@ export class Task {
     this.displayDueDate('form');
   }
 
-  getFullDate(date, time) {
-    const [h, m] = time.split(':');
-    date.setHours(h);
-    date.setMinutes(m);
-    return date;
-  }
-
-  parseDate(date) {
-    const [y, m, d] = date.split('-');
-    return new Date(y, m - 1, d);
-  }
-
   calcTimeDiff(date) {
     const diffMs = date.getTime() - new Date().getTime();
 
@@ -249,6 +238,17 @@ export class Task {
     if (this.hasClass('modal', e.target) || this.hasClass('btn-cancel', e.target)) modal.remove();
   }
 
+  //-- DUE: HELPERS ----//
+  parseDate(date) {
+    const [y, m, d] = date.split('-');
+    return new Date(y, m - 1, d);
+  }
+  getFullDate(date, time) {
+    const [h, m] = time.split(':');
+    date.setHours(h);
+    date.setMinutes(m);
+    return date;
+  }
   formatDate(date) {
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, 0);
@@ -256,7 +256,6 @@ export class Task {
 
     return `${m}/${d}/${y}`;
   }
-
   toAmPm(date) {
     const time = date.toTimeString().slice(0, 5);
     const [h24, min] = time.split(':');
@@ -271,19 +270,39 @@ export class Task {
     // Grab value from title
     const title = this.projectEl.querySelector('#input-task-title');
     const description = this.projectEl.querySelector('#input-task-description');
+    const checklist = this.taskForm.querySelectorAll('.task-form__checklist');
+    const note = this.taskForm.querySelectorAll('.task-form__note');
 
-    // Title & creation date
-    this.title = title.value;
-    this.created = new Date();
+    // Prevent saving if !title
+    if (!title.checkValidity()) return title.reportValidity();
 
-    // Set description
-    if (description.value.trim()) this.description = description.value;
-
+    // Creation date string
     const createdStr = () => {
       const d = this.formatDate(this.created);
       const t = this.toAmPm(this.created);
       return `${d}, ${t}`;
     };
+
+    // Set title, description & creation date
+    this.title = title.value;
+    this.created = new Date();
+    if (description.value.trim()) this.description = description.value;
+
+    // Check for checklist items
+    if (checklist) {
+      checklist.forEach(() => {
+        const title = checklist.querySelector('.task-form__checklist-input-title');
+        const id = this.checklists.length - 1;
+
+        const newChecklist = new Checklist(id, title);
+        this.checklists.push(newChecklist);
+
+        // Insert markup for checklist
+      });
+    }
+
+    // Check for notes
+    // Insert markup for notes
 
     // Hide form
     this.taskForm.remove();
@@ -302,7 +321,6 @@ export class Task {
     // If default description --> change color
     const taskCard = document.querySelector('.task-card');
     const taskDesc = taskCard.querySelector('.task-card__description');
-
     if (!description.value) taskDesc.classList.add('task-card__description--default');
 
     // Get due date values & display

@@ -3,6 +3,8 @@
 import { Project } from './project';
 import { helper } from '../index';
 
+import projectCardMarkup from '../components/projects/project-card.html';
+
 export class App {
   //-- CLASS PROPERTIES -------------------------------------//
   projects = document.querySelector('#projects');
@@ -46,7 +48,7 @@ export class App {
   getHeaderEl = (el) => el.closest('.project-card__header');
   getProject = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
   getTitleEl = (parent) => parent.querySelector('.project-card__title');
-  getInputEl = (parent) => parent.querySelector('#project-title-input');
+  getInputEl = (parent) => parent.querySelector('.project-card__title-input');
 
   //-- MARKUP ------------------------------------------------//
   markup(id) {
@@ -67,8 +69,9 @@ export class App {
 
   //-- METHODS ----------------------------------------------//
   renderProjectCard() {
+    this.projects.firstElementChild.insertAdjacentHTML('afterend', projectCardMarkup);
+
     const id = this.projectsArr.length;
-    this.projects.firstElementChild.insertAdjacentHTML('afterend', this.markup(id));
 
     // Get active input element
     const project = this.getProject(id);
