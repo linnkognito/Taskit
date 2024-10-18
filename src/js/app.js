@@ -14,28 +14,6 @@ export class App {
 
   constructor() {
     this.addBtn.addEventListener('click', this.createNewProject.bind(this));
-
-    // CLICKS ON PROJECT HEADER BTNS:
-    // projects.addEventListener('click', (e) => {
-    //   let btn = e.target.closest('.project-card__btn');
-    //   if (!btn) return;
-    //   const id = this.getId(btn);
-
-    //   // ADD TASK BTN is clicked:
-    //   if (btn && btn.classList.contains('btn-add-task')) {
-    //     return this.projectsArr[id].addTask();
-    //   }
-    //   // SETTINGS BTN or SORT BTN is clicked:
-    //   if (btn && !btn.classList.contains('btn-add-task')) {
-    //     this.projectsArr[id].openSettings(btn);
-    //   }
-    // });
-
-    // CLICKS OUTSIDE OF MODAL:
-    document.addEventListener('click', (e) => {
-      const modal = document.querySelector('.modal');
-      if (modal && e.target === modal) helper.hideElement(modal);
-    });
   }
 
   //-- HELPERS ----------------------------------------------//

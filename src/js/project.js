@@ -14,11 +14,23 @@ export class Project {
   constructor(id) {
     this.id = id;
     this.title = `Untitled #${this.id}`;
+
+    this.openDropdown = null;
   }
 
   //-- EVENT HANDLERS ----------------------------//
   initListeners() {
-    this.projectEl.addEventListener('click', (e) => this.addTask(e));
+    // HEADER BTNS //
+    this.projectEl.addEventListener('click', (e) => {
+      let btnAdd = e.target.closest('.btn-add-task');
+      let btnSettings = e.target.closest('.btn-settings');
+      let btnSort = e.target.closest('.btn-sort-tasks');
+
+      if (btnAdd) this.addTask(e);
+      if (btnSettings || btnSort) this.openSettings(btnSettings ? btnSettings : btnSort);
+    });
+
+    // CHANGE TITLE //
     this.projectEl.addEventListener('click', (e) => this.clickedTitle(e));
   }
 
@@ -29,7 +41,6 @@ export class Project {
   }
 
   //-- HELPERS ----------------------------------//
-  // getProjectEl = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
   getTaskId = (el) => el.closest('.task-form').dataset.id;
 
   //-- GETTERS ---------------------------------//
@@ -77,24 +88,54 @@ export class Project {
 
   //-- SETTINGS ------------------------------//
   openSettings(btn) {
+    // Check if dropdown is already open
+    console.log(this.openDropdown);
+    if (this.openDropdown) this.openDropdown.remove();
+
+    // Variables
     const header = app.getHeaderEl(btn);
     const headerHeight = header.getBoundingClientRect().height;
-    const project = this.projectEl;
     let dropdown;
 
+    // Open Settings
     if (btn.classList.contains('btn-settings')) {
-      header.insertAdjacentHTML('afterend', this.settingsMarkup());
-      dropdown = project.querySelector('.settings-dropdown');
-    }
-    if (btn.classList.contains('btn-sort-tasks')) {
-      header.insertAdjacentHTML('afterend', this.sortMarkup());
-      dropdown = project.querySelector('.sort-dropdown');
+      helper.insertMarkupAdj(header, 'afterend', dropdownSettings);
+      dropdown = this.projectEl.querySelector('.settings-dropdown');
+      this.openDropdown = dropdown;
     }
 
-    dropdown.style.top = `calc(${headerHeight}px)`; // placement
-    dropdown.addEventListener('mouseleave', () => helper.hideElement(dropdown)); // close
+    // Open Sort
+    if (btn.classList.contains('btn-sort-tasks')) {
+      helper.insertMarkupAdj(header, 'afterend', dropdownSort);
+      dropdown = this.projectEl.querySelector('.sort-dropdown');
+      this.openDropdown = dropdown;
+    }
+
+    // Placement
+    dropdown.style.top = `calc(${headerHeight}px)`;
+
+    // Close dropdown handler
+    if (dropdown) this.closeDropdown(dropdown);
   }
 
+  closeDropdown(dropdown) {
+    const events = ['mouseleave', 'click', 'keydown'];
+    events.forEach((ev) => {
+      this.projectEl.addEventListener(ev, (e) => {
+        console.log('ev:', ev, '/', e.target);
+
+        if (ev === 'mouseleave') {
+          return dropdown.remove();
+        }
+        if (ev === 'click' && !dropdown.contains(e.target)) {
+          return dropdown.remove();
+        }
+        if (ev === 'keydown' && e.key === 'Escape') {
+          return dropdown.remove();
+        }
+      });
+    });
+  }
   //-- TASKS --------------------------------//
   addTask(e) {
     const form = document.querySelector('.task-form');
