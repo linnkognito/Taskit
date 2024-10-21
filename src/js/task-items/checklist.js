@@ -17,12 +17,13 @@ export class Checklist {
     this.checklist.addEventListener('click', (e) => {
       const btnAdd = e.target.closest('.btn-add');
       const btnDel = e.target.closest('.checklist-item__delete-btn');
+      const label = e.target.closest('.checklist-item__value');
 
       // ADD LIST ITEM
       if (btnAdd) return this.addListItem();
       if (btnDel) return this.deleteListItem(btnDel);
       // EDIT LIST ITEM
-      if (label) return this.editListItem();
+      if (label) return this.editListItem(label);
     });
   }
 
@@ -52,6 +53,14 @@ export class Checklist {
     input.focus();
 
     newListItem.initListeners();
+  }
+
+  editListItem(labelEl) {
+    const inputEl = labelEl.parentNode.querySelector('.checklist-item__value-input');
+
+    helper.hideAndShowEls(labelEl, inputEl);
+    inputEl.textContent = this.value;
+    inputEl.focus();
   }
 
   deleteListItem(btn) {
@@ -98,17 +107,9 @@ class ListItem {
     inputEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') this.checkValue(e);
     });
-
-    // Edit list item
-    checklist.addEventListener('click', (e) => {
-      const labelEl = e.target.closest('.checklist-item__value');
-
-      if (labelEl) this.editListItem(labelEl, inputEl);
-    });
   }
 
   checkValue(e) {
-    console.log(this.checklist);
     const input = e === 'blur' ? e.target : this.inputEl;
     const value = input.value.trim();
     const label = this.getLabelEl(input);
@@ -121,15 +122,6 @@ class ListItem {
     label.textContent = this.value;
 
     helper.hideAndShowEls(input, label);
-  }
-
-  editListItem(labelEl, inputEl) {
-    helper.hideAndShowEls(labelEl, inputEl);
-
-    inputEl.value = this.value;
-    inputEl.focus();
-
-    this.initListeners();
   }
 
   checkedItem() {

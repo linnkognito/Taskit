@@ -179,6 +179,9 @@
 .task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
 }
+.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value:hover {
+  cursor: text;
+}
 .task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn {
   padding: 0.1em 0.6em;
   color: rgb(213, 207, 204);

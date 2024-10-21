@@ -75,21 +75,27 @@ export class Task {
 
   //-- EVENT LISTENERS ------------------------------//
   addFormItem(e) {
+    const checklistId = this.checklists.length + 1;
+    const noteId = this.notes.length + 1;
+
     const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
 
     // Add checklist:
     if (this.hasClass('btn-add-checklist', e.target)) {
-      insert(checklistMarkup);
+      const markup = checklistMarkup.replace('{%CHECKLIST_ID%}', checklistId);
+      insert(markup);
+
       this.els.checklistTitle().focus();
 
-      const newChecklist = new Checklist(this.checklists.length + 1, this);
+      const newChecklist = new Checklist(checklistId, this);
       this.checklists.push(newChecklist);
     }
 
     // Add note:
     if (this.hasClass('btn-add-note', e.target)) {
-      insert(noteMarkup);
+      const markup = noteMarkup.replace('{%NOTE_ID%}', noteId);
       this.els.noteTitle().focus();
+      insert(markup);
 
       const newNote = new Note(this.notes.length + 1, this);
       this.checklists.push(newNote);

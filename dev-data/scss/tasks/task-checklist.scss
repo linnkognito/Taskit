@@ -107,6 +107,11 @@
         @include mixins.input-text-focus-placeholder;
       }
 
+      // LIST ITEM LABEL (BODY) //
+      .checklist-item__value:hover {
+        cursor: text;
+      }
+
       .checklist-item__delete-btn {
         @include mixins.btn-tiny;
         display: flex;
