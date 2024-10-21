@@ -1,4 +1,4 @@
-import { app, helper } from '../../index';
+import { helper } from '../../index';
 
 import listItem from '../../components/tasks/items/checklist-item.html';
 
@@ -14,17 +14,15 @@ export class Checklist {
 
     this.items = [];
 
-    // document.addEventListener('click', (e) => {
-    //   const listItem = e.target.closest('.task-form__checklist-item');
-    //   if (!listItem) return;
-    //   listItem.classList.add('checklist-item--hover');
-    // });
-
-    // ADD LIST ITEM
     this.checklist.addEventListener('click', (e) => {
       const btnAdd = e.target.closest('.btn-add');
+      const btnDel = e.target.closest('.checklist-item__delete-btn');
 
+      // ADD LIST ITEM
       if (btnAdd) return this.addListItem();
+      if (btnDel) return this.deleteListItem(btnDel);
+      // EDIT LIST ITEM
+      if (label) return this.editListItem();
     });
   }
 
@@ -35,10 +33,33 @@ export class Checklist {
     listItem.replace('{%CHECKLIST_ID%}', itemId);
     helper.insertMarkupAdj(list, 'afterbegin', listItem);
 
-    const newListItem = new ListItem(this.items.length + 1, this);
+    const newListItem = new ListItem(itemId, this);
+    this.items.push(newListItem);
 
+    // List Item elements
     const item = list.querySelector('.task-form__checklist-item');
+    const checkbox = list.querySelector('.checklist-item__checkbox');
+    const input = list.querySelector('.checklist-item__value-input');
+    const label = list.querySelector('.checklist-item__value-input');
+
+    // Set attributes
     item.dataset.id = newListItem.id;
+    checkbox.name = `checkbox-${newListItem.id}`;
+    checkbox.id = `checkbox-${newListItem.id}`;
+    input.id = `checkbox-${newListItem.id}`;
+    label.for = `checkbox-${newListItem.id}`;
+
+    input.focus();
+
+    newListItem.initListeners();
+  }
+
+  deleteListItem(btn) {
+    const listItem = btn.closest('.task-form__checklist-item');
+    const id = listItem.dataset.id;
+
+    listItem.remove();
+    this.items.splice(id - 1, 1);
   }
 }
 
@@ -48,9 +69,84 @@ class ListItem {
     this.value = '';
     this.checked = false;
     this.checklist = checklist;
+
+    this.checklistEl = document.querySelector(`.task-form__checklist[data-id="${this.checklist.id}"]`);
+  }
+
+  // GETTERS //
+  get checkboxEl() {
+    return document.querySelector(`.checklist-item__checkbox[id="checkbox-${this.id}"]`);
+  }
+  get inputEl() {
+    return document.querySelector(`.checklist-item__value-input[id="checkbox-${this.id}"]`);
+  }
+  get labelEl() {
+    return document.querySelector(`.checklist-item__value[for="checkbox-${this.id}"]`);
+  }
+
+  // HELPERS //
+  getLabelEl(el) {
+    return el.parentNode.querySelector('.checklist-item__value');
+  }
+
+  // EVENT LISTENERS //
+  initListeners() {
+    const inputEl = this.inputEl;
+
+    // Save new list item
+    inputEl.addEventListener('blur', (e) => this.checkValue(e));
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') this.checkValue(e);
+    });
+
+    // Edit list item
+    checklist.addEventListener('click', (e) => {
+      const labelEl = e.target.closest('.checklist-item__value');
+
+      if (labelEl) this.editListItem(labelEl, inputEl);
+    });
+  }
+
+  checkValue(e) {
+    console.log(this.checklist);
+    const input = e === 'blur' ? e.target : this.inputEl;
+    const value = input.value.trim();
+    const label = this.getLabelEl(input);
+
+    // Remove item if input is empty
+    if (!value) return input.closest('.task-form__checklist-item').remove();
+
+    // Update values
+    this.value = value;
+    label.textContent = this.value;
+
+    helper.hideAndShowEls(input, label);
+  }
+
+  editListItem(labelEl, inputEl) {
+    helper.hideAndShowEls(labelEl, inputEl);
+
+    inputEl.value = this.value;
+    inputEl.focus();
+
+    this.initListeners();
   }
 
   checkedItem() {
     this.checked = true;
   }
 }
+
+// GETTERS //
+// get checklistEl() {
+//   return document.querySelector(`.task-form__checklist[data-id="${this.checklist.id}"]`);
+// }
+// get listItem() {
+//   return document.querySelector(`.task-form__checklist-item[data-id="${this.id}"]`);
+// }
+// get inputEl() {
+//   return this.listItem.querySelector(`.checklist-item__value-input[id="checkbox-${this.id}"]`);
+// }
+// get labelEl() {
+//   return this.listItem.querySelector(`.checklist-item__value[for="checkbox-${this.id}"]`);
+// }

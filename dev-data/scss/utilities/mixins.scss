@@ -47,13 +47,13 @@
 }
 
 // INPUT //
-@mixin input-text($color: vars.$col-secondary, $fs: 1.25rem) {
+@mixin input-text($col: vars.$col-secondary, $fs: 1.25rem) {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
   font-size: $fs;
   font-family: vars.$font-body;
-  color: $color;
+  color: $col;
   letter-spacing: vars.$ls-primary;
   border-radius: vars.$br-primary;
   outline: none;

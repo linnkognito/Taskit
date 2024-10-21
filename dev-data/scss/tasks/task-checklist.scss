@@ -66,6 +66,9 @@
   // BODY (CHECKLIST) //
   .task-form__checklist-body {
     @include mixins.item-body;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
 
     // LIST ITEM (BODY)
     .task-form__checklist-item {
@@ -76,12 +79,32 @@
       // LIST ITEM (BODY) //
       .checklist-item__wrapper {
         display: flex;
-        gap: 0.4em;
+        align-items: center;
+        gap: 0.3em;
 
         .task-form__checklist-item input[type='checkbox']:checked + label {
           text-decoration: line-through;
           color: rgb(163, 163, 163);
         }
+      }
+
+      // LIST TEXT INPUT (BODY) //
+      .checklist-item__value-input {
+        @include mixins.input-text($fs: 1rem);
+        margin-left: 0.25em;
+        border: 1px solid vars.$col-primary-low-op;
+      }
+      .checklist-item__value-input:focus {
+        @include mixins.input-text-focus;
+        border: 1px solid vars.$col-primary-op;
+        box-shadow: 0 0 2px vars.$col-primary-op;
+        transform: scale(1.01);
+      }
+      .checklist-item__value-input::placeholder {
+        @include mixins.input-text-placeholder;
+      }
+      .checklist-item__value-input:focus::placeholder {
+        @include mixins.input-text-focus-placeholder;
       }
 
       .checklist-item__delete-btn {
