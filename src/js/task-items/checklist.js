@@ -21,7 +21,7 @@ export class Checklist {
 
       // ADD LIST ITEM
       if (btnAdd) return this.addListItem();
-      if (btnDel) return this.deleteListItem(btnDel);
+      if (btnDel) return this.deleteListItem(e);
       // EDIT LIST ITEM
       if (label) return this.editListItem(label);
     });
@@ -41,14 +41,14 @@ export class Checklist {
     const item = list.querySelector('.task-form__checklist-item');
     const checkbox = list.querySelector('.checklist-item__checkbox');
     const input = list.querySelector('.checklist-item__value-input');
-    const label = list.querySelector('.checklist-item__value-input');
+    const label = list.querySelector('.checklist-item__value');
 
     // Set attributes
     item.dataset.id = newListItem.id;
     checkbox.name = `checkbox-${newListItem.id}`;
     checkbox.id = `checkbox-${newListItem.id}`;
     input.id = `checkbox-${newListItem.id}`;
-    label.for = `checkbox-${newListItem.id}`;
+    label.setAttribute('for', `checkbox-${newListItem.id}`);
 
     input.focus();
 
@@ -63,12 +63,14 @@ export class Checklist {
     inputEl.focus();
   }
 
-  deleteListItem(btn) {
-    const listItem = btn.closest('.task-form__checklist-item');
+  deleteListItem(e) {
+    const listItem = e.target.closest('.task-form__checklist-item');
     const id = listItem.dataset.id;
 
-    listItem.remove();
-    this.items.splice(id - 1, 1);
+    if (listItem) {
+      listItem.remove();
+      this.items.splice(id - 1, 1);
+    }
   }
 }
 
@@ -78,67 +80,69 @@ class ListItem {
     this.value = '';
     this.checked = false;
     this.checklist = checklist;
-
-    this.checklistEl = document.querySelector(`.task-form__checklist[data-id="${this.checklist.id}"]`);
+    this.preventBlur = false;
   }
 
   // GETTERS //
   get checkboxEl() {
     return document.querySelector(`.checklist-item__checkbox[id="checkbox-${this.id}"]`);
   }
-  get inputEl() {
-    return document.querySelector(`.checklist-item__value-input[id="checkbox-${this.id}"]`);
-  }
   get labelEl() {
     return document.querySelector(`.checklist-item__value[for="checkbox-${this.id}"]`);
   }
-
-  // HELPERS //
-  getLabelEl(el) {
-    return el.parentNode.querySelector('.checklist-item__value');
+  get inputEl() {
+    return document.querySelector(`.checklist-item__value-input[id="checkbox-${this.id}"]`);
+  }
+  get listItemEl() {
+    return document.querySelector(`.task-form__checklist-item[data-id="checkbox-${this.id}"]`);
   }
 
   // EVENT LISTENERS //
   initListeners() {
-    const inputEl = this.inputEl;
-
-    // Save new list item
-    inputEl.addEventListener('blur', (e) => this.checkValue(e));
-    inputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') this.checkValue(e);
+    // Check list item input value //
+    this.inputEl.addEventListener('blur', (e) => {
+      if (!this.preventBlur) this.checkValue(e);
+      this.preventBlur = false; // Reset flag
     });
+
+    this.inputEl.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      this.preventBlur = true; // Set flag --> prevent blur event
+      this.checkValue(e);
+    });
+
+    // Checked checkbox //
+    this.checkboxEl.addEventListener('click', () => this.checkedBox(this.checkboxEl));
   }
 
+  // METHODS //
   checkValue(e) {
-    const input = e === 'blur' ? e.target : this.inputEl;
+    const input = e.target;
     const value = input.value.trim();
-    const label = this.getLabelEl(input);
 
     // Remove item if input is empty
-    if (!value) return input.closest('.task-form__checklist-item').remove();
+    if (!value) {
+      return this.checklist.deleteListItem(e);
+    }
 
     // Update values
     this.value = value;
-    label.textContent = this.value;
+    this.labelEl.textContent = this.value;
 
-    helper.hideAndShowEls(input, label);
+    // Update elements
+    helper.hideAndShowEls(input, this.labelEl);
   }
 
-  checkedItem() {
-    this.checked = true;
+  checkedBox(cb) {
+    this.checked = cb.checked;
+
+    if (this.checked) {
+      // Move right after checked items
+    }
+    if (!this.checked) {
+      // Move to the top of the checklist
+      const value = this.labelEl.textContent;
+    }
   }
 }
-
-// GETTERS //
-// get checklistEl() {
-//   return document.querySelector(`.task-form__checklist[data-id="${this.checklist.id}"]`);
-// }
-// get listItem() {
-//   return document.querySelector(`.task-form__checklist-item[data-id="${this.id}"]`);
-// }
-// get inputEl() {
-//   return this.listItem.querySelector(`.checklist-item__value-input[id="checkbox-${this.id}"]`);
-// }
-// get labelEl() {
-//   return this.listItem.querySelector(`.checklist-item__value[for="checkbox-${this.id}"]`);
-// }

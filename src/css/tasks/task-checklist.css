@@ -55,7 +55,7 @@
   border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
-.task-card__checklist .task-card__checklist-body .task-card__checklist-body input[type=checkbox]:checked + label {
+.task-card__checklist .task-card__checklist-body .checklist-item__checkbox:checked + label {
   text-decoration: line-through;
   color: rgb(163, 163, 163);
 }
@@ -147,9 +147,9 @@
   align-items: center;
   gap: 0.3em;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper .task-form__checklist-item input[type=checkbox]:checked + label {
+.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label {
   text-decoration: line-through;
-  color: rgb(163, 163, 163);
+  color: rgba(165, 160, 158, 0.6);
 }
 .task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input {
   width: 100%;

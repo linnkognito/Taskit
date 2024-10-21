@@ -311,6 +311,8 @@ export class Task {
 
         // Insert markup for checklist
         helper.insertMarkupAdj('afterbegin');
+
+        // Remove DISABLED from checkbox elements
       });
     }
 

@@ -23,7 +23,7 @@
   .task-card__checklist-body {
     @include mixins.item-body;
 
-    .task-card__checklist-body input[type='checkbox']:checked + label {
+    .checklist-item__checkbox:checked + label {
       text-decoration: line-through;
       color: rgb(163, 163, 163);
     }
@@ -82,9 +82,9 @@
         align-items: center;
         gap: 0.3em;
 
-        .task-form__checklist-item input[type='checkbox']:checked + label {
+        .checklist-item__checkbox:checked + label {
           text-decoration: line-through;
-          color: rgb(163, 163, 163);
+          color: vars.$col-primary-dark-op;
         }
       }
 
