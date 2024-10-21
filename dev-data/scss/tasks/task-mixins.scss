@@ -102,13 +102,13 @@
 }
 
 // CHECKLISTS & NOTES //
-@mixin item() {
+@mixin item($bg: vars.$col-primary-low-op) {
   width: 100%;
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: vars.$col-prio3;
-  border: 1px solid vars.$col-prio3;
+  background: $bg;
+  border: 1px solid $bg;
   border-radius: vars.$br-primary;
 }
 @mixin item-header() {
@@ -124,12 +124,13 @@
   letter-spacing: 0.1em;
   color: white;
 }
-@mixin item-body() {
+@mixin item-body($bg: vars.$col-primary-low-op) {
   padding: 0.5em 1em;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: vars.$col-primary-dark;
   background: white;
-  border: 1px solid vars.$col-prio3;
+  border: 1px solid $bg;
   border-radius: vars.$br-primary;
 }
 

@@ -46,7 +46,6 @@ export class App {
 
     // Capture title
     inputEl.addEventListener('blur', () => newProject.saveProjectTitle());
-    console.log(newProject);
   }
 
   renderProjectCard(id) {

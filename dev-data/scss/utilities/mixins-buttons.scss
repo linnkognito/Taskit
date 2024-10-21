@@ -53,4 +53,10 @@
   background: $bg;
   transition: vars.$transform-ease-in;
   @include btn-border();
+  border-radius: 0.5em;
+}
+
+// TINY BUTTON //
+@mixin btn-tiny() {
+  @include btn-small(vars.$col-primary, vars.$col-primary-low-op);
 }

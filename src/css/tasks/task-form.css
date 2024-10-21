@@ -260,6 +260,7 @@
   transition: transform 0.2s ease-in;
   border: none;
   border-radius: 0.9em;
+  border-radius: 0.5em;
 }
 .task-form .task-form__footer .task-form__footer--buttons .btn-form-footer:hover {
   transform: scale(1.05);

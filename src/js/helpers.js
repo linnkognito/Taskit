@@ -18,6 +18,9 @@ export class Helper {
   hasClass(el, cls) {
     return el.classList.contain(cls);
   }
+  addClass(el, cls) {
+    return el.classList.add(cls);
+  }
 
   //-- MARKUP -----------------------------------------------//
   clear = (el) => (el.innerHTML = '');

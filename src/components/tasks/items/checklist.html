@@ -1,0 +1,21 @@
+<div class="task-form__checklist" data-id="{%CHECKLIST_ID%}">
+  <div class="task-form__checklist-header">
+    <input type="text" class="task-form__checklist-input-title" placeholder="Checklist" />
+    <div class="task-form__checklist-title hidden">{%CHECKLIST_TITLE%}</div>
+    <div class="task-form__checklist-buttons">
+      <button class="task-form__btn btn-add">
+        <img src="../../../../public/icons/add.png" alt="Add list item" title="Add list item" class="task-form__btn--icon" />
+      </button>
+    </div>
+  </div>
+  <div class="task-form__checklist-body">
+    <div class="task-form__checklist-item">
+      <div class="checklist-item__wrapper">
+        <input type="checkbox" name="{%CHECKLIST_ITEM%}" id="{%CHECKLIST_ID%}" />
+        <label for="{%CHECKLIST_ID%}">List item text</label>
+      </div>
+      <button class="checklist-item__delete-btn"><img src="../../../../public/icons/delete.png" alt="Delete list item" /></button>
+    </div>
+    <button class="btn-add-checklist-item btn-add">+ Add item</button>
+  </div>
+</div>

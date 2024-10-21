@@ -92,6 +92,7 @@
   transition: transform 0.2s ease-in;
   border: none;
   border-radius: 0.9em;
+  border-radius: 0.5em;
   margin: 0.1em 0;
 }
 .modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-due-footer:hover {

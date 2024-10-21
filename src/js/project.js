@@ -31,17 +31,22 @@ export class Project {
     });
 
     // CHANGE TITLE //
-    this.projectEl.addEventListener('click', (e) => this.clickedTitle(e));
+    this.projectEl.addEventListener('click', (e) => {
+      const title = e.target.closest('.project-card__title');
+      const delBtn = e.target.closest('.btn-delete');
+
+      if (title) return this.clickedTitle(e);
+      if (delBtn) return this.deleteTask(delBtn);
+    });
+    // DELETE TASK //
   }
 
   clickedTitle(e) {
-    const title = e.target.closest('.project-card__title');
-    if (!title) return;
     this.editProjectTitle(e.target);
   }
 
   //-- HELPERS ----------------------------------//
-  getTaskId = (el) => el.closest('.task-form').dataset.id;
+  getTaskId = (el) => el.closest('.task-card').dataset.id;
 
   //-- GETTERS ---------------------------------//
   get projectEl() {
@@ -55,9 +60,6 @@ export class Project {
   }
   get inputEl() {
     return this.projectEl.querySelector('.project-card__title-input');
-  }
-  get taskEl() {
-    return document.querySelector(`.task-card[data-id="${this.id}"]`);
   }
 
   //-- TITLE ---------------------------------//
@@ -149,16 +151,17 @@ export class Project {
     if (btn) {
       this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
 
-      const newTask = new Task(this.tasksArr.lengt + 1, this, this.projectEl);
+      const newTask = new Task(this.tasksArr.length + 1, this, this.projectEl);
       this.tasksArr.push(newTask);
     }
   }
 
-  // deleteTask(id) {
-  //   this.tasksArr.splice(id, 1);
-  //   // Check if it exists in the checkedTasks array & delete that too
-  //   // Re-render code from Array
-  // }
+  deleteTask(btn) {
+    const taskId = this.getTaskId(btn);
+    const task = btn.closest(`.task-card[data-id="${taskId}"]`);
+    this.tasksArr.splice(taskId - 1, 1);
+    task.remove();
+  }
 
   // moveChecked(task) {
   //   this.tasksArr[task.id].checked = true; // do i need this or does the array instance point to the same thinf
@@ -168,5 +171,4 @@ export class Project {
   // }
 
   // moveChecked(task) { }
-  //-- EFFECTS ----------------------------------//
 }

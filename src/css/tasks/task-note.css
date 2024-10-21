@@ -9,8 +9,8 @@
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: rgb(204, 223, 240);
-  border: 1px solid rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
 .task-card__note .task-card__note-header {
@@ -48,10 +48,11 @@
 }
 .task-card__note .task-card__note-body {
   padding: 0.5em 1em;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: rgb(165, 160, 158);
   background: white;
-  border: 1px solid rgb(204, 223, 240);
+  border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
 
@@ -60,8 +61,8 @@
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: rgb(204, 223, 240);
-  border: 1px solid rgb(204, 223, 240);
+  background: rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
 .task-form__note .task-form__note-header {
@@ -125,10 +126,11 @@
 }
 .task-form__note .task-form__note-body {
   padding: 0.5em 1em;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: rgb(165, 160, 158);
   background: white;
-  border: 1px solid rgb(204, 223, 240);
+  border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   font-size: 1rem;
 }

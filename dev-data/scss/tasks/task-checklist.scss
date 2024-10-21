@@ -1,5 +1,6 @@
 @use '../utilities/vars';
 @use '../utilities/mixins';
+@use '../utilities/mixins-buttons';
 
 // CHECKLIST //
 .task-card__checklist {
@@ -66,19 +67,52 @@
   .task-form__checklist-body {
     @include mixins.item-body;
 
-    .task-form__checklist-item input[type='checkbox']:checked + label {
-      text-decoration: line-through;
-      color: rgb(163, 163, 163);
+    // LIST ITEM (BODY)
+    .task-form__checklist-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      // LIST ITEM (BODY) //
+      .checklist-item__wrapper {
+        display: flex;
+        gap: 0.4em;
+
+        .task-form__checklist-item input[type='checkbox']:checked + label {
+          text-decoration: line-through;
+          color: rgb(163, 163, 163);
+        }
+      }
+
+      .checklist-item__delete-btn {
+        @include mixins.btn-tiny;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.5em;
+        height: 1.5em;
+      }
+      .checklist-item__delete-btn img {
+        height: 100%;
+      }
+      .checklist-item__delete-btn:hover {
+        @include mixins.btn-hover;
+        background: vars.$col-primary-op;
+      }
+    }
+    .checklist-item--hover {
+      background: vars.$col-primary-low-op;
     }
 
+    // ADD LIST ITEM BTN //
     .btn-add-checklist-item {
-      @include mixins.btn-small(vars.$col-secondary, vars.$col-prio3-light);
+      @include mixins.btn-small(vars.$col-secondary, vars.$col-primary-low-op);
       margin-top: 0.5em;
     }
     .btn-add-checklist-item:hover {
-      @include mixins.btn-hover(1.05);
+      @include mixins.btn-hover(1.03);
       color: white;
-      background: vars.$col-prio3;
+      background: vars.$col-primary;
     }
   }
 }

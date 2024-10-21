@@ -1,9 +1,10 @@
 // task.js
 import { app, helper } from '../index';
 import { Checklist } from './task-items/checklist';
+import { Note } from './task-items/note';
 
-import checklistMarkup from '../components/tasks/items/item-checklist.html';
-import noteMarkup from '../components/tasks/items/item-note.html';
+import checklistMarkup from '../components/tasks/items/checklist.html';
+import noteMarkup from '../components/tasks/items/note.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardTemp from '../components/tasks/task-card.html';
 
@@ -76,15 +77,22 @@ export class Task {
   addFormItem(e) {
     const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
 
-    // Add checklist btn clicked:
+    // Add checklist:
     if (this.hasClass('btn-add-checklist', e.target)) {
       insert(checklistMarkup);
       this.els.checklistTitle().focus();
+
+      const newChecklist = new Checklist(this.checklists.length + 1, this);
+      this.checklists.push(newChecklist);
     }
-    // Add note btn clicked:
+
+    // Add note:
     if (this.hasClass('btn-add-note', e.target)) {
       insert(noteMarkup);
       this.els.noteTitle().focus();
+
+      const newNote = new Note(this.notes.length + 1, this);
+      this.checklists.push(newNote);
     }
   }
   saveOrCancelForm(e) {
@@ -290,14 +298,13 @@ export class Task {
 
     // Check for checklist items
     if (checklist) {
-      checklist.forEach(() => {
+      checklist.forEach((cl) => {
+        // Store values in instance object (alredy created)
         const title = checklist.querySelector('.task-form__checklist-input-title');
-        const id = this.checklists.length - 1;
-
-        const newChecklist = new Checklist(id, title);
-        this.checklists.push(newChecklist);
+        cl.title = title;
 
         // Insert markup for checklist
+        helper.insertMarkupAdj('afterbegin');
       });
     }
 
