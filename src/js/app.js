@@ -10,6 +10,8 @@ export class App {
   projects = document.querySelector('#projects');
   projectBtns = document.querySelector('.project-card__buttons');
   addBtn = document.querySelector('.add-project__body');
+  nav = document.querySelectorAll('nav-link');
+
   projectsArr = [];
 
   constructor() {
@@ -22,6 +24,7 @@ export class App {
   getProject = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
   getTitleEl = (parent) => parent.querySelector('.project-card__title');
   getInputEl = (parent) => parent.querySelector('.project-card__title-input');
+  hasClass = (el, cls) => el.classList.contains(cls);
 
   //-- METHODS ----------------------------------------------//
   createNewProject() {

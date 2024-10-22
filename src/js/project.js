@@ -149,14 +149,22 @@ export class Project {
     const btn = e.target.closest('.btn-add-task');
 
     if (btn) {
+      // Insert markup
       this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
 
+      // Get elements
       const taskForm = document.querySelector('.task-form');
-      // const taskFormHeight = taskForm.getBoundingClientRect().height;
+      const content = document.querySelector('.project-card__body--content');
+
+      // Get form height
+      const taskFormHeight = taskForm.getBoundingClientRect().height;
 
       // Apply animations
       helper.scaleUp(taskForm, 'top');
+      content.transition = 'transform 0.3s ease';
+      helper.moveDown(content, taskFormHeight);
 
+      // Create Task instance
       const newTask = new Task(this.tasksArr.length + 1, this, this.projectEl);
       this.tasksArr.push(newTask);
     }

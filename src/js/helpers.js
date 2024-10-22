@@ -26,6 +26,9 @@ export class Helper {
       el.classList.add(`scale-up-${startPos}`);
     });
   }
+  moveDown(el, h) {
+    return (el.transform = `translateY(${h})`);
+  }
 
   //-- MARKUP -----------------------------------------------//
   clear = (el) => (el.innerHTML = '');
