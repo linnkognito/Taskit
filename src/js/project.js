@@ -151,6 +151,12 @@ export class Project {
     if (btn) {
       this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
 
+      const taskForm = document.querySelector('.task-form');
+      // const taskFormHeight = taskForm.getBoundingClientRect().height;
+
+      // Apply animations
+      helper.scaleUp(taskForm, 'top');
+
       const newTask = new Task(this.tasksArr.length + 1, this, this.projectEl);
       this.tasksArr.push(newTask);
     }

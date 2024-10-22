@@ -8,9 +8,9 @@ export class Checklist {
 
   constructor(id, task) {
     this.id = id;
-    this.task = task;
     this.title = `Checklist ${this.id}`;
     this.checked = false;
+    this.task = task;
 
     this.items = [];
 

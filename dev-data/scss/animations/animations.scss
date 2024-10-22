@@ -30,3 +30,20 @@
     opacity: 1;
   }
 }
+@keyframes scale-up-top {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.scale-up-top {
+  transform-origin: top;
+  animation: scale-up-top 0.3s ease-out forwards;
+  transform: scale(0);
+  opacity: 0;
+}

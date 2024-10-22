@@ -1,6 +1,7 @@
 // task-note.scss
 
 @use '../utilities/mixins';
+@use '../utilities/vars';
 
 .task-card__note {
   @include mixins.item;
@@ -57,5 +58,46 @@
   .task-form__note-body {
     @include mixins.item-body;
     font-size: 1rem;
+
+    .note-body__formatting-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      gap: 0.3em;
+      margin: 0.2em 0 0.3em 0;
+      padding: 0.3em 0.3em;
+      background: vars.$col-primary-low-op;
+      // border: 1px solid vars.$col-primary-low-op;
+      border-radius: 0.5em;
+
+      .btn-formatting {
+        @include mixins.btn-tiny(vars.$col-primary);
+        width: 1.8em;
+        height: 1.8em;
+
+        .btn-formatting--icon {
+          height: 100%;
+        }
+      }
+      .btn-formatting:hover {
+        @include mixins.btn-hover(1.03);
+        background: vars.$col-primary-dark-op;
+      }
+    }
+    .task-form__note-editor {
+      width: 100%;
+      padding: 0.35em 0.6em;
+      font-size: 1rem;
+      color: vars.$col-secondary;
+      border: 1px dashed vars.$col-primary;
+      border-radius: 0.5em;
+    }
+    .task-form__note-editor:focus {
+      color: vars.$col-secondary;
+      border: 1px dashed vars.$col-primary-dark;
+      outline: none;
+    }
   } //////////////////////////////////
+}
+.task-form__note--active {
+  box-shadow: 0 0 5px vars.$col-primary-dark;
 }

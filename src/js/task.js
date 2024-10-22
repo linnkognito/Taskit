@@ -94,11 +94,12 @@ export class Task {
     // Add note:
     if (this.hasClass('btn-add-note', e.target)) {
       const markup = noteMarkup.replace('{%NOTE_ID%}', noteId);
-      this.els.noteTitle().focus();
       insert(markup);
 
-      const newNote = new Note(this.notes.length + 1, this);
-      this.checklists.push(newNote);
+      this.els.noteTitle().focus();
+
+      const newNote = new Note(noteId, this);
+      this.notes.push(newNote);
     }
   }
   saveOrCancelForm(e) {

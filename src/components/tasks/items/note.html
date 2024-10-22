@@ -1,12 +1,32 @@
 <div class="task-form__note" data-id="{%NOTE_ID%}">
   <div class="task-form__note-header">
     <input type="text" class="task-form__note-input-title" placeholder="Add note" />
-    <div class="task-form__note-title hidden">{%NOTE_TITLE%}</div>
+    <div class="task-form__note-title hidden"></div>
     <div class="task-form__note-buttons">
       <button class="task-form__btn btn-save">
         <img src="../../../../public/icons/save.png" alt="Save checklist" title="Save checklist" class="task-form__btn--icon" />
       </button>
     </div>
   </div>
-  <div class="task-form__note-body">{%NOTE_TEXT%}</div>
+
+  <div class="task-form__note-body">
+    <div class="note-body__formatting-buttons">
+      <button class="btn-formatting btn-bold">
+        <img src="../../../../public/icons/bold.png" alt="Apply bold" class="btn-formatting--icon" />
+      </button>
+      <button class="btn-formatting btn-">
+        <img src="../../../../public/icons/italic.png" alt="Apply italic" class="btn-formatting--icon" />
+      </button>
+      <button class="btn-formatting btn-">
+        <img src="../../../../public/icons/underline.png" alt="Apply underline" class="btn-formatting--icon" />
+      </button>
+      <button class="btn-formatting btn-">
+        <img src="../../../../public/icons/strikethrough.png" alt="Apply strikethrough" class="btn-formatting--icon" />
+      </button>
+      <button class="btn-formatting btn-">
+        <img src="../../../../public/icons/link.png" alt="Create link" class="btn-formatting--icon" />
+      </button>
+    </div>
+    <div contenteditable="true" id="task-form__note-editor" class="task-form__note-editor">Hello</div>
+  </div>
 </div>

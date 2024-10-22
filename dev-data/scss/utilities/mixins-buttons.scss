@@ -57,6 +57,15 @@
 }
 
 // TINY BUTTON //
-@mixin btn-tiny() {
-  @include btn-small(vars.$col-primary, vars.$col-primary-low-op);
+@mixin btn-tiny($bg: vars.$col-primary-low-op) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.1em 0.6em;
+  background: $bg;
+  transition: vars.$transform-ease-in;
+  @include btn-border();
+  border-radius: 0.5em;
 }

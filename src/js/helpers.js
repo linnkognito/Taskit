@@ -21,6 +21,11 @@ export class Helper {
   addClass(el, cls) {
     return el.classList.add(cls);
   }
+  scaleUp(el, startPos) {
+    return requestAnimationFrame(() => {
+      el.classList.add(`scale-up-${startPos}`);
+    });
+  }
 
   //-- MARKUP -----------------------------------------------//
   clear = (el) => (el.innerHTML = '');

@@ -54,8 +54,6 @@ export class App {
     this.projects.firstElementChild.insertAdjacentHTML('afterend', projectMarkup);
 
     // Apply animation
-    requestAnimationFrame(() => {
-      this.getProject(id).classList.add('scale-up-center');
-    });
+    helper.scaleUp(this.getProject(id), 'center');
   }
 }

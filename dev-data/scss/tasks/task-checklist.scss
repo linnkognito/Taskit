@@ -114,11 +114,6 @@
 
       .checklist-item__delete-btn {
         @include mixins.btn-tiny;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 1.5em;
-        height: 1.5em;
       }
       .checklist-item__delete-btn img {
         height: 100%;
