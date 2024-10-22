@@ -27,6 +27,7 @@
 // NOTE FORM //
 .task-form__note {
   @include mixins.item;
+  min-width: fit-content;
 
   // HEADER ///////////////////////////
   .task-form__note-header {
@@ -57,12 +58,73 @@
   //  BODY ///////////////////////////
   .task-form__note-body {
     @include mixins.item-body;
+    position: relative;
     font-size: 1rem;
 
+    // LINK POPUP (FORMATTING BUTTONS) //
+    .popup-insert-link {
+      @include mixins.modal-contrainer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+      position: absolute;
+      top: -100%;
+      width: 100%;
+      min-width: fit-content;
+      margin: auto;
+      padding: 1em;
+      border: 1px solid vars.$col-primary;
+      box-shadow: 0 0 0.5em vars.$col-primary-dark;
+      z-index: 10000;
+
+      // INPUT (POPUP) //
+      .popup-insert-link__label {
+        margin-left: 0.6em;
+      }
+      .popup-insert-link__input {
+        @include mixins.input-text;
+        font-size: 1rem;
+        font-style: italic;
+        outline: none;
+        border: 1px solid vars.$col-primary;
+      }
+      .popup-insert-link__input:focus {
+        box-shadow: 0 0 0.1em vars.$col-primary-dark;
+      }
+
+      // FOOTER (POPUP) //
+      .popup-insert-link__buttons {
+        display: flex;
+        justify-content: end;
+        gap: 0.2em;
+        padding: 0.3em 0.5em 0 0;
+        width: 100%;
+
+        .btn-popup {
+          padding: 0 0.5em;
+          font-size: 0.8rem;
+          background: vars.$col-primary-op;
+          border: none;
+          border-radius: vars.$br-primary;
+        }
+        .btn-apply:hover {
+          background: vars.$col-prio2;
+        }
+        .btn-cancel:hover {
+          background: vars.$col-prio1;
+        }
+        .btn-popup:hover {
+          @include mixins.btn-hover;
+        }
+      }
+    }
+
+    // FORMATTING BUTTONS (BODY) //
     .note-body__formatting-buttons {
       display: flex;
       justify-content: space-evenly;
       gap: 0.3em;
+      min-width: fit-content;
       margin: 0.2em 0 0.3em 0;
       padding: 0.3em 0.3em;
       background: vars.$col-primary-low-op;
@@ -102,8 +164,18 @@
       border: 1px dashed vars.$col-primary-dark;
       outline: none;
     }
+
+    // QUILL FORMATTING LIBRARY STYLES //
     .ql-editor {
       outline: none;
+
+      .ql-editor--link {
+        color: vars.$col-primary;
+      }
+      .ql-editor--link:hover {
+        color: white;
+        background: vars.$col-primary;
+      }
     }
   } //////////////////////////////////
 }

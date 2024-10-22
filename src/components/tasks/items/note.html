@@ -10,6 +10,18 @@
   </div>
 
   <div class="task-form__note-body">
+    <!-- INSERT LINK POPUP -->
+    <div class="popup-insert-link">
+      <label for="url" class="popup-insert-link__label">Insert URL:</label>
+      <input type="text" name="url" placeholder="" class="popup-insert-link__input" />
+
+      <div class="popup-insert-link__buttons">
+        <button class="btn-popup btn-cancel">Cancel</button>
+        <button class="btn-popup btn-apply">Apply</button>
+      </div>
+    </div>
+
+    <!-- FORMATTING BUTTONS -->
     <div class="note-body__formatting-buttons">
       <button class="btn-formatting btn-bold">
         <img src="../../../../public/icons/bold.png" alt="Apply bold" class="btn-formatting--icon" />
@@ -23,6 +35,8 @@
       <button class="btn-formatting btn-strikethrough">
         <img src="../../../../public/icons/strikethrough.png" alt="Apply strikethrough" class="btn-formatting--icon" />
       </button>
+
+      <!-- LINK BUTTON -->
       <button class="btn-formatting btn-link">
         <img src="../../../../public/icons/link.png" alt="Create link" class="btn-formatting--icon" />
       </button>
