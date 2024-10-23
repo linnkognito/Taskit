@@ -18,7 +18,9 @@ export class Note {
     this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
       theme: null,
     });
-    this.quill.on('selection-change', () => this.updateToolbar());
+    this.quill.on('selection-change', () => {
+      this.updateToolbar();
+    });
     this.quill.on('text-change', () => {
       this.updateToolbar();
     });
@@ -35,7 +37,6 @@ export class Note {
     this.popupLink.addEventListener('click', (e) => {
       const apply = e.target.closest('.btn-apply');
       const cancel = e.target.closest('.btn-cancel');
-
       if (!apply && !cancel) return;
 
       if (apply) return this.formatLink();
@@ -43,14 +44,24 @@ export class Note {
     });
   }
 
+  // GETTERS //
   get noteEl() {
     return document.querySelector(`.task-form__note[data-id="${this.id}"]`);
   }
+  get linkInput() {
+    return this.popupLink.querySelector('.popup-insert-link__input');
+  }
 
+  // HELPERS //
   toggleFormatBtn(btn, bool) {
     return btn.classList.toggle('btn-formatting--active', bool);
   }
+  isLink() {
+    const selection = this.quill.getSelection();
+    return selection ? !!this.quill.getFormat(selection).link : false;
+  }
 
+  // METHODS //
   formatLink() {
     const input = this.popupLink.querySelector('.popup-insert-link__input');
     const url = input.value;
@@ -62,12 +73,6 @@ export class Note {
     helper.hideElement(this.popupLink);
     input.value = '';
     this.updateToolbar();
-  }
-
-  isLink() {
-    const selection = this.quill.getSelection();
-
-    return selection ? !!this.quill.getFormat(selection).link : false;
   }
 
   toggleLinkIcon() {
@@ -116,12 +121,14 @@ export class Note {
 
     // Link formatting
     if (type === 'link') {
+      // Toggle off if link already exists
       const url = current.link;
       if (url) return this.quill.format('link', false);
 
+      // Open popup
       helper.showElement(this.popupLink);
-      const input = this.popupLink.querySelector('.popup-insert-link__input');
-      input.focus();
+      //const input = this.popupLink.querySelector('.popup-insert-link__input');
+      this.linkInput.focus();
       return;
     }
 

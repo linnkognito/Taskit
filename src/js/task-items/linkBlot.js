@@ -9,7 +9,8 @@ class LinkBlot extends Inline {
   static create(url) {
     let node = super.create();
     node.setAttribute('href', url);
-    node.setAttribute('targt', '_blank');
+    node.setAttribute('target', '_blank');
+    node.setAttribute('title', url);
     node.classList.add('ql-editor--link');
     return node;
   }
