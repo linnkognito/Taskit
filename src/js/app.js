@@ -9,6 +9,7 @@ export class App {
   //-- CLASS PROPERTIES -------------------------------------//
   projects = document.querySelector('#projects');
   projectBtns = document.querySelector('.project-card__buttons');
+  dummyProjectCard = document.querySelector('.add-project');
   addBtn = document.querySelector('.add-project__body');
   nav = document.querySelectorAll('nav-link');
 

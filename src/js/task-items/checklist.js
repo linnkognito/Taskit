@@ -1,19 +1,20 @@
 import { helper } from '../../index';
-
 import listItem from '../../components/tasks/items/checklist-item.html';
 
 export class Checklist {
   checklist = document.querySelector('.task-form__checklist');
   addItem = document.querySelector('.btn-add');
+  titleInput = document.querySelector('.task-form__checklist-input-title');
 
   constructor(id, task) {
     this.id = id;
-    this.title = `Checklist ${this.id}`;
+    this.title = '';
     this.checked = false;
     this.task = task;
 
     this.items = [];
 
+    // ADD LIST ITEM
     this.checklist.addEventListener('click', (e) => {
       const btnAdd = e.target.closest('.btn-add');
       const btnDel = e.target.closest('.checklist-item__delete-btn');
@@ -25,6 +26,10 @@ export class Checklist {
       // EDIT LIST ITEM
       if (label) return this.editListItem(label);
     });
+    // SAVE TITLE
+    this.titleInput.addEventListener('blur', (e) => {
+      this.saveTitle(e);
+    });
   }
 
   addListItem() {
@@ -34,6 +39,7 @@ export class Checklist {
     listItem.replace('{%CHECKLIST_ID%}', itemId);
     helper.insertMarkupAdj(list, 'afterbegin', listItem);
 
+    // Create List Item instance
     const newListItem = new ListItem(itemId, this);
     this.items.push(newListItem);
 
@@ -53,6 +59,17 @@ export class Checklist {
     input.focus();
 
     newListItem.initListeners();
+  }
+
+  saveTitle(e) {
+    let title = e.target;
+
+    // Set title
+    title.value ? (this.title = title.value) : this.title;
+
+    // Add placeholder & value
+    title.placeholder = this.title || 'Add title';
+    title.value = this.title;
   }
 
   editListItem(labelEl) {

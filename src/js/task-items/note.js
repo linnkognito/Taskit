@@ -2,16 +2,19 @@ import Quill from 'quill';
 import './linkBlot';
 
 import { helper } from '../../index';
+import { saveTitle } from './checklist';
 
 export class Note {
   toolbar = document.querySelector('.note-body__formatting-buttons');
   buttons = this.toolbar.querySelectorAll('.btn-formatting');
   popupLink = document.querySelector('.popup-insert-link');
   btnLink = document.querySelector('.btn-link');
+  titleInput = document.querySelector('.task-form__note-input-title');
 
   constructor(id, task) {
     this.id = id;
-    this.title = `Note #${this.id}`;
+    this.title = '';
+    this.note = '';
     this.task = task;
 
     // QUILL //
@@ -42,11 +45,20 @@ export class Note {
       if (apply) return this.formatLink();
       if (cancel) return helper.hideElement(this.popupLink);
     });
+    this.titleInput.addEventListener('blur', (e) => {
+      this.saveTitle(e);
+    });
+    this.editor.addEventListener('blur', (e) => {
+      this.saveNote(e);
+    });
   }
 
   // GETTERS //
   get noteEl() {
     return document.querySelector(`.task-form__note[data-id="${this.id}"]`);
+  }
+  get editor() {
+    return document.querySelector('.ql-editor');
   }
   get linkInput() {
     return this.popupLink.querySelector('.popup-insert-link__input');
@@ -62,6 +74,23 @@ export class Note {
   }
 
   // METHODS //
+  saveNote(e) {
+    let editor = e.target;
+
+    editor.innerHTML ? (this.note = editor.innerHTML) : this.note;
+  }
+
+  saveTitle(e) {
+    let title = e.target;
+
+    // Set title
+    title.value ? (this.title = title.value) : this.title;
+
+    // Add placeholder & value
+    title.placeholder = this.title || 'Add title';
+    title.value = this.title;
+  }
+
   formatLink() {
     const input = this.popupLink.querySelector('.popup-insert-link__input');
     const url = input.value;

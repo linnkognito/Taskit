@@ -1,10 +1,10 @@
 // task.js
-import { app, helper } from '../index';
+import { helper } from '../index';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 
-import checklistMarkup from '../components/tasks/items/checklist.html';
-import noteMarkup from '../components/tasks/items/note.html';
+import checklistMarkup from '../components/tasks/items/checklist-form.html';
+import noteMarkup from '../components/tasks/items/note-form.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardTemp from '../components/tasks/task-card.html';
 
@@ -281,11 +281,28 @@ export class Task {
   }
 
   //-- TASK -----------------------------------------//
+  saveChecklists(clEls) {
+    clEls.forEach((cl) => {
+      const id = cl.dataset.id;
+      const title = cl.querySelector('.task-form__checklist-input-title');
+
+      // Find checklist object
+      const curr = this.checklists.find((el) => (el.id = id));
+
+      // Store values in instance object (alredy created)
+      curr.title = title;
+
+      // Insert markup for checklist
+      helper.insertMarkupAdj('afterbegin');
+      // Remove DISABLED from checkbox elements
+    });
+  }
+
   saveTask() {
     // Grab value from title
     const title = this.projectEl.querySelector('#input-task-title');
     const description = this.projectEl.querySelector('#input-task-description');
-    const checklist = this.taskForm.querySelectorAll('.task-form__checklist');
+    const checklistEls = this.taskForm.querySelectorAll('.task-form__checklist');
     const note = this.taskForm.querySelectorAll('.task-form__note');
 
     // Prevent saving if !title
@@ -304,21 +321,14 @@ export class Task {
     if (description.value.trim()) this.description = description.value;
 
     // Check for checklist items
-    if (checklist) {
-      checklist.forEach((cl) => {
-        // Store values in instance object (alredy created)
-        const title = checklist.querySelector('.task-form__checklist-input-title');
-        cl.title = title;
-
-        // Insert markup for checklist
-        helper.insertMarkupAdj('afterbegin');
-
-        // Remove DISABLED from checkbox elements
-      });
+    if (checklistEls) {
+      this.saveChecklists(checklistEls);
     }
 
     // Check for notes
-    // Insert markup for notes
+    if (note) {
+      // Insert markup for notes
+    }
 
     // Hide form
     this.taskForm.remove();
