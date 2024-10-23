@@ -68,10 +68,8 @@
       flex-direction: column;
       gap: 0.3em;
       position: absolute;
-      top: -100%;
       width: 100%;
       min-width: fit-content;
-      margin: auto;
       padding: 1em;
       border: 1px solid vars.$col-primary;
       box-shadow: 0 0 0.5em vars.$col-primary-dark;

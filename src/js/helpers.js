@@ -8,6 +8,9 @@ export class Helper {
   hideElement(el) {
     return el.classList.add('hidden');
   }
+  toggleElement(el) {
+    return el.classList.toggle('hidden');
+  }
   hideAndShowEls(el1, el2) {
     this.hideElement(el1);
     this.showElement(el2);
