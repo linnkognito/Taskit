@@ -1,5 +1,5 @@
 import { helper } from '../../index';
-import listItem from '../../components/tasks/items/checklist-item.html';
+import listFormItem from '../../components/tasks/items/checklist-form-item.html';
 
 export class Checklist {
   checklist = document.querySelector('.task-form__checklist');
@@ -11,6 +11,7 @@ export class Checklist {
     this.title = '';
     this.checked = false;
     this.task = task;
+    this.created = new Date();
 
     this.items = [];
 
@@ -32,12 +33,14 @@ export class Checklist {
     });
   }
 
+  renderChecklist() {}
+
   addListItem() {
     const list = this.checklist.querySelector('.task-form__checklist-body');
 
     const itemId = this.items.length + 1;
-    listItem.replace('{%CHECKLIST_ID%}', itemId);
-    helper.insertMarkupAdj(list, 'afterbegin', listItem);
+    listFormItem.replace('{%CHECKLIST_ID%}', itemId);
+    helper.insertMarkupAdj(list, 'afterbegin', listFormItem);
 
     // Create List Item instance
     const newListItem = new ListItem(itemId, this);
@@ -134,6 +137,12 @@ class ListItem {
   }
 
   // METHODS //
+  renderListItem() {
+    // Store markup in a variable
+    // Replace dummy values in markup
+    // Insert markup
+  }
+
   checkValue(e) {
     const input = e.target;
     const value = input.value.trim();

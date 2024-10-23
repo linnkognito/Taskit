@@ -16,6 +16,7 @@ export class Note {
     this.title = '';
     this.note = '';
     this.task = task;
+    this.created = new Date();
 
     // QUILL //
     this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {

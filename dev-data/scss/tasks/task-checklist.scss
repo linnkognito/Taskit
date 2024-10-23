@@ -1,7 +1,7 @@
 @use '../utilities/vars';
 @use '../utilities/mixins';
 @use '../utilities/mixins-buttons';
-
+/*
 // CHECKLIST //
 .task-card__checklist {
   @include mixins.item;
@@ -29,13 +29,16 @@
     }
   }
 }
+  */
 
 // CHECKLIST FORM //
-.task-form__checklist {
+.task-form__checklist,
+.task-card__checklist {
   @include mixins.item;
 
   // HEADER (CHECKLIST) //
-  .task-form__checklist-header {
+  .task-form__checklist-header,
+  .task-card__checklist-header {
     @include mixins.item-header;
 
     .task-form__checklist-input-title {
@@ -50,7 +53,9 @@
     .task-form__checklist-input-title:focus::placeholder {
       @include mixins.input-text-focus-placeholder;
     }
-    .task-form__checklist-title {
+
+    .task-form__checklist-title,
+    .task-card__checklist-title {
       @include mixins.item-title;
     }
     // BUTTONS (HEADER) //
@@ -61,17 +66,26 @@
         margin: auto;
       }
     }
+    .task-card__checklist-buttons {
+      @include mixins.buttons-header('card');
+
+      .task-card__btn {
+        margin: auto;
+      }
+    }
   }
 
   // BODY (CHECKLIST) //
-  .task-form__checklist-body {
+  .task-form__checklist-body,
+  .task-card__checklist-body {
     @include mixins.item-body;
     display: flex;
     flex-direction: column;
     gap: 0.3em;
 
     // LIST ITEM (BODY)
-    .task-form__checklist-item {
+    .task-form__checklist-item,
+    .task-card__checklist-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -82,6 +96,7 @@
         align-items: center;
         gap: 0.3em;
 
+        .checklist-item__checkbox:checked + label,
         .checklist-item__checkbox:checked + label {
           text-decoration: line-through;
           color: vars.$col-primary-dark-op;

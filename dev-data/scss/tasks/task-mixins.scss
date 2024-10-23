@@ -32,7 +32,7 @@
 
 @mixin buttons-header($cls) {
   .task-#{$cls}__btn {
-    display: flex;
+    // display: flex;
     width: 2em;
     height: 2em;
     padding: 0.13em 0.06em;

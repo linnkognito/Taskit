@@ -46,7 +46,6 @@
   letter-spacing: 0.1em;
 }
 .task-card .task-card__header .task-card__buttons .task-card__btn {
-  display: flex;
   width: 2em;
   height: 2em;
   padding: 0.13em 0.06em;

@@ -59,7 +59,6 @@
   flex-grow: 1;
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn {
-  display: flex;
   width: 2em;
   height: 2em;
   padding: 0.13em 0.06em;

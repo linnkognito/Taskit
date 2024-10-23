@@ -3,7 +3,8 @@ import { helper } from '../index';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 
-import checklistMarkup from '../components/tasks/items/checklist-form.html';
+import checklistFormMarkup from '../components/tasks/items/checklist-form.html';
+import checklistMarkup from '../components/tasks/items/checklist.html';
 import noteMarkup from '../components/tasks/items/note-form.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardTemp from '../components/tasks/task-card.html';
@@ -68,13 +69,13 @@ export class Task {
       this.setPrio(btn);
     });
     // FORM: ADD NOTE OR CHECKLIST
-    this.els.addBtns.addEventListener('click', (e) => this.addFormItem(e));
+    this.els.addBtns.addEventListener('click', (e) => this.addItem(e));
     // FORM: SAVE OR CANCEL
     this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
   }
 
   //-- EVENT LISTENERS ------------------------------//
-  addFormItem(e) {
+  addItem(e) {
     const checklistId = this.checklists.length + 1;
     const noteId = this.notes.length + 1;
 
@@ -82,7 +83,7 @@ export class Task {
 
     // Add checklist:
     if (this.hasClass('btn-add-checklist', e.target)) {
-      const markup = checklistMarkup.replace('{%CHECKLIST_ID%}', checklistId);
+      const markup = checklistFormMarkup.replace('{%CHECKLIST_ID%}', checklistId);
       insert(markup);
 
       this.els.checklistTitle().focus();
@@ -281,29 +282,12 @@ export class Task {
   }
 
   //-- TASK -----------------------------------------//
-  saveChecklists(clEls) {
-    clEls.forEach((cl) => {
-      const id = cl.dataset.id;
-      const title = cl.querySelector('.task-form__checklist-input-title');
-
-      // Find checklist object
-      const curr = this.checklists.find((el) => (el.id = id));
-
-      // Store values in instance object (alredy created)
-      curr.title = title;
-
-      // Insert markup for checklist
-      helper.insertMarkupAdj('afterbegin');
-      // Remove DISABLED from checkbox elements
-    });
-  }
-
   saveTask() {
     // Grab value from title
     const title = this.projectEl.querySelector('#input-task-title');
     const description = this.projectEl.querySelector('#input-task-description');
     const checklistEls = this.taskForm.querySelectorAll('.task-form__checklist');
-    const note = this.taskForm.querySelectorAll('.task-form__note');
+    const noteEls = this.taskForm.querySelectorAll('.task-form__note');
 
     // Prevent saving if !title
     if (!title.checkValidity()) return title.reportValidity();
@@ -314,21 +298,14 @@ export class Task {
       const t = this.toAmPm(this.created);
       return `${d}, ${t}`;
     };
-
-    // Set title, description & creation date
-    this.title = title.value;
+    // Set creation date
     this.created = new Date();
+
+    // Set title
+    this.title = title.value;
+
+    // Set description
     if (description.value.trim()) this.description = description.value;
-
-    // Check for checklist items
-    if (checklistEls) {
-      this.saveChecklists(checklistEls);
-    }
-
-    // Check for notes
-    if (note) {
-      // Insert markup for notes
-    }
 
     // Hide form
     this.taskForm.remove();
@@ -349,8 +326,21 @@ export class Task {
     const taskDesc = taskCard.querySelector('.task-card__description');
     if (!description.value) taskDesc.classList.add('task-card__description--default');
 
+    // Sort task items (Checklists and Notes)
+    this.sortAndRenderItems();
+
     // Get due date values & display
     this.displayDueDate('card');
+  }
+
+  sortAndRenderItems() {
+    const items = [...this.checklists, ...this.notes];
+    items.sort((a, b) => b.created - a.created);
+
+    items.forEach((item) => {
+      if (item instanceof Checklist) item.renderChecklist();
+      if (item instanceof Note) item.renderNote();
+    });
   }
 
   updateTask() {
