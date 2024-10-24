@@ -97,6 +97,13 @@
   letter-spacing: 0.1em;
   color: white;
 }
+.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons,
+.task-form__checklist .task-card__checklist-header .task-form__checklist-buttons,
+.task-card__checklist .task-form__checklist-header .task-form__checklist-buttons,
+.task-card__checklist .task-card__checklist-header .task-form__checklist-buttons {
+  display: flex;
+  gap: 0.3em;
+}
 .task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn,
 .task-form__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn,
 .task-card__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn,
@@ -125,11 +132,12 @@
   width: 100%;
   height: 100%;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn {
-  margin: auto;
+.task-form__checklist .task-form__checklist-header .task-card__checklist-buttons,
+.task-form__checklist .task-card__checklist-header .task-card__checklist-buttons,
+.task-card__checklist .task-form__checklist-header .task-card__checklist-buttons,
+.task-card__checklist .task-card__checklist-header .task-card__checklist-buttons {
+  display: flex;
+  gap: 0.3em;
 }
 .task-form__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn,
 .task-form__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn,
@@ -158,12 +166,6 @@
 .task-card__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn--icon {
   width: 100%;
   height: 100%;
-}
-.task-form__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn,
-.task-form__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn,
-.task-card__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn,
-.task-card__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn {
-  margin: auto;
 }
 .task-form__checklist .task-form__checklist-body,
 .task-form__checklist .task-card__checklist-body,

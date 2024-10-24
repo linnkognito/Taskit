@@ -45,6 +45,10 @@
   font-size: 1.25em;
   letter-spacing: 0.1em;
 }
+.task-card .task-card__header .task-card__buttons {
+  display: flex;
+  gap: 0.3em;
+}
 .task-card .task-card__header .task-card__buttons .task-card__btn {
   width: 2em;
   height: 2em;
@@ -138,6 +142,30 @@
   background: rgb(213, 207, 204);
   transform: scale(1.02);
   cursor: pointer;
+}
+.task-card .task-card__body .task-card__add-item-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+  margin: 0.5em 0;
+}
+.task-card .task-card__body .task-card__add-item-buttons .btn-add-item {
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+  color: rgb(158, 158, 158);
+  background: rgba(213, 207, 204, 0.7);
+  border: none;
+  border-radius: 0.9em;
+  transition: all 0.2s ease-in;
+  min-width: calc(50% - 0.5em);
+}
+.task-card .task-card__body .task-card__add-item-buttons .btn-add-item:hover {
+  background: rgb(213, 207, 204);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+.task-card .task-card__body .task-card__note-content {
+  cursor: text;
 }
 .task-card .task-card__body .task-card__footer {
   width: 100%;

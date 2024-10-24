@@ -57,7 +57,8 @@
   color: rgba(213, 207, 204, 0.4);
 }
 .task-form .task-form__header .task-form__buttons {
-  flex-grow: 1;
+  display: flex;
+  gap: 0.3em;
 }
 .task-form .task-form__header .task-form__buttons .task-form__btn {
   width: 2em;
@@ -84,9 +85,10 @@
 }
 .task-form .task-form__body .task-form__prio {
   display: flex;
-  justify-content: space-evenly;
+  gap: 1em;
+  justify-content: center;
   margin-bottom: 0.7em;
-  padding: 0.4em 0.7em;
+  padding: 0.4em 1em;
   color: rgb(158, 158, 158);
   background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;

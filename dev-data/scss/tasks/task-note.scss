@@ -65,6 +65,7 @@
   .task-form__note-header {
     @include mixins.item-header;
 
+    // INPUT (HEADER)
     .task-form__note-input-title {
       @include mixins.input-text;
       margin-bottom: 0.1em;
@@ -79,6 +80,8 @@
     .task-form__note-title {
       @include mixins.item-title;
     }
+
+    // BUTTONS (HEADER) //
     .task-form__note-buttons {
       @include mixins.buttons-header('form');
     }

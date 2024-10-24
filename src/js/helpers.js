@@ -19,7 +19,7 @@ export class Helper {
     return el.classList.contains(cls);
   }
   hasClass(el, cls) {
-    return el.classList.contain(cls);
+    return el.classList.contains(cls);
   }
   addClass(el, cls) {
     return el.classList.add(cls);

@@ -19,6 +19,7 @@ export class Note {
     this.task = task;
     this.created = new Date();
     this.sort = 'created';
+    this.editAllMode = false;
 
     // QUILL //
     this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
@@ -48,16 +49,16 @@ export class Note {
       if (apply) return this.formatLink();
       if (cancel) return helper.hideElement(this.popupLink);
     });
+    // SAVE CHANGES ON FOCUSOUT
     document.addEventListener('focusout', (e) => {
+      if (this.editAllMode) return;
+
       const input = e.target.closest('.title-input');
       const note = e.target.closest('.ql-editor');
 
-      if (input) return this.saveTitle(e);
-      if (note) return this.saveNote(e);
+      if (input) return this.saveTitle(e.target);
+      if (note) return this.saveNote(e.target);
     });
-    // this.editor.addEventListener('blur', (e) => {
-    //   this.saveNote(e);
-    // });
     this.editorContainer.addEventListener('click', () => this.editor.focus());
   }
 
@@ -98,14 +99,45 @@ export class Note {
   activateListeners() {
     // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
-      if (e.target.closest('.btn-edit')) this.editElement(this.noteContent, 'note');
+      // ENTER EDIT ALL MODE
+      if (e.target.closest('.btn-edit')) {
+        this.editAllMode = true;
+        this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
+        this.editAll([
+          { el: this.noteTitle, type: 'title' },
+          { el: this.noteContent, type: 'note' },
+        ]);
+      }
+
+      // SAVE & EXIT EDIT ALL MODE
+      if (e.target.closest('.btn-save-edits')) {
+        this.saveTitle(this.noteInputTitle);
+        this.saveNote(this.editor);
+        this.editAllMode = false;
+        this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
+      }
+
+      // CANCEL EDIT ALL MODE
+      if (e.target.closest('.btn-cancel-edits')) {
+        const userConfirmed = confirm('Cancel editing? All unsaved changes will be lost.');
+        console.log(`userConfirmed ${userConfirmed}`);
+        if (userConfirmed) {
+          this.editAllMode = false;
+          this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
+          helper.hideAndShowEls(this.noteInputTitle, this.noteTitle);
+          helper.hideAndShowEls(this.editorContainer, this.noteContent);
+          helper.hideElement(this.toolbar);
+        }
+      }
+
+      // DELETE NOTE
       if (e.target.closest('.btn-del')) this.deleteNote();
     });
 
-    // EDIT ELEMENT
+    // EDIT SINGLE ELEMENT
     this.noteEl.addEventListener('click', (e) => {
       // TITLE CLICKED
-      if (e.target.closest('.title')) return this.editElement(e.target);
+      if (e.target.closest('.title')) return this.editElement(e.target, 'title');
 
       // NOTE CLICKED
       if (e.target.closest('.task-card__note-content')) return this.editElement(e.target.closest('.task-card__note-content'), 'note');
@@ -116,6 +148,16 @@ export class Note {
   toggleFormatBtn(btn, bool) {
     return btn.classList.toggle('btn-formatting--active', bool);
   }
+  toggleEditModeBtns(parent, cls) {
+    const buttons = parent.querySelectorAll(cls);
+
+    if (this.editAllMode) {
+      buttons.forEach((btn) => (helper.hasClass(btn, 'edit-all-mode') ? helper.showElement(btn) : helper.hideElement(btn)));
+    }
+    if (!this.editAllMode) {
+      buttons.forEach((btn) => (helper.hasClass(btn, 'edit-all-mode') ? helper.hideElement(btn) : helper.showElement(btn)));
+    }
+  }
   isLink() {
     const selection = this.quill.getSelection();
     return selection ? !!this.quill.getFormat(selection).link : false;
@@ -125,6 +167,12 @@ export class Note {
   }
 
   // METHODS //
+  editAll(elements) {
+    elements.forEach((el) => {
+      this.editElement(el.el, el.type);
+    });
+  }
+
   editElement(el, type) {
     let input = el.nextElementSibling;
     helper.hideAndShowEls(el, input);
@@ -161,7 +209,7 @@ export class Note {
       .replace('{%NOTE_CONTENT%}', this.note);
   }
 
-  saveNote(e) {
+  saveNote(noteInput) {
     // Grab note value
     const content = this.quill.root.innerHTML;
 
@@ -171,15 +219,14 @@ export class Note {
     // Insert new value
     if (this.noteContent) this.noteContent.innerHTML = this.note;
 
-    if (e.target.closest('.task-card__note')) {
+    //if (e.target.closest('.task-card__note')) {
+    if (noteInput.closest('.task-card__note')) {
       helper.hideElement(this.toolbar);
       helper.hideAndShowEls(this.editor, this.noteContent);
     }
   }
 
-  saveTitle(e) {
-    let title = e.target;
-
+  saveTitle(title) {
     // Set title
     title.value.trim() ? (this.title = title.value) : this.title;
     console.log(this.title);

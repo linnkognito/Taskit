@@ -24,6 +24,99 @@
         </div>
       </div>
       <!-- END OF ADD PROJECT ------------------------------ X -->
+      <!-- TEST XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+      <div class="project-card hidden" data-id="{%PROJECT_ID%}">
+        <!-- PROJECT HEADER -->
+        <div class="project-card__header">
+          <h2 class="project-card__title hidden"></h2>
+          <input type="text" id="project-title-input" placeholder="Enter title" class="project-card__title-input" />
+
+          <div class="project-card__buttons">
+            <button class="project-card__btn btn-sort-tasks" title="Sort tasks">
+              <img src="./public/icons/sort.png" alt="Sort tasks" class="icon-sort" />
+            </button>
+
+            <button class="project-card__btn btn-add-task" title="Add task">
+              <img src="./public/icons/add.png" alt="Add new task" class="icon-add" />
+            </button>
+
+            <button class="project-card__btn btn-settings" title="Settings">
+              <img src="./public/icons/settings.png" alt="Sort tasks" class="icon-settings" />
+            </button>
+          </div>
+        </div>
+
+        <!-- PROJECT BODY -->
+        <div class="project-card__body">
+          <div class="project-card__body--content">
+            <div class="task-form" data-id="">
+              <!-- FORM HEADER -->
+              <div class="task-form__header">
+                <div class="task-form__title-wrapper">
+                  <input type="text" id="input-task-title" placeholder="Title" class="task-form__title-input" value="Title" required />
+                  <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox hidden" />
+                </div>
+
+                <div class="task-form__buttons">
+                  <button class="task-form__btn btn-save">
+                    <img src="./public/icons/save.png" alt="Save task" title="Save task" class="task-form__btn--icon" />
+                  </button>
+                </div>
+              </div>
+
+              <!-- FORM BODY -->
+              <div class="task-form__body">
+                <!-- PRIO -->
+                <div class="task-form__prio">
+                  <div class="task-form__prio-label">Prio:</div>
+                  <div class="task-form__prio-buttons">
+                    <button class="prio-btn prio-top-btn" data-prio="1">Top</button>
+                    <button class="prio-btn prio-mid-btn" data-prio="2">Mid</button>
+                    <button class="prio-btn prio-low-btn" data-prio="3">Low</button>
+                    <button class="prio-btn prio-none-btn" data-prio="0">None</button>
+                  </div>
+                </div>
+
+                <!-- BODY TOP -->
+                <div class="task-form__body-top">
+                  <!-- DESCRIPTION -->
+                  <textarea rows="3" id="input-task-description" name="input-task-description" placeholder="Add a description (optional)"></textarea>
+                  <div class="task-form__description hidden">{%TASKCARD_DESCRIPTION%}</div>
+
+                  <!-- DUE DATE -->
+                  <div class="task-form__btn-due-date">
+                    <img src="./public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="icon-calendar" />
+                  </div>
+                  <div class="task-form__due-date hidden">
+                    <span class="task-form__due-date--month"></span>
+                    <span class="task-form__due-date--date"></span>
+                    <span class="task-form__due-date--year"></span>
+                  </div>
+                </div>
+
+                <!-- ADD ITEM BUTTONS -->
+                <div class="task-form__add-item-buttons">
+                  <button class="btn-add-item btn-add-checklist">Add checklist</button>
+                  <button class="btn-add-item btn-add-note">Add note</button>
+                </div>
+              </div>
+              <!-- FORM FOOTER -->
+              <div class="task-form__footer">
+                <div class="task-form__footer--buttons">
+                  <button class="btn-form-footer btn-cancel">Cancel</button>
+                  <button class="btn-form-footer btn-save">Save</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ADD TASK BUTTON (PROJECT) -->
+            <button class="project-card__btn-add-task btn-add-task">+ Add task</button>
+          </div>
+        </div>
+        <!-- END OF PROJECT CARD BODY ---------------------- X -->
+      </div>
+
+      <!-- TEST XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
     </div>
     <!-- END OF PROJECTS ----------------------------------- X -->
   </body>

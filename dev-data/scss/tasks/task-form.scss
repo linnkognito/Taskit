@@ -34,7 +34,6 @@
     // BUTTONS (HEADER) //
     .task-form__buttons {
       @include mixins.buttons-header('form');
-      flex-grow: 1;
     }
   } // [X] END OF HEADER [X]
 
@@ -45,9 +44,10 @@
     // PRIO SELECTION (BODY) //
     .task-form__prio {
       display: flex;
-      justify-content: space-evenly;
+      gap: 1em;
+      justify-content: center;
       margin-bottom: 0.7em;
-      padding: 0.4em 0.7em;
+      padding: 0.4em 1em;
       color: vars.$col-secondary;
       background: vars.$col-primary-low-op;
       border-radius: vars.$br-primary;

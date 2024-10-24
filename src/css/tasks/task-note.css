@@ -49,6 +49,8 @@
 .task-card__note .task-card__note-header .task-card__note-buttons {
   display: flex;
   gap: 0.3em;
+  display: flex;
+  gap: 0.3em;
 }
 .task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn {
   width: 2em;
@@ -133,6 +135,10 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   color: white;
+}
+.task-form__note .task-form__note-header .task-form__note-buttons {
+  display: flex;
+  gap: 0.3em;
 }
 .task-form__note .task-form__note-header .task-form__note-buttons .task-form__btn {
   width: 2em;

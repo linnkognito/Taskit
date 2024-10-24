@@ -61,17 +61,9 @@
     // BUTTONS (HEADER) //
     .task-form__checklist-buttons {
       @include mixins.buttons-header('form');
-
-      .task-form__btn {
-        margin: auto;
-      }
     }
     .task-card__checklist-buttons {
       @include mixins.buttons-header('card');
-
-      .task-card__btn {
-        margin: auto;
-      }
     }
   }
 

@@ -90,6 +90,27 @@
       }
     } // [X] END OF TOP SECTION [X]
 
+    // ADD ITEM BUTTONS (BODY) //
+    .task-card__add-item-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5em;
+      margin: 0.5em 0;
+
+      .btn-add-item {
+        @include mixins.btn-medium;
+        min-width: calc(50% - 0.5em);
+      }
+      .btn-add-item:hover {
+        @include mixins.btn-medium-hover;
+      }
+    }
+
+    // NOTE CONTAINER //
+    .task-card__note-content {
+      cursor: text;
+    }
+
     // FOOTER (BODY) //
     .task-card__footer {
       @include mixins.item-footer;
