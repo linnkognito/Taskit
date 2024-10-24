@@ -1,8 +1,9 @@
-<div class="task-card__checklist-item" data-id="">
+<div class="task-card__checklist-item" data-id="{%LIST_ITEM_ID%}">
   <div class="checklist-item__wrapper">
-    <input type="checkbox" name="" id="" class="checklist-item__checkbox" />
-    <label for="" class="checklist-item__value hidden"></label>
-    <input type="text" id="" class="checklist-item__value-input hidden" />
+    <input type="checkbox" id="{%LIST_ITEM_INPUT_ID%}" class="checklist-item__checkbox" />
+    <label for="{%LIST_ITEM_LABEL_FOR%}" class="checklist-item__value"></label>
+
+    <input type="text" id="{%LIST_ITEM_VALUE_INPUT%}" class="checklist-item__value-input hidden" />
   </div>
   <button class="checklist-item__delete-btn">
     <img src="../../../../public/icons/delete.png" alt="Delete list item" />

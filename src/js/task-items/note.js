@@ -3,6 +3,7 @@ import './linkBlot';
 
 import { helper } from '../../index';
 import { saveTitle } from './checklist';
+//import noteMarkup from '../components/tasks/items/note.html';
 
 export class Note {
   toolbar = document.querySelector('.note-body__formatting-buttons');
@@ -10,6 +11,7 @@ export class Note {
   popupLink = document.querySelector('.popup-insert-link');
   btnLink = document.querySelector('.btn-link');
   titleInput = document.querySelector('.task-form__note-input-title');
+  titleEl = document.querySelector('.task-form__note-title');
 
   constructor(id, task) {
     this.id = id;
@@ -17,6 +19,7 @@ export class Note {
     this.note = '';
     this.task = task;
     this.created = new Date();
+    this.sort = 'created';
 
     // QUILL //
     this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
@@ -61,6 +64,9 @@ export class Note {
   get editor() {
     return document.querySelector('.ql-editor');
   }
+  get noteContainer() {
+    return document.querySelector('.task-form__note-editor');
+  }
   get linkInput() {
     return this.popupLink.querySelector('.popup-insert-link__input');
   }
@@ -75,6 +81,21 @@ export class Note {
   }
 
   // METHODS //
+  renderNote() {
+    /*
+    // Show title
+    helper.hideAndShowEls(this.titleInput, this.titleEl);
+    this.titleEl.textContent = this.title;
+
+    // Hide toolbar
+    helper.hideElement(this.toolbar);
+
+    // Show note
+    helper.hideElement(this.editor);
+    helper.insertMarkupAdj(this.noteContainer, 'afterbegin', this.note);
+    */
+  }
+
   saveNote(e) {
     let editor = e.target;
 

@@ -4,7 +4,7 @@ import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 
 import checklistFormMarkup from '../components/tasks/items/checklist-form.html';
-import checklistMarkup from '../components/tasks/items/checklist.html';
+
 import noteMarkup from '../components/tasks/items/note-form.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardTemp from '../components/tasks/task-card.html';
@@ -27,6 +27,7 @@ export class Task {
     this.dueDateObj = null;
     this.checked = false;
     this.created = null;
+    this.sort = 'created';
 
     this.checklists = [];
     this.notes = [];
@@ -174,9 +175,6 @@ export class Task {
     this.dueTime = time;
     this.dueDateObj = fullDate;
 
-    console.log('Saving dueDate:', this.dueDate, 'Saving dueTime:', this.dueTime); // Debugging log
-    console.log('Full Date:', fullDate);
-
     // Make sure the time is in the future
     const diff = this.dueDateObj.getTime() - new Date().getTime();
     if (diff < 0) return alert('❗ The selected date and/or time must be in the future');
@@ -286,20 +284,18 @@ export class Task {
     // Grab value from title
     const title = this.projectEl.querySelector('#input-task-title');
     const description = this.projectEl.querySelector('#input-task-description');
-    const checklistEls = this.taskForm.querySelectorAll('.task-form__checklist');
-    const noteEls = this.taskForm.querySelectorAll('.task-form__note');
 
     // Prevent saving if !title
     if (!title.checkValidity()) return title.reportValidity();
 
-    // Creation date string
+    // Set creation date
+    this.created = new Date();
+    // Create creation date string
     const createdStr = () => {
       const d = this.formatDate(this.created);
       const t = this.toAmPm(this.created);
       return `${d}, ${t}`;
     };
-    // Set creation date
-    this.created = new Date();
 
     // Set title
     this.title = title.value;
@@ -315,7 +311,11 @@ export class Task {
       .replace('{%TASKCARD_ID%}', this.id)
       .replace('{%TASKCARD_TITLE%}', this.title)
       .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', `${createdStr()}`);
+      .replace('{%TASKCARD_CREATED%}', `${createdStr()}`)
+      .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
+
+    // Display due date
+    this.displayDueDate('card');
 
     // Generate task card
     const projectBody = this.projectEl.querySelector('.project-card__body');
@@ -327,20 +327,33 @@ export class Task {
     if (!description.value) taskDesc.classList.add('task-card__description--default');
 
     // Sort task items (Checklists and Notes)
-    this.sortAndRenderItems();
+    //this.sortAndRenderItems();
 
     // Get due date values & display
     this.displayDueDate('card');
   }
 
-  sortAndRenderItems() {
-    const items = [...this.checklists, ...this.notes];
-    items.sort((a, b) => b.created - a.created);
+  sortAndRenderItems(sortPref) {
+    let items;
 
-    items.forEach((item) => {
-      if (item instanceof Checklist) item.renderChecklist();
-      if (item instanceof Note) item.renderNote();
-    });
+    // Sort by creation date
+    if (sortPref === 'created') {
+      items = [...this.checklists, ...this.notes];
+      items.sort((a, b) => b.created - a.created);
+
+      // Render markup for items
+      items.forEach((item) => {
+        if (item instanceof Checklist) item.renderChecklist();
+        if (item instanceof Note) item.renderNote();
+      });
+
+      return;
+    }
+
+    // Sort by due date
+    if (sortPref === 'due') {
+      return console.log('due date selected as sorting preference');
+    }
   }
 
   updateTask() {

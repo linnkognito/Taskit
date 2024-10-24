@@ -1,10 +1,14 @@
 import { helper } from '../../index';
+import checklistMarkup from '../../components/tasks/items/checklist.html';
 import listFormItem from '../../components/tasks/items/checklist-form-item.html';
+import listItemMarkup from '../../components/tasks/items/checklist-item.html';
 
 export class Checklist {
   checklist = document.querySelector('.task-form__checklist');
+  checkbox = document.querySelectorAll('.checklist-item__checkbox');
   addItem = document.querySelector('.btn-add');
   titleInput = document.querySelector('.task-form__checklist-input-title');
+  titleEl = document.querySelector('.task-form__checklist-title');
 
   constructor(id, task) {
     this.id = id;
@@ -12,6 +16,7 @@ export class Checklist {
     this.checked = false;
     this.task = task;
     this.created = new Date();
+    this.sort = 'created';
 
     this.items = [];
 
@@ -28,12 +33,18 @@ export class Checklist {
       if (label) return this.editListItem(label);
     });
     // SAVE TITLE
-    this.titleInput.addEventListener('blur', (e) => {
-      this.saveTitle(e);
-    });
+    this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
   }
 
-  renderChecklist() {}
+  renderChecklist() {
+    const markup = checklistMarkup.replace('{%CHECKLIST_ID%}', this.id).replace('{%CHECKLIST_TITLE%}', this.title).replace('{%CHECKLIST_ITEMS%}', renderListItems());
+
+    return markup;
+  }
+
+  renderListItems() {
+    this.items.forEach((item) => item.renderListItem());
+  }
 
   addListItem() {
     const list = this.checklist.querySelector('.task-form__checklist-body');
@@ -101,6 +112,8 @@ class ListItem {
     this.checked = false;
     this.checklist = checklist;
     this.preventBlur = false;
+    this.created = new Date();
+    this.sort = 'created';
   }
 
   // GETTERS //
@@ -138,9 +151,13 @@ class ListItem {
 
   // METHODS //
   renderListItem() {
-    // Store markup in a variable
-    // Replace dummy values in markup
-    // Insert markup
+    const markup = listItemMarkup
+      .replace('{%LIST_ITEM_ID%}', this.id)
+      .replace('{%LIST_ITEM_INPUT_ID%}', `checkbox-${this.id}`)
+      .replace('{%LIST_ITEM_LABEL_FOR%}', `checkbox-${this.id}`)
+      .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`);
+
+    return markup;
   }
 
   checkValue(e) {
