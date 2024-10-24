@@ -57,6 +57,7 @@ export class Task {
       noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
     };
 
+    //-- EVENT LISTENERS ------------------------------//
     // FORM: OPEN DUE DATE MODAL
     this.taskForm.addEventListener('click', (e) => {
       const dueBtn = e.target.closest('.task-form__btn-due-date');
@@ -75,7 +76,14 @@ export class Task {
     this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
   }
 
-  //-- EVENT LISTENERS ------------------------------//
+  // GETTERS //
+  get noteForm() {
+    return document.querySelector('.task-form__note');
+  }
+  get checklistForm() {
+    return document.querySelector('.task-form__checklist');
+  }
+
   addItem(e) {
     const checklistId = this.checklists.length + 1;
     const noteId = this.notes.length + 1;
@@ -86,6 +94,7 @@ export class Task {
     if (this.hasClass('btn-add-checklist', e.target)) {
       const markup = checklistFormMarkup.replace('{%CHECKLIST_ID%}', checklistId);
       insert(markup);
+      helper.scaleUp(this.checklistForm, 'top');
 
       this.els.checklistTitle().focus();
 
@@ -97,6 +106,7 @@ export class Task {
     if (this.hasClass('btn-add-note', e.target)) {
       const markup = noteMarkup.replace('{%NOTE_ID%}', noteId);
       insert(markup);
+      helper.scaleUp(this.noteForm, 'top');
 
       this.els.noteTitle().focus();
 

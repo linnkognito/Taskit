@@ -176,13 +176,4 @@ export class Project {
     this.tasksArr.splice(taskId - 1, 1);
     task.remove();
   }
-
-  // moveChecked(task) {
-  //   this.tasksArr[task.id].checked = true; // do i need this or does the array instance point to the same thinf
-  //   this.tasksArr.forEach((task) => {
-  //     // sort checked and unchecked based on default (or current) sort option
-  //   });
-  // }
-
-  // moveChecked(task) { }
 }

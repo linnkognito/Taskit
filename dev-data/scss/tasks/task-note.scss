@@ -146,34 +146,34 @@
       }
     }
 
-    // FORMATTING BUTTONS (BODY) //
-    .note-body__formatting-buttons {
-      display: flex;
-      justify-content: space-evenly;
-      gap: 0.3em;
-      min-width: fit-content;
-      margin: 0.2em 0 0.3em 0;
-      padding: 0.3em 0.3em;
-      background: vars.$col-primary-low-op;
-      border-radius: 0.5em;
+    // // FORMATTING BUTTONS (BODY) //
+    // .note-body__formatting-buttons {
+    //   display: flex;
+    //   justify-content: space-evenly;
+    //   gap: 0.3em;
+    //   min-width: fit-content;
+    //   margin: 0.2em 0 0.3em 0;
+    //   padding: 0.3em 0.3em;
+    //   background: vars.$col-primary-low-op;
+    //   border-radius: 0.5em;
 
-      .btn-formatting {
-        @include mixins.btn-tiny(vars.$col-primary);
-        width: 1.8em;
-        height: 1.8em;
+    //   .btn-formatting {
+    //     @include mixins.btn-tiny(vars.$col-primary);
+    //     width: 1.8em;
+    //     height: 1.8em;
 
-        .btn-formatting--icon {
-          height: 100%;
-        }
-      }
-      .btn-formatting:hover {
-        @include mixins.btn-hover(1.03);
-        background: vars.$col-primary-dark-op;
-      }
-      .btn-formatting--active {
-        background: vars.$col-primary-dark;
-      }
-    }
+    //     .btn-formatting--icon {
+    //       height: 100%;
+    //     }
+    //   }
+    //   .btn-formatting:hover {
+    //     @include mixins.btn-hover(1.03);
+    //     background: vars.$col-primary-dark-op;
+    //   }
+    //   .btn-formatting--active {
+    //     background: vars.$col-primary-dark;
+    //   }
+    // }
     .task-form__note-editor {
       width: 100%;
       min-height: 5em;
@@ -210,4 +210,33 @@
 }
 .task-form__note--active {
   box-shadow: 0 0 5px vars.$col-primary-dark;
+}
+
+// FORMATTING BUTTONS (BODY) //
+.note-body__formatting-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.3em;
+  min-width: fit-content;
+  margin: 0.2em 0 0.3em 0;
+  padding: 0.3em 0.3em;
+  background: vars.$col-primary-low-op;
+  border-radius: 0.5em;
+
+  .btn-formatting {
+    @include mixins.btn-tiny(vars.$col-primary);
+    width: 1.8em;
+    height: 1.8em;
+
+    .btn-formatting--icon {
+      height: 100%;
+    }
+  }
+  .btn-formatting:hover {
+    @include mixins.btn-hover(1.03);
+    background: vars.$col-primary-dark-op;
+  }
+  .btn-formatting--active {
+    background: vars.$col-primary-dark;
+  }
 }

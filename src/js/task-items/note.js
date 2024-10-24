@@ -5,7 +5,7 @@ import { helper } from '../../index';
 import noteMarkup from '../../components/tasks/items/note.html';
 
 export class Note {
-  toolbar = document.querySelector('.note-body__formatting-buttons');
+  //toolbar = document.querySelector('.note-body__formatting-buttons');
   buttons = this.toolbar.querySelectorAll('.btn-formatting');
   popupLink = document.querySelector('.popup-insert-link');
   btnLink = document.querySelector('.btn-link');
@@ -14,7 +14,7 @@ export class Note {
 
   constructor(id, task) {
     this.id = id;
-    this.title = '';
+    this.title = `Note #${this.id}`;
     this.note = '';
     this.task = task;
     this.created = new Date();
@@ -50,12 +50,14 @@ export class Note {
     });
     document.addEventListener('focusout', (e) => {
       const input = e.target.closest('.title-input');
+      const note = e.target.closest('.ql-editor');
 
       if (input) return this.saveTitle(e);
+      if (note) return this.saveNote(e);
     });
-    this.editor.addEventListener('blur', (e) => {
-      this.saveNote(e);
-    });
+    // this.editor.addEventListener('blur', (e) => {
+    //   this.saveNote(e);
+    // });
     this.editorContainer.addEventListener('click', () => this.editor.focus());
   }
 
@@ -88,15 +90,25 @@ export class Note {
   get linkInput() {
     return this.popupLink.querySelector('.popup-insert-link__input');
   }
+  get toolbar() {
+    return document.querySelector('.note-body__formatting-buttons');
+  }
 
   // EVENT LISTENERS //
   activateListeners() {
+    // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
-      if (e.target.closest('.btn-edit')) this.editNote();
+      if (e.target.closest('.btn-edit')) this.editElement(this.noteContent, 'note');
       if (e.target.closest('.btn-del')) this.deleteNote();
     });
+
+    // EDIT ELEMENT
     this.noteEl.addEventListener('click', (e) => {
-      if (e.target.closest('.title')) this.editElement(e.target, 'title');
+      // TITLE CLICKED
+      if (e.target.closest('.title')) return this.editElement(e.target);
+
+      // NOTE CLICKED
+      if (e.target.closest('.task-card__note-content')) return this.editElement(e.target.closest('.task-card__note-content'), 'note');
     });
   }
 
@@ -108,16 +120,33 @@ export class Note {
     const selection = this.quill.getSelection();
     return selection ? !!this.quill.getFormat(selection).link : false;
   }
+  clearClipboard() {
+    this.quill.root.innerHTML = '';
+  }
 
   // METHODS //
   editElement(el, type) {
-    if (type === 'title') {
-      const title = el;
-      const input = title.nextElementSibling;
-      helper.hideAndShowEls(title, input);
-      input.value = this.title;
-      input.focus();
+    let input = el.nextElementSibling;
+    helper.hideAndShowEls(el, input);
+
+    if (type === 'note') {
+      helper.showElement(this.toolbar);
+
+      // Reinitialize Quill
+      this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
+        theme: null,
+      });
+
+      // Clear & populate editor
+      this.clearClipboard();
+      this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
     }
+
+    if (type === 'title') {
+      input.value = this.title;
+    }
+
+    input.focus();
   }
 
   deleteNote() {
@@ -133,16 +162,26 @@ export class Note {
   }
 
   saveNote(e) {
-    let editor = e.target;
+    // Grab note value
+    const content = this.quill.root.innerHTML;
 
-    editor.innerHTML ? (this.note = editor.innerHTML) : this.note;
+    // Update note property to new value
+    this.note = content;
+
+    // Insert new value
+    if (this.noteContent) this.noteContent.innerHTML = this.note;
+
+    if (e.target.closest('.task-card__note')) {
+      helper.hideElement(this.toolbar);
+      helper.hideAndShowEls(this.editor, this.noteContent);
+    }
   }
 
   saveTitle(e) {
     let title = e.target;
 
     // Set title
-    title.value ? (this.title = title.value) : this.title;
+    title.value.trim() ? (this.title = title.value) : this.title;
     console.log(this.title);
 
     // Add placeholder & value
