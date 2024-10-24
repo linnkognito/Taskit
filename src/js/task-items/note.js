@@ -2,8 +2,7 @@ import Quill from 'quill';
 import './linkBlot';
 
 import { helper } from '../../index';
-import { saveTitle } from './checklist';
-//import noteMarkup from '../components/tasks/items/note.html';
+import noteMarkup from '../../components/tasks/items/note.html';
 
 export class Note {
   toolbar = document.querySelector('.note-body__formatting-buttons');
@@ -55,6 +54,7 @@ export class Note {
     this.editor.addEventListener('blur', (e) => {
       this.saveNote(e);
     });
+    this.noteContainer.addEventListener('click', () => this.editor.focus());
   }
 
   // GETTERS //
@@ -81,19 +81,12 @@ export class Note {
   }
 
   // METHODS //
+  // prettier-ignore
   renderNote() {
-    /*
-    // Show title
-    helper.hideAndShowEls(this.titleInput, this.titleEl);
-    this.titleEl.textContent = this.title;
-
-    // Hide toolbar
-    helper.hideElement(this.toolbar);
-
-    // Show note
-    helper.hideElement(this.editor);
-    helper.insertMarkupAdj(this.noteContainer, 'afterbegin', this.note);
-    */
+    return noteMarkup
+      .replace('{%NOTE_ID%}', this.id)
+      .replace('{%NOTE_TITLE%}', this.title)
+      .replace('{%NOTE_CONTENT%}', this.note);
   }
 
   saveNote(e) {

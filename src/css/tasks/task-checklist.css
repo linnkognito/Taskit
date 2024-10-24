@@ -277,6 +277,16 @@
 .task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
 }
+.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value,
+.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value,
+.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value,
+.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value,
+.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value,
+.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value,
+.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value,
+.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value {
+  margin-left: 0.75em;
+}
 .task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value:hover,
 .task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value:hover,
 .task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value:hover,

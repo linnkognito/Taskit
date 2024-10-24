@@ -26,7 +26,7 @@
   letter-spacing: 0.1em;
   color: white;
 }
-.task-card__note .task-card__note-header .task-card__buttons .task-card__btn {
+.task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn {
   width: 2em;
   height: 2em;
   padding: 0.13em 0.06em;
@@ -36,12 +36,12 @@
   cursor: pointer;
   transition: transform 0.2s ease-in;
 }
-.task-card__note .task-card__note-header .task-card__buttons .task-card__btn:hover {
+.task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 2px white;
   cursor: pointer;
 }
-.task-card__note .task-card__note-header .task-card__buttons .task-card__btn--icon {
+.task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn--icon {
   width: 100%;
   height: 100%;
 }
@@ -241,6 +241,7 @@
   border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.5em;
   outline: none;
+  cursor: text;
   overflow-y: auto;
 }
 .task-form__note .task-form__note-body .task-form__note-editor:focus {
@@ -249,6 +250,7 @@
   outline: none;
 }
 .task-form__note .task-form__note-body .ql-editor {
+  height: 100%;
   outline: none;
 }
 .task-form__note .task-form__note-body .ql-editor .ql-editor--link {

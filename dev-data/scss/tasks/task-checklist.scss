@@ -31,7 +31,7 @@
 }
   */
 
-// CHECKLIST FORM //
+// CHECKLIST //
 .task-form__checklist,
 .task-card__checklist {
   @include mixins.item;
@@ -123,6 +123,9 @@
       }
 
       // LIST ITEM LABEL (BODY) //
+      .checklist-item__value {
+        margin-left: 0.75em;
+      }
       .checklist-item__value:hover {
         cursor: text;
       }
