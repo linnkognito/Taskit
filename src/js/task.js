@@ -306,6 +306,8 @@ export class Task {
     // Hide form
     this.taskForm.remove();
 
+    console.log(`Sort and render: ${this.sortAndRenderItems(this.sort)}`);
+
     // Set task card values
     let taskCardMarkup = taskCardTemp
       .replace('{%TASKCARD_ID%}', this.id)
@@ -314,12 +316,12 @@ export class Task {
       .replace('{%TASKCARD_CREATED%}', `${createdStr()}`)
       .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
 
-    // Display due date
-    this.displayDueDate('card');
-
     // Generate task card
     const projectBody = this.projectEl.querySelector('.project-card__body');
     helper.insertMarkupAdj(projectBody, 'afterbegin', taskCardMarkup);
+
+    // Display due date
+    this.displayDueDate('card');
 
     // If default description --> change color
     const taskCard = document.querySelector('.task-card');
@@ -335,6 +337,7 @@ export class Task {
 
   sortAndRenderItems(sortPref) {
     let items;
+    let markup = '';
 
     // Sort by creation date
     if (sortPref === 'created') {
@@ -343,17 +346,17 @@ export class Task {
 
       // Render markup for items
       items.forEach((item) => {
-        if (item instanceof Checklist) item.renderChecklist();
-        if (item instanceof Note) item.renderNote();
+        if (item instanceof Checklist) markup += item.renderChecklist();
+        if (item instanceof Note) markup += item.renderNote();
       });
-
-      return;
     }
 
     // Sort by due date
     if (sortPref === 'due') {
       return console.log('due date selected as sorting preference');
     }
+
+    return markup;
   }
 
   updateTask() {

@@ -37,13 +37,15 @@ export class Checklist {
   }
 
   renderChecklist() {
-    const markup = checklistMarkup.replace('{%CHECKLIST_ID%}', this.id).replace('{%CHECKLIST_TITLE%}', this.title).replace('{%CHECKLIST_ITEMS%}', renderListItems());
-
-    return markup;
+    return checklistMarkup.replace('{%CHECKLIST_ID%}', this.id).replace('{%CHECKLIST_TITLE%}', this.title).replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
   }
 
   renderListItems() {
-    this.items.forEach((item) => item.renderListItem());
+    let markup = '';
+
+    this.items.forEach((item) => (markup += item.renderListItem()));
+
+    return markup;
   }
 
   addListItem() {
@@ -151,13 +153,12 @@ class ListItem {
 
   // METHODS //
   renderListItem() {
-    const markup = listItemMarkup
+    return listItemMarkup
       .replace('{%LIST_ITEM_ID%}', this.id)
       .replace('{%LIST_ITEM_INPUT_ID%}', `checkbox-${this.id}`)
       .replace('{%LIST_ITEM_LABEL_FOR%}', `checkbox-${this.id}`)
-      .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`);
-
-    return markup;
+      .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`)
+      .replace('{%LIST_ITEM_VALUE%}', this.value);
   }
 
   checkValue(e) {
