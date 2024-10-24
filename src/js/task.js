@@ -306,8 +306,6 @@ export class Task {
     // Hide form
     this.taskForm.remove();
 
-    console.log(`Sort and render: ${this.sortAndRenderItems(this.sort)}`);
-
     // Set task card values
     let taskCardMarkup = taskCardTemp
       .replace('{%TASKCARD_ID%}', this.id)
@@ -328,11 +326,11 @@ export class Task {
     const taskDesc = taskCard.querySelector('.task-card__description');
     if (!description.value) taskDesc.classList.add('task-card__description--default');
 
-    // Sort task items (Checklists and Notes)
-    //this.sortAndRenderItems();
-
     // Get due date values & display
     this.displayDueDate('card');
+
+    // Initialize event listeners
+    if (this.notes.length) this.notes.forEach((note) => note.activateListeners());
   }
 
   sortAndRenderItems(sortPref) {

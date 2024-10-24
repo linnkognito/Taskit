@@ -1,23 +1,26 @@
 <div class="task-card__note" data-id="{%NOTE_ID%}">
   <div class="task-card__note-header">
     <!-- TITLE -->
-    <div class="task-card__note-title">{%NOTE_TITLE%}</div>
-    <input type="text" class="task-form__note-input-title hidden" placeholder="Add note" />
+    <div class="task-card__note-title title">{%NOTE_TITLE%}</div>
+    <input type="text" class="task-card__note-input-title title-input hidden" placeholder="Add note" />
 
     <!-- BUTTONS (HEADER) -->
     <div class="task-card__note-buttons">
       <button class="task-card__btn btn-edit">
-        <img src="../../../../public/icons/edit.png" alt="Edit checklist" title="Edit checklist" class="task-card__btn--icon" />
+        <img src="../../../../public/icons/edit.png" alt="Edit note" title="Edit note" class="task-card__btn--icon" />
       </button>
-      <button class="task-card__btn btn-del">
-        <img src="../../../../public/icons/delete.png" alt="Delete checklist" title="Delete checklist" class="task-card__btn--icon" />
+      <button class="task-card__btn btn-delete">
+        <img src="../../../../public/icons/delete.png" alt="Delete note" title="Delete note" class="task-card__btn--icon" />
+      </button>
+      <button class="task-card__btn btn-save hidden">
+        <img src="../../../../public/icons/save.png" alt="Save note" title="Save note" class="task-card__btn--icon" />
       </button>
     </div>
   </div>
 
   <!-- CONTENT -->
   <div class="task-card__note-body">
-    {%NOTE_CONTENT%}
+    <div class="task-card__note-content">{%NOTE_CONTENT%}</div>
     <div id="task-form__note-editor" class="task-form__note-editor hidden"></div>
   </div>
 </div>

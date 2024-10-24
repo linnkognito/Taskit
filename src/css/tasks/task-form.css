@@ -36,6 +36,7 @@
 .task-form .task-form__header .task-form__title-wrapper .task-form__title-input {
   width: 100%;
   margin-right: 0.4em;
+  margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;

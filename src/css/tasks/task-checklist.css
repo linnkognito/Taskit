@@ -58,6 +58,7 @@
 .task-card__checklist .task-card__checklist-header .task-form__checklist-input-title {
   width: 100%;
   margin-right: 0.4em;
+  margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
@@ -89,8 +90,9 @@
 .task-card__checklist .task-form__checklist-header .task-card__checklist-title,
 .task-card__checklist .task-card__checklist-header .task-form__checklist-title,
 .task-card__checklist .task-card__checklist-header .task-card__checklist-title {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2rem;
+  margin-bottom: 0.1em;
+  padding: 0.1em 0.5em;
+  font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   color: white;
@@ -231,6 +233,7 @@
 .task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input {
   width: 100%;
   margin-right: 0.4em;
+  margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1rem;
   font-family: "Urbanist", sans-serif;

@@ -9,7 +9,7 @@ export class Note {
   buttons = this.toolbar.querySelectorAll('.btn-formatting');
   popupLink = document.querySelector('.popup-insert-link');
   btnLink = document.querySelector('.btn-link');
-  titleInput = document.querySelector('.task-form__note-input-title');
+  //titleInput = document.querySelector('.task-form__note-input-title');
   titleEl = document.querySelector('.task-form__note-title');
 
   constructor(id, task) {
@@ -48,27 +48,56 @@ export class Note {
       if (apply) return this.formatLink();
       if (cancel) return helper.hideElement(this.popupLink);
     });
-    this.titleInput.addEventListener('blur', (e) => {
-      this.saveTitle(e);
+    document.addEventListener('focusout', (e) => {
+      const input = e.target.closest('.title-input');
+
+      if (input) return this.saveTitle(e);
     });
     this.editor.addEventListener('blur', (e) => {
       this.saveNote(e);
     });
-    this.noteContainer.addEventListener('click', () => this.editor.focus());
+    this.editorContainer.addEventListener('click', () => this.editor.focus());
   }
 
   // GETTERS //
   get noteEl() {
-    return document.querySelector(`.task-form__note[data-id="${this.id}"]`);
+    return document.querySelector(`.task-form__note[data-id="${this.id}"], .task-card__note[data-id="${this.id}"]`);
+  }
+  get noteTitle() {
+    return this.noteEl.querySelector('.task-card__note-title');
+  }
+  get noteInputTitle() {
+    return this.noteEl.querySelector('.task-card__note-input-title');
+  }
+  get titleInput() {
+    return this.noteEl.querySelector('.title-input');
+  }
+  get noteHeaderBtns() {
+    return this.noteEl.querySelectorAll('.task-card__btn');
   }
   get editor() {
-    return document.querySelector('.ql-editor');
+    return this.noteEl.querySelector('.ql-editor');
+    // return document.querySelector('.ql-editor');
   }
-  get noteContainer() {
+  get editorContainer() {
     return document.querySelector('.task-form__note-editor');
+  }
+  get noteContent() {
+    return this.noteEl.querySelector('.task-card__note-content');
   }
   get linkInput() {
     return this.popupLink.querySelector('.popup-insert-link__input');
+  }
+
+  // EVENT LISTENERS //
+  activateListeners() {
+    this.noteEl.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-edit')) this.editNote();
+      if (e.target.closest('.btn-del')) this.deleteNote();
+    });
+    this.noteEl.addEventListener('click', (e) => {
+      if (e.target.closest('.title')) this.editElement(e.target, 'title');
+    });
   }
 
   // HELPERS //
@@ -81,8 +110,22 @@ export class Note {
   }
 
   // METHODS //
-  // prettier-ignore
+  editElement(el, type) {
+    if (type === 'title') {
+      const title = el;
+      const input = title.nextElementSibling;
+      helper.hideAndShowEls(title, input);
+      input.value = this.title;
+      input.focus();
+    }
+  }
+
+  deleteNote() {
+    return console.log(`delete note`);
+  }
+
   renderNote() {
+    // prettier-ignore
     return noteMarkup
       .replace('{%NOTE_ID%}', this.id)
       .replace('{%NOTE_TITLE%}', this.title)
@@ -100,10 +143,20 @@ export class Note {
 
     // Set title
     title.value ? (this.title = title.value) : this.title;
+    console.log(this.title);
 
     // Add placeholder & value
     title.placeholder = this.title || 'Add title';
     title.value = this.title;
+
+    // If form, return
+    if (title.closest('.task-form__note')) return;
+
+    // If card, update title text
+    if (title.closest('.task-card__note')) {
+      helper.hideAndShowEls(this.titleInput, this.noteTitle);
+      this.noteTitle.textContent = this.title;
+    }
   }
 
   formatLink() {

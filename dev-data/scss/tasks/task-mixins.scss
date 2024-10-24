@@ -118,8 +118,9 @@
   padding-bottom: 0.3em;
 }
 @mixin item-title() {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2rem;
+  margin-bottom: 0.1em;
+  padding: 0.1em 0.5em;
+  font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   color: white;

@@ -10,17 +10,49 @@
   .task-card__note-header {
     @include mixins.item-header;
 
+    // TITLE (HEADER) //
     .task-card__note-title {
       @include mixins.item-title;
     }
+
+    // INPUT TITLE (HEADER) //
+    .task-card__note-input-title {
+      @include mixins.input-text;
+      // margin-bottom: 0.1em;
+      border: none;
+    }
+    .task-card__note-input-title::placeholder {
+      @include mixins.input-text-placeholder;
+    }
+    .task-card__note-input-title:focus::placeholder {
+      @include mixins.input-text-focus-placeholder;
+    }
+
+    // BUTTONS (HEADER) //
     .task-card__note-buttons {
       @include mixins.buttons-header('card');
+      display: flex;
+      gap: 0.3em;
     }
   } //////////////////////////////////
 
   //  BODY ///////////////////////////
   .task-card__note-body {
     @include mixins.item-body;
+
+    // QUILL FORMATTING LIBRARY STYLES //
+    .ql-editor {
+      height: 100%;
+      outline: none;
+
+      .ql-editor--link {
+        color: vars.$col-primary;
+      }
+      .ql-editor--link:hover {
+        color: white;
+        background: vars.$col-primary;
+      }
+    }
   } //////////////////////////////////
 }
 
@@ -43,9 +75,6 @@
     }
     .task-form__note-input-title:focus::placeholder {
       @include mixins.input-text-focus-placeholder;
-    }
-    .task-form__note-title {
-      @include mixins.item-title;
     }
     .task-form__note-title {
       @include mixins.item-title;

@@ -20,11 +20,35 @@
   padding-bottom: 0.3em;
 }
 .task-card__note .task-card__note-header .task-card__note-title {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2rem;
+  margin-bottom: 0.1em;
+  padding: 0.1em 0.5em;
+  font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   color: white;
+}
+.task-card__note .task-card__note-header .task-card__note-input-title {
+  width: 100%;
+  margin-right: 0.4em;
+  margin-bottom: 0.1em;
+  padding: 0.1em 0.5em;
+  font-size: 1.25rem;
+  font-family: "Urbanist", sans-serif;
+  color: rgb(158, 158, 158);
+  letter-spacing: 0.05em;
+  border-radius: 0.9em;
+  outline: none;
+  border: none;
+}
+.task-card__note .task-card__note-header .task-card__note-input-title::placeholder {
+  color: rgb(213, 207, 204);
+}
+.task-card__note .task-card__note-header .task-card__note-input-title:focus::placeholder {
+  color: rgba(213, 207, 204, 0.4);
+}
+.task-card__note .task-card__note-header .task-card__note-buttons {
+  display: flex;
+  gap: 0.3em;
 }
 .task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn {
   width: 2em;
@@ -54,6 +78,17 @@
   border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
+.task-card__note .task-card__note-body .ql-editor {
+  height: 100%;
+  outline: none;
+}
+.task-card__note .task-card__note-body .ql-editor .ql-editor--link {
+  color: rgb(213, 207, 204);
+}
+.task-card__note .task-card__note-body .ql-editor .ql-editor--link:hover {
+  color: white;
+  background: rgb(213, 207, 204);
+}
 
 .task-form__note {
   width: 100%;
@@ -74,6 +109,7 @@
 .task-form__note .task-form__note-header .task-form__note-input-title {
   width: 100%;
   margin-right: 0.4em;
+  margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
@@ -91,15 +127,9 @@
   color: rgba(213, 207, 204, 0.4);
 }
 .task-form__note .task-form__note-header .task-form__note-title {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: white;
-}
-.task-form__note .task-form__note-header .task-form__note-title {
-  margin: 0 0 0.1em 0.7em;
-  font-size: 1.2rem;
+  margin-bottom: 0.1em;
+  padding: 0.1em 0.5em;
+  font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   color: white;
@@ -156,6 +186,7 @@
 .task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__input {
   width: 100%;
   margin-right: 0.4em;
+  margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
