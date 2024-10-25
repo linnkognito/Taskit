@@ -110,7 +110,7 @@ export class Task {
 
       this.els.noteTitle().focus();
 
-      const newNote = new Note(noteId, this);
+      const newNote = new Note(noteId);
       this.notes.push(newNote);
     }
   }

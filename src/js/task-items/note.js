@@ -5,18 +5,15 @@ import { helper } from '../../index';
 import noteMarkup from '../../components/tasks/items/note.html';
 
 export class Note {
-  //toolbar = document.querySelector('.note-body__formatting-buttons');
-  buttons = this.toolbar.querySelectorAll('.btn-formatting');
-  popupLink = document.querySelector('.popup-insert-link');
-  btnLink = document.querySelector('.btn-link');
-  //titleInput = document.querySelector('.task-form__note-input-title');
-  titleEl = document.querySelector('.task-form__note-title');
+  hideElement = helper.hideElement;
+  showElement = helper.showElement;
+  hideAndShowEls = helper.hideAndShowEls;
+  hasClass = helper.hasClass;
 
-  constructor(id, task) {
+  constructor(id) {
     this.id = id;
     this.title = `Note #${this.id}`;
     this.note = '';
-    this.task = task;
     this.created = new Date();
     this.sort = 'created';
     this.editAllMode = false;
@@ -47,9 +44,8 @@ export class Note {
       if (!apply && !cancel) return;
 
       if (apply) return this.formatLink();
-      if (cancel) return helper.hideElement(this.popupLink);
+      if (cancel) return this.hideElement(this.popupLink);
     });
-    // SAVE CHANGES ON FOCUSOUT
     document.addEventListener('focusout', (e) => {
       if (this.editAllMode) return;
 
@@ -94,13 +90,22 @@ export class Note {
   get toolbar() {
     return document.querySelector('.note-body__formatting-buttons');
   }
+  get buttons() {
+    return this.toolbar.querySelectorAll('.btn-formatting');
+  }
+  get popupLink() {
+    return document.querySelector('.popup-insert-link');
+  }
+  get btnLink() {
+    return document.querySelector('.btn-link');
+  }
 
   // EVENT LISTENERS //
   activateListeners() {
     // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
       // ENTER EDIT ALL MODE
-      if (e.target.closest('.btn-edit')) {
+      if (e.target.closest('.btn-edit-note')) {
         this.editAllMode = true;
         this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
         this.editAll([
@@ -120,18 +125,19 @@ export class Note {
       // CANCEL EDIT ALL MODE
       if (e.target.closest('.btn-cancel-edits')) {
         const userConfirmed = confirm('Cancel editing? All unsaved changes will be lost.');
-        console.log(`userConfirmed ${userConfirmed}`);
         if (userConfirmed) {
           this.editAllMode = false;
           this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
-          helper.hideAndShowEls(this.noteInputTitle, this.noteTitle);
-          helper.hideAndShowEls(this.editorContainer, this.noteContent);
-          helper.hideElement(this.toolbar);
+          this.hideAndShowEls(this.noteInputTitle, this.noteTitle);
+          this.hideAndShowEls(this.editorContainer, this.noteContent);
+          this.hideElement(this.toolbar);
         }
       }
 
       // DELETE NOTE
-      if (e.target.closest('.btn-del')) this.deleteNote();
+      if (e.target.closest('.btn-delete-note')) {
+        this.deleteNote();
+      }
     });
 
     // EDIT SINGLE ELEMENT
@@ -152,10 +158,10 @@ export class Note {
     const buttons = parent.querySelectorAll(cls);
 
     if (this.editAllMode) {
-      buttons.forEach((btn) => (helper.hasClass(btn, 'edit-all-mode') ? helper.showElement(btn) : helper.hideElement(btn)));
+      buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.showElement(btn) : this.hideElement(btn)));
     }
     if (!this.editAllMode) {
-      buttons.forEach((btn) => (helper.hasClass(btn, 'edit-all-mode') ? helper.hideElement(btn) : helper.showElement(btn)));
+      buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.hideElement(btn) : this.showElement(btn)));
     }
   }
   isLink() {
@@ -175,10 +181,10 @@ export class Note {
 
   editElement(el, type) {
     let input = el.nextElementSibling;
-    helper.hideAndShowEls(el, input);
+    this.hideAndShowEls(el, input);
 
     if (type === 'note') {
-      helper.showElement(this.toolbar);
+      this.showElement(this.toolbar);
 
       // Reinitialize Quill
       this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
@@ -221,15 +227,14 @@ export class Note {
 
     //if (e.target.closest('.task-card__note')) {
     if (noteInput.closest('.task-card__note')) {
-      helper.hideElement(this.toolbar);
-      helper.hideAndShowEls(this.editor, this.noteContent);
+      this.hideElement(this.toolbar);
+      this.hideAndShowEls(this.editor, this.noteContent);
     }
   }
 
   saveTitle(title) {
     // Set title
     title.value.trim() ? (this.title = title.value) : this.title;
-    console.log(this.title);
 
     // Add placeholder & value
     title.placeholder = this.title || 'Add title';
@@ -240,7 +245,7 @@ export class Note {
 
     // If card, update title text
     if (title.closest('.task-card__note')) {
-      helper.hideAndShowEls(this.titleInput, this.noteTitle);
+      this.hideAndShowEls(this.titleInput, this.noteTitle);
       this.noteTitle.textContent = this.title;
     }
   }
@@ -253,7 +258,7 @@ export class Note {
 
     if (url) this.quill.format('link', url);
 
-    helper.hideElement(this.popupLink);
+    this.hideElement(this.popupLink);
     input.value = '';
     this.updateToolbar();
   }
@@ -268,11 +273,11 @@ export class Note {
     const linkOff = this.btnLink.querySelector('.btn-link-off-icon');
 
     // If there's a selection and it is a link
-    helper.hideAndShowEls(link, linkOff);
+    this.hideAndShowEls(link, linkOff);
 
     // Reset on mouseleave
     this.btnLink.addEventListener('mouseleave', () => {
-      helper.hideAndShowEls(linkOff, link);
+      this.hideAndShowEls(linkOff, link);
     });
 
     this.updateToolbar();
@@ -309,7 +314,7 @@ export class Note {
       if (url) return this.quill.format('link', false);
 
       // Open popup
-      helper.showElement(this.popupLink);
+      this.showElement(this.popupLink);
       //const input = this.popupLink.querySelector('.popup-insert-link__input');
       this.linkInput.focus();
       return;

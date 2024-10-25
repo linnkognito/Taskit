@@ -171,9 +171,10 @@ export class Project {
   }
 
   deleteTask(btn) {
-    const taskId = this.getTaskId(btn);
-    const task = btn.closest(`.task-card[data-id="${taskId}"]`);
-    this.tasksArr.splice(taskId - 1, 1);
-    task.remove();
+    console.log(`deleteTask entered (it's empty, needs to be reworked)`);
+    // const taskId = this.getTaskId(btn);
+    // const task = btn.closest(`.task-card[data-id="${taskId}"]`);
+    // this.tasksArr.splice(taskId - 1, 1);
+    // task.remove();
   }
 }
