@@ -2,6 +2,8 @@
 
 export class Helper {
   //-- CLASS MANIPULATION -----------------------------------//
+
+  // HIDE & SHOW //
   showElement(el) {
     return el.classList.remove('hidden');
   }
@@ -15,6 +17,8 @@ export class Helper {
     this.hideElement(el1);
     this.showElement(el2);
   }
+
+  // CHECK FOR CLASS //
   containsClass(el, cls) {
     return el.classList.contains(cls);
   }
@@ -24,6 +28,8 @@ export class Helper {
   addClass(el, cls) {
     return el.classList.add(cls);
   }
+
+  // EFFECTS & ANIMATIONS //
   scaleUp(el, startPos) {
     return requestAnimationFrame(() => {
       el.classList.add(`scale-up-${startPos}`);
@@ -31,6 +37,11 @@ export class Helper {
   }
   moveDown(el, h) {
     return (el.transform = `translateY(${h})`);
+  }
+
+  //-- GET VALUES --------------------------------------------//
+  generateId() {
+    return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   }
 
   //-- MARKUP -----------------------------------------------//

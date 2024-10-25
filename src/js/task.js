@@ -10,6 +10,8 @@ import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardTemp from '../components/tasks/task-card.html';
 
 export class Task {
+  generateId = helper.generateId;
+
   body = document.querySelector('body');
   taskForm = document.querySelector('.task-form');
   btnDueDate = document.querySelector('.task-form__btn-due-date');
@@ -19,7 +21,7 @@ export class Task {
     this.project = project;
     this.projectEl = projectEl;
 
-    this.title = `Untitled Task #${id}`;
+    this.title = `Untitled`;
     this.prio = 0;
     this.description = 'Click to add a description';
     this.dueDate = null;
@@ -85,21 +87,21 @@ export class Task {
   }
 
   addItem(e) {
-    const checklistId = this.checklists.length + 1;
-    const noteId = this.notes.length + 1;
+    const checklistId = this.generateId();
+    const noteId = this.generateId();
 
     const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
 
     // Add checklist:
     if (this.hasClass('btn-add-checklist', e.target)) {
-      const markup = checklistFormMarkup.replace('{%CHECKLIST_ID%}', checklistId);
+      const newChecklist = new Checklist(this.generateId(), this);
+      this.checklists.push(newChecklist);
+
+      const markup = checklistFormMarkup.replace('{%CHECKLIST_ID%}', newChecklist.id);
       insert(markup);
       helper.scaleUp(this.checklistForm, 'top');
 
       this.els.checklistTitle().focus();
-
-      const newChecklist = new Checklist(checklistId, this);
-      this.checklists.push(newChecklist);
     }
 
     // Add note:
@@ -110,7 +112,7 @@ export class Task {
 
       this.els.noteTitle().focus();
 
-      const newNote = new Note(noteId);
+      const newNote = new Note(noteId, this);
       this.notes.push(newNote);
     }
   }
@@ -374,5 +376,10 @@ export class Task {
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
+  }
+
+  //-- ITEMS ---------------------------------------//
+  removeItemById(id, item) {
+    this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
   }
 }

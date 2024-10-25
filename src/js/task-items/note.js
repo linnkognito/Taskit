@@ -10,9 +10,10 @@ export class Note {
   hideAndShowEls = helper.hideAndShowEls;
   hasClass = helper.hasClass;
 
-  constructor(id) {
+  constructor(id, task) {
     this.id = id;
     this.title = `Note #${this.id}`;
+    this.task = task;
     this.note = '';
     this.created = new Date();
     this.sort = 'created';
@@ -204,7 +205,8 @@ export class Note {
   }
 
   deleteNote() {
-    return console.log(`delete note`);
+    this.task.removeItemById(this.id);
+    this.noteEl.remove();
   }
 
   renderNote() {
