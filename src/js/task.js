@@ -4,17 +4,17 @@ import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 
 import checklistFormMarkup from '../components/tasks/items/checklist-form.html';
-
 import noteMarkup from '../components/tasks/items/note-form.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
-import taskCardTemp from '../components/tasks/task-card.html';
+import taskCardMarkup from '../components/tasks/task-card.html';
+
+////////////////////////////////////////////////////////////////////////
 
 export class Task {
   generateId = helper.generateId;
-
-  body = document.querySelector('body');
-  taskForm = document.querySelector('.task-form');
-  btnDueDate = document.querySelector('.task-form__btn-due-date');
+  addClass = helper.addClass;
+  hasClass = helper.hasClass;
+  removeClass = helper.removeClass;
 
   constructor(id, project, projectEl) {
     this.id = id;
@@ -78,6 +78,8 @@ export class Task {
     this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
   }
 
+  /////////////////////////////////////////////////////////////////////////////////
+
   // GETTERS //
   get noteForm() {
     return document.querySelector('.task-form__note');
@@ -85,15 +87,22 @@ export class Task {
   get checklistForm() {
     return document.querySelector('.task-form__checklist');
   }
+  get body() {
+    return document.querySelector('body');
+  }
+  get taskForm() {
+    return document.querySelector('.task-form');
+  }
+  get btnDueDate() {
+    return document.querySelector('.task-form__btn-due-date');
+  }
 
+  // METHODS - FORM ITEMS //
   addItem(e) {
-    const checklistId = this.generateId();
-    const noteId = this.generateId();
-
     const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
 
     // Add checklist:
-    if (this.hasClass('btn-add-checklist', e.target)) {
+    if (this.hasClass(e.target, 'btn-add-checklist')) {
       const newChecklist = new Checklist(this.generateId(), this);
       this.checklists.push(newChecklist);
 
@@ -105,39 +114,34 @@ export class Task {
     }
 
     // Add note:
-    if (this.hasClass('btn-add-note', e.target)) {
-      const markup = noteMarkup.replace('{%NOTE_ID%}', noteId);
+    if (this.hasClass(e.target, 'btn-add-note')) {
+      const newNote = new Note(this.generateId(), this);
+      this.notes.push(newNote);
+
+      const markup = noteMarkup.replace('{%NOTE_ID%}', newNote.id);
       insert(markup);
       helper.scaleUp(this.noteForm, 'top');
 
       this.els.noteTitle().focus();
-
-      const newNote = new Note(noteId, this);
-      this.notes.push(newNote);
     }
   }
   saveOrCancelForm(e) {
     const btn = e.target.closest('.btn-form-footer') || e.target.closest('.task-form__btn');
     if (!btn) return;
 
-    if (this.hasClass('btn-save', btn)) this.saveTask();
-    if (this.hasClass('btn-cancel', btn)) this.taskForm.remove();
+    if (this.hasClass(btn, 'btn-save')) this.saveTask();
+    if (this.hasClass(btn, 'btn-cancel')) this.taskForm.remove();
   }
-
-  //-- HELPERS -------------------------------------//
-  hasClass = (cls, el) => el.classList.contains(cls);
-  addClass = (cls, el) => el.classList.add(cls);
-  removeClass = (cls, el) => el.classList.remove(cls);
 
   //-- PRIO -----------------------------------------//
   setPrio(btn) {
     // Remove active style for all Prio buttons
     this.els.prioBtns.btns.forEach((b) => {
-      this.removeClass(`prio${b.dataset.prio}-color-profile`, b);
+      this.removeClass(b, `prio${b.dataset.prio}-color-profile`);
     });
 
     this.prio = btn.dataset.prio;
-    this.addClass(`prio${this.prio}-color-profile`, btn);
+    this.addClass(btn, `prio${this.prio}-color-profile`);
     this.setPrioColors(this.prio);
   }
 
@@ -261,7 +265,7 @@ export class Task {
   }
 
   closeModal(e, modal) {
-    if (this.hasClass('modal', e.target) || this.hasClass('btn-cancel', e.target)) modal.remove();
+    if (this.hasClass(e.target, 'modal') || this.hasClass(e.target, 'btn-cancel')) modal.remove();
   }
 
   //-- DUE: HELPERS ----//
@@ -319,7 +323,7 @@ export class Task {
     this.taskForm.remove();
 
     // Set task card values
-    let taskCardMarkup = taskCardTemp
+    let taskCardMarkup = taskCardMarkup
       .replace('{%TASKCARD_ID%}', this.id)
       .replace('{%TASKCARD_TITLE%}', this.title)
       .replace('{%TASKCARD_DESCRIPTION%}', this.description)

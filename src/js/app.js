@@ -3,61 +3,55 @@
 import { Project } from './project';
 import { helper } from '../index';
 
-import projectTemp from '../components/projects/project-card.html';
+////////////////////////////////////////////////////////////////////////
 
 export class App {
-  //-- CLASS PROPERTIES -------------------------------------//
-  projects = document.querySelector('#projects');
-  projectBtns = document.querySelector('.project-card__buttons');
-  dummyProjectCard = document.querySelector('.add-project');
-  addBtn = document.querySelector('.add-project__body');
-  nav = document.querySelectorAll('nav-link');
-
-  projectsArr = [];
+  generateId = helper.generateId;
+  addClass = helper.addClass;
+  removeClass = helper.removeClass;
 
   constructor() {
+    this.projectsArr = [];
+
     this.addBtn.addEventListener('click', this.createNewProject.bind(this));
   }
 
-  //-- HELPERS ----------------------------------------------//
-  getId = (el) => el.closest('.project-card').dataset.id;
-  getHeaderEl = (el) => el.closest('.project-card__header');
-  getProject = (id) => document.querySelector(`.project-card[data-id="${id}"]`);
-  getTitleEl = (parent) => parent.querySelector('.project-card__title');
-  getInputEl = (parent) => parent.querySelector('.project-card__title-input');
-  hasClass = (el, cls) => el.classList.contains(cls);
+  //-- GETTERS ----------------------------------------------//
+  //#region Getters
+  get projects() {
+    return document.querySelector('#projects');
+  }
+  get projectBtns() {
+    return document.querySelector('.project-card__buttons');
+  }
+  get dummyProjectCard() {
+    return document.querySelector('.add-project');
+  }
+  get addBtn() {
+    return document.querySelector('.add-project__body');
+  }
+  get nav() {
+    return document.querySelectorAll('.nav-link');
+  }
+  get taskForm() {
+    return document.querySelector('.task-form');
+  }
+  //#endregion
 
   //-- METHODS ----------------------------------------------//
   createNewProject() {
     // Remove any open task form
-    const taskForm = document.querySelector('.task-form');
-    if (taskForm) taskForm.remove();
-
-    // Create ID & render markup
-    const id = this.projectsArr.length + 1;
-    this.renderProjectCard(id);
-
-    // Focus on title input element
-    const inputEl = this.getInputEl(this.getProject(id));
-    inputEl.focus();
+    if (this.taskForm) this.taskForm.remove();
 
     // Create instance
-    const newProject = new Project(id);
+    const newProject = new Project(this.generateId());
     this.projectsArr.push(newProject);
+
+    // Render markup
+    newProject.renderProjectCard();
+    // newProject.titleInput.focus();
 
     // Initialize event listeners
     newProject.initListeners();
-
-    // Capture title
-    inputEl.addEventListener('blur', () => newProject.saveProjectTitle());
-  }
-
-  renderProjectCard(id) {
-    // Update & insert markup
-    const projectMarkup = projectTemp.replace('{%PROJECT_ID%}', id);
-    this.projects.firstElementChild.insertAdjacentHTML('afterend', projectMarkup);
-
-    // Apply animation
-    helper.scaleUp(this.getProject(id), 'center');
   }
 }

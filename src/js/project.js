@@ -1,30 +1,41 @@
 // project.js
 
-import { app, helper } from '../index';
+import { helper } from '../index';
 import { Task } from './task';
 
-//-- TEMPLATES ----------------------------------//
-import taskFormMarkup from '../components/tasks/forms/task-form.html';
-import dropdownSort from '../components/menus/dropdown-sort.html';
 import dropdownSettings from '../components/menus/dropdown-settings.html';
+import dropdownSort from '../components/menus/dropdown-sort.html';
+import projectMarkup from '../components/projects/project-card.html';
+import taskFormMarkup from '../components/tasks/forms/task-form.html';
+
+////////////////////////////////////////////////////////////////////////
 
 export class Project {
-  tasksArr = [];
+  generateId = helper.generateId;
+  addClass = helper.addClass;
+  hasClass = helper.hasClass;
+  removeClass = helper.removeClass;
+  hideAndShowEls = helper.hideAndShowEls;
+  getClosest = helper.getClosest;
 
   constructor(id) {
-    this.id = id;
-    this.title = `Untitled #${this.id}`;
-
+    this.id = id || this.generateId();
+    this.title = 'Untitled Project';
     this.openDropdown = null;
+
+    this.tasksArr = [];
   }
 
   //-- EVENT HANDLERS ----------------------------//
   initListeners() {
+    // SAVE TITLE //
+    this.inputEl.addEventListener('blur', () => this.saveProjectTitle());
+
     // HEADER BTNS //
     this.projectEl.addEventListener('click', (e) => {
-      let btnAdd = e.target.closest('.btn-add-task');
-      let btnSettings = e.target.closest('.btn-settings');
-      let btnSort = e.target.closest('.btn-sort-tasks');
+      const btnAdd = e.target.closest('.btn-add-task');
+      const btnSettings = e.target.closest('.btn-settings');
+      const btnSort = e.target.closest('.btn-sort-tasks');
 
       if (btnAdd) this.addTask(e);
       if (btnSettings || btnSort) this.openSettings(btnSettings ? btnSettings : btnSort);
@@ -35,22 +46,28 @@ export class Project {
       const title = e.target.closest('.project-card__title');
       const delBtn = e.target.closest('.btn-delete');
 
-      if (title) return this.clickedTitle(e);
+      if (title) return this.editProjectTitle(e.target);
       if (delBtn) return this.deleteTask(delBtn);
     });
-    // DELETE TASK //
-  }
+    // this.projectEl.addEventListener('click', (e) => {
+    //   const title = e.target.closest('.project-card__title');
+    //   const delBtn = e.target.closest('.btn-delete');
 
-  clickedTitle(e) {
-    this.editProjectTitle(e.target);
+    //   if (title) return this.editProjectTitle(e.target);
+    //   if (delBtn) return this.deleteTask(delBtn);
+    // });
   }
-
-  //-- HELPERS ----------------------------------//
-  getTaskId = (el) => el.closest('.task-card').dataset.id;
 
   //-- GETTERS ---------------------------------//
+  //#region Getters
   get projectEl() {
     return document.querySelector(`.project-card[data-id="${this.id}"]`);
+  }
+  get projects() {
+    return document.querySelector('#projects');
+  }
+  get titleInput() {
+    return this.projectEl.querySelector('.project-card__title-input');
   }
   get projectBody() {
     return this.projectEl.querySelector('.project-card__body');
@@ -61,16 +78,24 @@ export class Project {
   get inputEl() {
     return this.projectEl.querySelector('.project-card__title-input');
   }
+  //#endregion
 
-  //-- TITLE ---------------------------------//
+  //-- PROJECT --------------------------------//
+  renderProjectCard() {
+    // Update & insert markup
+    const markup = projectMarkup.replace('{%PROJECT_ID%}', this.id);
+    this.projects.firstElementChild.insertAdjacentHTML('afterend', markup);
+
+    // Apply animation
+    helper.scaleUp(this.projectEl, 'center');
+
+    this.titleInput.focus();
+  }
+
   saveProjectTitle() {
-    let inputEl = this.inputEl;
     this.titleEl.textContent = this.title;
-
-    // Store new title or set default
-    this.title = inputEl.value.trim() || `Untitled #${this.id}`;
-
-    helper.hideAndShowEls(inputEl, this.titleEl);
+    this.title = this.inputEl.value.trim() || 'Untitled Project';
+    this.hideAndShowEls(this.inputEl, this.titleEl);
   }
 
   editProjectTitle() {
@@ -98,7 +123,7 @@ export class Project {
     }
 
     // Variables
-    const header = app.getHeaderEl(btn);
+    const header = this.getClosest(btn, '.project-card__header');
     const headerHeight = header.getBoundingClientRect().height;
     let dropdown;
 

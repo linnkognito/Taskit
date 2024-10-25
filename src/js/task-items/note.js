@@ -4,6 +4,8 @@ import './linkBlot';
 import { helper } from '../../index';
 import noteMarkup from '../../components/tasks/items/note.html';
 
+////////////////////////////////////////////////////////////////////////
+
 export class Note {
   hideElement = helper.hideElement;
   showElement = helper.showElement;
@@ -12,7 +14,7 @@ export class Note {
 
   constructor(id, task) {
     this.id = id;
-    this.title = `Note #${this.id}`;
+    this.title = `Untitled Note`;
     this.task = task;
     this.note = '';
     this.created = new Date();
@@ -60,6 +62,7 @@ export class Note {
   }
 
   // GETTERS //
+  //#region Getters
   get noteEl() {
     return document.querySelector(`.task-form__note[data-id="${this.id}"], .task-card__note[data-id="${this.id}"]`);
   }
@@ -100,6 +103,7 @@ export class Note {
   get btnLink() {
     return document.querySelector('.btn-link');
   }
+  //#endregion
 
   // EVENT LISTENERS //
   activateListeners() {

@@ -1,7 +1,11 @@
 // helpers.js
 
 export class Helper {
-  //-- CLASS MANIPULATION -----------------------------------//
+  constructor() {
+    this.hideAndShowEls = this.hideAndShowEls.bind(this);
+  }
+
+  //-- CLASS MANIPULATION ------------------------------//
 
   // HIDE & SHOW //
   showElement(el) {
@@ -18,15 +22,17 @@ export class Helper {
     this.showElement(el2);
   }
 
-  // CHECK FOR CLASS //
-  containsClass(el, cls) {
-    return el.classList.contains(cls);
-  }
-  hasClass(el, cls) {
-    return el.classList.contains(cls);
-  }
+  // ADD & REMOVE
   addClass(el, cls) {
     return el.classList.add(cls);
+  }
+  removeClass(el, cls) {
+    return el.classList.remove(cls);
+  }
+
+  // CHECK FOR CLASS //
+  hasClass(el, cls) {
+    return el.classList.contains(cls);
   }
 
   // EFFECTS & ANIMATIONS //
@@ -39,12 +45,17 @@ export class Helper {
     return (el.transform = `translateY(${h})`);
   }
 
-  //-- GET VALUES --------------------------------------------//
+  //-- DOM ---------------------------------------------//
+  getClosest(el, cls) {
+    el.closest(cls);
+  }
+
+  //-- VALUES ------------------------------------------//
   generateId() {
     return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   }
 
-  //-- MARKUP -----------------------------------------------//
+  //-- MARKUP ------------------------------------------//
   clear = (el) => (el.innerHTML = '');
   insertMarkupAdj = (el, pos, markup) => el.insertAdjacentHTML(pos, markup);
   insertMarkupInner = (el, pos, markup) => el.innerHTML(pos, markup);

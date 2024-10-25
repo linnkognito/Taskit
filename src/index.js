@@ -21,9 +21,10 @@ let app;
 let helper;
 
 window.addEventListener('load', () => {
-  app = new App();
   helper = new Helper();
+  app = new App();
 
+  // Set Header height
   const header = document.querySelector('header');
   const headerHeight = header.getBoundingClientRect().height;
   app.projects.style.minHeight = `calc(100vh - ${headerHeight}px)`;
