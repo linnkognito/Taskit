@@ -49,7 +49,6 @@ export class App {
 
     // Render markup
     newProject.renderProjectCard();
-    // newProject.titleInput.focus();
 
     // Initialize event listeners
     newProject.initListeners();

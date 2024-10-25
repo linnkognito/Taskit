@@ -109,6 +109,11 @@
       .project-card__btn-add-task:hover {
         @include mixins.btn-wide-hover();
       }
+
+      // TASKS CONTAINER (BODY) //
+      .project-card__task-container {
+        transition: transform 0.3s ease;
+      }
     } // [X] END OF BODY [X] //
   } // [X] END OF PROJECT CARD [X] //
 }

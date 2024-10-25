@@ -137,6 +137,9 @@
   transform-origin: center;
   will-change: transform;
 }
+#projects .project-card .project-card__body .project-card__task-container {
+  transition: transform 0.3s ease;
+}
 
 .scale-up-center {
   transform-origin: center;

@@ -11,6 +11,7 @@
   border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   overflow: hidden;
+  transition: transform 0.3s ease;
 }
 .task-form .task-form__header {
   display: flex;

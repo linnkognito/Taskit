@@ -1,14 +1,16 @@
-// project.js
+//////////////_________________P R O J E C T_________________//////////////
 
 import { helper } from '../index';
 import { Task } from './task';
+
+//////////////_________________M A R K U P_________________//////////////
 
 import dropdownSettings from '../components/menus/dropdown-settings.html';
 import dropdownSort from '../components/menus/dropdown-sort.html';
 import projectMarkup from '../components/projects/project-card.html';
 import taskFormMarkup from '../components/tasks/forms/task-form.html';
 
-////////////////////////////////////////////////////////////////////////
+//////////////__________P R O J E C T  C L A S S__________//////////////
 
 export class Project {
   generateId = helper.generateId;
@@ -17,70 +19,74 @@ export class Project {
   removeClass = helper.removeClass;
   hideAndShowEls = helper.hideAndShowEls;
   getClosest = helper.getClosest;
+  insert = helper.insertMarkupAdj;
+  scaleUp = helper.scaleUp;
+  moveDown = helper.moveDown;
 
   constructor(id) {
     this.id = id || this.generateId();
     this.title = 'Untitled Project';
-    this.openDropdown = null;
+    this.dropdown = null;
+    this.dropdownBtn = null;
 
-    this.tasksArr = [];
+    this.tasks = [];
   }
 
-  //-- EVENT HANDLERS ----------------------------//
+  //////////////_________E V E N T  H A N D L E R S_________//////////////
+
   initListeners() {
-    // SAVE TITLE //
-    this.inputEl.addEventListener('blur', () => this.saveProjectTitle());
+    this.inputTitle.addEventListener('blur', () => this.saveProjectTitle());
+    this.projectEl.addEventListener('click', this.handleClick.bind(this));
+  }
+  handleClick(e) {
+    // Map button classes to methods
+    const actionMap = {
+      'btn-add-task': () => this.addTask(),
+      'btn-delete': (btn) => this.deleteTask(btn),
+      'btn-settings': (btn) => this.openSettings(btn),
+      'btn-sort-tasks': (btn) => this.openSettings(btn),
+      'project-card__title': (title) => this.editProjectTitle(title),
+    };
 
-    // HEADER BTNS //
-    this.projectEl.addEventListener('click', (e) => {
-      const btnAdd = e.target.closest('.btn-add-task');
-      const btnSettings = e.target.closest('.btn-settings');
-      const btnSort = e.target.closest('.btn-sort-tasks');
-
-      if (btnAdd) this.addTask(e);
-      if (btnSettings || btnSort) this.openSettings(btnSettings ? btnSettings : btnSort);
+    // Call the method
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls](el);
     });
-
-    // CHANGE TITLE //
-    this.projectEl.addEventListener('click', (e) => {
-      const title = e.target.closest('.project-card__title');
-      const delBtn = e.target.closest('.btn-delete');
-
-      if (title) return this.editProjectTitle(e.target);
-      if (delBtn) return this.deleteTask(delBtn);
-    });
-    // this.projectEl.addEventListener('click', (e) => {
-    //   const title = e.target.closest('.project-card__title');
-    //   const delBtn = e.target.closest('.btn-delete');
-
-    //   if (title) return this.editProjectTitle(e.target);
-    //   if (delBtn) return this.deleteTask(delBtn);
-    // });
   }
 
-  //-- GETTERS ---------------------------------//
+  //////////////_______________G E T T E R S_______________//////////////
+
   //#region Getters
-  get projectEl() {
-    return document.querySelector(`.project-card[data-id="${this.id}"]`);
-  }
   get projects() {
     return document.querySelector('#projects');
   }
-  get titleInput() {
-    return this.projectEl.querySelector('.project-card__title-input');
+  get projectEl() {
+    return document.querySelector(`.project-card[data-id="${this.id}"]`);
+  }
+  get projectHeader() {
+    return this.projectEl.querySelector('.project-card__header');
   }
   get projectBody() {
     return this.projectEl.querySelector('.project-card__body');
   }
+  get inputTitle() {
+    return this.projectEl.querySelector('.project-card__title-input');
+  }
   get titleEl() {
     return this.projectEl.querySelector('.project-card__title');
   }
-  get inputEl() {
-    return this.projectEl.querySelector('.project-card__title-input');
+  get taskContainer() {
+    return this.projectEl.querySelector('.project-card__task-container');
+  }
+  get taskForm() {
+    return document.querySelector('.task-form');
   }
   //#endregion
 
-  //-- PROJECT --------------------------------//
+  //////////////________________M E T H O D S_______________//////////////
+
+  //___P R O J E C T_________________________________________________//
   renderProjectCard() {
     // Update & insert markup
     const markup = projectMarkup.replace('{%PROJECT_ID%}', this.id);
@@ -89,117 +95,103 @@ export class Project {
     // Apply animation
     helper.scaleUp(this.projectEl, 'center');
 
-    this.titleInput.focus();
+    this.inputTitle.focus();
   }
 
+  //___P R O J E C T  T I T L E_______________________________________//
   saveProjectTitle() {
     this.titleEl.textContent = this.title;
-    this.title = this.inputEl.value.trim() || 'Untitled Project';
-    this.hideAndShowEls(this.inputEl, this.titleEl);
+    this.title = this.inputTitle.value.trim() || 'Untitled Project';
+    this.hideAndShowEls(this.inputTitle, this.titleEl);
   }
-
   editProjectTitle() {
-    helper.hideAndShowEls(this.titleEl, this.inputEl);
-    this.inputEl.value = this.title;
-    this.inputEl.focus();
-
-    // Listen for save //
-    if (this.inputEl) {
-      this.inputEl.addEventListener('keydown', (e) => {
-        const enter = e.key === 'Enter';
-        if (enter && this.inputEl) this.saveProjectTitle();
-      });
-      this.inputEl.addEventListener('blur', () => this.saveProjectTitle());
-    }
+    helper.hideAndShowEls(this.titleEl, this.inputTitle);
+    this.inputTitle.value = this.title;
+    this.inputTitle.focus();
+    this.listenForSave();
   }
-
-  //-- SETTINGS ------------------------------//
-  openSettings(btn) {
-    // Check if dropdown is already open
-    if (this.openDropdown) {
-      this.openDropdown.remove();
-      this.openDropdown = null;
-      return;
-    }
-
-    // Variables
-    const header = this.getClosest(btn, '.project-card__header');
-    const headerHeight = header.getBoundingClientRect().height;
-    let dropdown;
-
-    // Open Settings
-    if (btn.classList.contains('btn-settings')) {
-      helper.insertMarkupAdj(header, 'afterend', dropdownSettings);
-      dropdown = this.projectEl.querySelector('.settings-dropdown');
-
-      this.openDropdown = dropdown;
-    }
-
-    // Open Sort
-    if (btn.classList.contains('btn-sort-tasks')) {
-      helper.insertMarkupAdj(header, 'afterend', dropdownSort);
-      dropdown = this.projectEl.querySelector('.sort-dropdown');
-
-      this.openDropdown = dropdown;
-    }
-
-    // Placement
-    dropdown.style.top = `calc(${headerHeight}px)`;
-
-    // Close dropdown handler
-    if (dropdown) this.closeDropdown(dropdown);
-  }
-
-  closeDropdown(dropdown) {
-    const events = ['mouseleave', 'click', 'keydown'];
-    events.forEach((ev) => {
-      this.projectEl.addEventListener(ev, (e) => {
-        if (ev === 'mouseleave') {
-          return dropdown.remove();
-        }
-        if (ev === 'click' && !dropdown.contains(e.target)) {
-          return dropdown.remove();
-        }
-        if (ev === 'keydown' && e.key === 'Escape') {
-          return dropdown.remove();
-        }
-      });
+  listenForSave() {
+    this.inputTitle.addEventListener('blur', () => this.saveProjectTitle());
+    this.inputTitle.addEventListener('keydown', (e) => {
+      const enter = e.key === 'Enter';
+      if (enter && this.inputTitle) this.saveProjectTitle();
     });
   }
-  //-- TASKS --------------------------------//
-  addTask(e) {
-    const form = document.querySelector('.task-form');
-    if (form) return;
 
-    const btn = e.target.closest('.btn-add-task');
+  //___D R O P D O W N S______________________________________________//
+  openSettings(btn) {
+    // Check if dropdown is already open
+    if (this.dropdownBtn === btn) return this.removeDropdown();
+    if (this.dropdown) this.removeDropdown();
 
-    if (btn) {
-      // Insert markup
-      this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
+    // Store clicked button (needed for closing logic)
+    this.dropdownBtn = btn;
+    console.log('entererd');
 
-      // Get elements
-      const taskForm = document.querySelector('.task-form');
-      const content = document.querySelector('.project-card__body--content');
-
-      // Get form height
-      const taskFormHeight = taskForm.getBoundingClientRect().height;
-
-      // Apply animations
-      helper.scaleUp(taskForm, 'top');
-      content.transition = 'transform 0.3s ease';
-      helper.moveDown(content, taskFormHeight);
-
-      // Create Task instance
-      const newTask = new Task(this.tasksArr.length + 1, this, this.projectEl);
-      this.tasksArr.push(newTask);
+    // Render dropdown
+    if (btn.title.toLowerCase().includes('settings')) {
+      this.renderDropdown(dropdownSettings, '.settings-dropdown');
     }
+    if (btn.title.toLowerCase().includes('sort')) {
+      this.renderDropdown(dropdownSort, '.sort-dropdown');
+    }
+    console.log(this.dropdown, 'this.dropdown');
+
+    // Placement
+    const headerHeight = this.projectHeader.getBoundingClientRect().height;
+    this.dropdown.style.top = `calc(${headerHeight}px)`;
+
+    // Listen for clicks to close dropdown
+    this.listenForClose();
+    // if (this.dropdown) this.listenForClose();
+    console.log('yes');
+  }
+  renderDropdown(markup, cls) {
+    this.insert(this.projectHeader, 'afterend', markup);
+    this.dropdown = this.projectEl.querySelector(cls);
+  }
+  removeDropdown() {
+    this.dropdown.remove();
+    this.dropdown = null;
+    this.dropdownBtn = null;
+  }
+  listenForClose() {
+    this.dropdown.addEventListener('mouseleave', () => this.removeDropdown());
+
+    document.addEventListener('click', (e) => {
+      if (!this.dropdown || this.dropdown.contains(e.target) || this.dropdownBtn.contains(e.target)) return;
+      this.removeDropdown();
+    });
   }
 
-  deleteTask(btn) {
-    console.log(`deleteTask entered (it's empty, needs to be reworked)`);
-    // const taskId = this.getTaskId(btn);
-    // const task = btn.closest(`.task-card[data-id="${taskId}"]`);
-    // this.tasksArr.splice(taskId - 1, 1);
-    // task.remove();
+  //___S E T T I N G S_______________________________________________//
+
+  //___T A S K S____________________________________________________//
+  addTask() {
+    // Check if there's already an open form
+    if (this.taskForm) {
+      // FIX LATER if (this.hasUnsavedChanges() && !this.discardChanges()) return;
+      this.taskForm.remove();
+    }
+
+    // Insert markup
+    this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
+
+    // Apply animations
+    this.scaleUp(this.taskForm, 'top');
+    this.moveDown(this.taskContainer, this.taskContainer.getBoundingClientRect().height);
+
+    // Create Task instance
+    const newTask = new Task(this.generateId(), this, this.projectEl);
+    this.tasks.push(newTask);
+
+    // Have form id match Task id
+    this.taskForm.dataset.id = newTask.id;
+  }
+  hasUnsavedChanges() {
+    return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges();
+  }
+  discardChanges() {
+    return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`);
   }
 }

@@ -47,7 +47,7 @@ export class Helper {
 
   //-- DOM ---------------------------------------------//
   getClosest(el, cls) {
-    el.closest(cls);
+    return el.closest(cls);
   }
 
   //-- VALUES ------------------------------------------//

@@ -1,20 +1,26 @@
-// task.js
+//////////////_____________________T A S K_____________________//////////////
+
 import { helper } from '../index';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 
+//////////////_________________M A R K U P_________________//////////////
+
 import checklistFormMarkup from '../components/tasks/items/checklist-form.html';
-import noteMarkup from '../components/tasks/items/note-form.html';
+import noteFormMarkup from '../components/tasks/items/note-form.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardMarkup from '../components/tasks/task-card.html';
 
-////////////////////////////////////////////////////////////////////////
+//////////////_______________T A S K  C L A S S_______________//////////////
 
 export class Task {
   generateId = helper.generateId;
+  insertMarkup = helper.insertMarkupAdj;
   addClass = helper.addClass;
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
+  scaleUp = helper.scaleUp;
+  hasChanges = false;
 
   constructor(id, project, projectEl) {
     this.id = id;
@@ -59,7 +65,8 @@ export class Task {
       noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
     };
 
-    //-- EVENT LISTENERS ------------------------------//
+    //////////////_________E V E N T  H A N D L E R S_________//////////////
+
     // FORM: OPEN DUE DATE MODAL
     this.taskForm.addEventListener('click', (e) => {
       const dueBtn = e.target.closest('.task-form__btn-due-date');
@@ -78,9 +85,8 @@ export class Task {
     this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
   }
 
-  /////////////////////////////////////////////////////////////////////////////////
+  //////////////_______________G E T T E R S_______________//////////////
 
-  // GETTERS //
   get noteForm() {
     return document.querySelector('.task-form__note');
   }
@@ -96,19 +102,26 @@ export class Task {
   get btnDueDate() {
     return document.querySelector('.task-form__btn-due-date');
   }
+  get btnsAddItem() {
+    return this.projectEl.querySelector('.task-form__add-item-buttons');
+  }
+  get taskFormContainer() {
+    return this.projectEl.querySelector('.task-form__container');
+  }
 
-  // METHODS - FORM ITEMS //
+  //////////////_______________M E T H O D S_______________//////////////
+
+  //___F O R M  I T E M S_____________________________________________//
   addItem(e) {
-    const insert = (markup) => this.els.addBtns.insertAdjacentHTML('afterend', markup);
-
     // Add checklist:
     if (this.hasClass(e.target, 'btn-add-checklist')) {
       const newChecklist = new Checklist(this.generateId(), this);
       this.checklists.push(newChecklist);
 
       const markup = checklistFormMarkup.replace('{%CHECKLIST_ID%}', newChecklist.id);
-      insert(markup);
-      helper.scaleUp(this.checklistForm, 'top');
+      this.insertMarkup(this.taskFormContainer, 'afterbegin', markup);
+
+      this.scaleUp(this.checklistForm, 'top');
 
       this.els.checklistTitle().focus();
     }
@@ -118,12 +131,15 @@ export class Task {
       const newNote = new Note(this.generateId(), this);
       this.notes.push(newNote);
 
-      const markup = noteMarkup.replace('{%NOTE_ID%}', newNote.id);
-      insert(markup);
-      helper.scaleUp(this.noteForm, 'top');
+      const markup = noteFormMarkup.replace('{%NOTE_ID%}', newNote.id);
+      this.insertMarkup(this.taskFormContainer, 'afterbegin', markup);
+
+      this.scaleUp(this.noteForm, 'top');
 
       this.els.noteTitle().focus();
     }
+
+    this.hasChanges = true;
   }
   saveOrCancelForm(e) {
     const btn = e.target.closest('.btn-form-footer') || e.target.closest('.task-form__btn');
@@ -133,7 +149,7 @@ export class Task {
     if (this.hasClass(btn, 'btn-cancel')) this.taskForm.remove();
   }
 
-  //-- PRIO -----------------------------------------//
+  //___P R I O_______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons
     this.els.prioBtns.btns.forEach((b) => {
@@ -143,17 +159,17 @@ export class Task {
     this.prio = btn.dataset.prio;
     this.addClass(btn, `prio${this.prio}-color-profile`);
     this.setPrioColors(this.prio);
+    this.hasChanges = true;
   }
-
   setPrioColors(prio) {
     // for changing prio color on click
   }
 
-  //-- DUE -----------------------------------------//
+  //___D U E  D A T E_______________________________________________//
   openDueModal() {
     if (document.querySelector('.modal-due-date')) document.querySelector('.modal-due-date').remove();
 
-    helper.insertMarkupAdj(this.body, 'afterbegin', dueModal);
+    this.insertMarkup(this.body, 'afterbegin', dueModal);
 
     const modal = document.querySelector('.modal');
     const btnSave = document.querySelector('.btn-save');
@@ -198,6 +214,8 @@ export class Task {
     // Handle DOM elements
     modal.remove();
     this.displayDueDate('form');
+
+    this.hasChanges = true;
   }
 
   calcTimeDiff(date) {
@@ -268,7 +286,7 @@ export class Task {
     if (this.hasClass(e.target, 'modal') || this.hasClass(e.target, 'btn-cancel')) modal.remove();
   }
 
-  //-- DUE: HELPERS ----//
+  //___D U E  D A T E :  H E L P E R S______________________________//
   parseDate(date) {
     const [y, m, d] = date.split('-');
     return new Date(y, m - 1, d);
@@ -295,7 +313,7 @@ export class Task {
     return `${h12}:${min} ${per}`;
   }
 
-  //-- TASK -----------------------------------------//
+  //___T A S K S____________________________________________________//
   saveTask() {
     // Grab value from title
     const title = this.projectEl.querySelector('#input-task-title');
@@ -332,7 +350,7 @@ export class Task {
 
     // Generate task card
     const projectBody = this.projectEl.querySelector('.project-card__body');
-    helper.insertMarkupAdj(projectBody, 'afterbegin', taskCardMarkup);
+    this.insertMarkup(projectBody, 'afterbegin', taskCardMarkup);
 
     // Display due date
     this.displayDueDate('card');
@@ -347,6 +365,9 @@ export class Task {
 
     // Initialize event listeners
     if (this.notes.length) this.notes.forEach((note) => note.activateListeners());
+
+    // Reset hasChanges to false since they're saved now
+    this.hasChanges = false;
   }
 
   sortAndRenderItems(sortPref) {
@@ -373,16 +394,12 @@ export class Task {
     return markup;
   }
 
-  updateTask() {
-    console.log('entered updateTask()');
-  }
-
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
   }
 
-  //-- ITEMS ---------------------------------------//
+  //___T A S K  I T E M S_____________________________________________//
   removeItemById(id, item) {
     this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
   }
