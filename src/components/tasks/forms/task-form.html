@@ -1,11 +1,12 @@
 <div class="task-form" data-id="">
   <!-- FORM HEADER -->
   <div class="task-form__header">
+    <!-- TITLE INPUT -->
     <div class="task-form__title-wrapper">
       <input type="text" id="input-task-title" placeholder="Title" class="task-form__title-input" value="Title" required />
-      <img src="../../../../public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox hidden" />
     </div>
 
+    <!-- BUTTONS HEADER -->
     <div class="task-form__buttons">
       <button class="task-form__btn btn-save">
         <img src="../../../../public/icons/save.png" alt="Save task" title="Save task" class="task-form__btn--icon" />
@@ -29,7 +30,7 @@
     <!-- BODY TOP -->
     <div class="task-form__body-top">
       <!-- DESCRIPTION -->
-      <textarea rows="3" id="input-task-description" name="input-task-description" placeholder="Add a description (optional)"></textarea>
+      <textarea rows="3" id="input-task-description" name="input-task-description" class="task-form__description-input" placeholder="Add a description (optional)"></textarea>
       <div class="task-form__description hidden">{%TASKCARD_DESCRIPTION%}</div>
 
       <!-- DUE DATE -->
@@ -55,8 +56,8 @@
   <!-- FORM FOOTER -->
   <div class="task-form__footer">
     <div class="task-form__footer--buttons">
-      <button class="btn-form-footer btn-cancel">Cancel</button>
-      <button class="btn-form-footer btn-save">Save</button>
+      <button class="btn-form-footer btn-cancel-form btn-cancel">Cancel</button>
+      <button class="btn-form-footer btn-save-form btn-save">Save</button>
     </div>
   </div>
 </div>

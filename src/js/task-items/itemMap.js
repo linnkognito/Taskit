@@ -22,18 +22,3 @@ const itemMap = {
 };
 
 export default itemMap;
-
-// const itemMap = {
-//   checklist: {
-//     markup: this.getPopulatedMarkup(checklistFormMarkup, 'checklist', id),
-//     createInstance: () => new Checklist(id, this),
-//     formEl: this.checklistForm,
-//     array: this.checklists,
-//   },
-//   note: {
-//     markup: this.getPopulatedMarkup(noteFormMarkup, 'note', id),
-//     createInstance: () => new Note(id, this),
-//     formEl: this.noteForm,
-//     array: this.notes,
-//   },
-// };

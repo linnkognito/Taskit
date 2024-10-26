@@ -7,8 +7,6 @@ import itemMap from './task-items/itemMap';
 
 //////////////_________________M A R K U P_________________//////////////
 
-import checklistFormMarkup from '../components/tasks/items/checklist-form.html';
-import noteFormMarkup from '../components/tasks/items/note-form.html';
 import dueModal from '../components/tasks/forms/modal-date-picker.html';
 import taskCardMarkup from '../components/tasks/task-card.html';
 
@@ -65,23 +63,6 @@ export class Task {
       checklistTitle: () => this.projectEl.querySelector('.task-form__checklist-input-title'),
       noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
     };
-
-    // FORM: OPEN DUE DATE MODAL
-    // this.taskForm.addEventListener('click', (e) => {
-    //   const dueBtn = e.target.closest('.task-form__btn-due-date');
-    //   if (!dueBtn) return;
-    //   this.openDueModal();
-    // });
-    // FORM: SET PRIO
-    // this.els.prioBtns.parent.addEventListener('click', (e) => {
-    //   const btn = e.target.closest('.prio-btn');
-    //   if (!btn) return;
-    //   this.setPrio(btn);
-    // });
-    // FORM: ADD NOTE OR CHECKLIST
-    //this.btnsAddItem.addEventListener('click', (e) => this.addItem(e));
-    // FORM: SAVE OR CANCEL
-    this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
   }
 
   //////////////_________E V E N T  H A N D L E R S_________//////////////
@@ -95,6 +76,8 @@ export class Task {
       'task-form__btn-due-date': (btn) => this.openDueModal(btn),
       'btn-add-checklist': (btn) => this.addItem(btn),
       'btn-add-note': (btn) => this.addItem(btn),
+      'btn-save': () => this.saveTask(),
+      'btn-cancel': () => this.taskForm.remove(),
     };
 
     // Call the method
@@ -124,6 +107,12 @@ export class Task {
   get btnsAddItem() {
     return this.projectEl.querySelector('.task-form__add-item-buttons');
   }
+  get formTitleInput() {
+    return this.projectEl.querySelector('.task-form__title-input');
+  }
+  get formDescriptionInput() {
+    return this.projectEl.querySelector('.task-form__description-input');
+  }
   get taskFormContainer() {
     return this.projectEl.querySelector('.task-form__container');
   }
@@ -149,13 +138,6 @@ export class Task {
     newItem.titleInput.focus();
 
     this.hasChanges = true;
-  }
-  saveOrCancelForm(e) {
-    const btn = e.target.closest('.btn-form-footer') || e.target.closest('.task-form__btn');
-    if (!btn) return;
-
-    if (this.hasClass(btn, 'btn-save')) this.saveTask();
-    if (this.hasClass(btn, 'btn-cancel')) this.taskForm.remove();
   }
 
   //___F O R M  I T E M S :  H E L P E R S____________________________//
@@ -336,8 +318,8 @@ export class Task {
   //___T A S K S____________________________________________________//
   saveTask() {
     // Grab value from title
-    const title = this.projectEl.querySelector('#input-task-title');
-    const description = this.projectEl.querySelector('#input-task-description');
+    const title = this.formTitleInput;
+    const description = this.formDescriptionInput;
 
     // Prevent saving if !title
     if (!title.checkValidity()) return title.reportValidity();
@@ -353,24 +335,20 @@ export class Task {
 
     // Set title
     this.title = title.value;
-
-    // Set description
     if (description.value.trim()) this.description = description.value;
 
     // Hide form
     this.taskForm.remove();
 
-    // Set task card values
-    let taskCardMarkup = taskCardMarkup
+    // Render populated markup
+    const markup = taskCardMarkup
       .replace('{%TASKCARD_ID%}', this.id)
       .replace('{%TASKCARD_TITLE%}', this.title)
       .replace('{%TASKCARD_DESCRIPTION%}', this.description)
       .replace('{%TASKCARD_CREATED%}', `${createdStr()}`)
       .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
 
-    // Generate task card
-    const projectBody = this.projectEl.querySelector('.project-card__body');
-    this.insertMarkup(projectBody, 'afterbegin', taskCardMarkup);
+    this.insertMarkup(this.project.projectBody, 'afterbegin', markup);
 
     // Display due date
     this.displayDueDate('card');
