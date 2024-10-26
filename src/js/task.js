@@ -31,7 +31,7 @@ export class Task {
 
     this.title = `Untitled`;
     this.prio = 0;
-    this.description = 'Click to add a description';
+    this.description = itemMap['description'].default;
     this.dueDate = null;
     this.dueTime = null;
     this.dueDateObj = null;
@@ -91,7 +91,7 @@ export class Task {
   }
 
   //////////////_______________G E T T E R S_______________//////////////
-
+  //#region Getters
   get noteForm() {
     return document.querySelector('.task-form__note');
   }
@@ -117,7 +117,7 @@ export class Task {
     return this.projectEl.querySelector('.task-form__title-input');
   }
   get formDescInput() {
-    return this.projectEl.querySelector('.task-form__description-input');
+    return document.querySelector('.task-form__description-input');
   }
   get descriptionEl() {
     return this.taskCard.querySelector('.task-card__description');
@@ -125,6 +125,7 @@ export class Task {
   get taskFormContainer() {
     return this.projectEl.querySelector('.task-form__container');
   }
+  //#endregion
 
   //////////////_______________M E T H O D S_______________//////////////
 
@@ -177,7 +178,7 @@ export class Task {
     this.hasChanges = true;
   }
   setPrioColors(prio) {
-    // for changing prio color on click
+    // PLACEHOLDER
   }
 
   //___D U E  D A T E_______________________________________________//
@@ -204,7 +205,6 @@ export class Task {
     btnCancel.addEventListener('click', (e) => this.closeModal(e, modal), { once: true });
     btnSave.addEventListener('click', () => this.saveDueDate(modal), { once: true });
   }
-
   saveDueDate(modal) {
     const inputDate = document.querySelector('.input-due-date').value;
     const inputTime = document.querySelector('.input-due-time').value;
@@ -232,7 +232,6 @@ export class Task {
 
     this.hasChanges = true;
   }
-
   calcTimeDiff(date) {
     const diffMs = date.getTime() - new Date().getTime();
 
@@ -251,7 +250,6 @@ export class Task {
 
     return { years, days, hours, mins };
   }
-
   displayDueDate(cls) {
     const monthsArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -296,7 +294,6 @@ export class Task {
 
     dueDateEl.addEventListener('click', () => this.openDueModal());
   }
-
   closeModal(e, modal) {
     if (this.hasClass(e.target, 'modal') || this.hasClass(e.target, 'btn-cancel')) modal.remove();
   }
@@ -342,19 +339,15 @@ export class Task {
     this.taskForm.remove();
     this.insertMarkup(this.project.projectBody, 'afterbegin', this.populateTaskCardMarkup());
 
+    // If there's no description, set default + styles
+    if (this.description === itemMap['description'].default) {
+      this.addClass(this.descriptionEl, 'description--default');
+    }
+
     // Display due date
     this.displayDueDate('card');
 
-    // If default description --> set light text color
-    if (!this.checkValue(this.formDescInput)) this.addClass(this.descriptionEl, 'task-card__description--default');
-
-    // Get due date values & display
-    this.displayDueDate('card');
-
-    // Initialize event listeners
-    if (this.notes.length) this.notes.forEach((note) => note.activateListeners());
-
-    // Reset hasChanges to false since they're saved now
+    // Mark changes as saved
     this.hasChanges = false;
   }
 
@@ -399,12 +392,13 @@ export class Task {
       .replace('{%TASKCARD_ID%}', this.id)
       .replace('{%TASKCARD_TITLE%}', this.title)
       .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', `${getCreationDateStr()}`)
+      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr())
       .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
   }
 
   //___T A S K  I T E M S___________________________________________//
   removeItemById(id, item) {
+    // Filters out item from array
     this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
   }
 }

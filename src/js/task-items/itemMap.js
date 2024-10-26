@@ -5,6 +5,10 @@ import { Checklist } from './checklist';
 import { Note } from './note';
 
 const itemMap = {
+  description: {
+    type: 'description',
+    default: 'Click to add a description',
+  },
   checklist: {
     type: 'checklist',
     markup: checklistFormMarkup,

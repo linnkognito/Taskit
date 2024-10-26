@@ -90,7 +90,7 @@
   border: 1px dashed rgb(213, 207, 204);
   border-radius: 0.9em;
 }
-.task-card .task-card__body .task-card__body-top .task-card__description--default {
+.task-card .task-card__body .task-card__body-top .description--default {
   color: rgba(213, 207, 204, 0.7);
 }
 .task-card .task-card__body .task-card__body-top .task-card__btn-due-date {

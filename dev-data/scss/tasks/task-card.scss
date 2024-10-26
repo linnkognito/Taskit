@@ -50,7 +50,7 @@
       .task-card__description {
         @include task-mixins.description;
       }
-      .task-card__description--default {
+      .description--default {
         color: vars.$col-primary-op;
       }
 
