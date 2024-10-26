@@ -29,14 +29,15 @@ export class Task {
     this.project = project;
     this.projectEl = projectEl;
 
-    this.title = `Untitled`;
+    this.title = 'Untitled';
     this.prio = 0;
     this.description = itemMap['description'].default;
     this.dueDate = null;
     this.dueTime = null;
     this.dueDateObj = null;
-    this.checked = false;
     this.created = null;
+
+    this.checked = false;
     this.sort = 'created';
 
     this.checklists = [];
@@ -115,6 +116,9 @@ export class Task {
   get inputDueTime() {
     return this.modal.querySelector('.input-due-time');
   }
+  get modalBtnCancel() {
+    return this.modalDueDate.querySelector('.btn-cancel');
+  }
   //#endregion
 
   //////////////_______________M E T H O D S_______________//////////////
@@ -177,6 +181,7 @@ export class Task {
     // Avoid rendering duplicate modals
     if (this.modalDueDate) this.modalDueDate.remove();
 
+    // Render modal
     this.insertMarkup(this.body, 'afterbegin', modalDueMarkup);
 
     // If user previously entered values → populate input fields
@@ -188,35 +193,37 @@ export class Task {
     this.initDueModalListeners();
   }
   initDueModalListeners() {
-    const btnSave = this.modalDueDate.querySelector('.btn-save');
-    const btnCancel = this.modalDueDate.querySelector('.btn-cancel');
+    this.modal.addEventListener('click', this.handleModalClick.bind(this));
+  }
+  handleModalClick(e) {
+    const actionMap = {
+      'modal-due-date': () => this.modal.remove(),
+      'btn-cancel': () => this.modal.remove(),
+      'btn-save': () => this.saveDueDate(),
+    };
 
-    this.modal.addEventListener('click', (e) => this.closeModal(e, this.modal), { once: true });
-    btnCancel.addEventListener('click', (e) => this.closeModal(e, this.modal), { once: true });
-    btnSave.addEventListener('click', () => this.saveDueDate(this.modal), { once: true });
+    Object.keys(actionMap).forEach((cls) => {
+      if (this.hasClass(e.target, cls)) {
+        actionMap[cls]();
+      }
+    });
   }
   saveDueDate() {
     const inputDate = this.inputDueDate.value;
     const inputTime = this.inputDueTime.value;
 
-    // User clicks Save w/out any input
-    if (!this.inputDueDate.value && !this.inputDueTime.value) {
+    if (!inputDate && !inputTime) {
       return alert('📅 Pick a future date or Cancel');
     }
 
-    // Capture time
-    const date = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
-    const time = inputTime ? inputTime : new Date().toTimeString().slice(0, 5);
-    const fullDate = this.getFullDate(date, time);
-
-    // Set time
-    this.dueDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    this.dueTime = time;
-    this.dueDateObj = fullDate;
+    // Set due date
+    this.dueDate = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
+    this.dueDate = this.formatDueDate();
+    this.dueTime = inputTime ? inputTime : new Date().toTimeString().slice(0, 5);
+    this.dueDateObj = this.getFullDate(this.dueDate, this.dueTime);
 
     // Make sure the time is in the future
-    const diff = this.dueDateObj.getTime() - new Date().getTime();
-    if (diff < 0) return alert('❗ The selected date and/or time must be in the future');
+    this.checkIfFutureDate();
 
     // Handle DOM elements
     this.modal.remove();
@@ -286,11 +293,16 @@ export class Task {
 
     dueDateEl.addEventListener('click', () => this.openDueModal());
   }
-  closeModal(e, modal) {
-    if (this.hasClass(e.target, 'modal') || this.hasClass(e.target, 'btn-cancel')) modal.remove();
-  }
 
   //___D U E  D A T E :  H E L P E R S______________________________//
+  formatDueDate() {
+    return `${this.dueDate.getFullYear()}-${this.dueDate.getMonth() + 1}-${this.dueDate.getDate()}`;
+  }
+  checkIfFutureDate() {
+    const diff = this.dueDateObj.getTime() - new Date().getTime();
+
+    if (diff < 0) alert('❗ The selected date and/or time must be in the future');
+  }
   parseDate(date) {
     const [y, m, d] = date.split('-');
     return new Date(y, m - 1, d);
@@ -301,13 +313,7 @@ export class Task {
     date.setMinutes(m);
     return date;
   }
-  formatDate(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, 0);
-    const d = String(date.getDate()).padStart(2, 0);
 
-    return `${m}/${d}/${y}`;
-  }
   toAmPm(date) {
     const time = date.toTimeString().slice(0, 5);
     const [h24, min] = time.split(':');
@@ -374,11 +380,18 @@ export class Task {
 
   //___T A S K S :  H E L P E R S___________________________________//
   getCreationDateStr = () => {
-    const d = this.formatDate(this.created);
+    const d = this.formatCreationDate();
     const t = this.toAmPm(this.created);
 
     return `${d}, ${t}`;
   };
+  formatCreationDate() {
+    const y = this.created.getFullYear();
+    const m = String(this.created.getMonth() + 1).padStart(2, 0);
+    const d = String(this.created.getDate()).padStart(2, 0);
+
+    return `${m}/${d}/${y}`;
+  }
   populateTaskCardMarkup() {
     return taskCardMarkup
       .replace('{%TASKCARD_ID%}', this.id)

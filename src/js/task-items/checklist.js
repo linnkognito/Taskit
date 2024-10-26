@@ -162,7 +162,7 @@ class ListItem {
     this.inputEl.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;
       e.preventDefault();
-      this.preventBlur = true; // Set flag --> prevent blur event
+      this.preventBlur = true;
       this.checkValue(e);
     });
 

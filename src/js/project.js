@@ -190,9 +190,9 @@ export class Project {
     newTask.initListeners();
   }
   hasUnsavedChanges() {
-    return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges();
+    return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges; // returns boolean
   }
   discardChanges() {
-    return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`);
+    return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean
   }
 }
