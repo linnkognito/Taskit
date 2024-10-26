@@ -41,31 +41,6 @@ export class Task {
 
     this.checklists = [];
     this.notes = [];
-
-    this.els = {
-      addBtns: this.projectEl.querySelector('.task-form__add-item-buttons'),
-      taskFormBody: this.projectEl.querySelector('.task-form__body'),
-
-      taskTitle: {
-        input: this.projectEl.querySelector('#input-task-title'),
-        val: this.projectEl.querySelector('#input-task-title').value,
-      },
-      prioBtns: {
-        parent: this.projectEl.querySelector('.task-form__prio'),
-        btns: this.projectEl.querySelectorAll('.prio-btn'),
-      },
-      description: {
-        input: this.projectEl.querySelector('#input-task-description'),
-        val: this.projectEl.querySelector('#input-task-description').value,
-      },
-      checklist: {
-        checklist: () => this.projectEl.querySelector('.task-form__checklist'),
-      },
-      taskFooter: document.querySelector('.task-form__footer'),
-
-      checklistTitle: () => this.projectEl.querySelector('.task-form__checklist-input-title'),
-      noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
-    };
   }
 
   //////////////_________E V E N T  H A N D L E R S_________//////////////
@@ -125,6 +100,9 @@ export class Task {
   get taskFormContainer() {
     return this.projectEl.querySelector('.task-form__container');
   }
+  get btnsPrio() {
+    return this.projectEl.querySelectorAll('.prio-btn');
+  }
   //#endregion
 
   //////////////_______________M E T H O D S_______________//////////////
@@ -168,7 +146,7 @@ export class Task {
   //___P R I O______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons
-    this.els.prioBtns.btns.forEach((b) => {
+    this.btnsPrio.forEach((b) => {
       this.removeClass(b, `prio${b.dataset.prio}-color-profile`);
     });
 
