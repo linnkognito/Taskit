@@ -105,7 +105,7 @@ export class Project {
     this.hideAndShowEls(this.inputTitle, this.titleEl);
   }
   editProjectTitle() {
-    helper.hideAndShowEls(this.titleEl, this.inputTitle);
+    this.hideAndShowEls(this.titleEl, this.inputTitle);
     this.inputTitle.value = this.title;
     this.inputTitle.focus();
     this.listenForSave();

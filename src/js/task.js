@@ -196,6 +196,9 @@ export class Task {
     btnSave.addEventListener('click', () => this.saveDueDate(this.modal), { once: true });
   }
   saveDueDate(modal) {
+    const inputDate = this.inputDueDate.value;
+    const inputTime = this.inputDueTime.value;
+
     // User clicks Save w/out any input
     if (!this.inputDueDate.value && !this.inputDueTime.value) {
       return alert('📅 Pick a future date or Cancel');
