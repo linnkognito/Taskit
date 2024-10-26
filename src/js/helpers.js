@@ -54,6 +54,9 @@ export class Helper {
   generateId() {
     return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   }
+  checkValidity(inputEl) {
+    if (!inputEl.checkValidity()) return inputEl.reportValidity();
+  }
 
   //-- MARKUP ------------------------------------------//
   clear = (el) => (el.innerHTML = '');

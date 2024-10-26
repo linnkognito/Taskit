@@ -14,11 +14,13 @@ import taskCardMarkup from '../components/tasks/task-card.html';
 
 export class Task {
   generateId = helper.generateId;
+  checkValidity = helper.checkValidity;
   insertMarkup = helper.insertMarkupAdj;
   addClass = helper.addClass;
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
   scaleUp = helper.scaleUp;
+
   hasChanges = false;
 
   constructor(id, project, projectEl) {
@@ -110,7 +112,7 @@ export class Task {
   get formTitleInput() {
     return this.projectEl.querySelector('.task-form__title-input');
   }
-  get formDescriptionInput() {
+  get formDescInput() {
     return this.projectEl.querySelector('.task-form__description-input');
   }
   get taskFormContainer() {
@@ -119,7 +121,7 @@ export class Task {
 
   //////////////_______________M E T H O D S_______________//////////////
 
-  //___F O R M  I T E M S_____________________________________________//
+  //___F O R M  I T E M S___________________________________________//
   addItem(btn) {
     const id = this.generateId();
     const type = this.getItemType(btn);
@@ -151,7 +153,7 @@ export class Task {
     return template.replace(`{%${type.toUpperCase()}_ID%}`, id);
   }
 
-  //___P R I O_______________________________________________________//
+  //___P R I O______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons
     this.els.prioBtns.btns.forEach((b) => {
@@ -317,38 +319,17 @@ export class Task {
 
   //___T A S K S____________________________________________________//
   saveTask() {
-    // Grab value from title
-    const title = this.formTitleInput;
-    const description = this.formDescriptionInput;
-
     // Prevent saving if !title
-    if (!title.checkValidity()) return title.reportValidity();
+    this.checkValidity(this.formTitleInput);
 
-    // Set creation date
-    this.created = new Date();
-    // Create creation date string
-    const createdStr = () => {
-      const d = this.formatDate(this.created);
-      const t = this.toAmPm(this.created);
-      return `${d}, ${t}`;
-    };
+    // Update Task card values
 
-    // Set title
-    this.title = title.value;
-    if (description.value.trim()) this.description = description.value;
+    this.title = this.formTitleInput.value;
+    this.description = this.formDescInput.value.trim() || this.description;
 
-    // Hide form
+    // Swap out markup
     this.taskForm.remove();
-
-    // Render populated markup
-    const markup = taskCardMarkup
-      .replace('{%TASKCARD_ID%}', this.id)
-      .replace('{%TASKCARD_TITLE%}', this.title)
-      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', `${createdStr()}`)
-      .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
-
-    this.insertMarkup(this.project.projectBody, 'afterbegin', markup);
+    this.insertMarkup(this.project.projectBody, 'afterbegin', this.populateTaskCardMarkup());
 
     // Display due date
     this.displayDueDate('card');
@@ -356,7 +337,7 @@ export class Task {
     // If default description --> change color
     const taskCard = document.querySelector('.task-card');
     const taskDesc = taskCard.querySelector('.task-card__description');
-    if (!description.value) taskDesc.classList.add('task-card__description--default');
+    if (!this.formDescInput.value) taskDesc.classList.add('task-card__description--default');
 
     // Get due date values & display
     this.displayDueDate('card');
@@ -397,7 +378,23 @@ export class Task {
     this.project.moveChecked(task);
   }
 
-  //___T A S K  I T E M S_____________________________________________//
+  //___T A S K S :  H E L P E R S___________________________________//
+  getCreationDateStr = () => {
+    const d = this.formatDate(this.created);
+    const t = this.toAmPm(this.created);
+
+    return `${d}, ${t}`;
+  };
+  populateTaskCardMarkup() {
+    return taskCardMarkup
+      .replace('{%TASKCARD_ID%}', this.id)
+      .replace('{%TASKCARD_TITLE%}', this.title)
+      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
+      .replace('{%TASKCARD_CREATED%}', `${getCreationDateStr()}`)
+      .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
+  }
+
+  //___T A S K  I T E M S___________________________________________//
   removeItemById(id, item) {
     this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
   }

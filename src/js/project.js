@@ -186,6 +186,7 @@ export class Project {
     // Have form id match Task id
     this.taskForm.dataset.id = newTask.id;
 
+    // Initialize event listeners of Task instance
     newTask.initListeners();
   }
   hasUnsavedChanges() {
