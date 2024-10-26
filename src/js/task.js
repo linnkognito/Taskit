@@ -3,6 +3,7 @@
 import { helper } from '../index';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
+import itemMap from './task-items/itemMap';
 
 //////////////_________________M A R K U P_________________//////////////
 
@@ -65,24 +66,42 @@ export class Task {
       noteTitle: () => this.projectEl.querySelector('.task-form__note-input-title'),
     };
 
-    //////////////_________E V E N T  H A N D L E R S_________//////////////
-
     // FORM: OPEN DUE DATE MODAL
-    this.taskForm.addEventListener('click', (e) => {
-      const dueBtn = e.target.closest('.task-form__btn-due-date');
-      if (!dueBtn) return;
-      this.openDueModal();
-    });
+    // this.taskForm.addEventListener('click', (e) => {
+    //   const dueBtn = e.target.closest('.task-form__btn-due-date');
+    //   if (!dueBtn) return;
+    //   this.openDueModal();
+    // });
     // FORM: SET PRIO
-    this.els.prioBtns.parent.addEventListener('click', (e) => {
-      const btn = e.target.closest('.prio-btn');
-      if (!btn) return;
-      this.setPrio(btn);
-    });
+    // this.els.prioBtns.parent.addEventListener('click', (e) => {
+    //   const btn = e.target.closest('.prio-btn');
+    //   if (!btn) return;
+    //   this.setPrio(btn);
+    // });
     // FORM: ADD NOTE OR CHECKLIST
-    this.els.addBtns.addEventListener('click', (e) => this.addItem(e));
+    //this.btnsAddItem.addEventListener('click', (e) => this.addItem(e));
     // FORM: SAVE OR CANCEL
     this.taskForm.addEventListener('click', (e) => this.saveOrCancelForm(e));
+  }
+
+  //////////////_________E V E N T  H A N D L E R S_________//////////////
+  initListeners() {
+    this.taskForm.addEventListener('click', this.handleClick.bind(this));
+  }
+  handleClick(e) {
+    // Map button classes to methods
+    const actionMap = {
+      'prio-btn': (btn) => this.setPrio(btn),
+      'task-form__btn-due-date': (btn) => this.openDueModal(btn),
+      'btn-add-checklist': (btn) => this.addItem(btn),
+      'btn-add-note': (btn) => this.addItem(btn),
+    };
+
+    // Call the method
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls](el);
+    });
   }
 
   //////////////_______________G E T T E R S_______________//////////////
@@ -112,32 +131,22 @@ export class Task {
   //////////////_______________M E T H O D S_______________//////////////
 
   //___F O R M  I T E M S_____________________________________________//
-  addItem(e) {
-    // Add checklist:
-    if (this.hasClass(e.target, 'btn-add-checklist')) {
-      const newChecklist = new Checklist(this.generateId(), this);
-      this.checklists.push(newChecklist);
+  addItem(btn) {
+    const id = this.generateId();
+    const type = this.getItemType(btn);
+    const item = itemMap[type];
 
-      const markup = checklistFormMarkup.replace('{%CHECKLIST_ID%}', newChecklist.id);
-      this.insertMarkup(this.taskFormContainer, 'afterbegin', markup);
+    // Render
+    const markup = this.getPopulatedMarkup(item.markup, type, id);
+    this.insertMarkup(this.taskFormContainer, 'afterbegin', markup);
 
-      this.scaleUp(this.checklistForm, 'top');
+    // Create item instance
+    const newItem = item.createInstance(id, this);
+    item.array(this).push(newItem);
 
-      this.els.checklistTitle().focus();
-    }
-
-    // Add note:
-    if (this.hasClass(e.target, 'btn-add-note')) {
-      const newNote = new Note(this.generateId(), this);
-      this.notes.push(newNote);
-
-      const markup = noteFormMarkup.replace('{%NOTE_ID%}', newNote.id);
-      this.insertMarkup(this.taskFormContainer, 'afterbegin', markup);
-
-      this.scaleUp(this.noteForm, 'top');
-
-      this.els.noteTitle().focus();
-    }
+    // Apply animation & focus
+    this.scaleUp(item.formEl(this), 'top');
+    newItem.titleInput.focus();
 
     this.hasChanges = true;
   }
@@ -147,6 +156,17 @@ export class Task {
 
     if (this.hasClass(btn, 'btn-save')) this.saveTask();
     if (this.hasClass(btn, 'btn-cancel')) this.taskForm.remove();
+  }
+
+  //___F O R M  I T E M S :  H E L P E R S____________________________//
+  getItemType(btn) {
+    return [...btn.classList]
+      .find((cls) => cls.startsWith('btn-add-') && cls !== 'btn-add-item')
+      .split('-')
+      .pop();
+  }
+  getPopulatedMarkup(template, type, id) {
+    return template.replace(`{%${type.toUpperCase()}_ID%}`, id);
   }
 
   //___P R I O_______________________________________________________//

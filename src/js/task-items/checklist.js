@@ -36,6 +36,25 @@ export class Checklist {
     this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
   }
 
+  //////////////_______________G E T T E R S_______________//////////////
+  //#region Name
+  get checklist() {
+    return document.querySelector('.task-form__checklist');
+  }
+  get checkbox() {
+    return document.querySelectorAll('.checklist-item__checkbox');
+  }
+  get addItem() {
+    return document.querySelector('.btn-add');
+  }
+  get titleInput() {
+    return document.querySelector('.task-form__checklist-input-title');
+  }
+  get titleEl() {
+    return document.querySelector('.task-form__checklist-title');
+  }
+  //#endregion
+
   renderChecklist() {
     return checklistMarkup.replace('{%CHECKLIST_ID%}', this.id).replace('{%CHECKLIST_TITLE%}', this.title).replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
   }

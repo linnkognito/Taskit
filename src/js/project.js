@@ -165,12 +165,14 @@ export class Project {
   }
 
   //___S E T T I N G S_______________________________________________//
+  // PLACEHOLDER
 
   //___T A S K S____________________________________________________//
   addTask() {
     // Check if there's already an open form
     if (this.taskForm) {
-      // FIX LATER if (this.hasUnsavedChanges() && !this.discardChanges()) return;
+      // FIX LATER
+      // if (this.hasUnsavedChanges() && !this.discardChanges()) return;
       this.taskForm.remove();
     }
 
@@ -187,6 +189,8 @@ export class Project {
 
     // Have form id match Task id
     this.taskForm.dataset.id = newTask.id;
+
+    newTask.initListeners();
   }
   hasUnsavedChanges() {
     return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges();
