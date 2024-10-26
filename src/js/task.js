@@ -179,7 +179,7 @@ export class Task {
 
     this.insertMarkup(this.body, 'afterbegin', modalDueMarkup);
 
-    // If previously entered values --> populate input fields
+    // If user previously entered values → populate input fields
     if (this.dueDate) {
       this.inputDueDate.value = this.dueDate;
       this.inputDueTime.value = this.dueTime;
@@ -195,7 +195,7 @@ export class Task {
     btnCancel.addEventListener('click', (e) => this.closeModal(e, this.modal), { once: true });
     btnSave.addEventListener('click', () => this.saveDueDate(this.modal), { once: true });
   }
-  saveDueDate(modal) {
+  saveDueDate() {
     const inputDate = this.inputDueDate.value;
     const inputTime = this.inputDueTime.value;
 
@@ -219,7 +219,7 @@ export class Task {
     if (diff < 0) return alert('❗ The selected date and/or time must be in the future');
 
     // Handle DOM elements
-    modal.remove();
+    this.modal.remove();
     this.displayDueDate('form');
 
     this.hasChanges = true;
