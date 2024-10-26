@@ -7,7 +7,7 @@ import itemMap from './task-items/itemMap';
 
 //////////////_________________M A R K U P_________________//////////////
 
-import dueModal from '../components/tasks/forms/modal-date-picker.html';
+import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
 import taskCardMarkup from '../components/tasks/task-card.html';
 
 //////////////_______________T A S K  C L A S S_______________//////////////
@@ -103,6 +103,18 @@ export class Task {
   get btnsPrio() {
     return this.projectEl.querySelectorAll('.prio-btn');
   }
+  get modalDueDate() {
+    return document.querySelector('.modal-due-date');
+  }
+  get modal() {
+    return document.querySelector('.modal');
+  }
+  get inputDueDate() {
+    return this.modal.querySelector('.input-due-date');
+  }
+  get inputDueTime() {
+    return this.modal.querySelector('.input-due-time');
+  }
   //#endregion
 
   //////////////_______________M E T H O D S_______________//////////////
@@ -146,13 +158,14 @@ export class Task {
   //___P R I O______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons
-    this.btnsPrio.forEach((b) => {
-      this.removeClass(b, `prio${b.dataset.prio}-color-profile`);
+    this.btnsPrio.forEach((btnEl) => {
+      this.removeClass(btnEl, `prio${btnEl.dataset.prio}-color-profile`);
     });
 
     this.prio = btn.dataset.prio;
     this.addClass(btn, `prio${this.prio}-color-profile`);
     this.setPrioColors(this.prio);
+
     this.hasChanges = true;
   }
   setPrioColors(prio) {
@@ -161,22 +174,18 @@ export class Task {
 
   //___D U E  D A T E_______________________________________________//
   openDueModal() {
-    if (document.querySelector('.modal-due-date')) document.querySelector('.modal-due-date').remove();
+    // Avoid rendering duplicate modals
+    if (this.modalDueDate) this.modalDueDate.remove();
 
-    this.insertMarkup(this.body, 'afterbegin', dueModal);
+    this.insertMarkup(this.body, 'afterbegin', modalDueMarkup);
 
-    const modal = document.querySelector('.modal');
-    const btnSave = document.querySelector('.btn-save');
-    const btnCancel = document.querySelector('.btn-cancel');
+    const btnSave = this.modalDueDate.querySelector('.btn-save');
+    const btnCancel = this.modalDueDate.querySelector('.btn-cancel');
 
-    // If the user previously entered values
+    // If previously entered values --> populate input fields
     if (this.dueDate) {
-      const dateInput = modal.querySelector('.input-due-date');
-      const timeInput = modal.querySelector('.input-due-time');
-
-      // Insert stored values into input fields
-      dateInput.value = this.dueDate;
-      timeInput.value = this.dueTime;
+      this.inputDueDate.value = this.dueDate;
+      this.inputDueTime.value = this.dueTime;
     }
 
     modal.addEventListener('click', (e) => this.closeModal(e, modal), { once: true });
@@ -184,11 +193,10 @@ export class Task {
     btnSave.addEventListener('click', () => this.saveDueDate(modal), { once: true });
   }
   saveDueDate(modal) {
-    const inputDate = document.querySelector('.input-due-date').value;
-    const inputTime = document.querySelector('.input-due-time').value;
-
     // User clicks Save w/out any input
-    if (!inputDate && !inputTime) return alert('📅 Pick a future date or Cancel');
+    if (!this.inputDueDate.value && !this.inputDueTime.value) {
+      return alert('📅 Pick a future date or Cancel');
+    }
 
     // Capture time
     const date = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
