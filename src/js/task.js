@@ -14,6 +14,7 @@ import taskCardMarkup from '../components/tasks/task-card.html';
 
 export class Task {
   generateId = helper.generateId;
+  checkValue = helper.checkValue;
   checkValidity = helper.checkValidity;
   insertMarkup = helper.insertMarkupAdj;
   addClass = helper.addClass;
@@ -100,6 +101,9 @@ export class Task {
   get body() {
     return document.querySelector('body');
   }
+  get taskCard() {
+    return document.querySelector(`.task-card[data-id="${this.id}"]`);
+  }
   get taskForm() {
     return document.querySelector('.task-form');
   }
@@ -114,6 +118,9 @@ export class Task {
   }
   get formDescInput() {
     return this.projectEl.querySelector('.task-form__description-input');
+  }
+  get descriptionEl() {
+    return this.taskCard.querySelector('.task-card__description');
   }
   get taskFormContainer() {
     return this.projectEl.querySelector('.task-form__container');
@@ -139,7 +146,11 @@ export class Task {
     this.scaleUp(item.formEl(this), 'top');
     newItem.titleInput.focus();
 
+    // Indicate that changes have been made
     this.hasChanges = true;
+
+    // Initialize Item event listeners
+    newItem.initListeners();
   }
 
   //___F O R M  I T E M S :  H E L P E R S____________________________//
@@ -323,7 +334,7 @@ export class Task {
     this.checkValidity(this.formTitleInput);
 
     // Update Task card values
-
+    this.created = new Date();
     this.title = this.formTitleInput.value;
     this.description = this.formDescInput.value.trim() || this.description;
 
@@ -334,10 +345,8 @@ export class Task {
     // Display due date
     this.displayDueDate('card');
 
-    // If default description --> change color
-    const taskCard = document.querySelector('.task-card');
-    const taskDesc = taskCard.querySelector('.task-card__description');
-    if (!this.formDescInput.value) taskDesc.classList.add('task-card__description--default');
+    // If default description --> set light text color
+    if (!this.checkValue(this.formDescInput)) this.addClass(this.descriptionEl, 'task-card__description--default');
 
     // Get due date values & display
     this.displayDueDate('card');

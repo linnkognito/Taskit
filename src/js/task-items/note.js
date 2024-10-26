@@ -106,7 +106,7 @@ export class Note {
   //#endregion
 
   // EVENT LISTENERS //
-  activateListeners() {
+  initListeners() {
     // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
       // ENTER EDIT ALL MODE
