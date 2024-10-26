@@ -179,18 +179,21 @@ export class Task {
 
     this.insertMarkup(this.body, 'afterbegin', modalDueMarkup);
 
-    const btnSave = this.modalDueDate.querySelector('.btn-save');
-    const btnCancel = this.modalDueDate.querySelector('.btn-cancel');
-
     // If previously entered values --> populate input fields
     if (this.dueDate) {
       this.inputDueDate.value = this.dueDate;
       this.inputDueTime.value = this.dueTime;
     }
 
-    modal.addEventListener('click', (e) => this.closeModal(e, modal), { once: true });
-    btnCancel.addEventListener('click', (e) => this.closeModal(e, modal), { once: true });
-    btnSave.addEventListener('click', () => this.saveDueDate(modal), { once: true });
+    this.initDueModalListeners();
+  }
+  initDueModalListeners() {
+    const btnSave = this.modalDueDate.querySelector('.btn-save');
+    const btnCancel = this.modalDueDate.querySelector('.btn-cancel');
+
+    this.modal.addEventListener('click', (e) => this.closeModal(e, this.modal), { once: true });
+    btnCancel.addEventListener('click', (e) => this.closeModal(e, this.modal), { once: true });
+    btnSave.addEventListener('click', () => this.saveDueDate(this.modal), { once: true });
   }
   saveDueDate(modal) {
     // User clicks Save w/out any input
