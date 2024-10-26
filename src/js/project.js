@@ -126,7 +126,6 @@ export class Project {
 
     // Store clicked button (needed for closing logic)
     this.dropdownBtn = btn;
-    console.log('entererd');
 
     // Render dropdown
     if (btn.title.toLowerCase().includes('settings')) {
@@ -135,16 +134,13 @@ export class Project {
     if (btn.title.toLowerCase().includes('sort')) {
       this.renderDropdown(dropdownSort, '.sort-dropdown');
     }
-    console.log(this.dropdown, 'this.dropdown');
 
     // Placement
     const headerHeight = this.projectHeader.getBoundingClientRect().height;
     this.dropdown.style.top = `calc(${headerHeight}px)`;
 
-    // Listen for clicks to close dropdown
+    // Listen close dropdown events
     this.listenForClose();
-    // if (this.dropdown) this.listenForClose();
-    console.log('yes');
   }
   renderDropdown(markup, cls) {
     this.insert(this.projectHeader, 'afterend', markup);
