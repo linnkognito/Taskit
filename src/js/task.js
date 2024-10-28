@@ -9,6 +9,7 @@ import itemMap from './task-items/itemMap';
 
 import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
 import taskCardMarkup from '../components/tasks/task-card.html';
+import sortItemsDropdown from '../components/menus/dropdown-sort-items.html';
 
 //////////////_______________T A S K  C L A S S_______________//////////////
 
@@ -20,6 +21,7 @@ export class Task {
   addClass = helper.addClass;
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
+  showElement = helper.showElement;
   hideAndShowEls = helper.hideAndShowEls;
   clear = helper.clear;
   scaleUp = helper.scaleUp;
@@ -65,6 +67,20 @@ export class Task {
     Object.keys(actionMap).forEach((cls) => {
       const el = e.target.closest(`.${cls}`);
       if (el) actionMap[cls](el);
+    });
+  }
+  initTaskCardListeners() {
+    this.taskCard.addEventListener('click', this.handleCardClick.bind(this));
+  }
+  handleCardClick(e) {
+    const actionMap = {
+      'btn-active-selection': () => this.showSortItemsDropdown(),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      if (e.target.closest(`.${cls}`)) {
+        actionMap[cls]();
+      }
     });
   }
 
@@ -124,6 +140,13 @@ export class Task {
   get modalBtnCancel() {
     return this.modalDueDate.querySelector('.btn-cancel');
   }
+  get sortItemsContainer() {
+    return this.taskCard.querySelector('.task-card__sort-items');
+  }
+  get dropdownSortItems() {
+    return this.taskCard.querySelector('.dropdown-sort-items');
+  }
+
   //#endregion
 
   //////////////_______________M E T H O D S_______________//////////////
@@ -357,10 +380,15 @@ export class Task {
     this.displayDueDate();
 
     // Display task Items (if there are any)
-    if (this.checklists.length || this.notes.length) this.renderItems();
+    if (this.checklists.length || this.notes.length) {
+      this.renderItems();
+      this.showElement(this.sortItemsContainer);
+    }
 
     // Mark changes as saved
     this.hasChanges = false;
+
+    this.initTaskCardListeners();
   }
   renderItems() {
     // INITIAL METHOD FOR SORTING & RENDERING AFTER SAVING NEW TASK //
@@ -386,15 +414,27 @@ export class Task {
   }
 
   //___T A S K S :  S O R T  I T E M S_______________________________//
-  sortItems(sortBasis) {
-    // METHOD IS ENTERED WHEN USER CLICKS THE ITEM SORT BUTTON //
-    const items = [...this.checklists, ...this.notes];
-    //const { sortBasis, sortOrder } = this.getSortOptions();
+  // sortItems(sortBasis) {
+  //   // METHOD IS ENTERED WHEN USER CLICKS THE ITEM SORT BUTTON //
+  //   const items = [...this.checklists, ...this.notes];
+  //   //const { sortBasis, sortOrder } = this.getSortOptions();
 
-    // sort = created,
-    items.sort((a, b) => {
-      if (sortOrder === 'descending') return;
-    });
+  //   // sort = created,
+  //   items.sort((a, b) => {
+  //     if (sortOrder === 'descending') return;
+  //   });
+  // }
+  showSortItemsDropdown() {
+    // Avoid duplicate dropdown elements
+    if (this.dropdownSortItems) this.dropdownSortItems.remove();
+
+    // Insert dropdown markup
+    this.insertMarkup(this.sortItemsContainer, 'beforeend', sortItemsDropdown);
+
+    // Dropdown placement
+    const height = this.sortItemsContainer.getBoundingClientRect().height;
+    console.log(height);
+    this.dropdownSortItems.style.top = `${height}px`;
   }
   switchSortOrder() {
     const { sortBasis } = this.getSortOptions();

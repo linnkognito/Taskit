@@ -166,6 +166,7 @@
   cursor: pointer;
 }
 .task-card .task-card__body .task-card__sort-items {
+  position: relative;
   display: flex;
   gap: 0.5em;
   align-items: center;
@@ -228,9 +229,13 @@
 }
 
 .dropdown-sort-items {
+  position: absolute;
   display: flex;
   flex-direction: column;
+  top: 0;
+  right: 0;
   width: fit-content;
+  background: white;
   border: 1px solid rgba(213, 207, 204, 0.7);
   border-radius: 0.9em;
   font-size: 0.9rem;

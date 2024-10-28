@@ -40,21 +40,34 @@
       <button class="btn-add-item btn-add-note">Add note</button>
     </div>
 
+    <!-- SORT ITEMS BUTTON -->
     <div class="task-card__sort-items hidden">
       <div class="sort-items-label">Sort by:</div>
       <button class="btn-active-selection">
         <span>Creation date</span>
         <img src="../../../public/icons/arrow-down--col-sec.png" alt="Expand dropdown arrow" class="icon-active-selection" />
       </button>
+
+      <!-- <div class="dropdown-sort-items">
+        <div class="dropdown-sort-items__li li-created">
+          <img src="../../../public/icons/sort-created--col-pr.png" alt="Created icon" class="icon-sort-items icon-created" />
+          <span>Creation date</span>
+        </div>
+        <div class="dropdown-sort-items__li li-alpha">
+          <img src="../../../public/icons/sort-alpha--col-pr.png" alt="Sort alphabetically icon" class="icon-sort-items icon-alpha" />
+          <span>Alphabetically</span>
+        </div>
+      </div> -->
     </div>
 
-    <!-- ITEMS (BODY) -->
-    <div class="task-card__container"></div>
+      <!-- ITEMS (BODY) -->
+      <div class="task-card__container"></div>
 
-    <!-- FOOTER -->
-    <div class="task-card__footer">
-      <div class="task-card__creation-date">Created: {%TASKCARD_CREATED%}</div>
-      <img src="../../../public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
+      <!-- FOOTER -->
+      <div class="task-card__footer">
+        <div class="task-card__creation-date">Created: {%TASKCARD_CREATED%}</div>
+        <img src="../../../public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
+      </div>
     </div>
   </div>
 </div>
