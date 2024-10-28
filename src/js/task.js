@@ -20,6 +20,10 @@ export class Task {
   addClass = helper.addClass;
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
+  hideAndShowEls = helper.hideAndShowEls;
+  // hideElement = helper.hideElement;
+  // showElement = helper.showElement;
+
   scaleUp = helper.scaleUp;
 
   hasChanges = false;
@@ -212,9 +216,7 @@ export class Task {
     const inputDate = this.inputDueDate.value;
     const inputTime = this.inputDueTime.value;
 
-    if (!inputDate && !inputTime) {
-      return alert('📅 Pick a future date or Cancel');
-    }
+    if (!inputDate && !inputTime) return alert('📅 Pick a future date or Cancel');
 
     // Set due date
     this.dueDate = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
@@ -227,7 +229,7 @@ export class Task {
 
     // Handle DOM elements
     this.modal.remove();
-    this.displayDueDate('form');
+    this.displayDueDate();
 
     this.hasChanges = true;
   }
@@ -249,23 +251,18 @@ export class Task {
 
     return { years, days, hours, mins };
   }
-  displayDueDate(cls) {
+  displayDueDate() {
     const monthsArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    const calendarBtn = this.projectEl.querySelector(`.task-${cls}__btn-due-date`);
-    const dueDateEl = this.projectEl.querySelector(`.task-${cls}__due-date`);
-    const monthEl = this.projectEl.querySelector(`.task-${cls}__due-date--month`);
-    const dateEl = this.projectEl.querySelector(`.task-${cls}__due-date--date`);
-    const yearEl = this.projectEl.querySelector(`.task-${cls}__due-date--year`);
+    const calendarBtn = this.projectEl.querySelector('btn-due-date');
+    const dueDateEl = this.projectEl.querySelector('due-date');
+    const monthEl = this.projectEl.querySelector('due-date--month');
+    const dateEl = this.projectEl.querySelector('due-date--date');
+    const yearEl = this.projectEl.querySelector('due-date--year');
 
-    if (!this.dueDateObj) {
-      helper.hideElement(dueDateEl);
-      helper.showElement(calendarBtn);
-      return;
-    }
+    if (!this.dueDateObj) return this.hideAndShowEls(dueDateEl, calendarBtn);
 
-    if (calendarBtn) helper.hideElement(calendarBtn);
-    helper.showElement(dueDateEl);
+    if (calendarBtn) this.hideAndShowEls(calendarBtn, dueDateEl);
 
     monthEl.innerHTML = '';
     dateEl.innerHTML = '';
@@ -312,15 +309,6 @@ export class Task {
     date.setHours(h);
     date.setMinutes(m);
     return date;
-  }
-
-  toAmPm(date) {
-    const time = date.toTimeString().slice(0, 5);
-    const [h24, min] = time.split(':');
-    const h12 = h24 % 12 || 12;
-    const per = h24 >= 12 ? 'PM' : 'AM';
-
-    return `${h12}:${min} ${per}`;
   }
 
   //___T A S K S____________________________________________________//
@@ -399,6 +387,14 @@ export class Task {
       .replace('{%TASKCARD_DESCRIPTION%}', this.description)
       .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr())
       .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
+  }
+  toAmPm(date) {
+    const time = date.toTimeString().slice(0, 5);
+    const [h24, min] = time.split(':');
+    const h12 = h24 % 12 || 12;
+    const per = h24 >= 12 ? 'PM' : 'AM';
+
+    return `${h12}:${min} ${per}`;
   }
 
   //___T A S K  I T E M S___________________________________________//
