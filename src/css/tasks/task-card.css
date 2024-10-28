@@ -148,7 +148,7 @@
   display: flex;
   justify-content: space-between;
   gap: 0.5em;
-  margin: 0.5em 0;
+  margin: 0.5em 0 0.7em;
 }
 .task-card .task-card__body .task-card__add-item-buttons .btn-add-item {
   padding: 0.5em;
@@ -164,6 +164,34 @@
   background: rgb(213, 207, 204);
   transform: scale(1.02);
   cursor: pointer;
+}
+.task-card .task-card__body .task-card__sort-items {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  justify-content: end;
+  margin-bottom: 0.7em;
+  padding: 0.3em 0.6em;
+  font-size: 0.9rem;
+  background: rgba(213, 207, 204, 0.2);
+  border-radius: 0.9em;
+}
+.task-card .task-card__body .task-card__sort-items .btn-active-selection {
+  display: flex;
+  gap: 0.3em;
+  align-items: center;
+  padding: 0.05em 0.4em;
+  font-size: 0.9rem;
+  background: white;
+  border: 1px solid rgba(213, 207, 204, 0.7);
+  border-radius: 0.9em;
+  cursor: pointer;
+}
+.task-card .task-card__body .task-card__sort-items .btn-active-selection:hover {
+  background: rgba(213, 207, 204, 0.4);
+}
+.task-card .task-card__body .task-card__sort-items .btn-active-selection .icon-active-selection {
+  width: 1em;
 }
 .task-card .task-card__body .task-card__note-content {
   cursor: text;
@@ -197,6 +225,50 @@
 .task-card .task-card__body .task-card__footer .expand-btn:hover {
   animation: levitate 2s ease-in-out infinite alternate;
   cursor: pointer;
+}
+
+.dropdown-sort-items {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  border: 1px solid rgba(213, 207, 204, 0.7);
+  border-radius: 0.9em;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.dropdown-sort-items .icon-sort-items {
+  width: 1.5em;
+}
+.dropdown-sort-items .dropdown-sort-items__li {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  width: 100%;
+  padding: 0 0.7em;
+  font-size: 0.9rem;
+}
+.dropdown-sort-items .dropdown-sort-items__li:hover {
+  background: rgba(213, 207, 204, 0.2);
+}
+.dropdown-sort-items .dropdown-sort-items__li:active {
+  color: white;
+  background: rgba(213, 207, 204, 0.4);
+}
+.dropdown-sort-items .li-created {
+  padding-top: 0.5em;
+  padding-bottom: 0.25em;
+}
+.dropdown-sort-items .li-created:hover {
+  border-top-right-radius: 0.9em;
+  border-top-left-radius: 0.9em;
+}
+.dropdown-sort-items .li-alpha {
+  padding-top: 0.25em;
+  padding-bottom: 0.5em;
+}
+.dropdown-sort-items .li-alpha:hover {
+  border-bottom-right-radius: 0.9em;
+  border-bottom-left-radius: 0.9em;
 }
 
 /*# sourceMappingURL=task-card.css.map */

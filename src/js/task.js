@@ -386,23 +386,19 @@ export class Task {
   }
 
   //___T A S K S :  S O R T  I T E M S_______________________________//
-  sortItems() {
+  sortItems(sortBasis) {
     // METHOD IS ENTERED WHEN USER CLICKS THE ITEM SORT BUTTON //
-
-    // Concatinate all Items
     const items = [...this.checklists, ...this.notes];
+    //const { sortBasis, sortOrder } = this.getSortOptions();
 
-    // Get sort preference
-    const { sortOrder } = this.getSortOptions();
-
+    // sort = created,
     items.sort((a, b) => {
-      // if(this.sortb.created - a.created
+      if (sortOrder === 'descending') return;
     });
   }
   switchSortOrder() {
     const { sortBasis } = this.getSortOptions();
 
-    // Toggle sort order
     this.sort = this.sort === `${sortBasis}-ascending` ? `${sortBasis}-descending` : `${sortBasis}-ascending`;
   }
   getSortOptions() {

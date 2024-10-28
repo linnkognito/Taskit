@@ -95,7 +95,7 @@
       display: flex;
       justify-content: space-between;
       gap: 0.5em;
-      margin: 0.5em 0;
+      margin: 0.5em 0 0.7em;
 
       .btn-add-item {
         @include mixins.btn-medium;
@@ -103,6 +103,38 @@
       }
       .btn-add-item:hover {
         @include mixins.btn-medium-hover;
+      }
+    }
+
+    // SORT BUTTON (BODY) //
+    .task-card__sort-items {
+      display: flex;
+      gap: 0.5em;
+      align-items: center;
+      justify-content: end;
+      margin-bottom: 0.7em;
+      padding: 0.3em 0.6em;
+      font-size: 0.9rem;
+      background: vars.$col-primary-xlow-op;
+      border-radius: vars.$br-primary;
+
+      .btn-active-selection {
+        display: flex;
+        gap: 0.3em;
+        align-items: center;
+        padding: 0.05em 0.4em;
+        font-size: 0.9rem;
+        background: white;
+        border: 1px solid vars.$col-primary-op;
+        border-radius: vars.$br-primary;
+        cursor: pointer;
+
+        &:hover {
+          background: vars.$col-primary-low-op;
+        }
+        .icon-active-selection {
+          width: 1em;
+        }
       }
     }
 
@@ -145,3 +177,53 @@
     }
   } // [X] END OF BODY [X]
 } // [X] END OF TASK CARD [X]
+
+//// SORT ITEMS DROPDOWN /////////////////////////////
+.dropdown-sort-items {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  border: 1px solid vars.$col-primary-op;
+  border-radius: vars.$br-primary;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  // DROPDOWN ITEMS //
+  .icon-sort-items {
+    width: 1.5em;
+  }
+  .dropdown-sort-items__li {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    width: 100%;
+    padding: 0 0.7em;
+    font-size: 0.9rem;
+
+    &:hover {
+      background: vars.$col-primary-xlow-op;
+    }
+    &:active {
+      color: white;
+      background: vars.$col-primary-low-op;
+    }
+  }
+  .li-created {
+    padding-top: 0.5em;
+    padding-bottom: 0.25em;
+    &:hover {
+      border-top-right-radius: vars.$br-primary;
+      border-top-left-radius: vars.$br-primary;
+    }
+  }
+  .li-alpha {
+    padding-top: 0.25em;
+    padding-bottom: 0.5em;
+
+    &:hover {
+      border-bottom-right-radius: vars.$br-primary;
+      border-bottom-left-radius: vars.$br-primary;
+    }
+  }
+}
+// [X] END OF SORT ITEMS DROPDOWN [X]
