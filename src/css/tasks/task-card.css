@@ -93,7 +93,7 @@
 .task-card .task-card__body .task-card__body-top .description--default {
   color: rgba(213, 207, 204, 0.7);
 }
-.task-card .task-card__body .task-card__body-top .task-card__btn-due-date {
+.task-card .task-card__body .task-card__body-top .btn-due-date {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -108,10 +108,10 @@
   text-align: center;
   transition: all 0.2s ease-in;
 }
-.task-card .task-card__body .task-card__body-top .task-card__btn-due-date .icon-calendar {
+.task-card .task-card__body .task-card__body-top .btn-due-date .icon-calendar {
   width: 80%;
 }
-.task-card .task-card__body .task-card__body-top .task-card__due-date {
+.task-card .task-card__body .task-card__body-top .due-date {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -125,20 +125,20 @@
   border-radius: 0.9em;
   transition: all 0.2s ease-in;
 }
-.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--date {
+.task-card .task-card__body .task-card__body-top .due-date .due-date--small-top {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+.task-card .task-card__body .task-card__body-top .due-date .due-date--big {
   margin: 0.1em 0;
   font-size: 2rem;
   font-weight: 600;
 }
-.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--month {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-}
-.task-card .task-card__body .task-card__body-top .task-card__due-date .task-card__due-date--year {
+.task-card .task-card__body .task-card__body-top .due-date .due-date--small-bottom {
   font-size: 0.8rem;
 }
-.task-card .task-card__body .task-card__body-top .task-card__btn-due-date:hover,
-.task-card .task-card__body .task-card__body-top .task-card__due-date:hover {
+.task-card .task-card__body .task-card__body-top .btn-due-date:hover,
+.task-card .task-card__body .task-card__body-top .due-date:hover {
   color: white;
   background: rgb(213, 207, 204);
   transform: scale(1.02);

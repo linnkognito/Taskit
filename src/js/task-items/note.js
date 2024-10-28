@@ -155,6 +155,10 @@ export class Note {
     });
   }
 
+  initListeners() {
+    //return console.log(`Called initListeners for Note`);
+  }
+
   // HELPERS //
   toggleFormatBtn(btn, bool) {
     return btn.classList.toggle('btn-formatting--active', bool);

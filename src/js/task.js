@@ -21,9 +21,7 @@ export class Task {
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
   hideAndShowEls = helper.hideAndShowEls;
-  // hideElement = helper.hideElement;
-  // showElement = helper.showElement;
-
+  clear = helper.clear;
   scaleUp = helper.scaleUp;
 
   hasChanges = false;
@@ -42,7 +40,7 @@ export class Task {
     this.created = null;
 
     this.checked = false;
-    this.sort = 'created';
+    this.sort = 'created-newest';
 
     this.checklists = [];
     this.notes = [];
@@ -56,7 +54,7 @@ export class Task {
     // Map button classes to methods
     const actionMap = {
       'prio-btn': (btn) => this.setPrio(btn),
-      'task-form__btn-due-date': (btn) => this.openDueModal(btn),
+      'btn-due-date': (btn) => this.openDueModal(btn),
       'btn-add-checklist': (btn) => this.addItem(btn),
       'btn-add-note': (btn) => this.addItem(btn),
       'btn-save': () => this.saveTask(),
@@ -101,6 +99,9 @@ export class Task {
   }
   get descriptionEl() {
     return this.taskCard.querySelector('.task-card__description');
+  }
+  get taskCardContainer() {
+    return this.taskCard.querySelector('.task-card__container');
   }
   get taskFormContainer() {
     return this.projectEl.querySelector('.task-form__container');
@@ -189,7 +190,7 @@ export class Task {
     this.insertMarkup(this.body, 'afterbegin', modalDueMarkup);
 
     // If user previously entered values → populate input fields
-    if (this.dueDate) {
+    if (this.dueDateObj) {
       this.inputDueDate.value = this.dueDate;
       this.inputDueTime.value = this.dueTime;
     }
@@ -204,11 +205,12 @@ export class Task {
       'modal-due-date': () => this.modal.remove(),
       'btn-cancel': () => this.modal.remove(),
       'btn-save': () => this.saveDueDate(),
+      clear: (e) => this.clearDueDateInput(e),
     };
 
     Object.keys(actionMap).forEach((cls) => {
       if (this.hasClass(e.target, cls)) {
-        actionMap[cls]();
+        actionMap[cls](e);
       }
     });
   }
@@ -216,22 +218,68 @@ export class Task {
     const inputDate = this.inputDueDate.value;
     const inputTime = this.inputDueTime.value;
 
-    if (!inputDate && !inputTime) return alert('📅 Pick a future date or Cancel');
+    if (!inputDate && !inputTime) return this.modal.remove();
 
     // Set due date
     this.dueDate = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
-    this.dueDate = this.formatDueDate();
-    this.dueTime = inputTime ? inputTime : new Date().toTimeString().slice(0, 5);
-    this.dueDateObj = this.getFullDate(this.dueDate, this.dueTime);
+    this.dueTime = inputTime || new Date().toTimeString().slice(0, 5);
+    this.dueDateObj = this.getFullDate(this.dueDate);
 
-    // Make sure the time is in the future
-    this.checkIfFutureDate();
+    // Make sure the selection is in the future
+    const inThePast = this.dueDate.getTime() <= new Date().getTime();
+    if (inThePast) return alert('❗ The selected date and/or time must be in the future');
+
+    // Format dueDate
+    this.dueDate = this.formatDueDate();
 
     // Handle DOM elements
     this.modal.remove();
     this.displayDueDate();
 
     this.hasChanges = true;
+  }
+  displayDueDate() {
+    const { calendarBtn, dueDateEl } = this.getDueDateElements();
+
+    if (!this.dueDateObj) return this.hideAndShowEls(dueDateEl, calendarBtn);
+    if (calendarBtn) this.hideAndShowEls(calendarBtn, dueDateEl);
+
+    const diff = this.calcTimeDiff(new Date(this.dueDateObj));
+    this.updateDueDateDisplay(diff);
+
+    dueDateEl.addEventListener('click', () => this.openDueModal());
+  }
+
+  //___D U E  D A T E :  H E L P E R S______________________________//
+  clearDueDateInput(e) {
+    // Clear input element
+    const input = e.target.closest('.btn-clear').previousElementSibling;
+    input.value = '';
+
+    // Update property
+    input.classList.contains('input-due-date') ? (this.dueDate = null) : (this.dueTime = null);
+  }
+  parseDate(date) {
+    const [y, m, d] = date.split('-');
+    return new Date(y, m - 1, d);
+  }
+  formatDueDate() {
+    return `${this.dueDate.getFullYear()}-${this.dueDate.getMonth() + 1}-${this.dueDate.getDate()}`;
+  }
+  getFullDate(date) {
+    const [h, m] = this.dueTime.split(':');
+    date.setHours(h);
+    date.setMinutes(m);
+    return date;
+  }
+  getDueDateElements() {
+    return {
+      calendarBtn: this.projectEl.querySelector('.btn-due-date'),
+      dueDateEl: this.projectEl.querySelector('.due-date'),
+      smallTextTop: this.projectEl.querySelector('.due-date--small-top'),
+      bigText: this.projectEl.querySelector('.due-date--big'),
+      smallTextBottom: this.projectEl.querySelector('.due-date--small-bottom'),
+    };
   }
   calcTimeDiff(date) {
     const diffMs = date.getTime() - new Date().getTime();
@@ -251,64 +299,39 @@ export class Task {
 
     return { years, days, hours, mins };
   }
-  displayDueDate() {
+  updateDueDateDisplay(diff) {
+    // Get elements
+    const { smallTextTop, bigText, smallTextBottom } = this.getDueDateElements();
+
+    // Clear contents
+    [smallTextTop, bigText, smallTextBottom].forEach((el) => {
+      this.clear(el);
+    });
+
     const monthsArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    const calendarBtn = this.projectEl.querySelector('btn-due-date');
-    const dueDateEl = this.projectEl.querySelector('due-date');
-    const monthEl = this.projectEl.querySelector('due-date--month');
-    const dateEl = this.projectEl.querySelector('due-date--date');
-    const yearEl = this.projectEl.querySelector('due-date--year');
-
-    if (!this.dueDateObj) return this.hideAndShowEls(dueDateEl, calendarBtn);
-
-    if (calendarBtn) this.hideAndShowEls(calendarBtn, dueDateEl);
-
-    monthEl.innerHTML = '';
-    dateEl.innerHTML = '';
-    yearEl.innerHTML = '';
-
-    const diff = this.calcTimeDiff(new Date(this.dueDateObj));
-
+    // Populate elements
     if (!diff.years && !diff.days && diff.hours && !diff.mins) {
-      dateEl.textContent = diff.hours;
-      yearEl.textContent = diff.hours === 1 ? 'hour' : 'hours';
+      bigText.textContent = diff.hours;
+      smallTextBottom.textContent = diff.hours === 1 ? 'hour' : 'hours';
+      return;
     }
     if (!diff.years && !diff.days && diff.hours && diff.mins) {
-      dateEl.textContent = `${diff.hours}h`;
-      yearEl.textContent = `${diff.mins} ${diff.mins === 1 ? 'min' : 'mins'}`;
+      bigText.textContent = `${diff.hours} h`;
+      smallTextBottom.textContent = `${diff.mins} ${diff.mins === 1 ? 'min' : 'mins'}`;
+      return;
     }
     if (!diff.years && !diff.days && !diff.hours) {
-      dateEl.textContent = Math.ceil(diff.mins);
-      yearEl.textContent = Math.ceil(diff.mins) === 1 ? 'min' : 'mins';
+      bigText.textContent = Math.ceil(diff.mins);
+      smallTextBottom.textContent = Math.ceil(diff.mins) === 1 ? 'min' : 'mins';
+      return;
     }
     if (diff.days || diff.years) {
-      monthEl.textContent = `${monthsArr[this.dueDateObj.getMonth()].slice(0, 3)}`;
-      dateEl.textContent = `${this.dueDateObj.getDate()}`;
-      yearEl.textContent = `${this.dueDateObj.getFullYear()}`;
+      smallTextTop.textContent = `${monthsArr[this.dueDateObj.getMonth()].slice(0, 3)}`;
+      bigText.textContent = `${this.dueDateObj.getDate()}`;
+      smallTextBottom.textContent = `${this.dueDateObj.getFullYear()}`;
+      return;
     }
-
-    dueDateEl.addEventListener('click', () => this.openDueModal());
-  }
-
-  //___D U E  D A T E :  H E L P E R S______________________________//
-  formatDueDate() {
-    return `${this.dueDate.getFullYear()}-${this.dueDate.getMonth() + 1}-${this.dueDate.getDate()}`;
-  }
-  checkIfFutureDate() {
-    const diff = this.dueDateObj.getTime() - new Date().getTime();
-
-    if (diff < 0) alert('❗ The selected date and/or time must be in the future');
-  }
-  parseDate(date) {
-    const [y, m, d] = date.split('-');
-    return new Date(y, m - 1, d);
-  }
-  getFullDate(date, time) {
-    const [h, m] = time.split(':');
-    date.setHours(h);
-    date.setMinutes(m);
-    return date;
   }
 
   //___T A S K S____________________________________________________//
@@ -331,39 +354,59 @@ export class Task {
     }
 
     // Display due date
-    this.displayDueDate('card');
+    this.displayDueDate();
+
+    // Display task Items (if there are any)
+    if (this.checklists.length || this.notes.length) this.renderItems();
 
     // Mark changes as saved
     this.hasChanges = false;
   }
-
-  sortAndRenderItems(sortPref) {
-    let items;
+  renderItems() {
+    // INITIAL METHOD FOR SORTING & RENDERING AFTER SAVING NEW TASK //
     let markup = '';
 
-    // Sort by creation date
-    if (sortPref === 'created') {
-      items = [...this.checklists, ...this.notes];
-      items.sort((a, b) => b.created - a.created);
+    // Sort items by creation time (default)
+    const items = [...this.checklists, ...this.notes];
+    items.sort((a, b) => b.created - a.created);
 
-      // Render markup for items
-      items.forEach((item) => {
-        if (item instanceof Checklist) markup += item.renderChecklist();
-        if (item instanceof Note) markup += item.renderNote();
-      });
-    }
+    // Fetch markup for each item
+    items.forEach((item) => {
+      console.log(`item in loop: ${item}`);
+      if (item instanceof Checklist) markup += item.renderChecklist();
+      if (item instanceof Note) markup += item.renderNote();
+    });
 
-    // Sort by due date
-    if (sortPref === 'due') {
-      return console.log('due date selected as sorting preference');
-    }
-
-    return markup;
+    // Insert markup
+    this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
   }
-
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
+  }
+
+  //___T A S K S :  S O R T  I T E M S_______________________________//
+  sortItems() {
+    // METHOD IS ENTERED WHEN USER CLICKS THE ITEM SORT BUTTON //
+
+    // Concatinate all Items
+    const items = [...this.checklists, ...this.notes];
+
+    // Get sort preference
+    const { sortOrder } = this.getSortOptions();
+
+    items.sort((a, b) => {
+      // if(this.sortb.created - a.created
+    });
+  }
+  switchSortOrder() {
+    const { sortBasis } = this.getSortOptions();
+
+    // Toggle sort order
+    this.sort = this.sort === `${sortBasis}-ascending` ? `${sortBasis}-descending` : `${sortBasis}-ascending`;
+  }
+  getSortOptions() {
+    return { sortBasis: this.sort.split('-')[0], sortOrder: this.sort.split('-')[1] };
   }
 
   //___T A S K S :  H E L P E R S___________________________________//
@@ -380,14 +423,6 @@ export class Task {
 
     return `${m}/${d}/${y}`;
   }
-  populateTaskCardMarkup() {
-    return taskCardMarkup
-      .replace('{%TASKCARD_ID%}', this.id)
-      .replace('{%TASKCARD_TITLE%}', this.title)
-      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr())
-      .replace('{%TASKCARD_ITEMS%}', this.sortAndRenderItems(this.sort));
-  }
   toAmPm(date) {
     const time = date.toTimeString().slice(0, 5);
     const [h24, min] = time.split(':');
@@ -395,6 +430,13 @@ export class Task {
     const per = h24 >= 12 ? 'PM' : 'AM';
 
     return `${h12}:${min} ${per}`;
+  }
+  populateTaskCardMarkup() {
+    return taskCardMarkup
+      .replace('{%TASKCARD_ID%}', this.id)
+      .replace('{%TASKCARD_TITLE%}', this.title)
+      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
+      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
   }
 
   //___T A S K  I T E M S___________________________________________//

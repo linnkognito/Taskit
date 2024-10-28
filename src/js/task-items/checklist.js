@@ -59,6 +59,10 @@ export class Checklist {
     return checklistMarkup.replace('{%CHECKLIST_ID%}', this.id).replace('{%CHECKLIST_TITLE%}', this.title).replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
   }
 
+  initListeners() {
+    //return console.log(`Called initListeners for Checklist`);
+  }
+
   renderListItems() {
     let markup = '';
 

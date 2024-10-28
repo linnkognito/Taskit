@@ -46,6 +46,12 @@
           border-radius: vars.$br-primary;
         }
 
+        .due-date__date--input-wrapper {
+          display: flex;
+          gap: 0.5em;
+          align-items: center;
+        }
+
         .input-due {
           padding: 0.5em 0.7em;
           border: 1px solid vars.$col-primary;
@@ -59,6 +65,19 @@
           outline: none;
           box-shadow: 0 0 3px vars.$col-primary;
           transform: scale(1.02);
+        }
+        .btn-clear {
+          @include mixins.btn-tiny;
+        }
+        .btn-clear--icon {
+          height: 100%;
+        }
+        .btn-clear:hover {
+          @include mixins.btn-hover;
+          background: vars.$col-primary-op;
+        }
+        .btn-clear:active {
+          background: vars.$col-primary-dark-op;
         }
       }
     }

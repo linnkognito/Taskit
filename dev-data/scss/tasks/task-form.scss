@@ -115,7 +115,7 @@
       }
 
       // DUE DATE BUTTON (BODY TOP) //
-      .task-form__btn-due-date {
+      .btn-due-date {
         @include mixins.due-date(vars.$col-primary-low-op);
         text-align: center;
         transition: vars.$ease-in;
@@ -126,22 +126,22 @@
       }
 
       // DUE DATE (BODY TOP) //
-      .task-form__due-date {
+      .due-date {
         @include mixins.due-date;
         transition: vars.$ease-in;
 
-        .task-form__due-date--date {
-          @include mixins.due-btn-date;
+        .due-date--small-top {
+          @include mixins.due-btn-small-top;
         }
-        .task-form__due-date--month {
-          @include mixins.due-btn-month;
+        .due-date--big {
+          @include mixins.due-btn-big;
         }
-        .task-form__due-date--year {
-          @include mixins.due-btn-year;
+        .due-date--small-bottom {
+          @include mixins.due-btn-small-bottom;
         }
       }
-      .task-form__btn-due-date:hover,
-      .task-form__due-date:hover {
+      .btn-due-date:hover,
+      .due-date:hover {
         color: white;
         background: vars.$col-primary;
         transform: scale(1.02);

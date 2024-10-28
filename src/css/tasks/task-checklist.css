@@ -4,35 +4,6 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-/*
-// CHECKLIST //
-.task-card__checklist {
-  @include mixins.item;
-
-  // HEADER (CHECKLIST) //
-  .task-card__checklist-header {
-    @include mixins.item-header;
-
-    .task-card__checklist-title {
-      @include mixins.item-title;
-    }
-    // BUTTONS (HEADER) //
-    .task-card__buttons {
-      @include mixins.buttons-header('card');
-    }
-  }
-
-  // BODY (CHECKLIST) //
-  .task-card__checklist-body {
-    @include mixins.item-body;
-
-    .checklist-item__checkbox:checked + label {
-      text-decoration: line-through;
-      color: rgb(163, 163, 163);
-    }
-  }
-}
-  */
 .task-form__checklist,
 .task-card__checklist {
   width: 100%;

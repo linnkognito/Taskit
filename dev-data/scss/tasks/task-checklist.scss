@@ -1,35 +1,6 @@
 @use '../utilities/vars';
 @use '../utilities/mixins';
 @use '../utilities/mixins-buttons';
-/*
-// CHECKLIST //
-.task-card__checklist {
-  @include mixins.item;
-
-  // HEADER (CHECKLIST) //
-  .task-card__checklist-header {
-    @include mixins.item-header;
-
-    .task-card__checklist-title {
-      @include mixins.item-title;
-    }
-    // BUTTONS (HEADER) //
-    .task-card__buttons {
-      @include mixins.buttons-header('card');
-    }
-  }
-
-  // BODY (CHECKLIST) //
-  .task-card__checklist-body {
-    @include mixins.item-body;
-
-    .checklist-item__checkbox:checked + label {
-      text-decoration: line-through;
-      color: rgb(163, 163, 163);
-    }
-  }
-}
-  */
 
 // CHECKLIST //
 .task-form__checklist,

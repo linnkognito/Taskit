@@ -91,16 +91,16 @@
   background: $bg;
   border-radius: vars.$br-primary;
 }
-@mixin due-btn-month() {
+@mixin due-btn-small-top() {
   font-size: 0.7rem;
   text-transform: uppercase;
 }
-@mixin due-btn-date() {
+@mixin due-btn-big() {
   margin: 0.1em 0;
   font-size: 2rem;
   font-weight: 600;
 }
-@mixin due-btn-year() {
+@mixin due-btn-small-bottom() {
   font-size: 0.8rem;
 }
 

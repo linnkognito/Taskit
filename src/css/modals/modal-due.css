@@ -58,6 +58,11 @@
   background: rgba(165, 160, 158, 0.6);
   border-radius: 0.9em;
 }
+.modal-due-date .due-date__container .due-date__body .due-date__selection .due-date__date--input-wrapper {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
 .modal-due-date .due-date__container .due-date__body .due-date__selection .input-due {
   padding: 0.5em 0.7em;
   border: 1px solid rgb(213, 207, 204);
@@ -71,6 +76,30 @@
   outline: none;
   box-shadow: 0 0 3px rgb(213, 207, 204);
   transform: scale(1.02);
+}
+.modal-due-date .due-date__container .due-date__body .due-date__selection .btn-clear {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.1em 0.6em;
+  background: rgba(213, 207, 204, 0.4);
+  transition: transform 0.2s ease-in;
+  border: none;
+  border-radius: 0.9em;
+  border-radius: 0.5em;
+}
+.modal-due-date .due-date__container .due-date__body .due-date__selection .btn-clear--icon {
+  height: 100%;
+}
+.modal-due-date .due-date__container .due-date__body .due-date__selection .btn-clear:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+  background: rgba(213, 207, 204, 0.7);
+}
+.modal-due-date .due-date__container .due-date__body .due-date__selection .btn-clear:active {
+  background: rgba(165, 160, 158, 0.6);
 }
 .modal-due-date .due-date__container .due-date__footer {
   width: 100%;

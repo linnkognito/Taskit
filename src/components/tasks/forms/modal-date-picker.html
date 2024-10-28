@@ -8,12 +8,26 @@
       <!-- DATE PICKER -->
       <div class="due-date__selection due-date__date">
         <label for="date" class="label-due">Choose a date:</label>
-        <input type="date" id="date" name="date" class="input-due input-due-date" />
+
+        <div class="due-date__date--input-wrapper">
+          <input type="date" id="date" name="date" class="input-due input-due-date" />
+
+          <button class="clear btn-clear">
+            <img src="../../../../public/icons/cancel.png" class="clear btn-clear--icon" alt="Clear due date" title="Clear due date" />
+          </button>
+        </div>
       </div>
       <!-- TIME PICKER -->
       <div class="due-date__selection due-date__time">
         <label for="time" class="label-due">Choose a time:</label>
-        <input type="time" id="time" name="time" class="input-due input-due-time" />
+
+        <div class="due-date__date--input-wrapper">
+          <input type="time" id="time" name="time" class="input-due input-due-time" />
+
+          <button class="clear btn-clear">
+            <img src="../../../../public/icons/cancel.png" class="clear btn-clear--icon" alt="Clear due time" title="Clear due time" />
+          </button>
+        </div>
       </div>
     </div>
 
