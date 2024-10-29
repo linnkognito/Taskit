@@ -1,6 +1,6 @@
-//////////////_________________P R O J E C T_________________//////////////
+//////////////________________P R O J E C T________________//////////////
 
-import { helper } from '../index';
+import { app, helper } from '../index';
 import { Task } from './task';
 
 //////////////_________________M A R K U P_________________//////////////
@@ -47,6 +47,7 @@ export class Project {
       'btn-settings': (btn) => this.openSettings(btn),
       'btn-sort-tasks': (btn) => this.openSettings(btn),
       'project-card__title': (title) => this.editProjectTitle(title),
+      'settings-delete': () => this.deleteProject(),
     };
 
     // Call the method
@@ -110,12 +111,30 @@ export class Project {
 
     this.inputTitle.focus();
   }
+  deleteProject() {
+    // Warn
+    const warn = confirm(`❗ Are you sure you want to permanently delete Project: ${this.title}?\nThis action is irreversable.\n`);
+    if (!warn) return;
+
+    // Delete project from array
+    const i = app.projectsArr.findIndex((p) => p.id === this.id);
+    if (i !== -1) app.projectsArr.splice(i, 1);
+
+    // Remove from local storage
+    localStorage.removeItem(`project_${this.id}`);
+
+    // Remove DOM element
+    this.projectEl.remove();
+  }
 
   //___P R O J E C T  T I T L E_______________________________________//
   saveProjectTitle() {
     this.titleEl.textContent = this.title;
     this.title = this.inputTitle.value.trim() || 'Untitled Project';
     this.hideAndShowEls(this.inputTitle, this.titleEl);
+
+    // Local storage
+    this.saveProjectState();
   }
   editProjectTitle() {
     this.hideAndShowEls(this.titleEl, this.inputTitle);
@@ -201,11 +220,93 @@ export class Project {
 
     // Initialize event listeners of Task instance
     newTask.initListeners();
+
+    // Local storage
+    this.saveProjectState();
   }
   hasUnsavedChanges() {
     return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges; // returns boolean
   }
   discardChanges() {
     return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean
+  }
+
+  //////////////__________L O C A L  S T O R A G E_________//////////////
+
+  //___S A V E  S T A T E________________________________________________//
+  saveProjectState() {
+    const projectData = {
+      id: this.id,
+      title: this.title,
+
+      // TASKS //
+      tasks: this.tasks.map((task) => ({
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        dueDate: task.dueDate,
+        prio: task.prio,
+        created: task.created,
+        dueDate: task.dueDate,
+        dueTime: task.dueTime,
+        dueDateObj: task.dueDateObj,
+        sort: task.sort,
+        checked: task.checked,
+
+        // CHECKLISTS (TASKS) //
+        checklists: task.checklists.map((cl) => ({
+          id: cl.id,
+          title: cl.title,
+          checked: cl.checked,
+          created: cl.created,
+          sort: cl.sort,
+
+          // LIST ITEMS (CHECKLIST) //
+          listItems: cl.items.map((li) => ({
+            id: li.id,
+            value: li.value,
+            checked: li.checked,
+            created: li.created,
+            sort: li.sort,
+          })),
+        })),
+
+        // NOTES (TASKS) //
+        notes: task.notes.map((n) => ({
+          id: n.id,
+          title: n.title,
+          task: n.task,
+          note: n.note,
+          created: n.created,
+          sort: n.sort,
+        })),
+      })),
+    };
+
+    localStorage.setItem(`project_${this.id}`, JSON.stringify(projectData));
+  }
+
+  //___L O A D  S I N G L E  P R O J E C T_______________________________//
+  static loadFromLocalStorage(id) {
+    const savedProject = JSON.parse(localStorage.getItem(`project_${id}`));
+    if (!savedProject) return null;
+
+    const project = new Project(savedProject.id);
+
+    project.title = savedProject.title;
+    project.tasks = savedProject.tasks.map((taskData) => {
+      const task = new Task(taskData.id, project, project.projectEl);
+      task.title = taskData.title;
+      task.description = taskData.description;
+      task.dueDate = taskData.dueDate;
+      task.prio = taskData.prio;
+      task.created = new Date(taskData.created);
+      return task;
+    });
+
+    project.renderProjectCard();
+    project.tasks.forEach((task) => task.renderItems());
+
+    return project;
   }
 }

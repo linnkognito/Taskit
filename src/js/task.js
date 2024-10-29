@@ -9,7 +9,7 @@ import itemMap from './task-items/itemMap';
 
 import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
 import taskCardMarkup from '../components/tasks/task-card.html';
-import sortItemsDropdown from '../components/menus/dropdown-sort-items.html';
+import dropdownMarkup from '../components/menus/dropdown-sort-items.html';
 
 //////////////_______________T A S K  C L A S S_______________//////////////
 
@@ -43,13 +43,15 @@ export class Task {
     this.created = null;
 
     this.checked = false;
-    this.sort = 'created-newest';
+    this.sort = '';
 
     this.checklists = [];
     this.notes = [];
+    this.items = [];
   }
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
+
   initListeners() {
     this.taskForm.addEventListener('click', this.handleClick.bind(this));
   }
@@ -75,7 +77,7 @@ export class Task {
   }
   handleCardClick(e) {
     const actionMap = {
-      'btn-active-selection': () => this.showSortItemsDropdown(),
+      'btn-active-selection': () => this.showDropdown(),
     };
 
     Object.keys(actionMap).forEach((cls) => {
@@ -86,6 +88,7 @@ export class Task {
   }
 
   //////////////________________G E T T E R S________________//////////////
+
   //#region Getters
   get noteForm() {
     return document.querySelector('.task-form__note');
@@ -141,14 +144,23 @@ export class Task {
   get modalBtnCancel() {
     return this.modalDueDate.querySelector('.btn-cancel');
   }
-  get sortItemsContainer() {
+  get sortBar() {
     return this.taskCard.querySelector('.task-card__sort-items');
   }
-  get dropdownSortItems() {
+  get dropdown() {
     return this.taskCard.querySelector('.dropdown-sort-items');
   }
   get btnActiveSort() {
     return this.taskCard.querySelector('.btn-active-selection');
+  }
+  get btnSwapSort() {
+    return this.taskCard.querySelector('.btn-swap-sort-order');
+  }
+  get dropdownText() {
+    return this.dropdown.querySelector('.btn-active-selection--text');
+  }
+  get dropdownSelections() {
+    if (this.dropdown) return {};
   }
 
   //#endregion
@@ -204,7 +216,7 @@ export class Task {
 
     this.hasChanges = true;
   }
-  setPrioColors(prio) {
+  setPrioColors() {
     // PLACEHOLDER
   }
 
@@ -386,7 +398,7 @@ export class Task {
     // Display task Items (if there are any)
     if (this.checklists.length || this.notes.length) {
       this.renderItems();
-      this.showElement(this.sortItemsContainer);
+      this.showElement(this.sortBar);
     }
 
     // Mark changes as saved
@@ -395,20 +407,18 @@ export class Task {
     this.initTaskCardListeners();
   }
   renderItems() {
-    // INITIAL METHOD FOR SORTING & RENDERING AFTER SAVING NEW TASK //
     let markup = '';
+    this.items = [...this.checklists, ...this.notes];
 
-    // Sort items by creation time (default)
-    const items = [...this.checklists, ...this.notes];
-    items.sort((a, b) => b.created - a.created);
+    // Sort items
+    if (!this.sort) this.sort = 'Creation date';
+    this.sortTaskItems();
 
-    // Fetch markup for each item
-    items.forEach((item) => {
+    // Render items
+    this.items.forEach((item) => {
       if (item instanceof Checklist) markup += item.renderChecklist();
       if (item instanceof Note) markup += item.renderNote();
     });
-
-    // Insert markup
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
   }
   isChecked(task) {
@@ -423,81 +433,72 @@ export class Task {
   }
 
   //___I T E M S :  S O R T___________________________________________//
-  showSortItemsDropdown() {
+  showDropdown() {
     // Avoid duplicate dropdown elements
-    if (this.dropdownSortItems) return this.removeWithAnimation();
+    if (this.dropdown) return this.animateRemove();
 
-    // Insert dropdown markup
-    this.insertMarkup(this.sortItemsContainer, 'beforeend', sortItemsDropdown);
-
-    // Dropdown placement
+    // Insert & position dropdown
+    this.insertMarkup(this.sortBar, 'beforeend', dropdownMarkup);
     this.positionDropdown();
-    this.scaleUp(this.dropdownSortItems, 'top');
+    this.scaleUp(this.dropdown, 'top');
 
-    // Listen for close dropdown events
     this.initDropdownListeners();
   }
   positionDropdown() {
-    const parentRect = this.sortItemsContainer.getBoundingClientRect();
+    const parentRect = this.sortBar.getBoundingClientRect();
     const btnRect = this.btnActiveSort.getBoundingClientRect();
 
-    const rightOffset = parentRect.right - btnRect.right;
-    const topOffset = parentRect.height;
-
-    this.dropdownSortItems.style.top = `${topOffset}px`;
-    this.dropdownSortItems.style.right = `${rightOffset}px`;
-
-    // Force reflow
-    this.dropdownSortItems.offsetHeight;
-    this.dropdownSortItems.offsetWidth;
+    this.dropdown.style.top = `${parentRect.height}px`;
+    this.dropdown.style.right = `${parentRect.right - btnRect.right}px`;
   }
-  removeWithAnimation() {
-    // Apply animation
-    this.scaleDown(this.dropdownSortItems, 'top');
-
-    // Wait for animation to end before removing element
-    this.dropdownSortItems.addEventListener(
-      'animationend',
-      () => {
-        this.dropdownSortItems.remove();
-      },
-      { once: true }
-    );
+  animateRemove() {
+    this.scaleDown(this.dropdown, 'top');
+    this.dropdown.addEventListener('animationend', () => this.dropdown.remove(), { once: true });
   }
   sortTaskItems() {
-    const items = [...this.checklists, ...this.notes];
-    //const { sortBasis, sortOrder } = this.getSortOptions();
+    // Sort: Creation date
+    if (this.sort === 'Creation date') {
+      return this.items.sort((a, b) => b.dueDateObj.getTime() - a.dueDateObj.getTime());
+    }
 
-    // sort = created,
-    items.sort((a, b) => {
-      if (sortOrder === 'descending') return;
-    });
+    // Sort: Alphabetical
+    if (this.sort === 'Alphabetically') {
+      return this.items.sort((a, b) => b.title - a.title);
+    }
 
-    // Sort: alphabetical
     // Sort: Item type
+    if (this.sort === 'Item type') {
+      this.items.sort((a, b) => b.dueDateObj.getTime() - a.dueDateObj.getTime());
+      this.items.sort((a, b) => (a instanceof Checklist) - (b instanceof Checklist));
+      return;
+    }
   }
   initDropdownListeners() {
-    // Listen for sort selection
-    this.dropdownSortItems.addEventListener('click', (e) => {
-      if (this.hasClass(e.target, 'dropdown-sort-items__li')) return this.sortTaskItems();
-    });
+    this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
 
     // Listen for close
-    this.dropdownSortItems.addEventListener('mouseleave', () => this.dropdownSortItems.remove());
-
+    this.dropdown.addEventListener('mouseleave', () => this.dropdown.remove());
     document.addEventListener('click', (e) => {
-      if (!this.dropdownSortItems || this.dropdownSortItems.contains(e.target) || this.btnActiveSort.contains(e.target)) return;
-
-      this.dropdownSortItems.remove();
+      if (!this.dropdown || this.dropdown.contains(e.target) || this.btnActiveSort.contains(e.target)) return;
+      this.dropdown.remove();
     });
   }
-  switchSortOrder() {
-    const { sortBasis } = this.getSortOptions();
+  handleDropdownClick(e) {
+    const actionMap = {
+      'dropdown-sort-items__li': () => this.sortTaskItems(),
+    };
 
-    this.sort = this.sort === `${sortBasis}-ascending` ? `${sortBasis}-descending` : `${sortBasis}-ascending`;
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) {
+        this.sort = el.dataset.sort;
+        actionMap[cls]();
+      }
+    });
   }
-  getSortOptions() {
-    return { sortBasis: this.sort.split('-')[0], sortOrder: this.sort.split('-')[1] };
+  reverseSortOrder() {
+    this.items.reverse();
+    this.renderItems();
   }
 
   //___T A S K S :  H E L P E R S____________________________________//

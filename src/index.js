@@ -1,4 +1,4 @@
-// index.js
+//////////////___________________I N D E X___________________//////////////
 
 import './css/animations/animations.css';
 import './css/assets/fonts.css';
@@ -13,7 +13,7 @@ import './css/tasks/task-note.css';
 import './css/modals/modal-due.css';
 import './css/styles.css';
 
-//////////////////////////////////////////////////
+//////////////____________________I N I T____________________//////////////
 
 import { App } from './js/app';
 import { Helper } from './js/helpers';

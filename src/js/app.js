@@ -1,10 +1,9 @@
-// app.js
+//////////////_____________________A P P_____________________//////////////
 
 import { Project } from './project';
 import { helper } from '../index';
 
-////////////////////////////////////////////////////////////////////////
-
+//////////////_______________A P P  C L A S S _______________//////////////
 export class App {
   generateId = helper.generateId;
   addClass = helper.addClass;
@@ -13,10 +12,11 @@ export class App {
   constructor() {
     this.projectsArr = [];
 
+    this.loadProjectsFromStorage;
     this.addBtn.addEventListener('click', this.createNewProject.bind(this));
   }
 
-  //-- GETTERS ----------------------------------------------//
+  //////////////________________G E T T E R S________________//////////////
   //#region Getters
   get projects() {
     return document.querySelector('#projects');
@@ -38,7 +38,8 @@ export class App {
   }
   //#endregion
 
-  //-- METHODS ----------------------------------------------//
+  //////////////________________M E T H O D S________________//////////////
+
   createNewProject() {
     // Remove any open task form
     if (this.taskForm) this.taskForm.remove();
@@ -52,5 +53,22 @@ export class App {
 
     // Initialize event listeners
     newProject.initListeners();
+  }
+
+  //////////////__________L O C A L  S T O R A G E_________//////////////
+
+  static loadProjectsFromStorage() {
+    // Find all project keys in local storage
+    const projectIds = Object.keys(localStorage).filter((key) => key.startsWith('project_'));
+
+    // Loop over and load projects
+    projectIds.forEach((id) => {
+      const project = Project.loadFromLocalStorage(id.replace('project_', ''));
+
+      if (project) {
+        this.projectsArr.push(project);
+        project.initListeners();
+      }
+    });
   }
 }

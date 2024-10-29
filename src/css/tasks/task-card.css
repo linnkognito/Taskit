@@ -290,11 +290,11 @@
   border-top-right-radius: 0.9em;
   border-top-left-radius: 0.9em;
 }
-.dropdown-sort-items #li-alpha {
+.dropdown-sort-items #li-type {
   padding-top: 0.25em;
   padding-bottom: 0.5em;
 }
-.dropdown-sort-items #li-alpha:hover {
+.dropdown-sort-items #li-type:hover {
   border-bottom-right-radius: 0.9em;
   border-bottom-left-radius: 0.9em;
 }
