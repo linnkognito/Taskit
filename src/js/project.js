@@ -17,6 +17,7 @@ export class Project {
   addClass = helper.addClass;
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
+  showElement = helper.showElement;
   hideAndShowEls = helper.hideAndShowEls;
   getClosest = helper.getClosest;
   insert = helper.insertMarkupAdj;
@@ -82,6 +83,9 @@ export class Project {
   get taskForm() {
     return document.querySelector('.task-form');
   }
+  get btnAddTask() {
+    return this.projectEl.querySelector('.project-card__btn-add-task');
+  }
   //#endregion
 
   //////////////________________M E T H O D S_______________//////////////
@@ -94,6 +98,15 @@ export class Project {
 
     // Apply animation
     helper.scaleUp(this.projectEl, 'center');
+
+    this.projectEl.addEventListener(
+      'animationend',
+      () => {
+        this.showElement(this.btnAddTask);
+        this.scaleUp(this.btnAddTask, 'top');
+      },
+      { once: true }
+    );
 
     this.inputTitle.focus();
   }
@@ -139,7 +152,7 @@ export class Project {
     const headerHeight = this.projectHeader.getBoundingClientRect().height;
     this.dropdown.style.top = `calc(${headerHeight}px)`;
 
-    // Listen close dropdown events
+    // Listen for close dropdown events
     this.listenForClose();
   }
   renderDropdown(markup, cls) {

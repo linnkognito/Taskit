@@ -1,3 +1,5 @@
+//////////////_____________A N I M A T I O N S_____________//////////////
+
 @keyframes levitate {
   0% {
     transform: translateY(0);
@@ -20,6 +22,10 @@
     transform: scale(1);
   }
 }
+
+//////////////_______________S C A L E  U P_______________//////////////
+
+//___C E N T E R___________________________________________________//
 @keyframes scale-up-center {
   0% {
     transform: scale(0);
@@ -30,6 +36,8 @@
     opacity: 1;
   }
 }
+
+//___T O P_________________________________________________________//
 @keyframes scale-up-top {
   0% {
     transform: scale(0);
@@ -40,10 +48,42 @@
     opacity: 1;
   }
 }
-
 .scale-up-top {
   transform-origin: top;
   animation: scale-up-top 0.3s ease-out forwards;
-  transform: scale(0);
   opacity: 0;
 }
+
+//___B O T T O M___________________________________________________//
+@keyframes scale-down-top {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+.scale-down-top {
+  transform-origin: top;
+  animation: scale-down-top 0.3s ease-out forwards;
+  opacity: 1;
+}
+
+//___T O P  R I G H T______________________________________________//
+// @keyframes scale-up-diagonal {
+//   0% {
+//     // transform: translate(100%, -100%) scale(0);
+//     opacity: 0;
+//   }
+//   100% {
+//     // transform: translate(0, 0) scale(1);
+//     opacity: 1;
+//   }
+// }
+// .scale-up-diagonal {
+//   opacity: 0;
+//   transform-origin: top right;
+//   animation: scale-up-diagonal 0.3s ease-out forwards;
+// }

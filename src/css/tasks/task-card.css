@@ -194,6 +194,29 @@
 .task-card .task-card__body .task-card__sort-items .btn-active-selection .icon-active-selection {
   width: 1em;
 }
+.task-card .task-card__body .task-card__sort-items .btn-swap-sort-order {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.1em 0.6em;
+  background: rgba(213, 207, 204, 0.7);
+  transition: transform 0.2s ease-in;
+  border: none;
+  border-radius: 0.9em;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.task-card .task-card__body .task-card__sort-items .btn-swap-sort-order:hover {
+  background: rgba(165, 160, 158, 0.6);
+}
+.task-card .task-card__body .task-card__sort-items .btn-swap-sort-order:active {
+  background: rgba(213, 207, 204, 0.7);
+}
+.task-card .task-card__body .task-card__sort-items .btn-swap-sort-order .icon-swap {
+  height: 100%;
+}
 .task-card .task-card__body .task-card__note-content {
   cursor: text;
 }
@@ -259,19 +282,19 @@
   color: white;
   background: rgba(213, 207, 204, 0.4);
 }
-.dropdown-sort-items .li-created {
+.dropdown-sort-items #li-created {
   padding-top: 0.5em;
   padding-bottom: 0.25em;
 }
-.dropdown-sort-items .li-created:hover {
+.dropdown-sort-items #li-created:hover {
   border-top-right-radius: 0.9em;
   border-top-left-radius: 0.9em;
 }
-.dropdown-sort-items .li-alpha {
+.dropdown-sort-items #li-alpha {
   padding-top: 0.25em;
   padding-bottom: 0.5em;
 }
-.dropdown-sort-items .li-alpha:hover {
+.dropdown-sort-items #li-alpha:hover {
   border-bottom-right-radius: 0.9em;
   border-bottom-left-radius: 0.9em;
 }

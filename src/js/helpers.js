@@ -1,13 +1,13 @@
-// helpers.js
+//////////////_________________H E L P E R S_________________//////////////
 
 export class Helper {
   constructor() {
     this.hideAndShowEls = this.hideAndShowEls.bind(this);
   }
 
-  //-- CLASS MANIPULATION ------------------------------//
+  //////////////____C L A S S  M A N I P U L A T I O N____//////////////
 
-  // HIDE & SHOW //
+  //___H I D E  &  S H O W___________________________________________//
   showElement(el) {
     return el.classList.remove('hidden');
   }
@@ -22,7 +22,7 @@ export class Helper {
     this.showElement(el2);
   }
 
-  // ADD & REMOVE
+  //___A D D  &  R E M O V E_________________________________________//
   addClass(el, cls) {
     return el.classList.add(cls);
   }
@@ -30,27 +30,32 @@ export class Helper {
     return el.classList.remove(cls);
   }
 
-  // CHECK FOR CLASS //
+  //___C H E C K  F O R  C L A S S___________________________________//
   hasClass(el, cls) {
     return el.classList.contains(cls);
   }
 
-  // EFFECTS & ANIMATIONS //
+  //////////////______________A N I M A T I O N S______________//////////////
   scaleUp(el, startPos) {
     return requestAnimationFrame(() => {
       el.classList.add(`scale-up-${startPos}`);
+    });
+  }
+  scaleDown(el, startPos) {
+    return requestAnimationFrame(() => {
+      el.classList.add(`scale-down-${startPos}`);
     });
   }
   moveDown(el, h) {
     return (el.transform = `translateY(${h})`);
   }
 
-  //-- DOM ---------------------------------------------//
+  //////////////_____________________D O M_____________________//////////////
   getClosest(el, cls) {
     return el.closest(cls);
   }
 
-  //-- VALUES ------------------------------------------//
+  //////////////__________________V A L U E S__________________//////////////
   generateId() {
     return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   }
@@ -61,7 +66,7 @@ export class Helper {
     if (!inputEl.checkValidity()) return inputEl.reportValidity();
   }
 
-  //-- MARKUP ------------------------------------------//
+  //////////////__________________M A R K U P__________________//////////////
   clear = (el) => (el.innerHTML = '');
   insertMarkupAdj = (el, pos, markup) => el.insertAdjacentHTML(pos, markup);
   insertMarkupInner = (el, pos, markup) => el.innerHTML(pos, markup);

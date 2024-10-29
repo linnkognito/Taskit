@@ -137,6 +137,21 @@
           width: 1em;
         }
       }
+      .btn-swap-sort-order {
+        @include mixins.btn-tiny(vars.$col-primary-op);
+        cursor: pointer;
+
+        &:hover {
+          background: vars.$col-primary-dark-op;
+        }
+        &:active {
+          background: vars.$col-primary-op;
+        }
+
+        .icon-swap {
+          height: 100%;
+        }
+      }
     }
 
     // NOTE CONTAINER //
@@ -213,7 +228,7 @@
       background: vars.$col-primary-low-op;
     }
   }
-  .li-created {
+  #li-created {
     padding-top: 0.5em;
     padding-bottom: 0.25em;
     &:hover {
@@ -221,7 +236,7 @@
       border-top-left-radius: vars.$br-primary;
     }
   }
-  .li-alpha {
+  #li-alpha {
     padding-top: 0.25em;
     padding-bottom: 0.5em;
 

@@ -1,11 +1,11 @@
-//////////////_____________________T A S K_____________________//////////////
+//////////////____________________T A S K____________________//////////////
 
 import { helper } from '../index';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 import itemMap from './task-items/itemMap';
 
-//////////////_________________M A R K U P_________________//////////////
+//////////////__________________M A R K U P__________________//////////////
 
 import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
 import taskCardMarkup from '../components/tasks/task-card.html';
@@ -25,6 +25,7 @@ export class Task {
   hideAndShowEls = helper.hideAndShowEls;
   clear = helper.clear;
   scaleUp = helper.scaleUp;
+  scaleDown = helper.scaleDown;
 
   hasChanges = false;
 
@@ -48,7 +49,7 @@ export class Task {
     this.notes = [];
   }
 
-  //////////////_________E V E N T  H A N D L E R S_________//////////////
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
   initListeners() {
     this.taskForm.addEventListener('click', this.handleClick.bind(this));
   }
@@ -84,7 +85,7 @@ export class Task {
     });
   }
 
-  //////////////_______________G E T T E R S_______________//////////////
+  //////////////________________G E T T E R S________________//////////////
   //#region Getters
   get noteForm() {
     return document.querySelector('.task-form__note');
@@ -146,12 +147,15 @@ export class Task {
   get dropdownSortItems() {
     return this.taskCard.querySelector('.dropdown-sort-items');
   }
+  get btnActiveSort() {
+    return this.taskCard.querySelector('.btn-active-selection');
+  }
 
   //#endregion
 
-  //////////////_______________M E T H O D S_______________//////////////
+  //////////////________________M E T H O D S________________//////////////
 
-  //___F O R M  I T E M S___________________________________________//
+  //___F O R M  I T E M S_____________________________________________//
   addItem(btn) {
     const id = this.generateId();
     const type = this.getItemType(btn);
@@ -187,7 +191,7 @@ export class Task {
     return template.replace(`{%${type.toUpperCase()}_ID%}`, id);
   }
 
-  //___P R I O______________________________________________________//
+  //___P R I O_______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons
     this.btnsPrio.forEach((btnEl) => {
@@ -204,7 +208,7 @@ export class Task {
     // PLACEHOLDER
   }
 
-  //___D U E  D A T E_______________________________________________//
+  //___D U E  D A T E________________________________________________//
   openDueModal() {
     // Avoid rendering duplicate modals
     if (this.modalDueDate) this.modalDueDate.remove();
@@ -273,7 +277,7 @@ export class Task {
     dueDateEl.addEventListener('click', () => this.openDueModal());
   }
 
-  //___D U E  D A T E :  H E L P E R S______________________________//
+  //___D U E  D A T E :  H E L P E R S_______________________________//
   clearDueDateInput(e) {
     // Clear input element
     const input = e.target.closest('.btn-clear').previousElementSibling;
@@ -357,7 +361,7 @@ export class Task {
     }
   }
 
-  //___T A S K S____________________________________________________//
+  //___T A S K S_____________________________________________________//
   saveTask() {
     // Prevent saving if !title
     this.checkValidity(this.formTitleInput);
@@ -400,7 +404,6 @@ export class Task {
 
     // Fetch markup for each item
     items.forEach((item) => {
-      console.log(`item in loop: ${item}`);
       if (item instanceof Checklist) markup += item.renderChecklist();
       if (item instanceof Note) markup += item.renderNote();
     });
@@ -413,28 +416,80 @@ export class Task {
     this.project.moveChecked(task);
   }
 
-  //___T A S K S :  S O R T  I T E M S_______________________________//
-  // sortItems(sortBasis) {
-  //   // METHOD IS ENTERED WHEN USER CLICKS THE ITEM SORT BUTTON //
-  //   const items = [...this.checklists, ...this.notes];
-  //   //const { sortBasis, sortOrder } = this.getSortOptions();
+  //___I T E M S______________________________________________________//
+  removeItemById(id, item) {
+    // Filters out item from array
+    this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
+  }
 
-  //   // sort = created,
-  //   items.sort((a, b) => {
-  //     if (sortOrder === 'descending') return;
-  //   });
-  // }
+  //___I T E M S :  S O R T___________________________________________//
   showSortItemsDropdown() {
     // Avoid duplicate dropdown elements
-    if (this.dropdownSortItems) this.dropdownSortItems.remove();
+    if (this.dropdownSortItems) return this.removeWithAnimation();
 
     // Insert dropdown markup
     this.insertMarkup(this.sortItemsContainer, 'beforeend', sortItemsDropdown);
 
     // Dropdown placement
-    const height = this.sortItemsContainer.getBoundingClientRect().height;
-    console.log(height);
-    this.dropdownSortItems.style.top = `${height}px`;
+    this.positionDropdown();
+    this.scaleUp(this.dropdownSortItems, 'top');
+
+    // Listen for close dropdown events
+    this.initDropdownListeners();
+  }
+  positionDropdown() {
+    const parentRect = this.sortItemsContainer.getBoundingClientRect();
+    const btnRect = this.btnActiveSort.getBoundingClientRect();
+
+    const rightOffset = parentRect.right - btnRect.right;
+    const topOffset = parentRect.height;
+
+    this.dropdownSortItems.style.top = `${topOffset}px`;
+    this.dropdownSortItems.style.right = `${rightOffset}px`;
+
+    // Force reflow
+    this.dropdownSortItems.offsetHeight;
+    this.dropdownSortItems.offsetWidth;
+  }
+  removeWithAnimation() {
+    // Apply animation
+    this.scaleDown(this.dropdownSortItems, 'top');
+
+    // Wait for animation to end before removing element
+    this.dropdownSortItems.addEventListener(
+      'animationend',
+      () => {
+        this.dropdownSortItems.remove();
+      },
+      { once: true }
+    );
+  }
+  sortTaskItems() {
+    const items = [...this.checklists, ...this.notes];
+    //const { sortBasis, sortOrder } = this.getSortOptions();
+
+    // sort = created,
+    items.sort((a, b) => {
+      if (sortOrder === 'descending') return;
+    });
+
+    // Sort: alphabetical
+    // Sort: Item type
+  }
+  initDropdownListeners() {
+    // Listen for sort selection
+    this.dropdownSortItems.addEventListener('click', (e) => {
+      if (this.hasClass(e.target, 'dropdown-sort-items__li')) return this.sortTaskItems();
+    });
+
+    // Listen for close
+    this.dropdownSortItems.addEventListener('mouseleave', () => this.dropdownSortItems.remove());
+
+    document.addEventListener('click', (e) => {
+      if (!this.dropdownSortItems || this.dropdownSortItems.contains(e.target) || this.btnActiveSort.contains(e.target)) return;
+
+      this.dropdownSortItems.remove();
+    });
   }
   switchSortOrder() {
     const { sortBasis } = this.getSortOptions();
@@ -445,7 +500,7 @@ export class Task {
     return { sortBasis: this.sort.split('-')[0], sortOrder: this.sort.split('-')[1] };
   }
 
-  //___T A S K S :  H E L P E R S___________________________________//
+  //___T A S K S :  H E L P E R S____________________________________//
   getCreationDateStr = () => {
     const d = this.formatCreationDate();
     const t = this.toAmPm(this.created);
@@ -473,11 +528,5 @@ export class Task {
       .replace('{%TASKCARD_TITLE%}', this.title)
       .replace('{%TASKCARD_DESCRIPTION%}', this.description)
       .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
-  }
-
-  //___T A S K  I T E M S___________________________________________//
-  removeItemById(id, item) {
-    // Filters out item from array
-    this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
   }
 }
