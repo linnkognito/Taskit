@@ -332,9 +332,13 @@ export class Project {
         note.created = new Date(noteData.created);
         return note;
       });
+      console.log('Loaded Task:', { title: newTask.title, description: newTask.description });
 
       return newTask;
     });
+
+    // Render saved tasks
+    project.tasks.forEach((task) => task.renderTaskCard());
 
     return project;
   }

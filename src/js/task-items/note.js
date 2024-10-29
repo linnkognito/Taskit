@@ -1,10 +1,14 @@
+//////////////____________________N O T E____________________//////////////
+
 import Quill from 'quill';
 import './linkBlot';
+
+//////////////__________________M A R K U P__________________//////////////
 
 import { helper } from '../../index';
 import noteMarkup from '../../components/tasks/items/note.html';
 
-////////////////////////////////////////////////////////////////////////
+//////////////_______________N O T E  C L A S S_______________//////////////
 
 export class Note {
   hideElement = helper.hideElement;
@@ -20,8 +24,10 @@ export class Note {
     this.created = new Date();
     this.sort = 'created';
     this.editAllMode = false;
+  }
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
 
-    // QUILL //
+  initializeQuill() {
     this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
       theme: null,
     });
@@ -31,7 +37,8 @@ export class Note {
     this.quill.on('text-change', () => {
       this.updateToolbar();
     });
-
+  }
+  initListeners() {
     // EVENT LISTENERS //
     this.btnLink.addEventListener('mouseenter', () => {
       this.toggleLinkIcon();
@@ -59,54 +66,7 @@ export class Note {
       if (note) return this.saveNote(e.target);
     });
     this.editorContainer.addEventListener('click', () => this.editor.focus());
-  }
 
-  // GETTERS //
-  //#region Getters
-  get noteEl() {
-    return document.querySelector(`.task-form__note[data-id="${this.id}"], .task-card__note[data-id="${this.id}"]`);
-  }
-  get noteTitle() {
-    return this.noteEl.querySelector('.task-card__note-title');
-  }
-  get noteInputTitle() {
-    return this.noteEl.querySelector('.task-card__note-input-title');
-  }
-  get titleInput() {
-    return this.noteEl.querySelector('.title-input');
-  }
-  get noteHeaderBtns() {
-    return this.noteEl.querySelectorAll('.task-card__btn');
-  }
-  get editor() {
-    return this.noteEl.querySelector('.ql-editor');
-    // return document.querySelector('.ql-editor');
-  }
-  get editorContainer() {
-    return document.querySelector('.task-form__note-editor');
-  }
-  get noteContent() {
-    return this.noteEl.querySelector('.task-card__note-content');
-  }
-  get linkInput() {
-    return this.popupLink.querySelector('.popup-insert-link__input');
-  }
-  get toolbar() {
-    return document.querySelector('.note-body__formatting-buttons');
-  }
-  get buttons() {
-    return this.toolbar.querySelectorAll('.btn-formatting');
-  }
-  get popupLink() {
-    return document.querySelector('.popup-insert-link');
-  }
-  get btnLink() {
-    return document.querySelector('.btn-link');
-  }
-  //#endregion
-
-  // EVENT LISTENERS //
-  initListeners() {
     // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
       // ENTER EDIT ALL MODE
@@ -155,39 +115,57 @@ export class Note {
     });
   }
 
-  initListeners() {
-    //return console.log(`Called initListeners for Note`);
+  //////////////________________G E T T E R S________________//////////////
+  //#region Getters
+  get noteEl() {
+    return document.querySelector(`.task-form__note[data-id="${this.id}"], .task-card__note[data-id="${this.id}"]`);
   }
+  get noteTitle() {
+    return this.noteEl.querySelector('.task-card__note-title');
+  }
+  get noteInputTitle() {
+    return this.noteEl.querySelector('.task-card__note-input-title');
+  }
+  get titleInput() {
+    return this.noteEl.querySelector('.title-input');
+  }
+  get noteHeaderBtns() {
+    return this.noteEl.querySelectorAll('.task-card__btn');
+  }
+  get editor() {
+    return this.noteEl.querySelector('.ql-editor');
+    // return document.querySelector('.ql-editor');
+  }
+  get editorContainer() {
+    return document.querySelector('.task-form__note-editor');
+  }
+  get noteContent() {
+    return this.noteEl.querySelector('.task-card__note-content');
+  }
+  get linkInput() {
+    return this.popupLink.querySelector('.popup-insert-link__input');
+  }
+  get toolbar() {
+    return document.querySelector('.note-body__formatting-buttons');
+  }
+  get buttons() {
+    return this.toolbar.querySelectorAll('.btn-formatting');
+  }
+  get popupLink() {
+    return document.querySelector('.popup-insert-link');
+  }
+  get btnLink() {
+    return document.querySelector('.btn-link');
+  }
+  //#endregion
 
-  // HELPERS //
-  toggleFormatBtn(btn, bool) {
-    return btn.classList.toggle('btn-formatting--active', bool);
-  }
-  toggleEditModeBtns(parent, cls) {
-    const buttons = parent.querySelectorAll(cls);
+  //////////////________________M E T H O D S________________//////////////
 
-    if (this.editAllMode) {
-      buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.showElement(btn) : this.hideElement(btn)));
-    }
-    if (!this.editAllMode) {
-      buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.hideElement(btn) : this.showElement(btn)));
-    }
-  }
-  isLink() {
-    const selection = this.quill.getSelection();
-    return selection ? !!this.quill.getFormat(selection).link : false;
-  }
-  clearClipboard() {
-    this.quill.root.innerHTML = '';
-  }
-
-  // METHODS //
   editAll(elements) {
     elements.forEach((el) => {
       this.editElement(el.el, el.type);
     });
   }
-
   editElement(el, type) {
     let input = el.nextElementSibling;
     this.hideAndShowEls(el, input);
@@ -211,12 +189,6 @@ export class Note {
 
     input.focus();
   }
-
-  deleteNote() {
-    this.task.removeItemById(this.id);
-    this.noteEl.remove();
-  }
-
   renderNote() {
     // prettier-ignore
     return noteMarkup
@@ -224,7 +196,6 @@ export class Note {
       .replace('{%NOTE_TITLE%}', this.title)
       .replace('{%NOTE_CONTENT%}', this.note);
   }
-
   saveNote(noteInput) {
     // Grab note value
     const content = this.quill.root.innerHTML;
@@ -241,7 +212,10 @@ export class Note {
       this.hideAndShowEls(this.editor, this.noteContent);
     }
   }
-
+  deleteNote() {
+    this.task.removeItemById(this.id);
+    this.noteEl.remove();
+  }
   saveTitle(title) {
     // Set title
     title.value.trim() ? (this.title = title.value) : this.title;
@@ -260,6 +234,7 @@ export class Note {
     }
   }
 
+  //___Q U I L L_____________________________________________________//
   formatLink() {
     const input = this.popupLink.querySelector('.popup-insert-link__input');
     const url = input.value;
@@ -272,7 +247,6 @@ export class Note {
     input.value = '';
     this.updateToolbar();
   }
-
   toggleLinkIcon() {
     // No selection || Selection is not a link
     const selection = this.quill.getSelection();
@@ -292,19 +266,16 @@ export class Note {
 
     this.updateToolbar();
   }
-
   resetToolbar() {
     this.buttons.forEach((btn) => {
       if (btn.classList.contains('btn-formatting--active')) btn.classList.remove('btn-formatting--active');
     });
   }
-
   getFormatType(btn) {
     const cls = [...btn.classList].find((cls) => cls.startsWith('btn-') && cls !== 'btn-formatting');
 
     return cls.split('-')[1];
   }
-
   formatText(btn) {
     // Get selection
     const selection = this.quill.getSelection();
@@ -325,7 +296,6 @@ export class Note {
 
       // Open popup
       this.showElement(this.popupLink);
-      //const input = this.popupLink.querySelector('.popup-insert-link__input');
       this.linkInput.focus();
       return;
     }
@@ -334,7 +304,6 @@ export class Note {
     this.quill.format(type, !isApplied);
     this.toggleFormatBtn(btn, !isApplied);
   }
-
   updateToolbar() {
     const selection = this.quill.getSelection();
     if (!selection) return this.resetToolbar();
@@ -348,5 +317,28 @@ export class Note {
 
       this.toggleFormatBtn(btn, !!isApplied);
     });
+  }
+
+  //////////////________________H E L P E R S________________//////////////
+
+  toggleFormatBtn(btn, bool) {
+    return btn.classList.toggle('btn-formatting--active', bool);
+  }
+  toggleEditModeBtns(parent, cls) {
+    const buttons = parent.querySelectorAll(cls);
+
+    if (this.editAllMode) {
+      buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.showElement(btn) : this.hideElement(btn)));
+    }
+    if (!this.editAllMode) {
+      buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.hideElement(btn) : this.showElement(btn)));
+    }
+  }
+  isLink() {
+    const selection = this.quill.getSelection();
+    return selection ? !!this.quill.getFormat(selection).link : false;
+  }
+  clearClipboard() {
+    this.quill.root.innerHTML = '';
   }
 }

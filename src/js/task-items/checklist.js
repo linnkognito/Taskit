@@ -1,15 +1,16 @@
+//////////////_______________C H E C K L I S T_______________//////////////
+
 import { helper } from '../../index';
+
+//////////////__________________M A R K U P__________________//////////////
+
 import checklistMarkup from '../../components/tasks/items/checklist.html';
 import listFormItem from '../../components/tasks/items/checklist-form-item.html';
 import listItemMarkup from '../../components/tasks/items/checklist-item.html';
 
-export class Checklist {
-  checklist = document.querySelector('.task-form__checklist');
-  checkbox = document.querySelectorAll('.checklist-item__checkbox');
-  addItem = document.querySelector('.btn-add');
-  titleInput = document.querySelector('.task-form__checklist-input-title');
-  titleEl = document.querySelector('.task-form__checklist-title');
+//////////////__________C H E C K L I S T  C L A S S__________//////////////
 
+export class Checklist {
   constructor(id, task) {
     this.id = id;
     this.title = '';
@@ -19,25 +20,31 @@ export class Checklist {
     this.sort = 'created';
 
     this.items = [];
+  }
 
-    // ADD LIST ITEM
-    this.checklist.addEventListener('click', (e) => {
-      const btnAdd = e.target.closest('.btn-add');
-      const btnDel = e.target.closest('.checklist-item__delete-btn');
-      const label = e.target.closest('.checklist-item__value');
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
 
-      // ADD LIST ITEM
-      if (btnAdd) return this.addListItem();
-      if (btnDel) return this.deleteListItem(e);
-      // EDIT LIST ITEM
-      if (label) return this.editListItem(label);
-    });
-    // SAVE TITLE
+  initListeners() {
     this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
+    this.checklist.addEventListener('click', (e) => this.handleClick(e));
+  }
+  handleClick(e) {
+    // Map button classes to methods
+    const actionMap = {
+      'btn-add': () => this.addListItem(),
+      'checklist-item__delete-btn': (e) => this.deleteListItem(e),
+      'checklist-item__value': (label) => this.editListItem(label),
+    };
+
+    // Call the method
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls](el);
+    });
   }
 
   //////////////_______________G E T T E R S_______________//////////////
-  //#region Name
+  //#region GETTERS
   get checklist() {
     return document.querySelector('.task-form__checklist');
   }
@@ -55,22 +62,33 @@ export class Checklist {
   }
   //#endregion
 
+  //////////////________________M E T H O D S________________//////////////
+
   renderChecklist() {
-    return checklistMarkup.replace('{%CHECKLIST_ID%}', this.id).replace('{%CHECKLIST_TITLE%}', this.title).replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
+    //prettier-ignore
+    return checklistMarkup
+      .replace('{%CHECKLIST_ID%}', this.id)
+      .replace('{%CHECKLIST_TITLE%}', this.title)
+      .replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
+  }
+  saveTitle(e) {
+    let title = e.target;
+
+    // Set title
+    title.value ? (this.title = title.value) : this.title;
+
+    // Add placeholder & value
+    title.placeholder = this.title || 'Add title';
+    title.value = this.title;
   }
 
-  initListeners() {
-    //return console.log(`Called initListeners for Checklist`);
-  }
-
+  //___L I S T  I T E M S____________________________________________//
   renderListItems() {
     let markup = '';
-
     this.items.forEach((item) => (markup += item.renderListItem()));
 
     return markup;
   }
-
   addListItem() {
     const list = this.checklist.querySelector('.task-form__checklist-body');
 
@@ -99,18 +117,6 @@ export class Checklist {
 
     newListItem.initListeners();
   }
-
-  saveTitle(e) {
-    let title = e.target;
-
-    // Set title
-    title.value ? (this.title = title.value) : this.title;
-
-    // Add placeholder & value
-    title.placeholder = this.title || 'Add title';
-    title.value = this.title;
-  }
-
   editListItem(labelEl) {
     const inputEl = labelEl.parentNode.querySelector('.checklist-item__value-input');
 
@@ -118,7 +124,6 @@ export class Checklist {
     inputEl.textContent = this.value;
     inputEl.focus();
   }
-
   deleteListItem(e) {
     const listItem = e.target.closest('.task-form__checklist-item');
     const id = listItem.dataset.id;
@@ -129,6 +134,8 @@ export class Checklist {
     }
   }
 }
+
+//////////////__________L I S T  I T E M  C L A S S__________//////////////
 
 class ListItem {
   constructor(id, checklist) {
@@ -141,7 +148,7 @@ class ListItem {
     this.sort = 'created';
   }
 
-  // GETTERS //
+  //////////////________________G E T T E R S________________//////////////
   get checkboxEl() {
     return document.querySelector(`.checklist-item__checkbox[id="checkbox-${this.id}"]`);
   }
@@ -155,7 +162,8 @@ class ListItem {
     return document.querySelector(`.task-form__checklist-item[data-id="checkbox-${this.id}"]`);
   }
 
-  // EVENT LISTENERS //
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
+
   initListeners() {
     // Check list item input value //
     this.inputEl.addEventListener('blur', (e) => {
@@ -174,7 +182,8 @@ class ListItem {
     this.checkboxEl.addEventListener('click', () => this.checkedBox(this.checkboxEl));
   }
 
-  // METHODS //
+  //////////////________________M E T H O D S________________//////////////
+
   renderListItem() {
     return listItemMarkup
       .replace('{%LIST_ITEM_ID%}', this.id)
@@ -183,7 +192,6 @@ class ListItem {
       .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`)
       .replace('{%LIST_ITEM_VALUE%}', this.value);
   }
-
   checkValue(e) {
     const input = e.target;
     const value = input.value.trim();
@@ -200,7 +208,6 @@ class ListItem {
     // Update elements
     helper.hideAndShowEls(input, this.labelEl);
   }
-
   checkedBox(cb) {
     this.checked = cb.checked;
 

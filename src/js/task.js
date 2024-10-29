@@ -35,7 +35,7 @@ export class Task {
     this.project = project;
     this.projectEl = projectEl;
 
-    this.title = 'Untitled';
+    this.title = '';
     this.prio = 0;
     this.description = itemMap['description'].default;
     this.dueDate = null;
@@ -191,6 +191,9 @@ export class Task {
 
     // Initialize Item event listeners
     newItem.initListeners();
+
+    // Update local storage
+    this.project.saveProjectState();
   }
 
   //___F O R M  I T E M S :  H E L P E R S____________________________//
@@ -216,6 +219,8 @@ export class Task {
     this.setPrioColors(this.prio);
 
     this.hasChanges = true;
+
+    this.project.saveProjectState();
   }
   setPrioColors() {
     // PLACEHOLDER
@@ -277,6 +282,9 @@ export class Task {
     this.displayDueDate();
 
     this.hasChanges = true;
+
+    // Update local storage
+    this.project.saveProjectState();
   }
   displayDueDate() {
     const { calendarBtn, dueDateEl } = this.getDueDateElements();
@@ -375,17 +383,7 @@ export class Task {
   }
 
   //___T A S K S_____________________________________________________//
-  saveTask() {
-    // Prevent saving if !title
-    this.checkValidity(this.formTitleInput);
-
-    // Update Task card values
-    this.created = new Date();
-    this.title = this.formTitleInput.value;
-    this.description = this.formDescInput.value.trim() || this.description;
-
-    // Swap out markup
-    this.taskForm.remove();
+  renderTaskCard() {
     this.insertMarkup(this.project.projectBody, 'afterbegin', this.populateTaskCardMarkup());
 
     // If there's no description, set default + styles
@@ -401,13 +399,66 @@ export class Task {
       this.renderItems();
       this.showElement(this.sortBar);
     }
+
     if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
+
+    this.initTaskCardListeners();
+  }
+  saveTask() {
+    // Prevent saving if !title
+    this.checkValidity(this.formTitleInput);
+
+    // Update Task card values
+    this.created = new Date();
+    this.title = this.formTitleInput.value || 'Untitled';
+    this.description = this.formDescInput.value.trim() || this.description;
+
+    // Swap out markup
+    this.taskForm.remove();
+    this.renderTaskCard();
 
     // Mark changes as saved
     this.hasChanges = false;
 
-    this.initTaskCardListeners();
+    // Update local storage
+    this.project.saveProjectState();
   }
+  isChecked(task) {
+    this.checked = true;
+    this.project.moveChecked(task);
+  }
+
+  //___T A S K S :  H E L P E R S____________________________________//
+  populateTaskCardMarkup() {
+    return taskCardMarkup
+      .replace('{%TASKCARD_ID%}', this.id)
+      .replace('{%TASKCARD_TITLE%}', this.title)
+      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
+      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
+  }
+  getCreationDateStr = () => {
+    const d = this.formatCreationDate();
+    const t = this.toAmPm(this.created);
+
+    return `${d}, ${t}`;
+  };
+  formatCreationDate() {
+    const y = this.created.getFullYear();
+    const m = String(this.created.getMonth() + 1).padStart(2, 0);
+    const d = String(this.created.getDate()).padStart(2, 0);
+
+    return `${m}/${d}/${y}`;
+  }
+  toAmPm(date) {
+    const time = date.toTimeString().slice(0, 5);
+    const [h24, min] = time.split(':');
+    const h12 = h24 % 12 || 12;
+    const per = h24 >= 12 ? 'PM' : 'AM';
+
+    return `${h12}:${min} ${per}`;
+  }
+
+  //___I T E M S______________________________________________________//
   renderItems() {
     let markup = '';
     this.items = [...this.checklists, ...this.notes];
@@ -422,13 +473,13 @@ export class Task {
       if (item instanceof Note) markup += item.renderNote();
     });
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
-  }
-  isChecked(task) {
-    this.checked = true;
-    this.project.moveChecked(task);
-  }
 
-  //___I T E M S______________________________________________________//
+    this.notes.forEach((note) => {
+      note.initializeQuill(); // prevents circular bug
+      note.initListeners();
+    });
+    this.checklists.forEach((checklist) => checklist.initListeners());
+  }
   removeItemById(id, item) {
     // Filters out item from array
     this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
@@ -501,35 +552,5 @@ export class Task {
   reverseSortOrder() {
     this.items.reverse();
     this.renderItems();
-  }
-
-  //___T A S K S :  H E L P E R S____________________________________//
-  getCreationDateStr = () => {
-    const d = this.formatCreationDate();
-    const t = this.toAmPm(this.created);
-
-    return `${d}, ${t}`;
-  };
-  formatCreationDate() {
-    const y = this.created.getFullYear();
-    const m = String(this.created.getMonth() + 1).padStart(2, 0);
-    const d = String(this.created.getDate()).padStart(2, 0);
-
-    return `${m}/${d}/${y}`;
-  }
-  toAmPm(date) {
-    const time = date.toTimeString().slice(0, 5);
-    const [h24, min] = time.split(':');
-    const h12 = h24 % 12 || 12;
-    const per = h24 >= 12 ? 'PM' : 'AM';
-
-    return `${h12}:${min} ${per}`;
-  }
-  populateTaskCardMarkup() {
-    return taskCardMarkup
-      .replace('{%TASKCARD_ID%}', this.id)
-      .replace('{%TASKCARD_TITLE%}', this.title)
-      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
   }
 }
