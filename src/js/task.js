@@ -21,6 +21,7 @@ export class Task {
   addClass = helper.addClass;
   hasClass = helper.hasClass;
   removeClass = helper.removeClass;
+  hideElement = helper.hideElement;
   showElement = helper.showElement;
   hideAndShowEls = helper.hideAndShowEls;
   clear = helper.clear;
@@ -400,6 +401,7 @@ export class Task {
       this.renderItems();
       this.showElement(this.sortBar);
     }
+    if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
 
     // Mark changes as saved
     this.hasChanges = false;
@@ -458,7 +460,7 @@ export class Task {
   sortTaskItems() {
     // Sort: Creation date
     if (this.sort === 'Creation date') {
-      return this.items.sort((a, b) => b.dueDateObj.getTime() - a.dueDateObj.getTime());
+      return this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
     }
 
     // Sort: Alphabetical
@@ -468,7 +470,7 @@ export class Task {
 
     // Sort: Item type
     if (this.sort === 'Item type') {
-      this.items.sort((a, b) => b.dueDateObj.getTime() - a.dueDateObj.getTime());
+      this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
       this.items.sort((a, b) => (a instanceof Checklist) - (b instanceof Checklist));
       return;
     }

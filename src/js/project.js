@@ -2,6 +2,8 @@
 
 import { app, helper } from '../index';
 import { Task } from './task';
+import { Checklist } from './task-items/checklist';
+import { Note } from './task-items/note';
 
 //////////////_________________M A R K U P_________________//////////////
 
@@ -108,6 +110,12 @@ export class Project {
       },
       { once: true }
     );
+
+    if (localStorage.getItem(`project_${this.id}`)) {
+      this.hideAndShowEls(this.inputTitle, this.titleEl);
+      this.titleEl.textContent = this.title;
+      return;
+    }
 
     this.inputTitle.focus();
   }
@@ -244,12 +252,11 @@ export class Project {
         id: task.id,
         title: task.title,
         description: task.description,
-        dueDate: task.dueDate,
         prio: task.prio,
-        created: task.created,
         dueDate: task.dueDate,
         dueTime: task.dueTime,
-        dueDateObj: task.dueDateObj,
+        dueDateObj: task.dueDateObj?.getTime() ?? null,
+        created: task.created,
         sort: task.sort,
         checked: task.checked,
 
@@ -291,21 +298,43 @@ export class Project {
     const savedProject = JSON.parse(localStorage.getItem(`project_${id}`));
     if (!savedProject) return null;
 
+    // Render project & populate title
     const project = new Project(savedProject.id);
-
     project.title = savedProject.title;
-    project.tasks = savedProject.tasks.map((taskData) => {
-      const task = new Task(taskData.id, project, project.projectEl);
-      task.title = taskData.title;
-      task.description = taskData.description;
-      task.dueDate = taskData.dueDate;
-      task.prio = taskData.prio;
-      task.created = new Date(taskData.created);
-      return task;
-    });
-
     project.renderProjectCard();
-    project.tasks.forEach((task) => task.renderItems());
+
+    // Load all tasks + items
+    project.tasks = savedProject.tasks.map((taskData) => {
+      const newTask = new Task(taskData.id, project, project.projectEl);
+
+      newTask.title = taskData.title;
+      newTask.description = taskData.description;
+      newTask.dueDate = taskData.dueDate;
+      newTask.dueTime = taskData.dueTime;
+      newTask.dueDateObj = taskData.dueDateObj ? new Date(taskData.dueDateObj) : null;
+      newTask.prio = taskData.prio;
+      newTask.created = new Date(taskData.created);
+
+      // Restore checklists
+      newTask.checklists = taskData.checklists.map((clData) => {
+        const checklist = new Checklist(clData.id, newTask);
+        checklist.title = clData.title;
+        checklist.checked = clData.checked;
+        checklist.created = new Date(clData.created);
+        return checklist;
+      });
+
+      // Restore notes
+      newTask.notes = taskData.notes.map((noteData) => {
+        const note = new Note(noteData.id, newTask);
+        note.title = noteData.title;
+        note.note = noteData.note;
+        note.created = new Date(noteData.created);
+        return note;
+      });
+
+      return newTask;
+    });
 
     return project;
   }

@@ -12,7 +12,7 @@ export class App {
   constructor() {
     this.projectsArr = [];
 
-    this.loadProjectsFromStorage;
+    this.loadProjectsFromStorage();
     this.addBtn.addEventListener('click', this.createNewProject.bind(this));
   }
 
@@ -57,7 +57,7 @@ export class App {
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
 
-  static loadProjectsFromStorage() {
+  loadProjectsFromStorage() {
     // Find all project keys in local storage
     const projectIds = Object.keys(localStorage).filter((key) => key.startsWith('project_'));
 
