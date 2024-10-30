@@ -25,6 +25,12 @@ export class Note {
     this.sort = 'created';
     this.editAllMode = false;
 
+    this.quill = null;
+  }
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
+  initQuill() {
+    if (!this.noteEl) return;
+
     this.quill = this.quill = new Quill(this.noteEl.querySelector('.note-editor'), {
       theme: null,
     });
@@ -35,8 +41,6 @@ export class Note {
       this.updateToolbar();
     });
   }
-  //////////////__________E V E N T  H A N D L E R S__________//////////////
-
   initListeners() {
     // EVENT LISTENERS //
     this.btnLink.addEventListener('mouseenter', () => {

@@ -474,6 +474,9 @@ export class Task {
       if (item instanceof Note) markup += item.renderNote();
     });
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
+
+    // If notes, initialize Quill
+    if (this.notes.length) this.notes.forEach((note) => note.initQuill());
   }
   removeItemById(id, item) {
     // Filters out item from array
