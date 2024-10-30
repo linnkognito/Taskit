@@ -45,7 +45,6 @@ export class Project {
     // Map button classes to methods
     const actionMap = {
       'btn-add-task': () => this.addTask(),
-      'btn-delete': (btn) => this.deleteTask(btn),
       'btn-settings': (btn) => this.openSettings(btn),
       'btn-sort-tasks': (btn) => this.openSettings(btn),
       'project-card__title': (title) => this.editProjectTitle(title),
@@ -223,23 +222,17 @@ export class Project {
     const newTask = new Task(this.generateId(), this, this.projectEl);
     this.tasks.push(newTask);
 
-    // Have form id match Task id
-    this.taskForm.dataset.id = newTask.id;
-
     // Initialize event listeners of Task instance
     newTask.initListeners();
 
     // Local storage
     this.saveProjectState();
   }
-
-  hasUnsavedChanges() {
-    return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges; // returns boolean
-  }
-
   discardChanges() {
     return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean
   }
+
+  //___T A S K S_______________________________________________//
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
 

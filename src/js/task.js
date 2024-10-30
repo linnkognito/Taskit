@@ -45,6 +45,7 @@ export class Task {
 
     this.checked = false;
     this.sort = '';
+    this.reverseSort = false;
 
     this.checklists = [];
     this.notes = [];
@@ -54,7 +55,7 @@ export class Task {
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 
   initListeners() {
-    this.taskForm.addEventListener('click', this.handleClick.bind(this));
+    this.taskEl.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
     // Map button classes to methods
@@ -78,6 +79,7 @@ export class Task {
   }
   handleCardClick(e) {
     const actionMap = {
+      'btn-delete': () => this.deleteTask(),
       'btn-active-selection': () => this.showDropdown(),
     };
 
@@ -87,10 +89,37 @@ export class Task {
       }
     });
   }
+  initDropdownListeners() {
+    this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
+    this.btnSwapSort.addEventListener('click', () => this.reverseSortOrder());
+
+    // Listen for close
+    this.dropdown.addEventListener('mouseleave', () => this.dropdown.remove());
+    document.addEventListener('click', (e) => {
+      if (!this.dropdown || this.dropdown.contains(e.target) || this.btnActiveSort.contains(e.target)) return;
+      this.dropdown.remove();
+    });
+  }
+  handleDropdownClick(e) {
+    const actionMap = {
+      'dropdown-sort-items__li': (el) => this.renderItems(el),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) {
+        this.sort = el.dataset.sort;
+        actionMap[cls](el);
+      }
+    });
+  }
 
   //////////////________________G E T T E R S________________//////////////
 
   //#region Getters
+  get taskEl() {
+    return document.querySelector(`.task-form, .task-card[data-id="${this.id}"]`);
+  }
   get noteForm() {
     return document.querySelector('.task-form__note');
   }
@@ -119,10 +148,10 @@ export class Task {
     return document.querySelector('.task-form__description-input');
   }
   get descriptionEl() {
-    return this.taskCard.querySelector('.task-card__description');
+    return this.taskEl.querySelector('.task-card__description');
   }
   get taskCardContainer() {
-    return this.taskCard.querySelector('.task-card__container');
+    return this.taskEl.querySelector('.task-card__container');
   }
   get taskFormContainer() {
     return this.projectEl.querySelector('.task-form__container');
@@ -146,24 +175,26 @@ export class Task {
     return this.modalDueDate.querySelector('.btn-cancel');
   }
   get sortBar() {
-    return this.taskCard.querySelector('.task-card__sort-items');
+    return this.taskEl.querySelector('.task-card__sort-items');
   }
   get dropdown() {
-    return this.taskCard.querySelector('.dropdown-sort-items');
+    return this.taskEl.querySelector('.dropdown-sort-items');
   }
   get btnActiveSort() {
-    return this.taskCard.querySelector('.btn-active-selection');
+    return this.taskEl.querySelector('.btn-active-selection');
   }
   get btnSwapSort() {
-    return this.taskCard.querySelector('.btn-swap-sort-order');
+    return this.taskEl.querySelector('.btn-swap-sort-order');
   }
   get dropdownText() {
-    return this.dropdown.querySelector('.btn-active-selection--text');
+    return this.taskEl.querySelector('.btn-active-selection--text');
   }
   get dropdownSelections() {
     if (this.dropdown) return {};
   }
-
+  get btnSwapSort() {
+    return document.querySelector('.btn-swap-sort-order');
+  }
   //#endregion
 
   //////////////________________M E T H O D S________________//////////////
@@ -191,9 +222,60 @@ export class Task {
 
     // Initialize Item event listeners
     newItem.initListeners();
+    if (newItem instanceof Note) newItem.initQuill();
 
     // Update local storage
     this.project.saveProjectState();
+  }
+
+  //___T A S K S_____________________________________________________//
+  saveTask() {
+    // Update Task card values
+    this.created = new Date();
+    this.title = this.formTitleInput.value || 'Untitled';
+    this.description = this.formDescInput.value.trim() || this.description;
+
+    // Swap out markup
+    this.taskForm.remove();
+    this.renderTaskCard();
+
+    // Mark changes as saved
+    this.hasChanges = false;
+
+    // Update local storage
+    this.project.saveProjectState();
+  }
+  renderTaskCard() {
+    this.insertMarkup(this.project.projectBody, 'afterbegin', this.populateTaskCardMarkup());
+
+    // If there's no description, set default + styles
+    if (this.description === itemMap['description'].default) {
+      this.addClass(this.descriptionEl, 'description--default');
+    }
+
+    // Display due date
+    this.displayDueDate();
+
+    // Display task Items (if there are any)
+    if (this.checklists.length || this.notes.length) {
+      this.renderItems();
+      this.showElement(this.sortBar);
+    }
+
+    if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
+
+    this.initTaskCardListeners();
+  }
+  deleteTask() {
+    this.project.tasks = this.project.tasks.filter((t) => t.id !== this.id);
+    this.taskEl.remove();
+
+    // Update state
+    this.project.saveProjectState();
+  }
+  isChecked(task) {
+    this.checked = true;
+    this.project.moveChecked(task);
   }
 
   //___F O R M  I T E M S :  H E L P E R S____________________________//
@@ -383,52 +465,6 @@ export class Task {
     }
   }
 
-  //___T A S K S_____________________________________________________//
-  renderTaskCard() {
-    this.insertMarkup(this.project.projectBody, 'afterbegin', this.populateTaskCardMarkup());
-
-    // If there's no description, set default + styles
-    if (this.description === itemMap['description'].default) {
-      this.addClass(this.descriptionEl, 'description--default');
-    }
-
-    // Display due date
-    this.displayDueDate();
-
-    // Display task Items (if there are any)
-    if (this.checklists.length || this.notes.length) {
-      this.renderItems();
-      this.showElement(this.sortBar);
-    }
-
-    if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
-
-    this.initTaskCardListeners();
-  }
-  saveTask() {
-    // Prevent saving if !title
-    this.checkValidity(this.formTitleInput);
-
-    // Update Task card values
-    this.created = new Date();
-    this.title = this.formTitleInput.value || 'Untitled';
-    this.description = this.formDescInput.value.trim() || this.description;
-
-    // Swap out markup
-    this.taskForm.remove();
-    this.renderTaskCard();
-
-    // Mark changes as saved
-    this.hasChanges = false;
-
-    // Update local storage
-    this.project.saveProjectState();
-  }
-  isChecked(task) {
-    this.checked = true;
-    this.project.moveChecked(task);
-  }
-
   //___T A S K S :  H E L P E R S____________________________________//
   populateTaskCardMarkup() {
     return taskCardMarkup
@@ -460,13 +496,15 @@ export class Task {
   }
 
   //___I T E M S______________________________________________________//
-  renderItems() {
+  renderItems(el = null) {
     let markup = '';
     this.items = [...this.checklists, ...this.notes];
 
     // Sort items
-    if (!this.sort) this.sort = 'Creation date';
+    this.sort = el?.dataset.sort || 'Creation date';
     this.sortTaskItems();
+
+    this.clear(this.taskCardContainer);
 
     // Render items
     this.items.forEach((item) => {
@@ -484,6 +522,30 @@ export class Task {
   }
 
   //___I T E M S :  S O R T___________________________________________//
+  sortTaskItems() {
+    // Sort: Creation date
+    if (this.sort === 'Creation date') {
+      this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
+    }
+    // Sort: Alphabetical
+    if (this.sort === 'Alphabetically') {
+      this.items.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    // Sort: Item type
+    if (this.sort === 'Item type') {
+      this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
+      this.items.sort((a, b) => (a instanceof Checklist) - (b instanceof Checklist));
+    }
+
+    // Check if reverse
+    if (this.reverseSort) this.items.reverse();
+
+    this.dropdownText.textContent = this.sort;
+  }
+  reverseSortOrder() {
+    this.reverseSort = !this.reverseSort;
+    this.renderItems();
+  }
   showDropdown() {
     // Avoid duplicate dropdown elements
     if (this.dropdown) return this.animateRemove();
@@ -505,50 +567,5 @@ export class Task {
   animateRemove() {
     this.scaleDown(this.dropdown, 'top');
     this.dropdown.addEventListener('animationend', () => this.dropdown.remove(), { once: true });
-  }
-  sortTaskItems() {
-    // Sort: Creation date
-    if (this.sort === 'Creation date') {
-      return this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
-    }
-
-    // Sort: Alphabetical
-    if (this.sort === 'Alphabetically') {
-      return this.items.sort((a, b) => b.title - a.title);
-    }
-
-    // Sort: Item type
-    if (this.sort === 'Item type') {
-      this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
-      this.items.sort((a, b) => (a instanceof Checklist) - (b instanceof Checklist));
-      return;
-    }
-  }
-  initDropdownListeners() {
-    this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
-
-    // Listen for close
-    this.dropdown.addEventListener('mouseleave', () => this.dropdown.remove());
-    document.addEventListener('click', (e) => {
-      if (!this.dropdown || this.dropdown.contains(e.target) || this.btnActiveSort.contains(e.target)) return;
-      this.dropdown.remove();
-    });
-  }
-  handleDropdownClick(e) {
-    const actionMap = {
-      'dropdown-sort-items__li': () => this.sortTaskItems(),
-    };
-
-    Object.keys(actionMap).forEach((cls) => {
-      const el = e.target.closest(`.${cls}`);
-      if (el) {
-        this.sort = el.dataset.sort;
-        actionMap[cls]();
-      }
-    });
-  }
-  reverseSortOrder() {
-    this.items.reverse();
-    this.renderItems();
   }
 }

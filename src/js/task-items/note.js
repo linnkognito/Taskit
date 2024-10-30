@@ -18,7 +18,7 @@ export class Note {
 
   constructor(id, task) {
     this.id = id;
-    this.title = `Untitled Note`;
+    this.title = 'Untitled Note';
     this.task = task;
     this.note = '';
     this.created = new Date();
@@ -29,9 +29,7 @@ export class Note {
   }
   //////////////__________E V E N T  H A N D L E R S__________//////////////
   initQuill() {
-    if (!this.noteEl) return;
-
-    this.quill = this.quill = new Quill(this.noteEl.querySelector('.note-editor'), {
+    this.quill = this.quill = new Quill(this.editorContainer, {
       theme: null,
     });
     this.quill.on('selection-change', () => {
@@ -42,7 +40,9 @@ export class Note {
     });
   }
   initListeners() {
-    // EVENT LISTENERS //
+    // Click on note editor area
+    this.editorContainer.addEventListener('click', () => this.focusTextCursor());
+
     this.btnLink.addEventListener('mouseenter', () => {
       this.toggleLinkIcon();
     });
@@ -69,13 +69,6 @@ export class Note {
       if (input) return this.saveTitle(e.target);
       if (note) return this.saveNote(e.target);
     });
-
-    this.editorContainer.addEventListener('click', (e) => {
-      console.log(this.editor);
-      console.log(e.target);
-      this.editor.focus();
-    });
-
     // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
       // ENTER EDIT ALL MODE
@@ -324,6 +317,11 @@ export class Note {
 
       this.toggleFormatBtn(btn, !!isApplied);
     });
+  }
+  focusTextCursor() {
+    this.quill.focus();
+    const length = this.quill.getLength();
+    this.quill.setSelection(length, length);
   }
 
   //////////////________________H E L P E R S________________//////////////

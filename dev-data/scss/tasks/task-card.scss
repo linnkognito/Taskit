@@ -123,16 +123,21 @@
         display: flex;
         gap: 0.3em;
         align-items: center;
+        justify-content: center;
+        width: 40%;
         padding: 0.05em 0.4em;
         font-size: 0.9rem;
         background: white;
         border: 1px solid vars.$col-primary-op;
         border-radius: vars.$br-primary;
+        transition: all 0.1s ease-in;
         cursor: pointer;
 
         &:hover {
-          background: vars.$col-primary-low-op;
+          box-shadow: 0 0 2px vars.$col-primary-dark;
+          border: 1px solid vars.$col-primary-low-op;
         }
+
         .icon-active-selection {
           width: 1em;
         }

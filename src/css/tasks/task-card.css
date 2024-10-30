@@ -181,15 +181,19 @@
   display: flex;
   gap: 0.3em;
   align-items: center;
+  justify-content: center;
+  width: 40%;
   padding: 0.05em 0.4em;
   font-size: 0.9rem;
   background: white;
   border: 1px solid rgba(213, 207, 204, 0.7);
   border-radius: 0.9em;
+  transition: all 0.1s ease-in;
   cursor: pointer;
 }
 .task-card .task-card__body .task-card__sort-items .btn-active-selection:hover {
-  background: rgba(213, 207, 204, 0.4);
+  box-shadow: 0 0 2px rgb(165, 160, 158);
+  border: 1px solid rgba(213, 207, 204, 0.4);
 }
 .task-card .task-card__body .task-card__sort-items .btn-active-selection .icon-active-selection {
   width: 1em;
