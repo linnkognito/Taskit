@@ -25,7 +25,7 @@ export class Checklist {
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 
   initListeners() {
-    this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
+    if (this.titleInput) this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
     this.checklist.addEventListener('click', (e) => this.handleClick(e));
   }
   handleClick(e) {

@@ -220,6 +220,7 @@ export class Task {
 
     this.hasChanges = true;
 
+    // Update local storage
     this.project.saveProjectState();
   }
   setPrioColors() {
@@ -473,12 +474,6 @@ export class Task {
       if (item instanceof Note) markup += item.renderNote();
     });
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
-
-    this.notes.forEach((note) => {
-      note.initializeQuill(); // prevents circular bug
-      note.initListeners();
-    });
-    this.checklists.forEach((checklist) => checklist.initListeners());
   }
   removeItemById(id, item) {
     // Filters out item from array

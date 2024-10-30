@@ -24,11 +24,8 @@ export class Note {
     this.created = new Date();
     this.sort = 'created';
     this.editAllMode = false;
-  }
-  //////////////__________E V E N T  H A N D L E R S__________//////////////
 
-  initializeQuill() {
-    this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
+    this.quill = this.quill = new Quill(this.noteEl.querySelector('.note-editor'), {
       theme: null,
     });
     this.quill.on('selection-change', () => {
@@ -38,6 +35,8 @@ export class Note {
       this.updateToolbar();
     });
   }
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
+
   initListeners() {
     // EVENT LISTENERS //
     this.btnLink.addEventListener('mouseenter', () => {
@@ -56,6 +55,7 @@ export class Note {
       if (apply) return this.formatLink();
       if (cancel) return this.hideElement(this.popupLink);
     });
+
     document.addEventListener('focusout', (e) => {
       if (this.editAllMode) return;
 
@@ -65,7 +65,12 @@ export class Note {
       if (input) return this.saveTitle(e.target);
       if (note) return this.saveNote(e.target);
     });
-    this.editorContainer.addEventListener('click', () => this.editor.focus());
+
+    this.editorContainer.addEventListener('click', (e) => {
+      console.log(this.editor);
+      console.log(e.target);
+      this.editor.focus();
+    });
 
     // HEADER BTNS CLICKED
     this.noteEl.addEventListener('click', (e) => {
@@ -104,7 +109,6 @@ export class Note {
         this.deleteNote();
       }
     });
-
     // EDIT SINGLE ELEMENT
     this.noteEl.addEventListener('click', (e) => {
       // TITLE CLICKED
@@ -133,11 +137,10 @@ export class Note {
     return this.noteEl.querySelectorAll('.task-card__btn');
   }
   get editor() {
-    return this.noteEl.querySelector('.ql-editor');
-    // return document.querySelector('.ql-editor');
+    return document.querySelector('.ql-editor');
   }
   get editorContainer() {
-    return document.querySelector('.task-form__note-editor');
+    return document.querySelector('.note-editor');
   }
   get noteContent() {
     return this.noteEl.querySelector('.task-card__note-content');
@@ -174,7 +177,7 @@ export class Note {
       this.showElement(this.toolbar);
 
       // Reinitialize Quill
-      this.quill = new Quill(this.noteEl.querySelector('.task-form__note-editor'), {
+      this.quill = new Quill(this.noteEl.querySelector('.note-editor'), {
         theme: null,
       });
 

@@ -232,9 +232,11 @@ export class Project {
     // Local storage
     this.saveProjectState();
   }
+
   hasUnsavedChanges() {
     return this.tasks.find((task) => task.id === this.taskForm.dataset.id)?.hasChanges; // returns boolean
   }
+
   discardChanges() {
     return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean
   }
@@ -256,7 +258,7 @@ export class Project {
         dueDate: task.dueDate,
         dueTime: task.dueTime,
         dueDateObj: task.dueDateObj?.getTime() ?? null,
-        created: task.created,
+        created: task.created ? task.created.getTime() : null,
         sort: task.sort,
         checked: task.checked,
 
@@ -265,7 +267,7 @@ export class Project {
           id: cl.id,
           title: cl.title,
           checked: cl.checked,
-          created: cl.created,
+          created: cl.created ? cl.created.getTime() : null,
           sort: cl.sort,
 
           // LIST ITEMS (CHECKLIST) //
@@ -273,7 +275,7 @@ export class Project {
             id: li.id,
             value: li.value,
             checked: li.checked,
-            created: li.created,
+            created: li.created ? li.created.getTime() : null,
             sort: li.sort,
           })),
         })),
@@ -282,9 +284,8 @@ export class Project {
         notes: task.notes.map((n) => ({
           id: n.id,
           title: n.title,
-          task: n.task,
           note: n.note,
-          created: n.created,
+          created: n.created ? n.created.getTime() : null,
           sort: n.sort,
         })),
       })),
@@ -332,7 +333,6 @@ export class Project {
         note.created = new Date(noteData.created);
         return note;
       });
-      console.log('Loaded Task:', { title: newTask.title, description: newTask.description });
 
       return newTask;
     });

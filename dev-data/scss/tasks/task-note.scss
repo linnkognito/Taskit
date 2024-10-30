@@ -177,7 +177,7 @@
     //     background: vars.$col-primary-dark;
     //   }
     // }
-    .task-form__note-editor {
+    .note-editor {
       width: 100%;
       min-height: 5em;
       max-height: 10em;
@@ -190,7 +190,7 @@
       cursor: text;
       overflow-y: auto;
     }
-    .task-form__note-editor:focus {
+    .note-editor:focus {
       color: vars.$col-secondary;
       border: 1px dashed vars.$col-primary-dark;
       outline: none;
