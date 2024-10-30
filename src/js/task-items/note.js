@@ -6,23 +6,21 @@ import './linkBlot';
 //////////////__________________M A R K U P__________________//////////////
 
 import { helper } from '../../index';
+import { TaskItem } from './taskItems';
 import noteMarkup from '../../components/tasks/items/note.html';
 
 //////////////_______________N O T E  C L A S S_______________//////////////
 
-export class Note {
+export class Note extends TaskItem {
   hideElement = helper.hideElement;
   showElement = helper.showElement;
   hideAndShowEls = helper.hideAndShowEls;
   hasClass = helper.hasClass;
 
   constructor(id, task) {
-    this.id = id;
+    super(id, task);
     this.title = 'Untitled Note';
-    this.task = task;
     this.note = '';
-    this.created = new Date();
-    this.sort = 'created';
     this.editAllMode = false;
 
     this.quill = null;
@@ -99,11 +97,6 @@ export class Note {
           this.hideAndShowEls(this.editorContainer, this.noteContent);
           this.hideElement(this.toolbar);
         }
-      }
-
-      // DELETE NOTE
-      if (e.target.closest('.btn-delete-note')) {
-        this.deleteNote();
       }
     });
     // EDIT SINGLE ELEMENT
@@ -212,10 +205,10 @@ export class Note {
       this.hideAndShowEls(this.editor, this.noteContent);
     }
   }
-  deleteNote() {
-    this.task.removeItemById(this.id);
-    this.noteEl.remove();
-  }
+  // deleteNote() {
+  //   this.task.removeItemById(this.id);
+  //   this.noteEl.remove();
+  // }
   saveTitle(title) {
     // Set title
     title.value.trim() ? (this.title = title.value) : this.title;

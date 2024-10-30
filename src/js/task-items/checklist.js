@@ -1,6 +1,7 @@
 //////////////_______________C H E C K L I S T_______________//////////////
 
 import { helper } from '../../index';
+import { TaskItem } from './taskItems';
 
 //////////////__________________M A R K U P__________________//////////////
 
@@ -10,14 +11,13 @@ import listItemMarkup from '../../components/tasks/items/checklist-item.html';
 
 //////////////__________C H E C K L I S T  C L A S S__________//////////////
 
-export class Checklist {
+export class Checklist extends TaskItem {
+  hideAndShowEls = helper.hideAndShowEls;
+
   constructor(id, task) {
-    this.id = id;
+    super(id, task);
     this.title = '';
     this.checked = false;
-    this.task = task;
-    this.created = new Date();
-    this.sort = 'created';
 
     this.items = [];
   }
@@ -26,12 +26,12 @@ export class Checklist {
 
   initListeners() {
     if (this.titleInput) this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
-    this.checklist.addEventListener('click', (e) => this.handleClick(e));
+    this.checklist.addEventListener('click', (e) => this.handleLiClick(e));
   }
-  handleClick(e) {
+  handleLiClick(e) {
     // Map button classes to methods
     const actionMap = {
-      'btn-add': () => this.addListItem(),
+      'btn-add-li': () => this.addListItem(),
       'checklist-item__delete-btn': (e) => this.deleteListItem(e),
       'checklist-item__value': (label) => this.editListItem(label),
     };
@@ -46,7 +46,7 @@ export class Checklist {
   //////////////_______________G E T T E R S_______________//////////////
   //#region GETTERS
   get checklist() {
-    return document.querySelector('.task-form__checklist');
+    return document.querySelector(`.checklist[data-id="${this.id}"]`);
   }
   get checkbox() {
     return document.querySelectorAll('.checklist-item__checkbox');
@@ -55,10 +55,10 @@ export class Checklist {
     return document.querySelector('.btn-add');
   }
   get titleInput() {
-    return document.querySelector('.task-form__checklist-input-title');
+    return document.querySelector('.task-form__checklist-input-title, .task-card__checklist-input-title');
   }
   get titleEl() {
-    return document.querySelector('.task-form__checklist-title');
+    return document.querySelector('.task-form__checklist-title, .task-card__checklist-input-title');
   }
   //#endregion
 
@@ -80,6 +80,9 @@ export class Checklist {
     // Add placeholder & value
     title.placeholder = this.title || 'Add title';
     title.value = this.title;
+
+    this.hideAndShowEls(this.titleInput, this.titleEl);
+    this.titleEl.textContent = this.title;
   }
 
   //___L I S T  I T E M S____________________________________________//

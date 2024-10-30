@@ -62,10 +62,16 @@ export class Task {
     const actionMap = {
       'prio-btn': (btn) => this.setPrio(btn),
       'btn-due-date': (btn) => this.openDueModal(btn),
-      'btn-add-checklist': (btn) => this.addItem(btn),
-      'btn-add-note': (btn) => this.addItem(btn),
       'btn-save': () => this.saveTask(),
       'btn-cancel': () => this.taskForm.remove(),
+      'btn-delete': () => this.deleteTask(),
+      'btn-active-selection': () => this.showDropdown(),
+
+      'btn-add-checklist': (btn) => this.addItem(btn),
+      'btn-delete-checklist': (btn) => this.triggerItemAction(btn, 'delete'),
+
+      'btn-add-note': (btn) => this.addItem(btn),
+      'btn-delete-note': (btn) => this.triggerItemAction(btn, 'delete'),
     };
 
     // Call the method
@@ -74,21 +80,21 @@ export class Task {
       if (el) actionMap[cls](el);
     });
   }
-  initTaskCardListeners() {
-    this.taskCard.addEventListener('click', this.handleCardClick.bind(this));
-  }
-  handleCardClick(e) {
-    const actionMap = {
-      'btn-delete': () => this.deleteTask(),
-      'btn-active-selection': () => this.showDropdown(),
-    };
+  // initTaskCardListeners() {
+  //   this.taskCard.addEventListener('click', this.handleCardClick.bind(this));
+  // }
+  // handleCardClick(e) {
+  //   const actionMap = {
+  //     'btn-delete': () => this.deleteTask(),
+  //     'btn-active-selection': () => this.showDropdown(),
+  //   };
 
-    Object.keys(actionMap).forEach((cls) => {
-      if (e.target.closest(`.${cls}`)) {
-        actionMap[cls]();
-      }
-    });
-  }
+  //   Object.keys(actionMap).forEach((cls) => {
+  //     if (e.target.closest(`.${cls}`)) {
+  //       actionMap[cls]();
+  //     }
+  //   });
+  // }
   initDropdownListeners() {
     this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
     this.btnSwapSort.addEventListener('click', () => this.reverseSortOrder());
@@ -112,6 +118,16 @@ export class Task {
         actionMap[cls](el);
       }
     });
+  }
+
+  triggerItemAction(el, action) {
+    const itemEl = el.closest('.checklist, .note');
+    const itemId = itemEl.dataset.id;
+    const itemType = itemEl.dataset.type;
+    const item = this.findById(itemId, itemType);
+
+    if (action === 'delete') item.deleteItem(itemEl, itemType);
+    if (action === 'edit') item.editItem();
   }
 
   //////////////________________G E T T E R S________________//////////////
@@ -207,7 +223,8 @@ export class Task {
 
     // Render
     const markup = this.getPopulatedMarkup(item.markup, type, id);
-    this.insertMarkup(this.taskFormContainer, 'afterbegin', markup);
+    const container = this.taskFormContainer || this.taskCardContainer;
+    this.insertMarkup(container, 'afterbegin', markup);
 
     // Create item instance
     const newItem = item.createInstance(id, this);
@@ -264,7 +281,8 @@ export class Task {
 
     if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
 
-    this.initTaskCardListeners();
+    // this.initTaskCardListeners();
+    this.initListeners();
   }
   deleteTask() {
     this.project.tasks = this.project.tasks.filter((t) => t.id !== this.id);
@@ -515,6 +533,9 @@ export class Task {
 
     // If notes, initialize Quill
     if (this.notes.length) this.notes.forEach((note) => note.initQuill());
+  }
+  findById(id, type) {
+    return this[`${type}s`].find((item) => item.id === id);
   }
   removeItemById(id, item) {
     // Filters out item from array
