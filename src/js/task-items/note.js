@@ -49,14 +49,15 @@ export class Note extends TaskItem {
       if (!btn) return;
       this.formatText(btn);
     });
-    this.popupLink.addEventListener('click', (e) => {
-      const apply = e.target.closest('.btn-apply');
-      const cancel = e.target.closest('.btn-cancel');
-      if (!apply && !cancel) return;
+    if (this.popupLink)
+      this.popupLink.addEventListener('click', (e) => {
+        const apply = e.target.closest('.btn-apply');
+        const cancel = e.target.closest('.btn-cancel');
+        if (!apply && !cancel) return;
 
-      if (apply) return this.formatLink();
-      if (cancel) return this.hideElement(this.popupLink);
-    });
+        if (apply) return this.formatLink();
+        if (cancel) return this.hideElement(this.popupLink);
+      });
 
     document.addEventListener('focusout', (e) => {
       if (this.editAllMode) return;
@@ -81,7 +82,7 @@ export class Note extends TaskItem {
 
       // SAVE & EXIT EDIT ALL MODE
       if (e.target.closest('.btn-save-edits')) {
-        // this.saveTitle(this.noteInputTitle);
+        // this.saveTitle(this.titleEl);
         this.saveNote(this.editor);
         this.editAllMode = false;
         this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
@@ -93,7 +94,7 @@ export class Note extends TaskItem {
         if (userConfirmed) {
           this.editAllMode = false;
           this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
-          this.hideAndShowEls(this.noteInputTitle, this.titleEl);
+          this.hideAndShowEls(this.titleEl, this.titleEl);
           this.hideAndShowEls(this.editorContainer, this.noteContent);
           this.hideElement(this.toolbar);
         }
@@ -109,13 +110,10 @@ export class Note extends TaskItem {
   //////////////________________G E T T E R S________________//////////////
   //#region Getters
   get noteEl() {
-    return document.querySelector(`.task-form__note[data-id="${this.id}"], .task-card__note[data-id="${this.id}"]`);
+    return document.querySelector(`.note[data-id="${this.id}"]`);
   }
   get titleEl() {
     return this.noteEl.querySelector('.title');
-  }
-  get noteInputTitle() {
-    return this.noteEl.querySelector('.task-card__note-input-title');
   }
   get inputTitle() {
     return this.noteEl.querySelector('.input-title');

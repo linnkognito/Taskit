@@ -11,16 +11,14 @@ const itemMap = {
   },
   checklist: {
     type: 'checklist',
-    markup: checklistMarkup,
+    element: '.checklist',
     createInstance: (id, context) => new Checklist(id, context),
-    formEl: (context) => context.checklistForm,
     array: (context) => context.checklists,
   },
   note: {
     type: 'note',
-    markup: noteFormMarkup,
+    element: '.note',
     createInstance: (id, context) => new Note(id, context),
-    formEl: (context) => context.noteForm,
     array: (context) => context.notes,
   },
 };

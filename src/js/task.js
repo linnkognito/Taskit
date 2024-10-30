@@ -205,21 +205,22 @@ export class Task {
 
   //___F O R M  I T E M S_____________________________________________//
   addItem(btn) {
-    const id = this.generateId();
-    const type = this.getItemType(btn);
-    const item = itemMap[type];
-
-    // Render
-    const markup = this.getPopulatedMarkup(item.markup, type, id);
-    const container = this.taskFormContainer || this.taskCardContainer;
-    this.insertMarkup(container, 'afterbegin', markup);
+    // Get type
+    const itemType = btn.dataset.item;
+    const item = itemMap[itemType];
 
     // Create item instance
-    const newItem = item.createInstance(id, this);
+    const newItem = item.createInstance(this.generateId(), this);
     item.array(this).push(newItem);
 
+    // Render
+    const container = this.taskFormContainer || this.taskCardContainer;
+    this.insertMarkup(container, 'afterbegin', newItem.renderItemMarkup());
+
+    const itemEl = this.projectEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
+
     // Apply animation & focus
-    this.scaleUp(item.formEl(this), 'top');
+    this.scaleUp(itemEl, 'top');
     newItem.inputTitle.focus();
 
     // Indicate that changes have been made
@@ -235,6 +236,8 @@ export class Task {
     // Listen for blur on inputEl
     newItem.inputTitle.addEventListener('blur', () => newItem.saveTitle(newItem.inputTitle, newItem.titleEl), { once: true });
   }
+
+  //___F O R M  I T E M S :  H E L P E R S____________________________//
 
   //___T A S K S_____________________________________________________//
   saveTask() {
@@ -285,17 +288,6 @@ export class Task {
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
-  }
-
-  //___F O R M  I T E M S :  H E L P E R S____________________________//
-  getItemType(btn) {
-    return [...btn.classList]
-      .find((cls) => cls.startsWith('btn-add-') && cls !== 'btn-add-item')
-      .split('-')
-      .pop();
-  }
-  getPopulatedMarkup(template, type, id) {
-    return template.replace(`{%${type.toUpperCase()}_ID%}`, id);
   }
 
   //___P R I O_______________________________________________________//
@@ -516,9 +508,7 @@ export class Task {
     this.clear(this.taskCardContainer);
 
     // Render items
-    this.items.forEach((item) => {
-      item.renderItemMarkup();
-    });
+    this.items.forEach((item) => (markup += item.renderItemMarkup()));
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
 
     // If notes, initialize Quill
