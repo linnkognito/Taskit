@@ -19,7 +19,7 @@ export class Note extends TaskItem {
 
   constructor(id, task) {
     super(id, task);
-    this.title = 'Untitled Note';
+    this.title = '';
     this.note = '';
     this.editAllMode = false;
 
@@ -64,7 +64,7 @@ export class Note extends TaskItem {
       const input = e.target.closest('.title-input');
       const note = e.target.closest('.ql-editor');
 
-      if (input) return this.saveTitle(e.target);
+      // if (input) return this.saveTitle(e.target);
       if (note) return this.saveNote(e.target);
     });
     // HEADER BTNS CLICKED
@@ -74,14 +74,14 @@ export class Note extends TaskItem {
         this.editAllMode = true;
         this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
         this.editAll([
-          { el: this.noteTitle, type: 'title' },
+          { el: this.titleEl, type: 'title' },
           { el: this.noteContent, type: 'note' },
         ]);
       }
 
       // SAVE & EXIT EDIT ALL MODE
       if (e.target.closest('.btn-save-edits')) {
-        this.saveTitle(this.noteInputTitle);
+        // this.saveTitle(this.noteInputTitle);
         this.saveNote(this.editor);
         this.editAllMode = false;
         this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
@@ -93,7 +93,7 @@ export class Note extends TaskItem {
         if (userConfirmed) {
           this.editAllMode = false;
           this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
-          this.hideAndShowEls(this.noteInputTitle, this.noteTitle);
+          this.hideAndShowEls(this.noteInputTitle, this.titleEl);
           this.hideAndShowEls(this.editorContainer, this.noteContent);
           this.hideElement(this.toolbar);
         }
@@ -101,9 +101,6 @@ export class Note extends TaskItem {
     });
     // EDIT SINGLE ELEMENT
     this.noteEl.addEventListener('click', (e) => {
-      // TITLE CLICKED
-      if (e.target.closest('.title')) return this.editElement(e.target, 'title');
-
       // NOTE CLICKED
       if (e.target.closest('.task-card__note-content')) return this.editElement(e.target.closest('.task-card__note-content'), 'note');
     });
@@ -114,14 +111,14 @@ export class Note extends TaskItem {
   get noteEl() {
     return document.querySelector(`.task-form__note[data-id="${this.id}"], .task-card__note[data-id="${this.id}"]`);
   }
-  get noteTitle() {
-    return this.noteEl.querySelector('.task-card__note-title');
+  get titleEl() {
+    return this.noteEl.querySelector('.title');
   }
   get noteInputTitle() {
     return this.noteEl.querySelector('.task-card__note-input-title');
   }
-  get titleInput() {
-    return this.noteEl.querySelector('.title-input');
+  get inputTitle() {
+    return this.noteEl.querySelector('.input-title');
   }
   get noteHeaderBtns() {
     return this.noteEl.querySelectorAll('.task-card__btn');
@@ -176,13 +173,9 @@ export class Note extends TaskItem {
       this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
     }
 
-    if (type === 'title') {
-      input.value = this.title;
-    }
-
     input.focus();
   }
-  renderNote() {
+  renderItemMarkup() {
     // prettier-ignore
     return noteMarkup
       .replace('{%NOTE_ID%}', this.id)
@@ -203,27 +196,6 @@ export class Note extends TaskItem {
     if (noteInput.closest('.task-card__note')) {
       this.hideElement(this.toolbar);
       this.hideAndShowEls(this.editor, this.noteContent);
-    }
-  }
-  // deleteNote() {
-  //   this.task.removeItemById(this.id);
-  //   this.noteEl.remove();
-  // }
-  saveTitle(title) {
-    // Set title
-    title.value.trim() ? (this.title = title.value) : this.title;
-
-    // Add placeholder & value
-    title.placeholder = this.title || 'Add title';
-    title.value = this.title;
-
-    // If form, return
-    if (title.closest('.task-form__note')) return;
-
-    // If card, update title text
-    if (title.closest('.task-card__note')) {
-      this.hideAndShowEls(this.titleInput, this.noteTitle);
-      this.noteTitle.textContent = this.title;
     }
   }
 

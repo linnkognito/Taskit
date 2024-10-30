@@ -3,120 +3,226 @@
 @use '../utilities/mixins-buttons';
 
 // CHECKLIST //
-.task-form__checklist,
-.task-card__checklist {
+.checklist {
   @include mixins.item;
 
   // HEADER (CHECKLIST) //
-  .task-form__checklist-header,
-  .task-card__checklist-header {
+  .checklist__header {
     @include mixins.item-header;
 
-    .task-form__checklist-input-title {
+    .input-title {
       @include mixins.input-text(vars.$col-secondary);
       margin-bottom: 0.1em;
       font-size: 1.2rem;
       border: none;
     }
-    .task-form__checklist-input-title::placeholder {
+    .input-title::placeholder {
       @include mixins.input-text-placeholder;
     }
-    .task-form__checklist-input-title:focus::placeholder {
+    .input-title:focus::placeholder {
       @include mixins.input-text-focus-placeholder;
     }
 
-    .task-form__checklist-title,
-    .task-card__checklist-title {
+    .checklist__title {
       @include mixins.item-title;
     }
     // BUTTONS (HEADER) //
-    .task-form__checklist-buttons {
-      @include mixins.buttons-header('form');
-    }
-    .task-card__checklist-buttons {
-      @include mixins.buttons-header('card');
+    .checklist__buttons {
+      @include mixins.buttons-item-header('checklist');
     }
   }
 
   // BODY (CHECKLIST) //
-  .task-form__checklist-body,
-  .task-card__checklist-body {
+  .checklist__body {
     @include mixins.item-body;
     display: flex;
     flex-direction: column;
     gap: 0.3em;
 
     // LIST ITEM (BODY)
-    .task-form__checklist-item,
-    .task-card__checklist-item {
+    .checklist__item {
       display: flex;
       justify-content: space-between;
       align-items: center;
 
       // LIST ITEM (BODY) //
-      .checklist-item__wrapper {
+      .checklist__item-content {
         display: flex;
         align-items: center;
         gap: 0.3em;
 
-        .checklist-item__checkbox:checked + label,
-        .checklist-item__checkbox:checked + label {
+        .checklist__item-checkbox:checked + label {
           text-decoration: line-through;
           color: vars.$col-primary-dark-op;
         }
       }
 
       // LIST TEXT INPUT (BODY) //
-      .checklist-item__value-input {
+      .checklist__item-input {
         @include mixins.input-text($fs: 1rem);
         margin-left: 0.25em;
         border: 1px solid vars.$col-primary-low-op;
       }
-      .checklist-item__value-input:focus {
+      .checklist__item-input:focus {
         @include mixins.input-text-focus;
         border: 1px solid vars.$col-primary-op;
         box-shadow: 0 0 2px vars.$col-primary-op;
         transform: scale(1.01);
       }
-      .checklist-item__value-input::placeholder {
+      .checklist__item-input::placeholder {
         @include mixins.input-text-placeholder;
       }
-      .checklist-item__value-input:focus::placeholder {
+      .checklist__item-input:focus::placeholder {
         @include mixins.input-text-focus-placeholder;
       }
 
       // LIST ITEM LABEL (BODY) //
-      .checklist-item__value {
+      .checklist__item-value {
         margin-left: 0.75em;
       }
-      .checklist-item__value:hover {
+      .checklist__item-value:hover {
         cursor: text;
       }
 
-      .checklist-item__delete-btn {
+      .btn-delete-li {
         @include mixins.btn-tiny;
       }
-      .checklist-item__delete-btn img {
+      .btn-delete-li img {
         height: 100%;
       }
-      .checklist-item__delete-btn:hover {
+      .btn-delete-li:hover {
         @include mixins.btn-hover;
         background: vars.$col-primary-op;
       }
     }
-    .checklist-item--hover {
-      background: vars.$col-primary-low-op;
-    }
 
     // ADD LIST ITEM BTN //
-    .btn-add-checklist-item {
+    .btn-add-li {
       @include mixins.btn-small(vars.$col-secondary, vars.$col-primary-low-op);
       margin-top: 0.5em;
     }
-    .btn-add-checklist-item:hover {
+    .btn-add-li:hover {
       @include mixins.btn-hover(1.03);
       color: white;
       background: vars.$col-primary;
     }
   }
 }
+// // CHECKLIST //
+// .task-form__checklist,
+// .task-card__checklist {
+//   @include mixins.item;
+
+//   // HEADER (CHECKLIST) //
+//   .task-form__checklist-header,
+//   .task-card__checklist-header {
+//     @include mixins.item-header;
+
+//     .input-title {
+//       @include mixins.input-text(vars.$col-secondary);
+//       margin-bottom: 0.1em;
+//       font-size: 1.2rem;
+//       border: none;
+//     }
+//     .input-title::placeholder {
+//       @include mixins.input-text-placeholder;
+//     }
+//     .input-title:focus::placeholder {
+//       @include mixins.input-text-focus-placeholder;
+//     }
+
+//     .task-form__checklist-title,
+//     .task-card__checklist-title {
+//       @include mixins.item-title;
+//     }
+//     // BUTTONS (HEADER) //
+//     .task-form__checklist-buttons {
+//       @include mixins.buttons-header('form');
+//     }
+//     .task-card__checklist-buttons {
+//       @include mixins.buttons-header('card');
+//     }
+//   }
+
+//   // BODY (CHECKLIST) //
+//   .task-form__checklist-body,
+//   .task-card__checklist-body {
+//     @include mixins.item-body;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 0.3em;
+
+//     // LIST ITEM (BODY)
+//     .task-form__checklist-item,
+//     .task-card__checklist-item {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
+
+//       // LIST ITEM (BODY) //
+//       .checklist-item__wrapper {
+//         display: flex;
+//         align-items: center;
+//         gap: 0.3em;
+
+//         .checklist-item__checkbox:checked + label,
+//         .checklist-item__checkbox:checked + label {
+//           text-decoration: line-through;
+//           color: vars.$col-primary-dark-op;
+//         }
+//       }
+
+//       // LIST TEXT INPUT (BODY) //
+//       .checklist-item__value-input {
+//         @include mixins.input-text($fs: 1rem);
+//         margin-left: 0.25em;
+//         border: 1px solid vars.$col-primary-low-op;
+//       }
+//       .checklist-item__value-input:focus {
+//         @include mixins.input-text-focus;
+//         border: 1px solid vars.$col-primary-op;
+//         box-shadow: 0 0 2px vars.$col-primary-op;
+//         transform: scale(1.01);
+//       }
+//       .checklist-item__value-input::placeholder {
+//         @include mixins.input-text-placeholder;
+//       }
+//       .checklist-item__value-input:focus::placeholder {
+//         @include mixins.input-text-focus-placeholder;
+//       }
+
+//       // LIST ITEM LABEL (BODY) //
+//       .checklist-item__value {
+//         margin-left: 0.75em;
+//       }
+//       .checklist-item__value:hover {
+//         cursor: text;
+//       }
+
+//       .checklist-item__delete-btn {
+//         @include mixins.btn-tiny;
+//       }
+//       .checklist-item__delete-btn img {
+//         height: 100%;
+//       }
+//       .checklist-item__delete-btn:hover {
+//         @include mixins.btn-hover;
+//         background: vars.$col-primary-op;
+//       }
+//     }
+//     .checklist-item--hover {
+//       background: vars.$col-primary-low-op;
+//     }
+
+//     // ADD LIST ITEM BTN //
+//     .btn-add-checklist-item {
+//       @include mixins.btn-small(vars.$col-secondary, vars.$col-primary-low-op);
+//       margin-top: 0.5em;
+//     }
+//     .btn-add-checklist-item:hover {
+//       @include mixins.btn-hover(1.03);
+//       color: white;
+//       background: vars.$col-primary;
+//     }
+//   }
+// }

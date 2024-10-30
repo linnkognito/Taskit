@@ -4,8 +4,7 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-.task-form__checklist,
-.task-card__checklist {
+.checklist {
   width: 100%;
   min-width: 50%;
   margin: 1em 0;
@@ -14,19 +13,13 @@
   border: 1px solid rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
 }
-.task-form__checklist .task-form__checklist-header,
-.task-form__checklist .task-card__checklist-header,
-.task-card__checklist .task-form__checklist-header,
-.task-card__checklist .task-card__checklist-header {
+.checklist .checklist__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 0.3em;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-input-title,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-input-title,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-input-title,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-input-title {
+.checklist .checklist__header .input-title {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
@@ -40,26 +33,13 @@
   font-size: 1.2rem;
   border: none;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-input-title::placeholder,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-input-title::placeholder,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-input-title::placeholder,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-input-title::placeholder {
+.checklist .checklist__header .input-title::placeholder {
   color: rgb(213, 207, 204);
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-input-title:focus::placeholder,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-input-title:focus::placeholder,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-input-title:focus::placeholder,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-input-title:focus::placeholder {
+.checklist .checklist__header .input-title:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-title,
-.task-form__checklist .task-form__checklist-header .task-card__checklist-title,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-title,
-.task-form__checklist .task-card__checklist-header .task-card__checklist-title,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-title,
-.task-card__checklist .task-form__checklist-header .task-card__checklist-title,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-title,
-.task-card__checklist .task-card__checklist-header .task-card__checklist-title {
+.checklist .checklist__header .checklist__title {
   margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
@@ -67,17 +47,11 @@
   letter-spacing: 0.1em;
   color: white;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-buttons,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-buttons,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-buttons {
+.checklist .checklist__header .checklist__buttons {
   display: flex;
   gap: 0.3em;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn {
+.checklist .checklist__header .checklist__buttons .checklist__btn {
   width: 2em;
   height: 2em;
   padding: 0.13em 0.06em;
@@ -87,60 +61,16 @@
   cursor: pointer;
   transition: transform 0.2s ease-in;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn:hover,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn:hover,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn:hover,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn:hover {
+.checklist .checklist__header .checklist__buttons .checklist__btn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 2px white;
   cursor: pointer;
 }
-.task-form__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn--icon,
-.task-form__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn--icon,
-.task-card__checklist .task-form__checklist-header .task-form__checklist-buttons .task-form__btn--icon,
-.task-card__checklist .task-card__checklist-header .task-form__checklist-buttons .task-form__btn--icon {
+.checklist .checklist__header .checklist__buttons .checklist__btn--icon {
   width: 100%;
   height: 100%;
 }
-.task-form__checklist .task-form__checklist-header .task-card__checklist-buttons,
-.task-form__checklist .task-card__checklist-header .task-card__checklist-buttons,
-.task-card__checklist .task-form__checklist-header .task-card__checklist-buttons,
-.task-card__checklist .task-card__checklist-header .task-card__checklist-buttons {
-  display: flex;
-  gap: 0.3em;
-}
-.task-form__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn,
-.task-form__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn,
-.task-card__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn,
-.task-card__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn {
-  width: 2em;
-  height: 2em;
-  padding: 0.13em 0.06em;
-  background: none;
-  border: 1px solid white;
-  border-radius: 0.5em;
-  cursor: pointer;
-  transition: transform 0.2s ease-in;
-}
-.task-form__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn:hover,
-.task-form__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn:hover,
-.task-card__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn:hover,
-.task-card__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 2px white;
-  cursor: pointer;
-}
-.task-form__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn--icon,
-.task-form__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn--icon,
-.task-card__checklist .task-form__checklist-header .task-card__checklist-buttons .task-card__btn--icon,
-.task-card__checklist .task-card__checklist-header .task-card__checklist-buttons .task-card__btn--icon {
-  width: 100%;
-  height: 100%;
-}
-.task-form__checklist .task-form__checklist-body,
-.task-form__checklist .task-card__checklist-body,
-.task-card__checklist .task-form__checklist-body,
-.task-card__checklist .task-card__checklist-body {
+.checklist .checklist__body {
   padding: 0.5em 1em;
   font-size: 1rem;
   letter-spacing: 0.02em;
@@ -152,57 +82,21 @@
   flex-direction: column;
   gap: 0.3em;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item {
+.checklist .checklist__body .checklist__item {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__wrapper,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__wrapper,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__wrapper,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__wrapper,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__wrapper,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__wrapper {
+.checklist .checklist__body .checklist__item .checklist__item-content {
   display: flex;
   align-items: center;
   gap: 0.3em;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__wrapper .checklist-item__checkbox:checked + label {
+.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-checkbox:checked + label {
   text-decoration: line-through;
   color: rgba(165, 160, 158, 0.6);
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input {
+.checklist .checklist__body .checklist__item .checklist__item-input {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
@@ -215,14 +109,7 @@
   margin-left: 0.25em;
   border: 1px solid rgba(213, 207, 204, 0.4);
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input:focus,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input:focus,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input:focus,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input:focus,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input:focus,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input:focus,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input:focus,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input:focus {
+.checklist .checklist__body .checklist__item .checklist__item-input:focus {
   color: rgb(158, 158, 158);
   border: none;
   outline: none;
@@ -231,54 +118,19 @@
   box-shadow: 0 0 2px rgba(213, 207, 204, 0.7);
   transform: scale(1.01);
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input::placeholder,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input::placeholder,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input::placeholder,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input::placeholder,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input::placeholder,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input::placeholder,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input::placeholder,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input::placeholder {
+.checklist .checklist__body .checklist__item .checklist__item-input::placeholder {
   color: rgb(213, 207, 204);
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value-input:focus::placeholder,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value-input:focus::placeholder {
+.checklist .checklist__body .checklist__item .checklist__item-input:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value {
+.checklist .checklist__body .checklist__item .checklist__item-value {
   margin-left: 0.75em;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value:hover,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value:hover,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value:hover,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value:hover,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__value:hover,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__value:hover,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__value:hover,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__value:hover {
+.checklist .checklist__body .checklist__item .checklist__item-value:hover {
   cursor: text;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__delete-btn,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__delete-btn,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__delete-btn,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__delete-btn,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__delete-btn,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__delete-btn {
+.checklist .checklist__body .checklist__item .btn-delete-li {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -291,38 +143,15 @@
   border-radius: 0.9em;
   border-radius: 0.5em;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn img,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__delete-btn img,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__delete-btn img,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__delete-btn img,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn img,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__delete-btn img,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__delete-btn img,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__delete-btn img {
+.checklist .checklist__body .checklist__item .btn-delete-li img {
   height: 100%;
 }
-.task-form__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn:hover,
-.task-form__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__delete-btn:hover,
-.task-form__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__delete-btn:hover,
-.task-form__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__delete-btn:hover,
-.task-card__checklist .task-form__checklist-body .task-form__checklist-item .checklist-item__delete-btn:hover,
-.task-card__checklist .task-form__checklist-body .task-card__checklist-item .checklist-item__delete-btn:hover,
-.task-card__checklist .task-card__checklist-body .task-form__checklist-item .checklist-item__delete-btn:hover,
-.task-card__checklist .task-card__checklist-body .task-card__checklist-item .checklist-item__delete-btn:hover {
+.checklist .checklist__body .checklist__item .btn-delete-li:hover {
   transform: scale(1.02);
   cursor: pointer;
   background: rgba(213, 207, 204, 0.7);
 }
-.task-form__checklist .task-form__checklist-body .checklist-item--hover,
-.task-form__checklist .task-card__checklist-body .checklist-item--hover,
-.task-card__checklist .task-form__checklist-body .checklist-item--hover,
-.task-card__checklist .task-card__checklist-body .checklist-item--hover {
-  background: rgba(213, 207, 204, 0.4);
-}
-.task-form__checklist .task-form__checklist-body .btn-add-checklist-item,
-.task-form__checklist .task-card__checklist-body .btn-add-checklist-item,
-.task-card__checklist .task-form__checklist-body .btn-add-checklist-item,
-.task-card__checklist .task-card__checklist-body .btn-add-checklist-item {
+.checklist .checklist__body .btn-add-li {
   padding: 0.1em 0.6em;
   color: rgb(158, 158, 158);
   background: rgba(213, 207, 204, 0.4);
@@ -332,10 +161,7 @@
   border-radius: 0.5em;
   margin-top: 0.5em;
 }
-.task-form__checklist .task-form__checklist-body .btn-add-checklist-item:hover,
-.task-form__checklist .task-card__checklist-body .btn-add-checklist-item:hover,
-.task-card__checklist .task-form__checklist-body .btn-add-checklist-item:hover,
-.task-card__checklist .task-card__checklist-body .btn-add-checklist-item:hover {
+.checklist .checklist__body .btn-add-li:hover {
   transform: scale(1.03);
   cursor: pointer;
   color: white;

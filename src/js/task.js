@@ -72,29 +72,17 @@ export class Task {
 
       'btn-add-note': (btn) => this.addItem(btn),
       'btn-delete-note': (btn) => this.triggerItemAction(btn, 'delete'),
+
+      title: (el, cls) => this.triggerItemAction(el, 'edit', cls),
+      'input-title': (el, cls) => this.triggerItemAction(el, 'edit', cls),
     };
 
     // Call the method
     Object.keys(actionMap).forEach((cls) => {
       const el = e.target.closest(`.${cls}`);
-      if (el) actionMap[cls](el);
+      if (el) actionMap[cls](el, cls);
     });
   }
-  // initTaskCardListeners() {
-  //   this.taskCard.addEventListener('click', this.handleCardClick.bind(this));
-  // }
-  // handleCardClick(e) {
-  //   const actionMap = {
-  //     'btn-delete': () => this.deleteTask(),
-  //     'btn-active-selection': () => this.showDropdown(),
-  //   };
-
-  //   Object.keys(actionMap).forEach((cls) => {
-  //     if (e.target.closest(`.${cls}`)) {
-  //       actionMap[cls]();
-  //     }
-  //   });
-  // }
   initDropdownListeners() {
     this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
     this.btnSwapSort.addEventListener('click', () => this.reverseSortOrder());
@@ -120,14 +108,14 @@ export class Task {
     });
   }
 
-  triggerItemAction(el, action) {
+  triggerItemAction(el, action, cls) {
     const itemEl = el.closest('.checklist, .note');
     const itemId = itemEl.dataset.id;
     const itemType = itemEl.dataset.type;
     const item = this.findById(itemId, itemType);
 
     if (action === 'delete') item.deleteItem(itemEl, itemType);
-    if (action === 'edit') item.editItem();
+    if (action === 'edit') item.activateEdit(cls, itemEl);
   }
 
   //////////////________________G E T T E R S________________//////////////
@@ -157,8 +145,8 @@ export class Task {
   get btnsAddItem() {
     return this.projectEl.querySelector('.task-form__add-item-buttons');
   }
-  get formTitleInput() {
-    return this.projectEl.querySelector('.task-form__title-input');
+  get inputTitle() {
+    return this.projectEl.querySelector('.input-title');
   }
   get formDescInput() {
     return document.querySelector('.task-form__description-input');
@@ -232,7 +220,7 @@ export class Task {
 
     // Apply animation & focus
     this.scaleUp(item.formEl(this), 'top');
-    newItem.titleInput.focus();
+    newItem.inputTitle.focus();
 
     // Indicate that changes have been made
     this.hasChanges = true;
@@ -243,13 +231,16 @@ export class Task {
 
     // Update local storage
     this.project.saveProjectState();
+
+    // Listen for blur on inputEl
+    newItem.inputTitle.addEventListener('blur', () => newItem.saveTitle(newItem.inputTitle, newItem.titleEl), { once: true });
   }
 
   //___T A S K S_____________________________________________________//
   saveTask() {
     // Update Task card values
     this.created = new Date();
-    this.title = this.formTitleInput.value || 'Untitled';
+    this.title = this.inputTitle.value || 'Untitled';
     this.description = this.formDescInput.value.trim() || this.description;
 
     // Swap out markup
@@ -526,8 +517,7 @@ export class Task {
 
     // Render items
     this.items.forEach((item) => {
-      if (item instanceof Checklist) markup += item.renderChecklist();
-      if (item instanceof Note) markup += item.renderNote();
+      item.renderItemMarkup();
     });
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
 

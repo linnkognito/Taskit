@@ -12,6 +12,7 @@ import listItemMarkup from '../../components/tasks/items/checklist-item.html';
 //////////////__________C H E C K L I S T  C L A S S__________//////////////
 
 export class Checklist extends TaskItem {
+  generateId = helper.generateId;
   hideAndShowEls = helper.hideAndShowEls;
 
   constructor(id, task) {
@@ -25,15 +26,14 @@ export class Checklist extends TaskItem {
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 
   initListeners() {
-    if (this.titleInput) this.titleInput.addEventListener('blur', (e) => this.saveTitle(e));
     this.checklist.addEventListener('click', (e) => this.handleLiClick(e));
   }
   handleLiClick(e) {
     // Map button classes to methods
     const actionMap = {
       'btn-add-li': () => this.addListItem(),
-      'checklist-item__delete-btn': (e) => this.deleteListItem(e),
-      'checklist-item__value': (label) => this.editListItem(label),
+      'btn-delete-li': (e) => this.deleteListItem(e),
+      'checklist__item-value': (label) => this.editListItem(label),
     };
 
     // Call the method
@@ -48,41 +48,33 @@ export class Checklist extends TaskItem {
   get checklist() {
     return document.querySelector(`.checklist[data-id="${this.id}"]`);
   }
-  get checkbox() {
-    return document.querySelectorAll('.checklist-item__checkbox');
-  }
-  get addItem() {
-    return document.querySelector('.btn-add');
-  }
-  get titleInput() {
-    return document.querySelector('.task-form__checklist-input-title, .task-card__checklist-input-title');
+  get inputTitle() {
+    return document.querySelector('.input-title');
   }
   get titleEl() {
-    return document.querySelector('.task-form__checklist-title, .task-card__checklist-input-title');
+    return document.querySelector('.title');
+  }
+  get checklistBody() {
+    return this.checklist.querySelector('.checklist__body');
+  }
+  get listItemEls() {
+    return {
+      item: this.checklist.querySelector('.checklist__item'),
+      itemCheckbox: this.checklist.querySelector('.checklist__item-checkbox'),
+      itemInput: this.checklist.querySelector('.checklist__item-input'),
+      itemVal: this.checklist.querySelector('.checklist__item-value'),
+    };
   }
   //#endregion
 
   //////////////________________M E T H O D S________________//////////////
 
-  renderChecklist() {
+  renderItemMarkup() {
     //prettier-ignore
     return checklistMarkup
       .replace('{%CHECKLIST_ID%}', this.id)
       .replace('{%CHECKLIST_TITLE%}', this.title)
       .replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
-  }
-  saveTitle(e) {
-    let title = e.target;
-
-    // Set title
-    title.value ? (this.title = title.value) : this.title;
-
-    // Add placeholder & value
-    title.placeholder = this.title || 'Add title';
-    title.value = this.title;
-
-    this.hideAndShowEls(this.titleInput, this.titleEl);
-    this.titleEl.textContent = this.title;
   }
 
   //___L I S T  I T E M S____________________________________________//
@@ -93,35 +85,30 @@ export class Checklist extends TaskItem {
     return markup;
   }
   addListItem() {
-    const list = this.checklist.querySelector('.task-form__checklist-body');
-
-    const itemId = this.items.length + 1;
-    listFormItem.replace('{%CHECKLIST_ID%}', itemId);
-    helper.insertMarkupAdj(list, 'afterbegin', listFormItem);
-
     // Create List Item instance
-    const newListItem = new ListItem(itemId, this);
+    const newListItem = new ListItem(this.generateId(), this);
     this.items.push(newListItem);
 
+    // Render list item
+    listFormItem.replace('{%CHECKLIST_ID%}', newListItem.id);
+    helper.insertMarkupAdj(this.checklistBody, 'afterbegin', listFormItem);
+
     // List Item elements
-    const item = list.querySelector('.task-form__checklist-item');
-    const checkbox = list.querySelector('.checklist-item__checkbox');
-    const input = list.querySelector('.checklist-item__value-input');
-    const label = list.querySelector('.checklist-item__value');
+    const { item, itemCheckbox, itemInput, itemVal } = this.listItemEls;
 
     // Set attributes
     item.dataset.id = newListItem.id;
-    checkbox.name = `checkbox-${newListItem.id}`;
-    checkbox.id = `checkbox-${newListItem.id}`;
-    input.id = `checkbox-${newListItem.id}`;
-    label.setAttribute('for', `checkbox-${newListItem.id}`);
+    itemCheckbox.name = `checkbox-${newListItem.id}`;
+    itemCheckbox.id = `checkbox-${newListItem.id}`;
+    itemInput.id = `checkbox-${newListItem.id}`;
+    itemVal.setAttribute('for', `checkbox-${newListItem.id}`);
 
-    input.focus();
+    itemInput.focus();
 
     newListItem.initListeners();
   }
   editListItem(labelEl) {
-    const inputEl = labelEl.parentNode.querySelector('.checklist-item__value-input');
+    const inputEl = labelEl.closest('.checklist').querySelector('.checklist__item-input');
 
     helper.hideAndShowEls(labelEl, inputEl);
     inputEl.textContent = this.value;
@@ -153,7 +140,7 @@ class ListItem {
 
   //////////////________________G E T T E R S________________//////////////
   get checkboxEl() {
-    return document.querySelector(`.checklist-item__checkbox[id="checkbox-${this.id}"]`);
+    return document.querySelector(`.checklist__item-checkbox[id="checkbox-${this.id}"]`);
   }
   get labelEl() {
     return document.querySelector(`.checklist-item__value[for="checkbox-${this.id}"]`);

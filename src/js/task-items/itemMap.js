@@ -1,5 +1,5 @@
 // itemMap.js
-import checklistFormMarkup from '../../components/tasks/items/checklist-form.html';
+import checklistMarkup from '../../components/tasks/items/checklist.html';
 import noteFormMarkup from '../../components/tasks/items/note-form.html';
 import { Checklist } from './checklist';
 import { Note } from './note';
@@ -11,7 +11,7 @@ const itemMap = {
   },
   checklist: {
     type: 'checklist',
-    markup: checklistFormMarkup,
+    markup: checklistMarkup,
     createInstance: (id, context) => new Checklist(id, context),
     formEl: (context) => context.checklistForm,
     array: (context) => context.checklists,

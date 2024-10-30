@@ -55,6 +55,30 @@
     height: 100%;
   }
 }
+@mixin buttons-item-header($cls) {
+  display: flex;
+  gap: 0.3em;
+
+  .#{$cls}__btn {
+    width: 2em;
+    height: 2em;
+    padding: 0.13em 0.06em;
+    background: none;
+    border: 1px solid white;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: vars.$transform-ease-in;
+  }
+  .#{$cls}__btn:hover {
+    transform: scale(1.05);
+    box-shadow: vars.$box-glow-mid;
+    cursor: pointer;
+  }
+  .#{$cls}__btn--icon {
+    width: 100%;
+    height: 100%;
+  }
+}
 
 // BODY //
 @mixin body() {
