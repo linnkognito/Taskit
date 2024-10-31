@@ -43,7 +43,7 @@
   font-size: vars.$fs-project-title;
   font-family: vars.$font-body;
   font-weight: normal;
-  letter-spacing: vars.$ls-primary;
+  letter-spacing: 0.09em;
 }
 
 // INPUT //
@@ -54,7 +54,7 @@
   font-size: $fs;
   font-family: vars.$font-body;
   color: $col;
-  letter-spacing: vars.$ls-primary;
+  letter-spacing: vars.$ls-title;
   border: none;
   border-radius: vars.$br-primary;
   outline: none;

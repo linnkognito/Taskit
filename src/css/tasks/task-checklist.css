@@ -19,11 +19,20 @@
   align-items: center;
   padding-bottom: 0.3em;
 }
-.checklist .checklist__header .input-title {
+.checklist .checklist__header .checklist__title {
+  margin-bottom: 0.1em;
+  padding: 0.1em 0.5em;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: white;
+  margin-right: 0.4em;
+}
+.checklist .checklist__header .input-item-title {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
-  font-size: 1.35rem;
+  font-size: 1.25em;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
@@ -31,22 +40,13 @@
   border-radius: 0.9em;
   outline: none;
   margin-bottom: 0.1em;
-  font-size: 1.2rem;
   border: none;
 }
-.checklist .checklist__header .input-title::placeholder {
+.checklist .checklist__header .input-item-title::placeholder {
   color: rgb(213, 207, 204);
 }
-.checklist .checklist__header .input-title:focus::placeholder {
+.checklist .checklist__header .input-item-title:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
-}
-.checklist .checklist__header .checklist__title {
-  margin-bottom: 0.1em;
-  padding: 0.1em 0.5em;
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: white;
 }
 .checklist .checklist__header .checklist__buttons {
   display: flex;

@@ -107,7 +107,6 @@ export class Task {
       }
     });
   }
-
   triggerItemAction(el, action, cls) {
     const itemEl = el.closest('.checklist, .note');
     if (!itemEl) return;

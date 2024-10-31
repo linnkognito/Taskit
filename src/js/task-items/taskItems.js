@@ -18,7 +18,7 @@ export class TaskItem {
 
   //////////////________________M E T H O D S________________//////////////
   activateEdit(cls, parentEl) {
-    if (cls === 'title' || 'input-title') this.editTitle(parentEl);
+    if (cls === 'item-title' || 'input-item-title') this.editTitle(parentEl);
   }
 
   editTitle(parent) {
@@ -26,8 +26,8 @@ export class TaskItem {
     const mode = parent.dataset.mode;
 
     // Get title elements
-    const titleEl = parent.querySelector('.title');
-    const inputEl = parent.querySelector('.input-title');
+    const titleEl = parent.querySelector('.item-title');
+    const inputEl = parent.querySelector('.input-item-title');
 
     // If Card: Hide title & show input
     //if (mode === 'card')

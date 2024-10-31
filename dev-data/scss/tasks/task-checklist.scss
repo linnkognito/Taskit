@@ -10,22 +10,22 @@
   .checklist__header {
     @include mixins.item-header;
 
-    .input-title {
-      @include mixins.input-text(vars.$col-secondary);
+    .checklist__title {
+      @include mixins.item-title;
+      margin-right: 0.4em;
+    }
+    .input-item-title {
+      @include mixins.input-text(vars.$col-secondary, 1.25em);
       margin-bottom: 0.1em;
-      font-size: 1.2rem;
       border: none;
     }
-    .input-title::placeholder {
+    .input-item-title::placeholder {
       @include mixins.input-text-placeholder;
     }
-    .input-title:focus::placeholder {
+    .input-item-title:focus::placeholder {
       @include mixins.input-text-focus-placeholder;
     }
 
-    .checklist__title {
-      @include mixins.item-title;
-    }
     // BUTTONS (HEADER) //
     .checklist__buttons {
       @include mixins.buttons-item-header('checklist');
