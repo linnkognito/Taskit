@@ -8,7 +8,7 @@ import itemMap from './task-items/itemMap';
 //////////////__________________M A R K U P__________________//////////////
 
 import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
-import taskCardMarkup from '../components/tasks/task-card.html';
+import taskMarkup from '../components/tasks/task.html';
 import dropdownMarkup from '../components/menus/dropdown-sort-items.html';
 
 //////////////_______________T A S K  C L A S S_______________//////////////
@@ -55,17 +55,17 @@ export class Task {
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 
   initListeners() {
-    this.taskEl.addEventListener('click', this.handleClick.bind(this));
+    document.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
     // Map button classes to methods
     const actionMap = {
-      'prio-btn': (btn) => this.setPrio(btn),
-      'btn-due-date': (btn) => this.openDueModal(btn),
-      'btn-save': () => this.saveTask(),
-      'btn-cancel': () => this.taskForm.remove(),
-      'btn-delete': () => this.deleteTask(),
-      'btn-active-selection': () => this.showDropdown(),
+      'task-prio__btn': (btn) => this.setPrio(btn),
+      'task-due': (btn) => this.openDueModal(btn),
+      'btn-save-task': () => this.saveTask(),
+      'btn-cancel-task': () => this.taskForm.remove(),
+      'btn-delete-task': () => this.deleteTask(),
+      'task-sort__selection': () => this.showDropdown(),
 
       'btn-add-checklist': (btn) => this.addItem(btn),
       'btn-delete-checklist': (btn) => this.triggerItemAction(btn, 'delete'),
@@ -73,8 +73,8 @@ export class Task {
       'btn-add-note': (btn) => this.addItem(btn),
       'btn-delete-note': (btn) => this.triggerItemAction(btn, 'delete'),
 
-      title: (el, cls) => this.triggerItemAction(el, 'edit', cls),
-      'input-title': (el, cls) => this.triggerItemAction(el, 'edit', cls),
+      'item-title': (el, cls) => this.triggerItemAction(el, 'edit', cls),
+      'input-item-title': (el, cls) => this.triggerItemAction(el, 'edit', cls),
     };
 
     // Call the method
@@ -90,7 +90,7 @@ export class Task {
     // Listen for close
     this.dropdown.addEventListener('mouseleave', () => this.dropdown.remove());
     document.addEventListener('click', (e) => {
-      if (!this.dropdown || this.dropdown.contains(e.target) || this.btnActiveSort.contains(e.target)) return;
+      if (!this.dropdown || this.dropdown.contains(e.target) || this.sortSelection.contains(e.target)) return;
       this.dropdown.remove();
     });
   }
@@ -110,6 +110,8 @@ export class Task {
 
   triggerItemAction(el, action, cls) {
     const itemEl = el.closest('.checklist, .note');
+    if (!itemEl) return;
+
     const itemId = itemEl.dataset.id;
     const itemType = itemEl.dataset.type;
     const item = this.findById(itemId, itemType);
@@ -122,8 +124,24 @@ export class Task {
 
   //#region Getters
   get taskEl() {
-    return document.querySelector(`.task-form, .task-card[data-id="${this.id}"]`);
+    return document.querySelector(`.task[data-id="${this.id}"]`);
   }
+  get taskForm() {
+    return document.querySelector(`.task[data-id="${this.id}"][data-state="form"]`);
+  }
+  get inputTitle() {
+    return this.projectEl.querySelector('.task-header__input');
+  }
+  get descInput() {
+    return document.querySelector('.task-description__textarea');
+  }
+  get descriptionEl() {
+    return this.taskEl.querySelector('.task-description');
+  }
+  get taskContainer() {
+    return this.taskEl.querySelector('.task-items-container');
+  }
+
   get noteForm() {
     return document.querySelector('.task-form__note');
   }
@@ -133,36 +151,18 @@ export class Task {
   get body() {
     return document.querySelector('body');
   }
-  get taskCard() {
-    return document.querySelector(`.task-card[data-id="${this.id}"]`);
-  }
-  get taskForm() {
-    return document.querySelector('.task-form');
-  }
+
   get btnDueDate() {
-    return document.querySelector('.task-form__btn-due-date');
+    return document.querySelector('.task-due');
   }
   get btnsAddItem() {
-    return this.projectEl.querySelector('.task-form__add-item-buttons');
-  }
-  get inputTitle() {
-    return this.projectEl.querySelector('.input-title');
-  }
-  get formDescInput() {
-    return document.querySelector('.task-form__description-input');
-  }
-  get descriptionEl() {
-    return this.taskEl.querySelector('.task-card__description');
-  }
-  get taskCardContainer() {
-    return this.taskEl.querySelector('.task-card__container');
-  }
-  get taskFormContainer() {
-    return this.projectEl.querySelector('.task-form__container');
+    return this.projectEl.querySelector('.task-add-item');
   }
   get btnsPrio() {
-    return this.projectEl.querySelectorAll('.prio-btn');
+    return this.projectEl.querySelectorAll('.task-prio__btn');
   }
+
+  //___D U E  D A T E________________________________________________//
   get modalDueDate() {
     return document.querySelector('.modal-due-date');
   }
@@ -178,26 +178,22 @@ export class Task {
   get modalBtnCancel() {
     return this.modalDueDate.querySelector('.btn-cancel');
   }
+
+  //___S O R T_______________________________________________________//
   get sortBar() {
-    return this.taskEl.querySelector('.task-card__sort-items');
+    return this.taskEl.querySelector('.task-sort');
   }
   get dropdown() {
     return this.taskEl.querySelector('.dropdown-sort-items');
   }
-  get btnActiveSort() {
-    return this.taskEl.querySelector('.btn-active-selection');
+  get sortSelectionText() {
+    return this.taskEl.querySelector('.task-sort__selection-text');
+  }
+  get sortSelection() {
+    return this.taskEl.querySelector('.task-sort__selection');
   }
   get btnSwapSort() {
-    return this.taskEl.querySelector('.btn-swap-sort-order');
-  }
-  get dropdownText() {
-    return this.taskEl.querySelector('.btn-active-selection--text');
-  }
-  get dropdownSelections() {
-    if (this.dropdown) return {};
-  }
-  get btnSwapSort() {
-    return document.querySelector('.btn-swap-sort-order');
+    return this.taskEl.querySelector('.task-sort__swap-btn');
   }
   //#endregion
 
@@ -214,8 +210,7 @@ export class Task {
     item.array(this).push(newItem);
 
     // Render
-    const container = this.taskFormContainer || this.taskCardContainer;
-    this.insertMarkup(container, 'afterbegin', newItem.renderItemMarkup());
+    this.insertMarkup(this.taskContainer, 'afterbegin', newItem.renderItemMarkup());
 
     // Apply animation & focus
     const itemEl = this.projectEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
@@ -243,7 +238,7 @@ export class Task {
     // Update Task card values
     this.created = new Date();
     this.title = this.inputTitle.value || 'Untitled';
-    this.description = this.formDescInput.value.trim() || this.description;
+    this.description = this.descInput.value.trim() || this.description;
 
     // Swap out markup
     this.taskForm.remove();
@@ -256,11 +251,11 @@ export class Task {
     this.project.saveProjectState();
   }
   renderTaskCard() {
-    this.insertMarkup(this.project.projectBody, 'afterbegin', this.populateTaskCardMarkup());
+    this.insertMarkup(this.project.projectBody, 'afterbegin', this.populatetaskMarkup());
 
     // If there's no description, set default + styles
     if (this.description === itemMap['description'].default) {
-      this.addClass(this.descriptionEl, 'description--default');
+      this.addClass(this.descriptionEl, 'task-description--default');
     }
 
     // Display due date
@@ -277,12 +272,8 @@ export class Task {
     // this.initTaskCardListeners();
     this.initListeners();
   }
-  populateTaskCardMarkup() {
-    return taskCardMarkup
-      .replace('{%TASKCARD_ID%}', this.id)
-      .replace('{%TASKCARD_TITLE%}', this.title)
-      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
+  populatetaskMarkup() {
+    return taskMarkup.replace('{%TASK_ID%}', this.id).replace('{%TASK_TITLE%}', this.title).replace('{%TASK_DESCRIPTION%}', this.description).replace('{%TASK_CREATED%}', this.getCreationDateStr());
   }
   deleteTask() {
     this.project.tasks = this.project.tasks.filter((t) => t.id !== this.id);
@@ -353,7 +344,15 @@ export class Task {
     const inputDate = this.inputDueDate.value;
     const inputTime = this.inputDueTime.value;
 
-    if (!inputDate && !inputTime) return this.modal.remove();
+    // Saving cleared input elements (reset)
+    if (!inputDate && !inputTime) {
+      this.dueDate = null;
+      this.dueTime = null;
+      this.dueDateObj = null;
+      this.modal.remove();
+      this.displayDueDate();
+      return;
+    }
 
     // Set due date
     this.dueDate = inputDate ? new Date(this.parseDate(inputDate)) : new Date();
@@ -412,11 +411,11 @@ export class Task {
   }
   getDueDateElements() {
     return {
-      calendarBtn: this.projectEl.querySelector('.btn-due-date'),
-      dueDateEl: this.projectEl.querySelector('.due-date'),
-      smallTextTop: this.projectEl.querySelector('.due-date--small-top'),
-      bigText: this.projectEl.querySelector('.due-date--big'),
-      smallTextBottom: this.projectEl.querySelector('.due-date--small-bottom'),
+      calendarBtn: this.projectEl.querySelector('.task-due--icon'),
+      dueDateEl: this.projectEl.querySelector('.task-due--text'),
+      smallTextTop: this.projectEl.querySelector('.task-due__small-top'),
+      bigText: this.projectEl.querySelector('.task-due__big'),
+      smallTextBottom: this.projectEl.querySelector('.task-due__small-bottom'),
     };
   }
   calcTimeDiff(date) {
@@ -505,11 +504,11 @@ export class Task {
     this.sort = el?.dataset.sort || 'Creation date';
     this.sortTaskItems();
 
-    this.clear(this.taskCardContainer);
+    this.clear(this.taskContainer);
 
     // Render items
     this.items.forEach((item) => (markup += item.renderItemMarkup()));
-    this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
+    this.insertMarkup(this.taskContainer, 'afterbegin', markup);
 
     this.items.forEach((item) => {
       if (!this.hasClass(item.inputTitle, 'hidden')) {
@@ -547,7 +546,7 @@ export class Task {
     // Check if reverse
     if (this.reverseSort) this.items.reverse();
 
-    this.dropdownText.textContent = this.sort;
+    this.sortSelectionText.textContent = this.sort;
   }
   reverseSortOrder() {
     this.reverseSort = !this.reverseSort;
@@ -566,7 +565,7 @@ export class Task {
   }
   positionDropdown() {
     const parentRect = this.sortBar.getBoundingClientRect();
-    const btnRect = this.btnActiveSort.getBoundingClientRect();
+    const btnRect = this.sortSelection.getBoundingClientRect();
 
     this.dropdown.style.top = `${parentRect.height}px`;
     this.dropdown.style.right = `${parentRect.right - btnRect.right}px`;

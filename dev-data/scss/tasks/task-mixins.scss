@@ -1,35 +1,6 @@
 // tasks-mixins.scss
+
 @use '../utilities/vars';
-
-// TASK //
-@mixin card($bg: vars.$col-primary-low-op) {
-  width: 100%;
-  margin-bottom: 1em;
-  background: $bg;
-  border: 1px solid $bg;
-  border-radius: 0.9em;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-// HEADER //
-@mixin header($bg: vars.$col-primary-low-op) {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0.5em;
-  color: white;
-  background: $bg;
-  border: 0;
-  border-radius: 0.9em 0.9em 0 0;
-}
-@mixin title-wrapper() {
-  display: flex;
-  align-items: center;
-  column-gap: 0.5em;
-}
 
 @mixin buttons-header($cls) {
   display: flex;
@@ -79,20 +50,6 @@
     height: 100%;
   }
 }
-
-// BODY //
-@mixin body() {
-  padding: 0.6em 0.7em;
-  background: white;
-}
-@mixin body-top() {
-  width: 100%;
-  display: flex;
-  gap: 1em;
-  margin-top: 0.7em;
-  padding-bottom: 0.7em;
-  background: white;
-}
 @mixin description($padding: 0.35em 0.6em, $bdr-col: vars.$col-primary) {
   width: 100%;
   padding: $padding;
@@ -112,20 +69,8 @@
   padding: 0.3em;
   line-height: 1;
   color: white;
-  background: $bg;
+  background: vars.$col-primary-op;
   border-radius: vars.$br-primary;
-}
-@mixin due-btn-small-top() {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-}
-@mixin due-btn-big() {
-  margin: 0.1em 0;
-  font-size: 2rem;
-  font-weight: 600;
-}
-@mixin due-btn-small-bottom() {
-  font-size: 0.8rem;
 }
 
 // CHECKLISTS & NOTES //
@@ -162,9 +107,124 @@
   border-radius: vars.$br-primary;
 }
 
-// FOOTER //
-@mixin item-footer() {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
+// // tasks-mixins.scss
+// @use '../utilities/vars';
+
+// // TASK //
+// @mixin card($bg: vars.$col-primary-low-op) {
+//   width: 100%;
+//   margin-bottom: 1em;
+//   background: $bg;
+//   border: 1px solid $bg;
+//   border-radius: 0.9em;
+//   overflow: hidden;
+//   transition: transform 0.3s ease;
+// }
+
+// // HEADER //
+// @mixin header($bg: vars.$col-primary-low-op) {
+//   display: flex;
+//   flex-wrap: nowrap;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+//   padding: 0.5em;
+//   color: white;
+//   background: $bg;
+//   border: 0;
+//   border-radius: 0.9em 0.9em 0 0;
+// }
+// @mixin title-wrapper() {
+//   display: flex;
+//   align-items: center;
+//   column-gap: 0.5em;
+// }
+
+// // BODY //
+// @mixin body() {
+//   padding: 0.6em 0.7em;
+//   background: white;
+// }
+// @mixin body-top() {
+//   width: 100%;
+//   display: flex;
+//   gap: 1em;
+//   margin-top: 0.7em;
+//   padding-bottom: 0.7em;
+//   background: white;
+// }
+// @mixin description($padding: 0.35em 0.6em, $bdr-col: vars.$col-primary) {
+//   width: 100%;
+//   padding: $padding;
+//   font-size: 1rem;
+//   font-style: italic;
+//   color: vars.$col-secondary;
+//   border: 1px dashed $bdr-col;
+//   border-radius: vars.$br-primary;
+// }
+// @mixin due-date($bg: vars.$col-primary-op) {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0;
+//   justify-content: center;
+//   align-items: center;
+//   min-width: 20%;
+//   padding: 0.3em;
+//   line-height: 1;
+//   color: white;
+//   background: $bg;
+//   border-radius: vars.$br-primary;
+// }
+// @mixin due-btn-small-top() {
+//   font-size: 0.7rem;
+//   text-transform: uppercase;
+// }
+// @mixin due-btn-big() {
+//   margin: 0.1em 0;
+//   font-size: 2rem;
+//   font-weight: 600;
+// }
+// @mixin due-btn-small-bottom() {
+//   font-size: 0.8rem;
+// }
+
+// // CHECKLISTS & NOTES //
+// @mixin item($bg: vars.$col-primary-low-op) {
+//   width: 100%;
+//   min-width: 50%;
+//   margin: 1em 0;
+//   padding: 0.5em 1em;
+//   background: $bg;
+//   border: 1px solid $bg;
+//   border-radius: vars.$br-primary;
+// }
+// @mixin item-header() {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding-bottom: 0.3em;
+// }
+// @mixin item-title() {
+//   margin-bottom: 0.1em;
+//   padding: 0.1em 0.5em;
+//   font-size: 1.25rem;
+//   font-weight: 500;
+//   letter-spacing: 0.1em;
+//   color: white;
+// }
+// @mixin item-body($bg: vars.$col-primary-low-op) {
+//   padding: 0.5em 1em;
+//   font-size: 1rem;
+//   letter-spacing: 0.02em;
+//   color: vars.$col-primary-dark;
+//   background: white;
+//   border: 1px solid $bg;
+//   border-radius: vars.$br-primary;
+// }
+
+// // FOOTER //
+// @mixin item-footer() {
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+// }

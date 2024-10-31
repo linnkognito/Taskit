@@ -3,111 +3,224 @@
 @use './task-mixins';
 
 //// TASK CARD /////////////////////////////
-.task-card {
-  @include task-mixins.card;
+.task {
+  width: 100%;
+  margin-bottom: 1em;
+  background: vars.$col-primary-low-op;
+  border: 1px solid vars.$col-primary-low-op;
+  border-radius: 0.9em;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 
   // HEADER (TASK CARD) //
-  .task-card__header {
-    @include task-mixins.header;
+  .task-header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.5em;
     padding-right: 0.8em;
+    color: white;
+    background: vars.$col-primary-low-op;
+    border: 0;
+    border-radius: 0.9em 0.9em 0 0;
 
     // TITLE & CHECKBOX (HEADER) //
-    .task-card__title-wrapper {
-      @include task-mixins.title-wrapper;
+    .task-header__title-wrapper {
+      display: flex;
+      align-items: center;
+      column-gap: 0.5em;
 
-      .checkbox {
+      .task-header__checkbox {
         height: 1.5em;
       }
-      .checkbox:hover {
+      .task-header__checkbox:hover {
         content: url(../../../public/icons/checkbox.png);
         opacity: 0.5;
         cursor: pointer;
       }
-      .checkbox:active {
+      .task-header__checkbox:active {
         opacity: 1;
       }
-      .task-card__title {
+      .task-header__title {
         font-size: 1.25em;
         letter-spacing: 0.1em;
       }
     }
 
     // BUTTONS (HEADER) //
-    .task-card__buttons {
-      @include task-mixins.buttons-header('card');
+    .task-header__buttons {
+      display: flex;
+      gap: 0.3em;
+
+      .task-header__btn {
+        width: 2em;
+        height: 2em;
+        padding: 0.13em 0.06em;
+        background: none;
+        border: 1px solid white;
+        border-radius: 0.5em;
+        cursor: pointer;
+        transition: vars.$transform-ease-in;
+      }
+      .task-header__btn:hover {
+        transform: scale(1.05);
+        box-shadow: vars.$box-glow-mid;
+        cursor: pointer;
+      }
+      .task-header__btn--icon {
+        width: 100%;
+        height: 100%;
+      }
     }
   } // [X] END OF HEADER [X]
 
   // BODY //
-  .task-card__body {
-    @include task-mixins.body;
+  .task-body {
+    padding: 0.6em 0.7em;
+    background: white;
+
+    // PRIO SELECTION (BODY) //
+    .task-prio {
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      margin-bottom: 0.7em;
+      padding: 0.4em 1em;
+      color: vars.$col-secondary;
+      background: vars.$col-primary-low-op;
+      border-radius: vars.$br-primary;
+
+      // PRIO BUTTONS (PRIO) //
+      .task-prio__buttons {
+        display: flex;
+        gap: 0.5em;
+
+        .task-prio__btn {
+          margin: 0 0.1em;
+          padding: 0.1em 0.5em;
+          font-family: vars.$font-body;
+          color: white;
+          background: vars.$col-primary;
+          border: none;
+          border-radius: 0.5em;
+          cursor: pointer;
+          transition: all 0.1s ease-in;
+
+          &:hover {
+            transform: scale(1.1);
+            box-shadow: vars.$box-glow;
+          }
+        }
+
+        .prio-top-btn {
+          background: vars.$col-prio1;
+        }
+        .prio-mid-btn {
+          background: vars.$col-prio2;
+        }
+        .prio-low-btn {
+          background: vars.$col-prio3;
+        }
+        .prio-none-btn {
+          background: vars.$col-primary-op;
+        }
+      }
+    } // [X] END OF PRIO [X]
 
     // BODY TOP (BODY) //
-    .task-card__body-top {
-      @include task-mixins.body-top;
+    .task-body__top {
+      width: 100%;
+      display: flex;
+      gap: 1em;
+      margin-top: 0.7em;
+      padding-bottom: 0.7em;
+      background: white;
 
       // DESCRIPTION (BODY TOP) //
-      .task-card__description {
-        @include task-mixins.description;
+      .task-description {
+        @include mixins.description;
       }
-      .description--default {
+      .task-description--default {
         color: vars.$col-primary-op;
       }
 
+      // DESCRIPTION TEXT AREA (BODY TOP) //
+      .task-description__textarea {
+        @include mixins.description;
+        min-height: calc(1.5rem * 3);
+        resize: vertical;
+
+        &:focus {
+          @include mixins.description;
+          color: vars.$col-secondary;
+          outline: none;
+        }
+        &::placeholder {
+          color: vars.$col-secondary;
+        }
+        &:focus::placeholder {
+          color: vars.$col-primary;
+        }
+      }
+
       // DUE DATE BUTTON (BODY TOP) //
-      .btn-due-date {
+      .task-due {
         @include mixins.due-date(vars.$col-primary-low-op);
         text-align: center;
         transition: vars.$ease-in;
 
-        .icon-calendar {
+        .task-due--icon {
           width: 80%;
+        }
+
+        &:hover {
+          color: white;
+          background: vars.$col-primary;
+          transform: scale(1.02);
+          cursor: pointer;
         }
       }
 
       // DUE DATE (BODY TOP) //
-      .due-date {
+      .task-due--text {
         @include mixins.due-date;
         transition: vars.$ease-in;
 
-        .due-date--small-top {
-          @include mixins.due-btn-small-top;
+        .task-due__small-top {
+          font-size: 0.7rem;
+          text-transform: uppercase;
         }
-        .due-date--big {
-          @include mixins.due-btn-big;
+        .task-due__big {
+          margin: 0.1em 0;
+          font-size: 2rem;
+          font-weight: 600;
         }
-        .due-date--small-bottom {
-          @include mixins.due-btn-small-bottom;
+        .task-due__small-bottom {
+          font-size: 0.8rem;
         }
-      }
-
-      .btn-due-date:hover,
-      .due-date:hover {
-        color: white;
-        background: vars.$col-primary;
-        transform: scale(1.02);
-        cursor: pointer;
       }
     } // [X] END OF TOP SECTION [X]
 
     // ADD ITEM BUTTONS (BODY) //
-    .task-card__add-item-buttons {
+    .task-add-item {
       display: flex;
       justify-content: space-between;
       gap: 0.5em;
       margin: 0.5em 0 0.7em;
 
-      .btn-add-item {
+      .task-add-item__btn {
         @include mixins.btn-medium;
         min-width: calc(50% - 0.5em);
       }
-      .btn-add-item:hover {
+      .task-add-item__btn:hover {
         @include mixins.btn-medium-hover;
       }
     }
 
     // SORT BUTTON (BODY) //
-    .task-card__sort-items {
+    .task-sort {
       position: relative;
       display: flex;
       gap: 0.5em;
@@ -119,7 +232,7 @@
       background: vars.$col-primary-xlow-op;
       border-radius: vars.$br-primary;
 
-      .btn-active-selection {
+      .task-sort__selection {
         display: flex;
         gap: 0.3em;
         align-items: center;
@@ -138,11 +251,11 @@
           border: 1px solid vars.$col-primary-low-op;
         }
 
-        .icon-active-selection {
+        .task-sort__selection-icon {
           width: 1em;
         }
       }
-      .btn-swap-sort-order {
+      .task-sort__swap-btn {
         @include mixins.btn-tiny(vars.$col-primary-op);
         cursor: pointer;
 
@@ -153,24 +266,21 @@
           background: vars.$col-primary-op;
         }
 
-        .icon-swap {
+        .task-sort__swap-btn-icon {
           height: 100%;
         }
       }
     }
 
-    // NOTE CONTAINER //
-    .task-card__note-content {
-      cursor: text;
-    }
-
     // FOOTER (BODY) //
-    .task-card__footer {
-      @include mixins.item-footer;
+    .task-footer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
       padding: 0.2em 0.5em 0;
 
       // CREATION DATE (FOOTER) //
-      .task-card__creation-date {
+      .task-footer__created {
         display: flex;
         align-items: center;
         width: fit-content;
@@ -181,17 +291,17 @@
         border-radius: 0.9em;
         transform: vars.$ease-in;
       }
-      .task-card__creation-date:hover {
+      .task-footer__created:hover {
         color: vars.$col-primary-dark;
         background: vars.$col-primary-op;
         transform: scale(1.01);
       }
 
-      .expand-btn {
+      .task-footer__expand-btn {
         height: 1.8em;
         margin-right: 1em;
       }
-      .expand-btn:hover {
+      .task-footer__expand-btn:hover {
         animation: levitate 2s ease-in-out infinite alternate;
         cursor: pointer;
       }
@@ -252,3 +362,8 @@
   }
 }
 // [X] END OF SORT ITEMS DROPDOWN [X]
+
+// NOTE CONTAINER //
+.task-card__note-content {
+  cursor: text;
+}

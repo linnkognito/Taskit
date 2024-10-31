@@ -1,0 +1,79 @@
+<div class="task" data-id="" data-state="form">
+  <!-- HEADER -->
+  <div class="task-header">
+    <!-- TITLE -->
+    <div class="task-header__title-wrapper">
+      <input type="text" placeholder="Title" class="input-title task-header__input" />
+      <div class="title task-header__title hidden">{%TASKCARD_TITLE%}</div>
+    </div>
+    <!-- BUTTONS HEADER -->
+    <div class="task-header__buttons">
+      <button class="task-header__btn btn-save-task">
+        <img src="../../../../public/icons/save.png" alt="Save task" title="Save task" class="task-header__btn-icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="task-body">
+
+    <!-- PRIO -->
+    <div class="task-prio">
+      <div class="task-prio__label">Prio:</div>
+      <div class="task-prio__buttons">
+        <button class="task-prio__btn prio-top-btn" data-prio="1">Top</button>
+        <button class="task-prio__btn prio-mid-btn" data-prio="2">Mid</button>
+        <button class="task-prio__btn prio-low-btn" data-prio="3">Low</button>
+        <button class="task-prio__btn prio-none-btn" data-prio="0">None</button>
+      </div>
+    </div>
+
+    <!-- PREVIEW / BODY TOP -->
+    <div class="task-body__top">
+      <!-- DESCRIPTION (BODY TOP) -->
+       <textarea rows="3" class="task-description__textarea" placeholder="Add a description (optional)"></textarea>
+      <div class="task-description hidden"></div>
+
+      <!-- DUE DATE (BODY TOP) -->
+      <div class="task-due task-due--icon">
+        <img src="../../../../public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="task-due--icon" />
+      </div>
+      <div class="task-due task-due--text hidden">
+        <span class="task-due__small-top"></span>
+        <span class="task-due__big"></span>
+        <span class="task-due__small-bottom"></span>
+      </div>
+    </div>
+
+    <!-- ADD ITEM BUTTONS -->
+    <div class="task-add-item">
+      <button class="task-add-item__btn btn-add-checklist" data-item="checklist">Add checklist</button>
+      <button class="task-add-item__btn btn-add-note" data-item="note">Add note</button>
+    </div>
+
+    <!-- SORT ITEMS BUTTON -->
+    <div class="task-sort hidden">
+      <div class="task-sort__label">Sort by:</div>
+      <button class="task-sort__selection">
+        <span class="task-sort__selection-text">Creation date</span>
+        <img src="../../../../public/icons/arrow-down--col-sec.png" alt="Expand dropdown arrow" class="task-sort__selection-icon" />
+      </button>
+      
+      <button class="task-sort__swap-btn" title="Swap sort order">
+        <img src="../../../../public/icons/sort-swap.png" alt="Swap sort order" title="Swap sort order" class="task-sort__swap-btn-icon">
+      </button>
+    </div>
+
+      <!-- ITEMS (BODY) -->
+      <div class="task-items-container"></div>
+
+      <!-- FOOTER -->
+      <div class="task-footer">
+        <div class="task-footer__buttons">
+          <button class="task-footer__btn task-footer__btn--cancel btn-cancel-task">Cancel</button>
+          <button class="task-footer__btn task-footer__btn--save btn-save-task">Save</button>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>

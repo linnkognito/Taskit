@@ -10,7 +10,7 @@ import { Note } from './task-items/note';
 import dropdownSettings from '../components/menus/dropdown-settings.html';
 import dropdownSort from '../components/menus/dropdown-sort.html';
 import projectMarkup from '../components/projects/project-card.html';
-import taskFormMarkup from '../components/tasks/forms/task-form.html';
+import taskFormMarkup from '../components/tasks/forms/task_form.html';
 
 //////////////__________P R O J E C T  C L A S S__________//////////////
 
@@ -83,7 +83,7 @@ export class Project {
     return this.projectEl.querySelector('.project-card__task-container');
   }
   get taskForm() {
-    return document.querySelector('.task-form');
+    return document.querySelector(`.task[data-state="form"]`);
   }
   get btnAddTask() {
     return this.projectEl.querySelector('.project-card__btn-add-task');
