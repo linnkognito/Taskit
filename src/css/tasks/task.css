@@ -46,6 +46,30 @@
   font-size: 1.25em;
   letter-spacing: 0.1em;
 }
+.task .task-header .task-header__title-wrapper .task-header__input {
+  width: 100%;
+  margin-right: 0.4em;
+  padding: 0.1em 0.5em;
+  font-size: 1.35rem;
+  font-family: "Urbanist", sans-serif;
+  color: rgb(158, 158, 158);
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: 0.9em;
+  outline: none;
+}
+.task .task-header .task-header__title-wrapper .task-header__input:focus {
+  color: rgb(158, 158, 158);
+  border: none;
+  outline: none;
+  box-shadow: 0 0 4px white;
+}
+.task .task-header .task-header__title-wrapper .task-header__input::placeholder {
+  color: rgb(213, 207, 204);
+}
+.task .task-header .task-header__title-wrapper .task-header__input:focus::placeholder {
+  color: rgba(213, 207, 204, 0.4);
+}
 .task .task-header .task-header__buttons {
   display: flex;
   gap: 0.3em;
@@ -289,33 +313,67 @@
 .task .task-body .task-sort .task-sort__swap-btn .task-sort__swap-btn-icon {
   height: 100%;
 }
-.task .task-body .task-footer {
+.task .task-footer {
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 0.2em 0.5em 0;
 }
-.task .task-body .task-footer .task-footer__created {
+.task .task-footer .task-footer__buttons {
+  display: flex;
+  justify-content: end;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.5em 1em;
+}
+.task .task-footer .task-footer__buttons .task-footer__btn {
+  padding: 0.1em 0.6em;
+  color: rgb(158, 158, 158);
+  background: white;
+  transition: transform 0.2s ease-in;
+  border: none;
+  border-radius: 0.9em;
+  border-radius: 0.5em;
+  margin: 0.1em 0;
+}
+.task .task-footer .task-footer__buttons .task-footer__btn:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+.task .task-footer .task-footer__buttons .task-footer__btn--cancel:hover {
+  background: rgb(232, 214, 214);
+}
+.task .task-footer .task-footer__buttons .task-footer__btn--save:hover {
+  background: rgb(215, 232, 221);
+}
+.task .task-footer--created {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.4em 0.15em 0.4em 1em;
+  background: rgba(255, 255, 255, 0.3);
+}
+.task .task-footer--created .task-footer__created {
   display: flex;
   align-items: center;
   width: fit-content;
-  padding: 0.1em 0.5em;
+  padding: 0 0.5em;
   font-size: 0.7rem;
   color: rgba(165, 160, 158, 0.6);
   background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   transform: all 0.2s ease-in;
 }
-.task .task-body .task-footer .task-footer__created:hover {
+.task .task-footer--created .task-footer__created:hover {
   color: rgb(165, 160, 158);
   background: rgba(213, 207, 204, 0.7);
   transform: scale(1.01);
 }
-.task .task-body .task-footer .task-footer__expand-btn {
+.task .task-footer--created .task-footer__expand-btn {
   height: 1.8em;
   margin-right: 1em;
 }
-.task .task-body .task-footer .task-footer__expand-btn:hover {
+.task .task-footer--created .task-footer__expand-btn:hover {
   animation: levitate 2s ease-in-out infinite alternate;
   cursor: pointer;
 }

@@ -50,12 +50,12 @@
 @mixin input-text($col: vars.$col-secondary, $fs: 1.35rem) {
   width: 100%;
   margin-right: 0.4em;
-  // margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: $fs;
   font-family: vars.$font-body;
   color: $col;
   letter-spacing: vars.$ls-primary;
+  border: none;
   border-radius: vars.$br-primary;
   outline: none;
 }

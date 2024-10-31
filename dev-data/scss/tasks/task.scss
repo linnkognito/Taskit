@@ -47,6 +47,19 @@
         font-size: 1.25em;
         letter-spacing: 0.1em;
       }
+      .task-header__input {
+        @include mixins.input-text;
+
+        &:focus {
+          @include mixins.input-text-focus;
+        }
+        &::placeholder {
+          @include mixins.input-text-placeholder;
+        }
+        &:focus::placeholder {
+          @include mixins.input-text-focus-placeholder;
+        }
+      }
     }
 
     // BUTTONS (HEADER) //
@@ -271,42 +284,73 @@
         }
       }
     }
+  } // [X] END OF BODY [X]
 
-    // FOOTER (BODY) //
-    .task-footer {
+  // FOOTER //
+  .task-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.2em 0.5em 0;
+
+    // SAVE & DELETE (FORM) //
+    .task-footer__buttons {
       display: flex;
-      justify-content: space-between;
+      justify-content: end;
+      gap: 0.5em;
       width: 100%;
-      padding: 0.2em 0.5em 0;
+      padding: 0.5em 1em;
+      // background: vars.$col-primary-low-op;
 
-      // CREATION DATE (FOOTER) //
-      .task-footer__created {
-        display: flex;
-        align-items: center;
-        width: fit-content;
-        padding: 0.1em 0.5em;
-        font-size: 0.7rem;
-        color: vars.$col-primary-dark-op;
-        background: vars.$col-primary-low-op;
-        border-radius: 0.9em;
-        transform: vars.$ease-in;
+      .task-footer__btn {
+        @include mixins.btn-small;
+        margin: 0.1em 0;
       }
-      .task-footer__created:hover {
-        color: vars.$col-primary-dark;
-        background: vars.$col-primary-op;
-        transform: scale(1.01);
+      .task-footer__btn:hover {
+        @include mixins.btn-hover(1.05);
       }
-
-      .task-footer__expand-btn {
-        height: 1.8em;
-        margin-right: 1em;
+      .task-footer__btn--cancel:hover {
+        background: vars.$col-prio1;
       }
-      .task-footer__expand-btn:hover {
-        animation: levitate 2s ease-in-out infinite alternate;
-        cursor: pointer;
+      .task-footer__btn--save:hover {
+        background: vars.$col-prio2;
       }
     }
-  } // [X] END OF BODY [X]
+  }
+  .task-footer--created {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.4em 0.15em 0.4em 1em;
+    background: rgba(255, 255, 255, 0.3);
+
+    // CREATION DATE (FOOTER) //
+    .task-footer__created {
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      padding: 0 0.5em;
+      font-size: 0.7rem;
+      color: vars.$col-primary-dark-op;
+      background: vars.$col-primary-low-op;
+      border-radius: 0.9em;
+      transform: vars.$ease-in;
+    }
+    .task-footer__created:hover {
+      color: vars.$col-primary-dark;
+      background: vars.$col-primary-op;
+      transform: scale(1.01);
+    }
+
+    .task-footer__expand-btn {
+      height: 1.8em;
+      margin-right: 1em;
+    }
+    .task-footer__expand-btn:hover {
+      animation: levitate 2s ease-in-out infinite alternate;
+      cursor: pointer;
+    }
+  }
 } // [X] END OF TASK CARD [X]
 
 //// SORT ITEMS DROPDOWN /////////////////////////////

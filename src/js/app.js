@@ -34,7 +34,7 @@ export class App {
     return document.querySelectorAll('.nav-link');
   }
   get taskForm() {
-    return document.querySelector('.task-form');
+    return document.querySelector(`.task[data-state="form"]`);
   }
   //#endregion
 

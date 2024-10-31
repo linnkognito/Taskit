@@ -49,10 +49,10 @@ export class Checklist extends TaskItem {
     return document.querySelector(`.checklist[data-id="${this.id}"]`);
   }
   get inputTitle() {
-    return document.querySelector('.input-title');
+    return document.querySelector('.input-item-title');
   }
   get titleEl() {
-    return document.querySelector('.title');
+    return document.querySelector('.item-title');
   }
   get checklistBody() {
     return this.checklist.querySelector('.checklist__body');

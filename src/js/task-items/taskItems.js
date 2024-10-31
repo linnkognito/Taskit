@@ -18,9 +18,6 @@ export class TaskItem {
 
   //////////////________________M E T H O D S________________//////////////
   activateEdit(cls, parentEl) {
-    console.log(`avtivateEdit called!`);
-    console.log(`cls: ${cls}. parentEl: ${parentEl}`);
-    console.log(`parentEl.mode: ${parentEl.dataset.mode}`);
     if (cls === 'title' || 'input-title') this.editTitle(parentEl);
   }
 

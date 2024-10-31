@@ -35,9 +35,9 @@
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
+  border: none;
   border-radius: 0.9em;
   outline: none;
-  border: none;
 }
 .task-card__note .task-card__note-header .task-card__note-input-title::placeholder {
   color: rgb(213, 207, 204);
@@ -115,6 +115,7 @@
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
+  border: none;
   border-radius: 0.9em;
   outline: none;
   margin-bottom: 0.1em;
@@ -195,6 +196,7 @@
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
+  border: none;
   border-radius: 0.9em;
   outline: none;
   font-size: 1rem;

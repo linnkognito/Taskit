@@ -9,14 +9,13 @@
     <!-- BUTTONS HEADER -->
     <div class="task-header__buttons">
       <button class="task-header__btn btn-save-task">
-        <img src="../../../../public/icons/save.png" alt="Save task" title="Save task" class="task-header__btn-icon" />
+        <img src="../../../../public/icons/save.png" alt="Save task" title="Save task" class="task-header__btn--icon" />
       </button>
     </div>
   </div>
 
   <!-- BODY -->
   <div class="task-body">
-
     <!-- PRIO -->
     <div class="task-prio">
       <div class="task-prio__label">Prio:</div>
@@ -31,7 +30,7 @@
     <!-- PREVIEW / BODY TOP -->
     <div class="task-body__top">
       <!-- DESCRIPTION (BODY TOP) -->
-       <textarea rows="3" class="task-description__textarea" placeholder="Add a description (optional)"></textarea>
+      <textarea rows="3" id="description-textarea" name="description-textarea" class="task-description__textarea" placeholder="Add a description (optional)"></textarea>
       <div class="task-description hidden"></div>
 
       <!-- DUE DATE (BODY TOP) -->
@@ -58,22 +57,20 @@
         <span class="task-sort__selection-text">Creation date</span>
         <img src="../../../../public/icons/arrow-down--col-sec.png" alt="Expand dropdown arrow" class="task-sort__selection-icon" />
       </button>
-      
+
       <button class="task-sort__swap-btn" title="Swap sort order">
-        <img src="../../../../public/icons/sort-swap.png" alt="Swap sort order" title="Swap sort order" class="task-sort__swap-btn-icon">
+        <img src="../../../../public/icons/sort-swap.png" alt="Swap sort order" title="Swap sort order" class="task-sort__swap-btn-icon" />
       </button>
     </div>
 
-      <!-- ITEMS (BODY) -->
-      <div class="task-items-container"></div>
-
-      <!-- FOOTER -->
-      <div class="task-footer">
-        <div class="task-footer__buttons">
-          <button class="task-footer__btn task-footer__btn--cancel btn-cancel-task">Cancel</button>
-          <button class="task-footer__btn task-footer__btn--save btn-save-task">Save</button>
-    </div>
-      </div>
+    <!-- ITEMS (BODY) -->
+    <div class="task-items-container"></div>
+  </div>
+  <!-- FOOTER -->
+  <div class="task-footer">
+    <div class="task-footer__buttons">
+      <button class="task-footer__btn task-footer__btn--cancel btn-cancel-task">Cancel</button>
+      <button class="task-footer__btn task-footer__btn--save btn-save-task">Save</button>
     </div>
   </div>
 </div>

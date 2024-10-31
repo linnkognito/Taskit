@@ -55,15 +55,15 @@ export class Task {
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 
   initListeners() {
-    document.addEventListener('click', this.handleClick.bind(this));
+    this.taskEl.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
     // Map button classes to methods
     const actionMap = {
       'task-prio__btn': (btn) => this.setPrio(btn),
       'task-due': (btn) => this.openDueModal(btn),
-      'btn-save-task': () => this.saveTask(),
-      'btn-cancel-task': () => this.taskForm.remove(),
+      'task-footer__btn--save': () => this.saveTask(),
+      'task-footer__btn--cancel': () => this.taskForm.remove(),
       'btn-delete-task': () => this.deleteTask(),
       'task-sort__selection': () => this.showDropdown(),
 
@@ -133,7 +133,7 @@ export class Task {
     return this.projectEl.querySelector('.task-header__input');
   }
   get descInput() {
-    return document.querySelector('.task-description__textarea');
+    return this.taskForm.querySelector('#description-textarea');
   }
   get descriptionEl() {
     return this.taskEl.querySelector('.task-description');
@@ -235,6 +235,10 @@ export class Task {
 
   //___T A S K S_____________________________________________________//
   saveTask() {
+    console.log(this.taskEl);
+    console.log(this.taskForm);
+    console.log(this.descInput);
+
     // Update Task card values
     this.created = new Date();
     this.title = this.inputTitle.value || 'Untitled';
@@ -511,6 +515,7 @@ export class Task {
     this.insertMarkup(this.taskContainer, 'afterbegin', markup);
 
     this.items.forEach((item) => {
+      console.log(item);
       if (!this.hasClass(item.inputTitle, 'hidden')) {
         this.hideAndShowEls(item.inputTitle, item.titleEl);
       }

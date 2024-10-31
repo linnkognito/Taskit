@@ -18,14 +18,13 @@
     // INPUT TITLE (HEADER) //
     .task-card__note-input-title {
       @include mixins.input-text;
-      // margin-bottom: 0.1em;
-      border: none;
-    }
-    .task-card__note-input-title::placeholder {
-      @include mixins.input-text-placeholder;
-    }
-    .task-card__note-input-title:focus::placeholder {
-      @include mixins.input-text-focus-placeholder;
+
+      &::placeholder {
+        @include mixins.input-text-placeholder;
+      }
+      &:focus::placeholder {
+        @include mixins.input-text-focus-placeholder;
+      }
     }
 
     // BUTTONS (HEADER) //

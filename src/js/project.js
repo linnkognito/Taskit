@@ -222,6 +222,8 @@ export class Project {
     const newTask = new Task(this.generateId(), this, this.projectEl);
     this.tasks.push(newTask);
 
+    document.querySelector('.task[data-state="form"]').dataset.id = newTask.id;
+
     // Initialize event listeners of Task instance
     newTask.initListeners();
 
