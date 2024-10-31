@@ -112,11 +112,11 @@ export class Note extends TaskItem {
   get noteEl() {
     return document.querySelector(`.note[data-id="${this.id}"]`);
   }
-  get titleEl() {
-    return this.noteEl.querySelector('.title');
-  }
   get inputTitle() {
     return this.noteEl.querySelector('.input-title');
+  }
+  get titleEl() {
+    return this.noteEl.querySelector('.title');
   }
   get noteHeaderBtns() {
     return this.noteEl.querySelectorAll('.task-card__btn');

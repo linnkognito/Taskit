@@ -217,20 +217,19 @@ export class Task {
     const container = this.taskFormContainer || this.taskCardContainer;
     this.insertMarkup(container, 'afterbegin', newItem.renderItemMarkup());
 
-    const itemEl = this.projectEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
-
     // Apply animation & focus
+    const itemEl = this.projectEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
     this.scaleUp(itemEl, 'top');
-    newItem.inputTitle.focus();
-
-    // Indicate that changes have been made
-    this.hasChanges = true;
+    if (this.hasClass(newItem.inputTitle, 'hidden')) {
+      this.hideAndShowEls(newItem.titleEl, newItem.inputTitle);
+      newItem.inputTitle.focus();
+    }
 
     // Initialize Item event listeners
     newItem.initListeners();
     if (newItem instanceof Note) newItem.initQuill();
 
-    // Update local storage
+    this.hasChanges = true;
     this.project.saveProjectState();
 
     // Listen for blur on inputEl
@@ -277,6 +276,13 @@ export class Task {
 
     // this.initTaskCardListeners();
     this.initListeners();
+  }
+  populateTaskCardMarkup() {
+    return taskCardMarkup
+      .replace('{%TASKCARD_ID%}', this.id)
+      .replace('{%TASKCARD_TITLE%}', this.title)
+      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
+      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
   }
   deleteTask() {
     this.project.tasks = this.project.tasks.filter((t) => t.id !== this.id);
@@ -467,13 +473,7 @@ export class Task {
   }
 
   //___T A S K S :  H E L P E R S____________________________________//
-  populateTaskCardMarkup() {
-    return taskCardMarkup
-      .replace('{%TASKCARD_ID%}', this.id)
-      .replace('{%TASKCARD_TITLE%}', this.title)
-      .replace('{%TASKCARD_DESCRIPTION%}', this.description)
-      .replace('{%TASKCARD_CREATED%}', this.getCreationDateStr());
-  }
+
   getCreationDateStr = () => {
     const d = this.formatCreationDate();
     const t = this.toAmPm(this.created);
@@ -510,6 +510,12 @@ export class Task {
     // Render items
     this.items.forEach((item) => (markup += item.renderItemMarkup()));
     this.insertMarkup(this.taskCardContainer, 'afterbegin', markup);
+
+    this.items.forEach((item) => {
+      if (!this.hasClass(item.inputTitle, 'hidden')) {
+        this.hideAndShowEls(item.inputTitle, item.titleEl);
+      }
+    });
 
     // If notes, initialize Quill
     if (this.notes.length) this.notes.forEach((note) => note.initQuill());

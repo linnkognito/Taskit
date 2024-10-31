@@ -1,6 +1,5 @@
 // itemMap.js
-import checklistMarkup from '../../components/tasks/items/checklist.html';
-import noteFormMarkup from '../../components/tasks/items/note-form.html';
+
 import { Checklist } from './checklist';
 import { Note } from './note';
 
