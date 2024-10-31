@@ -32,6 +32,7 @@
       align-items: center;
       column-gap: 0.5em;
 
+      // CHECKBOX (HEADER) //
       .task-header__checkbox {
         height: 1.5em;
       }
@@ -43,10 +44,14 @@
       .task-header__checkbox:active {
         opacity: 1;
       }
+
+      // TITLE (HEADER) //
       .task-header__title {
         font-size: 1.25em;
         letter-spacing: 0.1em;
       }
+
+      // INPUT TITLE (HEADER) //
       .task-header__input {
         @include mixins.input-text;
 

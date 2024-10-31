@@ -22,9 +22,6 @@ export class TaskItem {
   }
 
   editTitle(parent) {
-    // Check if Item is in a Form or Card
-    const mode = parent.dataset.mode;
-
     // Get title elements
     const titleEl = parent.querySelector('.item-title');
     const inputEl = parent.querySelector('.input-item-title');

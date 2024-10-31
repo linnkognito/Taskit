@@ -56,10 +56,13 @@ export class Task {
 
   initListeners() {
     this.taskEl.addEventListener('click', this.handleClick.bind(this));
+
+    if (this.inputTitle) this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl));
   }
   handleClick(e) {
     // Map button classes to methods
     const actionMap = {
+      'task-header__title': () => this.editTitle(this.taskEl),
       'task-prio__btn': (btn) => this.setPrio(btn),
       'task-due': (btn) => this.openDueModal(btn),
       'task-footer__btn--save': () => this.saveTask(),
@@ -130,6 +133,9 @@ export class Task {
   }
   get inputTitle() {
     return this.projectEl.querySelector('.task-header__input');
+  }
+  get titleEl() {
+    return this.projectEl.querySelector('.task-header__title');
   }
   get descInput() {
     return this.taskForm.querySelector('#description-textarea');
@@ -231,7 +237,33 @@ export class Task {
     newItem.inputTitle.addEventListener('blur', () => newItem.saveTitle(newItem.inputTitle, newItem.titleEl), { once: true });
   }
 
-  //___F O R M  I T E M S :  H E L P E R S____________________________//
+  //___T I T L E_____________________________________________________//
+  editTitle(parent) {
+    // Get title elements
+    const titleEl = parent.querySelector('.task-header__title');
+    const inputEl = parent.querySelector('.task-header__input');
+
+    this.hideAndShowEls(titleEl, inputEl);
+    inputEl.focus();
+
+    // Listen for blur on inputEl
+    inputEl.addEventListener('blur', () => this.saveTitle(inputEl, titleEl), { once: true });
+  }
+  saveTitle(inputEl, titleEl) {
+    // Save input data
+    this.title = inputEl.value.trim() || 'Untitled';
+
+    // Hide input and show title element
+    this.hideAndShowEls(inputEl, titleEl);
+
+    // Populate fields
+    titleEl.textContent = this.title;
+    inputEl.placeholder = this.title;
+    inputEl.value = this.title;
+
+    // Update local storage
+    this.project.saveProjectState();
+  }
 
   //___T A S K S_____________________________________________________//
   saveTask() {
@@ -471,7 +503,6 @@ export class Task {
   }
 
   //___T A S K S :  H E L P E R S____________________________________//
-
   getCreationDateStr = () => {
     const d = this.formatCreationDate();
     const t = this.toAmPm(this.created);
