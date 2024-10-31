@@ -269,7 +269,6 @@ export class Task {
 
     if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
 
-    // this.initTaskCardListeners();
     this.initListeners();
   }
   populatetaskMarkup() {
@@ -511,14 +510,28 @@ export class Task {
     this.insertMarkup(this.taskContainer, 'afterbegin', markup);
 
     this.items.forEach((item) => {
-      console.log(item);
+      // Hide input element
       if (!this.hasClass(item.inputTitle, 'hidden')) {
         this.hideAndShowEls(item.inputTitle, item.titleEl);
       }
+
+      item.initListeners();
     });
 
-    // If notes, initialize Quill
-    if (this.notes.length) this.notes.forEach((note) => note.initQuill());
+    // If checklist: initialize list item listeners
+    if (this.checklists.length) {
+      this.checklists.forEach((cl) => {
+        if (cl.items.length)
+          cl.items.forEach((li) => {
+            li.initListeners();
+          });
+      });
+    }
+
+    // If Note: initialize Quill:
+    if (this.notes.length) {
+      this.notes.forEach((note) => note.initQuill());
+    }
   }
   findById(id, type) {
     return this[`${type}s`].find((item) => item.id === id);

@@ -32,7 +32,7 @@ export class Checklist extends TaskItem {
     // Map button classes to methods
     const actionMap = {
       'btn-add-li': () => this.addListItem(),
-      'btn-delete-li': (e) => this.deleteListItem(e),
+      'btn-delete-li': (btn) => this.deleteListItem(btn),
       'checklist__item-value': (label) => this.editListItem(label),
     };
 
@@ -98,6 +98,9 @@ export class Checklist extends TaskItem {
     this.liInput.focus();
 
     newListItem.initListeners();
+
+    // Trigger save for items added in card mode
+    this.task.project.saveProjectState();
   }
   editListItem(labelEl) {
     const inputEl = labelEl.closest('.checklist').querySelector('.checklist__item-input');
@@ -106,20 +109,22 @@ export class Checklist extends TaskItem {
     inputEl.textContent = this.value;
     inputEl.focus();
   }
-  deleteListItem(e) {
-    const listItem = e.target.closest('.checklist-item--form');
-    const id = listItem.dataset.id;
+  deleteListItem(btn) {
+    const listItem = btn.closest('.checklist__item');
+    if (!listItem) return;
 
-    if (listItem) {
-      listItem.remove();
-      this.items.splice(id - 1, 1);
-    }
+    // Remove from array
+    const i = this.items.findIndex((li) => li.id === listItem.dataset.id);
+    this.items.splice(i, 1);
+
+    // Remove element
+    listItem.remove();
   }
 }
 
 //////////////__________L I S T  I T E M  C L A S S__________//////////////
 
-class ListItem {
+export class ListItem {
   constructor(id, checklist) {
     this.id = id;
     this.value = '';
@@ -130,6 +135,9 @@ class ListItem {
   }
 
   //////////////________________G E T T E R S________________//////////////
+  get checklistEl() {
+    return this.checklist.checklist;
+  }
   get checkboxEl() {
     return this.checklist.liCheckbox;
   }
@@ -147,15 +155,13 @@ class ListItem {
 
   initListeners() {
     // Check list item input value //
-    this.inputEl.addEventListener('blur', (e) => {
-      this.checkValue(e);
-    });
+    this.inputEl.addEventListener('blur', (e) => this.saveListItem(e));
 
     this.inputEl.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;
       e.preventDefault();
       this.preventBlur = true;
-      this.checkValue(e);
+      this.saveListItem(e);
     });
 
     // Checked checkbox //
@@ -172,7 +178,7 @@ class ListItem {
       .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`)
       .replace('{%LIST_ITEM_VALUE%}', this.value);
   }
-  checkValue(e) {
+  saveListItem(e) {
     const input = e.target;
     const value = input.value.trim();
 
@@ -181,12 +187,16 @@ class ListItem {
       return this.checklist.deleteListItem(e);
     }
 
+    console.log(`no early return`);
     // Update values
     this.value = value;
     this.labelEl.textContent = this.value;
 
     // Update elements
     helper.hideAndShowEls(input, this.labelEl);
+
+    // Save to local storage if created from Task Card
+    this.checklist.task.project.saveProjectState();
   }
   checkedBox(cb) {
     this.checked = cb.checked;

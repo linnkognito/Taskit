@@ -4,6 +4,7 @@ import { app, helper } from '../index';
 import { Task } from './task';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
+import { ListItem } from './task-items/checklist';
 
 //////////////_________________M A R K U P_________________//////////////
 
@@ -266,7 +267,7 @@ export class Project {
           sort: cl.sort,
 
           // LIST ITEMS (CHECKLIST) //
-          listItems: cl.items.map((li) => ({
+          items: cl.items.map((li) => ({
             id: li.id,
             value: li.value,
             checked: li.checked,
@@ -317,6 +318,17 @@ export class Project {
         checklist.title = clData.title;
         checklist.checked = clData.checked;
         checklist.created = new Date(clData.created);
+
+        // Restore checklist list items
+        checklist.items = clData.items.map((liData) => {
+          const item = new ListItem(liData.id, checklist);
+          item.value = liData.value;
+          item.checked = liData.checked;
+          item.created = new Date(liData.created);
+
+          return item;
+        });
+
         return checklist;
       });
 
