@@ -212,8 +212,9 @@ export class Task {
     this.insertMarkup(this.taskContainer, 'afterbegin', newItem.renderItemMarkup());
 
     // Apply animation & focus
-    const itemEl = this.projectEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
+    const itemEl = this.taskEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
     this.scaleUp(itemEl, 'top');
+
     if (this.hasClass(newItem.inputTitle, 'hidden')) {
       this.hideAndShowEls(newItem.titleEl, newItem.inputTitle);
       newItem.inputTitle.focus();
@@ -234,10 +235,6 @@ export class Task {
 
   //___T A S K S_____________________________________________________//
   saveTask() {
-    console.log(this.taskEl);
-    console.log(this.taskForm);
-    console.log(this.descInput);
-
     // Update Task card values
     this.created = new Date();
     this.title = this.inputTitle.value || 'Untitled';

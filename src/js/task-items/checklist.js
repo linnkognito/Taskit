@@ -6,13 +6,13 @@ import { TaskItem } from './taskItems';
 //////////////__________________M A R K U P__________________//////////////
 
 import checklistMarkup from '../../components/tasks/items/checklist.html';
-import listFormItem from '../../components/tasks/items/checklist-form-item.html';
 import listItemMarkup from '../../components/tasks/items/checklist-item.html';
 
 //////////////__________C H E C K L I S T  C L A S S__________//////////////
 
 export class Checklist extends TaskItem {
   generateId = helper.generateId;
+  showElement = helper.showElement;
   hideAndShowEls = helper.hideAndShowEls;
 
   constructor(id, task) {
@@ -57,18 +57,17 @@ export class Checklist extends TaskItem {
   get checklistBody() {
     return this.checklist.querySelector('.checklist__body');
   }
-  get listItemEls() {
-    return {
-      item: this.checklist.querySelector('.checklist__item'),
-      itemCheckbox: this.checklist.querySelector('.checklist__item-checkbox'),
-      itemInput: this.checklist.querySelector('.checklist__item-input'),
-      itemVal: this.checklist.querySelector('.checklist__item-value'),
-    };
+  get liInput() {
+    return this.checklist.querySelector('.checklist__item-input');
+  }
+  get liCheckbox() {
+    return this.checklist.querySelector('.checklist__item-checkbox');
   }
   //#endregion
 
   //////////////________________M E T H O D S________________//////////////
 
+  //___C H E C K L I S T_____________________________________________//
   renderItemMarkup() {
     //prettier-ignore
     return checklistMarkup
@@ -90,20 +89,13 @@ export class Checklist extends TaskItem {
     this.items.push(newListItem);
 
     // Render list item
-    listFormItem.replace('{%CHECKLIST_ID%}', newListItem.id);
-    helper.insertMarkupAdj(this.checklistBody, 'afterbegin', listFormItem);
+    const liMarkup = newListItem.renderListItem();
+    helper.insertMarkupAdj(this.checklistBody, 'afterbegin', liMarkup);
 
-    // List Item elements
-    const { item, itemCheckbox, itemInput, itemVal } = this.listItemEls;
+    if (this.checklist.closest('.task').dataset.state === 'form') this.liCheckbox.disabled = true;
 
-    // Set attributes
-    item.dataset.id = newListItem.id;
-    itemCheckbox.name = `checkbox-${newListItem.id}`;
-    itemCheckbox.id = `checkbox-${newListItem.id}`;
-    itemInput.id = `checkbox-${newListItem.id}`;
-    itemVal.setAttribute('for', `checkbox-${newListItem.id}`);
-
-    itemInput.focus();
+    this.showElement(this.liInput);
+    this.liInput.focus();
 
     newListItem.initListeners();
   }
@@ -115,7 +107,7 @@ export class Checklist extends TaskItem {
     inputEl.focus();
   }
   deleteListItem(e) {
-    const listItem = e.target.closest('.task-form__checklist-item');
+    const listItem = e.target.closest('.checklist-item--form');
     const id = listItem.dataset.id;
 
     if (listItem) {
@@ -133,23 +125,22 @@ class ListItem {
     this.value = '';
     this.checked = false;
     this.checklist = checklist;
-    this.preventBlur = false;
     this.created = new Date();
     this.sort = 'created';
   }
 
   //////////////________________G E T T E R S________________//////////////
   get checkboxEl() {
-    return document.querySelector(`.checklist__item-checkbox[id="checkbox-${this.id}"]`);
+    return this.checklist.liCheckbox;
   }
   get labelEl() {
-    return document.querySelector(`.checklist-item__value[for="checkbox-${this.id}"]`);
+    return document.querySelector(`.checklist__item-value[for="checkbox-${this.id}"]`);
   }
   get inputEl() {
-    return document.querySelector(`.checklist-item__value-input[id="checkbox-${this.id}"]`);
+    return this.checklist.liInput;
   }
   get listItemEl() {
-    return document.querySelector(`.task-form__checklist-item[data-id="checkbox-${this.id}"]`);
+    return document.querySelector(`.checklist-item[data-id="checkbox-${this.id}"]`);
   }
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
@@ -157,8 +148,7 @@ class ListItem {
   initListeners() {
     // Check list item input value //
     this.inputEl.addEventListener('blur', (e) => {
-      if (!this.preventBlur) this.checkValue(e);
-      this.preventBlur = false; // Reset flag
+      this.checkValue(e);
     });
 
     this.inputEl.addEventListener('keydown', (e) => {
