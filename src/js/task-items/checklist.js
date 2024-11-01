@@ -105,6 +105,8 @@ export class Checklist extends TaskItem {
 //////////////__________L I S T  I T E M  C L A S S__________//////////////
 
 export class ListItem {
+  hasClass = helper.hasClass;
+
   constructor(id, checklist) {
     this.id = id;
     this.value = '';
@@ -152,18 +154,19 @@ export class ListItem {
 
     // Handle clicks
     this.listItemEl.addEventListener('click', (e) => this.handleListItemClicks(e));
+
+    this.checkboxEl.addEventListener('click', (e) => this.toggleChecked(e));
   }
   handleListItemClicks(e) {
     const actionMap = {
       'checklist__item-value': (e) => this.editListItem(e),
-      //checklist__checkbox: () => this.toggleChecked(),
       'btn-delete-li': () => this.deleteListItem(),
     };
 
     // Call the method
     Object.keys(actionMap).forEach((cls) => {
       const el = e.target.closest(`.${cls}`);
-      if (el) actionMap[cls](el);
+      if (el) actionMap[cls](e);
     });
   }
 
@@ -196,9 +199,9 @@ export class ListItem {
     this.checklist.task.project.saveProjectState();
   }
   editListItem(e) {
-    e.preventDefault;
+    e.preventDefault();
     this.checklist.hideAndShowEls(this.labelEl, this.inputEl);
-    this.inputEl.textContent = this.value;
+    this.inputEl.value = this.value;
     this.inputEl.focus();
   }
   deleteListItem() {
@@ -215,8 +218,10 @@ export class ListItem {
 
     this.checklist.task.project.saveProjectState();
   }
-  toggleChecked() {
-    console.log(`toggleChecked entered`);
+  toggleChecked(e) {
+    // Disable checkboxes inside of Task Forms
+    if (this.checklist.task.taskForm) return e.preventDefault();
+
     this.checked = this.checkboxEl.checked;
 
     if (this.checked) {

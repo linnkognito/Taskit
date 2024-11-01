@@ -328,7 +328,12 @@ export class Task {
     this.initListeners();
   }
   populatetaskMarkup() {
-    return taskMarkup.replace('{%TASK_ID%}', this.id).replace('{%TASK_TITLE%}', this.title).replace('{%TASK_DESCRIPTION%}', this.description).replace('{%TASK_CREATED%}', this.getCreationDateStr());
+    //prettier-ignore
+    return taskMarkup
+      .replace('{%TASK_ID%}', this.id)
+      .replace('{%TASK_TITLE%}', this.title)
+      .replace('{%TASK_DESCRIPTION%}', this.description)
+      .replace('{%TASK_CREATED%}', this.getCreationDateStr());
   }
   deleteTask() {
     this.project.tasks = this.project.tasks.filter((t) => t.id !== this.id);
@@ -534,6 +539,8 @@ export class Task {
     return `${d}, ${t}`;
   };
   formatCreationDate() {
+    //if (!this.created) this.created = new Date();
+
     const y = this.created.getFullYear();
     const m = String(this.created.getMonth() + 1).padStart(2, 0);
     const d = String(this.created.getDate()).padStart(2, 0);

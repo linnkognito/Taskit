@@ -54,6 +54,9 @@ export class App {
     // Initialize event listeners
     newProject.initListeners();
   }
+  addClonedProject(projectClone) {
+    this.projectsArr.push(projectClone);
+  }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
 

@@ -49,6 +49,10 @@ export class Project {
       'btn-settings': (btn) => this.openSettings(btn),
       'btn-sort-tasks': (btn) => this.openSettings(btn),
       'project-card__title': (title) => this.editProjectTitle(title),
+
+      // Settings dropdown
+      'settings-edit': () => this.editProjectTitle(),
+      'settings-clone': () => this.cloneProject(),
       'settings-delete': () => this.deleteProject(),
     };
 
@@ -101,7 +105,6 @@ export class Project {
 
     // Apply animation
     helper.scaleUp(this.projectEl, 'center');
-
     this.projectEl.addEventListener(
       'animationend',
       () => {
@@ -133,6 +136,70 @@ export class Project {
 
     // Remove DOM element
     this.projectEl.remove();
+  }
+  cloneProject() {
+    // Create new Project instance
+    const clonedProject = new Project(this.generateId());
+    console.log(clonedProject);
+
+    // Create deep copy of Project
+    clonedProject.title = `${this.title} (Copy)`;
+
+    clonedProject.tasks = this.tasks.map((task) => {
+      const clonedTask = new Task(this.generateId(), clonedProject, clonedProject.projectEl);
+      clonedTask.title = task.title;
+      clonedTask.prio = task.prio;
+      clonedTask.description = task.description;
+      clonedTask.dueDate = task.dueDate;
+      clonedTask.dueTime = task.dueTime;
+      clonedTask.dueDateObj = task.dueDateObj ? new Date(task.dueDateObj) : null;
+      clonedTask.created = task.created ? new Date(task.created) : new Date();
+      clonedTask.checked = task.checked;
+      clonedTask.sort = task.sort;
+
+      // Checklists
+      clonedTask.checklists = task.checklists.map((cl) => {
+        const clonedChecklist = new Checklist(this.generateId(), clonedTask);
+        clonedChecklist.title = cl.title;
+        clonedChecklist.checked = cl.checked;
+
+        // Checklist items
+        clonedChecklist.items = cl.items.map((item) => {
+          const clonedItem = new ListItem(this.generateId(), clonedChecklist);
+          clonedItem.value = item.value;
+          clonedItem.checked = item.checked;
+          clonedItem.created = new Date(item.created);
+          return clonedItem;
+        });
+        return clonedChecklist;
+      });
+
+      // Notes
+      clonedTask.notes = task.notes.map((note) => {
+        const clonedNote = new Note(this.generateId(), clonedTask);
+        clonedNote.title = note.title;
+        clonedNote.note = note.note;
+        clonedNote.created = new Date(note.created);
+        return clonedNote;
+      });
+
+      return clonedTask;
+    });
+
+    // Push to array
+    app.addClonedProject(clonedProject);
+
+    // Render project card
+    clonedProject.renderProjectCard();
+    if (clonedProject.tasks.length) {
+      clonedProject.tasks.forEach((task) => {
+        console.log(clonedProject.tasks);
+        task.renderTaskCard();
+      });
+    }
+
+    // Persist data to local storage
+    this.saveProjectState();
   }
 
   //___P R O J E C T  T I T L E_______________________________________//
