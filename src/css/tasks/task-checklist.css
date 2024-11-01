@@ -88,45 +88,55 @@
   justify-content: space-between;
   align-items: center;
 }
-.checklist .checklist__body .checklist__item .checklist__item-content {
+.checklist .checklist__body .checklist__item .checklist__item-content--input,
+.checklist .checklist__body .checklist__item .checklist__item-content--value {
   display: flex;
-  gap: 0.3em;
+  gap: 0.25em;
 }
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-checkbox:checked + label {
+.checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-checkbox:checked + label,
+.checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-checkbox:checked + label {
   text-decoration: line-through;
   color: rgba(165, 160, 158, 0.6);
 }
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-input {
+.checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-input,
+.checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-input {
   width: 100%;
+  margin-right: 0.4em;
   padding: 0.1em 0.5em;
   font-size: 1rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  border: none;
   border-radius: 0.9em;
   outline: none;
+  border: 1px solid rgba(213, 207, 204, 0.4);
+  width: 100%;
+  padding: 0.1em 0.5em;
 }
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-input:focus {
+.checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-input:focus,
+.checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-input:focus {
   color: rgb(158, 158, 158);
   border: none;
   outline: none;
   box-shadow: 0 0 4px white;
   border: 1px solid rgba(213, 207, 204, 0.7);
   box-shadow: 0 0 2px rgba(213, 207, 204, 0.7);
-  transform: scale(1.01);
 }
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-input::placeholder {
+.checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-input::placeholder,
+.checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-input::placeholder {
   color: rgb(213, 207, 204);
 }
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-input:focus::placeholder {
+.checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-input:focus::placeholder,
+.checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-input:focus::placeholder {
   color: rgba(213, 207, 204, 0.4);
 }
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-value {
-  font-size: 1rem;
+.checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-value,
+.checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-value {
   padding: 0.1em 0.5em;
-}
-.checklist .checklist__body .checklist__item .checklist__item-content .checklist__item-value:hover {
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  border: 1px solid white;
   cursor: text;
 }
 .checklist .checklist__body .checklist__item .btn-delete-li {

@@ -47,36 +47,27 @@
       align-items: center;
 
       // LIST ITEM (BODY) //
-      .checklist__item-content {
+      .checklist__item-content--input,
+      .checklist__item-content--value {
         display: flex;
-        // align-items: center;
-        gap: 0.3em;
+        gap: 0.25em;
 
         .checklist__item-checkbox:checked + label {
           text-decoration: line-through;
           color: vars.$col-primary-dark-op;
         }
 
-        // LIST TEXT INPUT (BODY) //
+        // LI INPUT //
         .checklist__item-input {
-          // @include mixins.input-text($fs: 1rem);
-          // border: 1px solid vars.$col-primary-low-op;
-          width: 100%;
-          // margin-right: 0.4em;
-          padding: 0.1em 0.5em;
-          font-size: 1rem;
-          font-family: vars.$font-body;
-          color: vars.$col-secondary;
-          letter-spacing: vars.$ls-title;
+          @include mixins.input-text($fs: 1rem);
           border: 1px solid vars.$col-primary-low-op;
-          border-radius: vars.$br-primary;
-          outline: none;
+          width: 100%;
+          padding: 0.1em 0.5em;
 
           &:focus {
             @include mixins.input-text-focus;
             border: 1px solid vars.$col-primary-op;
             box-shadow: 0 0 2px vars.$col-primary-op;
-            transform: scale(1.01);
           }
           &::placeholder {
             @include mixins.input-text-placeholder;
@@ -86,13 +77,13 @@
           }
         }
 
-        // LIST ITEM LABEL (BODY) //
+        // LI VALUE (LABEL) //
         .checklist__item-value {
-          font-size: 1rem;
           padding: 0.1em 0.5em;
-          // margin-left: 0.75em;
-        }
-        .checklist__item-value:hover {
+          font-size: 1rem;
+          letter-spacing: vars.$ls-title;
+
+          border: 1px solid white;
           cursor: text;
         }
       }

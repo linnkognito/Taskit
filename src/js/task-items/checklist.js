@@ -58,6 +58,12 @@ export class Checklist extends TaskItem {
   get liInput() {
     return this.checklist.querySelector('.checklist__item-input');
   }
+  get liInputContainer() {
+    return this.checklist.querySelector('.checklist__item-content--input');
+  }
+  get liValueContainer() {
+    return this.checklist.querySelector('.checklist__item-content--value');
+  }
   get liCheckbox() {
     return this.checklist.querySelector('.checklist__item-checkbox');
   }
@@ -92,7 +98,8 @@ export class Checklist extends TaskItem {
 
     if (this.checklist.closest('.task').dataset.state === 'form') this.liCheckbox.disabled = true;
 
-    this.showElement(this.liInput);
+    //this.showElement(this.liInputContainer);
+    this.hideAndShowEls(this.liValueContainer, this.liInputContainer);
     this.liInput.focus();
 
     newListItem.initListeners();
@@ -106,6 +113,7 @@ export class Checklist extends TaskItem {
 
 export class ListItem {
   hasClass = helper.hasClass;
+  hideAndShowEls = helper.hideAndShowEls;
 
   constructor(id, checklist) {
     this.id = id;
@@ -125,19 +133,25 @@ export class ListItem {
     return this.checklistEl.querySelector('.checklist__body--checked');
   }
   get checkboxEl() {
-    //return this.checklist.liCheckbox;
     return this.listItemEl.querySelector('.checklist__item-checkbox');
   }
   get labelEl() {
-    //return document.querySelector(`.checklist__item-value[for="checkbox-${this.id}"]`);
     return this.listItemEl.querySelector('.checklist__item-value');
   }
+  get labelContainer() {
+    return this.listItemEl.querySelector('.checklist__item-content--value');
+  }
   get inputEl() {
-    //return this.checklist.liInput;
     return this.listItemEl.querySelector('.checklist__item-input');
+  }
+  get inputContainer() {
+    return this.listItemEl.querySelector('.checklist__item-content--input');
   }
   get listItemEl() {
     return document.querySelector(`.checklist__item[data-id="${this.id}"]`);
+  }
+  get checkedContainer() {
+    return this.listItemEl.querySelector('.checklist__item-content--checked');
   }
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
@@ -180,17 +194,30 @@ export class ListItem {
       .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`)
       .replace('{%LIST_ITEM_VALUE%}', this.value);
   }
+  handleEmptyInput(value) {
+    // If no input and no old value
+    if (!value && !this.value) {
+      return this.deleteListItem();
+    }
+
+    // If old value: reset to old value
+    if (!value && this.value) {
+      this.hideAndShowEls(this.inputContainer, this.labelContainer);
+      this.labelEl.textContent = this.value;
+    }
+  }
   saveListItem() {
-    // Remove item if input is empty
     let value = this.inputEl.value.trim();
-    if (!value) return;
+
+    // Handle empty input field
+    if (!value) return this.handleEmptyInput(value);
 
     // Update values
     this.value = value;
     this.labelEl.textContent = this.value;
 
     // Update elements
-    helper.hideAndShowEls(this.inputEl, this.labelEl);
+    this.hideAndShowEls(this.inputContainer, this.labelContainer);
 
     // Enable checkbox
     this.checkboxEl.disabled = false;
@@ -200,7 +227,7 @@ export class ListItem {
   }
   editListItem(e) {
     e.preventDefault();
-    this.checklist.hideAndShowEls(this.labelEl, this.inputEl);
+    this.checklist.hideAndShowEls(this.labelContainer, this.inputContainer);
     this.inputEl.value = this.value;
     this.inputEl.focus();
   }
