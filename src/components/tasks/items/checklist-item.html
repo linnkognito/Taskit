@@ -1,10 +1,8 @@
 <div class="checklist__item" data-id="{%LIST_ITEM_ID%}">
   <div class="checklist__item-content--value">
-    <input type="checkbox" id="{%LIST_ITEM_INPUT_ID%}" name="" class="checklist__item-checkbox" />
+    <input type="checkbox" id="{%LIST_ITEM_INPUT_ID%}" name="" class="checklist__item-checkbox" {%LIST_ITEM_CHECKED%} />
 
     <label for="{%LIST_ITEM_LABEL_FOR%}" class="checklist__item-value">{%LIST_ITEM_VALUE%}</label>
-
-    <!-- <input type="text" id="{%LIST_ITEM_VALUE_INPUT%}" class="checklist__item-input hidden" /> -->
   </div>
 
   <div class="checklist__item-content--input hidden">
@@ -12,8 +10,6 @@
 
     <input type="text" id="{%LIST_ITEM_VALUE_INPUT%}" class="checklist__item-input" />
   </div>
-
-  <div class="checklist__item-content--checked"></div>
 
   <button class="btn-delete-li">
     <img src="../../../../public/icons/delete.png" alt="Delete list item" />

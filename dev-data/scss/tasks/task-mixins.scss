@@ -97,8 +97,8 @@
   letter-spacing: vars.$ls-title;
   color: white;
 }
-@mixin item-body($bg: vars.$col-primary-low-op) {
-  padding: 0.5em 1em;
+@mixin item-body($bg: vars.$col-primary-low-op, $pad: 0.5em 1em) {
+  padding: $pad;
   font-size: 1rem;
   letter-spacing: 0.02em;
   color: vars.$col-primary-dark;

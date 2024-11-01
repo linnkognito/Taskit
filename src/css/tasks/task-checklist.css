@@ -72,7 +72,7 @@
   height: 100%;
 }
 .checklist .checklist__body {
-  padding: 0.5em 1em;
+  padding: 0.5em;
   font-size: 1rem;
   letter-spacing: 0.02em;
   color: rgb(165, 160, 158);
@@ -83,6 +83,15 @@
   flex-direction: column;
   gap: 0.3em;
 }
+.checklist .checklist__body .checklist__body--unchecked {
+  padding: 0 0.5em 0 0.3em;
+}
+.checklist .checklist__body .checklist__body--checked-wrapper {
+  padding: 0 0.5em 0 0.3em;
+  background: rgba(213, 207, 204, 0.2);
+  border-radius: 0.9em;
+  opacity: 0.6;
+}
 .checklist .checklist__body .checklist__item {
   display: flex;
   justify-content: space-between;
@@ -92,6 +101,7 @@
 .checklist .checklist__body .checklist__item .checklist__item-content--value {
   display: flex;
   gap: 0.25em;
+  padding: 0 0.3em;
 }
 .checklist .checklist__body .checklist__item .checklist__item-content--input .checklist__item-checkbox:checked + label,
 .checklist .checklist__body .checklist__item .checklist__item-content--value .checklist__item-checkbox:checked + label {
@@ -136,7 +146,6 @@
   padding: 0.1em 0.5em;
   font-size: 1rem;
   letter-spacing: 0.05em;
-  border: 1px solid white;
   cursor: text;
 }
 .checklist .checklist__body .checklist__item .btn-delete-li {

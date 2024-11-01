@@ -1,8 +1,10 @@
 <div class="checklist" data-id="{%CHECKLIST_ID%}" data-type="checklist">
+  <!-- HEADER -->
   <div class="checklist__header">
     <input type="text" class="input-item-title checklist__input-title hidden" placeholder="Checklist" />
     <div class="item-title checklist__title">{%CHECKLIST_TITLE%}</div>
 
+    <!-- BUTTONS -->
     <div class="checklist__buttons">
       <button class="checklist__btn btn-add-li">
         <img src="../../../../public/icons/add.png" alt="Add list item" title="Add list item" class="checklist__btn--icon" />
@@ -16,9 +18,15 @@
     </div>
   </div>
 
+  <!-- BODY -->
   <div class="checklist__body">
-    {%CHECKLIST_ITEMS%}
-    <span class="checklist__body--checked"></span>
+    <!-- UNCHEKED LI's -->
+    <div class="checklist__body--unchecked">{%CHECKLIST_ITEMS%}</div>
+    <!-- CHECKED LI'S -->
+    <div class="checklist__body--checked-wrapper">
+      <div class="checklist__heading">Completed (<span class="checklist__completed">{%CHECKLIST_COMPLETED%}</span>)</div>
+      <div class="checklist__body--checked">{%CHECKLIST_CHECKED%}</div>
+    </div>
     <button class="btn-add-li">+ Add item</button>
   </div>
 </div>

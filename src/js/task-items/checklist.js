@@ -18,6 +18,7 @@ export class Checklist extends TaskItem {
   constructor(id, task) {
     super(id, task);
     this.title = '';
+    this.created = new Date();
     this.checked = false;
 
     this.items = [];
@@ -67,6 +68,9 @@ export class Checklist extends TaskItem {
   get liCheckbox() {
     return this.checklist.querySelector('.checklist__item-checkbox');
   }
+  get completed() {
+    return this.checklist.querySelector('.checklist__completed');
+  }
   //#endregion
 
   //////////////________________M E T H O D S________________//////////////
@@ -77,13 +81,20 @@ export class Checklist extends TaskItem {
     return checklistMarkup
       .replace('{%CHECKLIST_ID%}', this.id)
       .replace('{%CHECKLIST_TITLE%}', this.title)
-      .replace('{%CHECKLIST_ITEMS%}', this.renderListItems());
+      .replace('{%CHECKLIST_ITEMS%}', this.renderListItems(false))
+      .replace('{%CHECKLIST_CHECKED%}', this.renderListItems(true))
+      .replace('{%CHECKLIST_COMPLETED%}', this.calcCompleted());
   }
 
   //___L I S T  I T E M S____________________________________________//
-  renderListItems() {
+  renderListItems(checked) {
     let markup = '';
-    this.items.forEach((item) => (markup += item.renderListItem()));
+
+    this.items.sort((a, b) => a.created - b.created);
+    this.items.forEach((item) => {
+      if (checked !== item.checked) return;
+      markup += item.renderListItem();
+    });
 
     return markup;
   }
@@ -107,21 +118,27 @@ export class Checklist extends TaskItem {
     // Trigger save for items added in card mode
     this.task.project.saveProjectState();
   }
+  calcCompleted() {
+    console.log(this.items);
+    return this.items.filter((li) => li.checked).length;
+  }
 }
 
 //////////////__________L I S T  I T E M  C L A S S__________//////////////
 
 export class ListItem {
+  clear = helper.clear;
   hasClass = helper.hasClass;
   hideAndShowEls = helper.hideAndShowEls;
+  insertMarkupAdj = helper.insertMarkupAdj;
 
   constructor(id, checklist) {
     this.id = id;
     this.value = '';
-    this.checked = false;
     this.checklist = checklist;
     this.created = new Date();
     this.sort = 'created';
+    this.checked = false;
     this.deleted = false;
   }
 
@@ -131,6 +148,9 @@ export class ListItem {
   }
   get checkedItemsContainer() {
     return this.checklistEl.querySelector('.checklist__body--checked');
+  }
+  get uncheckedItemsContainer() {
+    return this.checklistEl.querySelector('.checklist__body--unchecked');
   }
   get checkboxEl() {
     return this.listItemEl.querySelector('.checklist__item-checkbox');
@@ -149,9 +169,6 @@ export class ListItem {
   }
   get listItemEl() {
     return document.querySelector(`.checklist__item[data-id="${this.id}"]`);
-  }
-  get checkedContainer() {
-    return this.listItemEl.querySelector('.checklist__item-content--checked');
   }
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
@@ -189,6 +206,7 @@ export class ListItem {
   renderListItem() {
     return listItemMarkup
       .replace('{%LIST_ITEM_ID%}', this.id)
+      .replace('{%LIST_ITEM_CHECKED%}', this.checked ? 'checked' : '')
       .replace('{%LIST_ITEM_INPUT_ID%}', `checkbox-${this.id}`)
       .replace('{%LIST_ITEM_LABEL_FOR%}', `checkbox-${this.id}`)
       .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`)
@@ -227,6 +245,11 @@ export class ListItem {
   }
   editListItem(e) {
     e.preventDefault();
+
+    // Prevent editing of completed items
+    if (this.checked) return;
+
+    // Show input field
     this.checklist.hideAndShowEls(this.labelContainer, this.inputContainer);
     this.inputEl.value = this.value;
     this.inputEl.focus();
@@ -251,16 +274,28 @@ export class ListItem {
 
     this.checked = this.checkboxEl.checked;
 
+    // Moved to checked ListItems
     if (this.checked) {
-      // console.log(`checked entered`);
-      // this.listItemEl.remove();
-      // this.checkedItemsContainer.insertAdjecentHTML('afterbegin', this.renderListItem());
-      // this.checkboxEl.disabled = false;
-      // this.checkboxEl.checked = true;
+      this.checkedItemsContainer.appendChild(this.listItemEl);
     }
+
+    // Move back to unchecked ListItems
     if (!this.checked) {
-      // Move to the top of the checklist
-      const value = this.labelEl.textContent;
+      // Move item back to unchecked container
+      this.checkedItemsContainer.appendChild(this.listItemEl);
+
+      // Put it back in the same spot
+      this.checklist.items.sort((a, b) => b.created - a.created);
+      this.checklist.items.forEach((li) => {
+        if (li.checked) return;
+        this.uncheckedItemsContainer.appendChild(li.listItemEl);
+      });
     }
+
+    this.checklist.completed.textContent = '';
+    this.checklist.completed.textContent = this.checklist.calcCompleted();
+
+    // Persist to local storage
+    this.checklist.task.project.saveProjectState();
   }
 }

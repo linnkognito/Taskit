@@ -132,7 +132,6 @@ export class Task {
   }
 
   //////////////________________G E T T E R S________________//////////////
-
   //#region Getters
   get taskEl() {
     return document.querySelector(`.task[data-id="${this.id}"]`);
