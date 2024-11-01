@@ -183,6 +183,15 @@ export class Task {
   get btnsPrio() {
     return this.projectEl.querySelectorAll('.task-prio__btn');
   }
+  get getDueDateElements() {
+    return {
+      calendarBtn: this.taskEl.querySelector('.task-due--icon'),
+      dueDateEl: this.taskEl.querySelector('.task-due--text'),
+      smallTextTop: this.taskEl.querySelector('.task-due__small-top'),
+      bigText: this.taskEl.querySelector('.task-due__big'),
+      smallTextBottom: this.taskEl.querySelector('.task-due__small-bottom'),
+    };
+  }
 
   //___D U E  D A T E________________________________________________//
   get modalDueDate() {
@@ -306,7 +315,7 @@ export class Task {
     this.project.saveProjectState();
   }
   renderTaskCard() {
-    this.insertMarkup(this.project.projectBody, 'afterbegin', this.populatetaskMarkup());
+    this.insertMarkup(this.project.taskContainer, 'afterbegin', this.populatetaskMarkup());
 
     // If there's no description, set default + styles
     if (this.description === itemMap['description'].default) {
@@ -400,14 +409,13 @@ export class Task {
     });
   }
   saveDueDate() {
+    // For readability
     const inputDate = this.inputDueDate.value;
     const inputTime = this.inputDueTime.value;
 
     // Saving cleared input elements (reset)
     if (!inputDate && !inputTime) {
-      this.dueDate = null;
-      this.dueTime = null;
-      this.dueDateObj = null;
+      this.setDueDateToNull();
       this.modal.remove();
       this.displayDueDate();
       return;
@@ -420,7 +428,13 @@ export class Task {
 
     // Make sure the selection is in the future
     const inThePast = this.dueDate.getTime() <= new Date().getTime();
-    if (inThePast) return alert('❗ The selected date and/or time must be in the future');
+    if (inThePast) {
+      alert('❗ The selected date and/or time must be in the future');
+      this.setDueDateToNull();
+      this.inputDueDate.value = '';
+      this.inputDueTime.value = '';
+      return;
+    }
 
     // Format dueDate
     this.dueDate = this.formatDueDate();
@@ -435,7 +449,7 @@ export class Task {
     this.project.saveProjectState();
   }
   displayDueDate() {
-    const { calendarBtn, dueDateEl } = this.getDueDateElements();
+    const { calendarBtn, dueDateEl } = this.getDueDateElements;
 
     if (!this.dueDateObj) return this.hideAndShowEls(dueDateEl, calendarBtn);
     if (calendarBtn) this.hideAndShowEls(calendarBtn, dueDateEl);
@@ -455,6 +469,11 @@ export class Task {
     // Update property
     input.classList.contains('input-due-date') ? (this.dueDate = null) : (this.dueTime = null);
   }
+  setDueDateToNull() {
+    this.dueDate = null;
+    this.dueTime = null;
+    this.dueDateObj = null;
+  }
   parseDate(date) {
     const [y, m, d] = date.split('-');
     return new Date(y, m - 1, d);
@@ -467,15 +486,6 @@ export class Task {
     date.setHours(h);
     date.setMinutes(m);
     return date;
-  }
-  getDueDateElements() {
-    return {
-      calendarBtn: this.projectEl.querySelector('.task-due--icon'),
-      dueDateEl: this.projectEl.querySelector('.task-due--text'),
-      smallTextTop: this.projectEl.querySelector('.task-due__small-top'),
-      bigText: this.projectEl.querySelector('.task-due__big'),
-      smallTextBottom: this.projectEl.querySelector('.task-due__small-bottom'),
-    };
   }
   calcTimeDiff(date) {
     const diffMs = date.getTime() - new Date().getTime();
@@ -497,7 +507,7 @@ export class Task {
   }
   updateDueDateDisplay(diff) {
     // Get elements
-    const { smallTextTop, bigText, smallTextBottom } = this.getDueDateElements();
+    const { smallTextTop, bigText, smallTextBottom } = this.getDueDateElements;
 
     // Clear contents
     [smallTextTop, bigText, smallTextBottom].forEach((el) => {
@@ -538,8 +548,6 @@ export class Task {
     return `${d}, ${t}`;
   };
   formatCreationDate() {
-    //if (!this.created) this.created = new Date();
-
     const y = this.created.getFullYear();
     const m = String(this.created.getMonth() + 1).padStart(2, 0);
     const d = String(this.created.getDate()).padStart(2, 0);

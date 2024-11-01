@@ -16,6 +16,7 @@ import taskFormMarkup from '../components/tasks/forms/task_form.html';
 //////////////__________P R O J E C T  C L A S S__________//////////////
 
 export class Project {
+  clear = helper.clear;
   generateId = helper.generateId;
   addClass = helper.addClass;
   hasClass = helper.hasClass;
@@ -54,6 +55,7 @@ export class Project {
       'settings-edit': () => this.editProjectTitle(),
       'settings-clone': () => this.cloneProject(),
       'settings-delete': () => this.deleteProject(),
+      'settings-delete-expired': () => this.deleteExpiredTasks(),
     };
 
     // Call the method
@@ -98,7 +100,7 @@ export class Project {
   //////////////________________M E T H O D S_______________//////////////
 
   //___P R O J E C T_________________________________________________//
-  renderProjectCard() {
+  renderProjectCard(clone = false) {
     // Update & insert markup
     const markup = projectMarkup.replace('{%PROJECT_ID%}', this.id);
     this.projects.firstElementChild.insertAdjacentHTML('afterend', markup);
@@ -114,7 +116,7 @@ export class Project {
       { once: true }
     );
 
-    if (localStorage.getItem(`project_${this.id}`)) {
+    if (localStorage.getItem(`project_${this.id}`) || clone) {
       this.hideAndShowEls(this.inputTitle, this.titleEl);
       this.titleEl.textContent = this.title;
       return;
@@ -140,11 +142,9 @@ export class Project {
   cloneProject() {
     // Create new Project instance
     const clonedProject = new Project(this.generateId());
-    console.log(clonedProject);
 
     // Create deep copy of Project
     clonedProject.title = `${this.title} (Copy)`;
-
     clonedProject.tasks = this.tasks.map((task) => {
       const clonedTask = new Task(this.generateId(), clonedProject, clonedProject.projectEl);
       clonedTask.title = task.title;
@@ -162,6 +162,7 @@ export class Project {
         const clonedChecklist = new Checklist(this.generateId(), clonedTask);
         clonedChecklist.title = cl.title;
         clonedChecklist.checked = cl.checked;
+        clonedChecklist.created = new Date(cl.created);
 
         // Checklist items
         clonedChecklist.items = cl.items.map((item) => {
@@ -169,8 +170,10 @@ export class Project {
           clonedItem.value = item.value;
           clonedItem.checked = item.checked;
           clonedItem.created = new Date(item.created);
+
           return clonedItem;
         });
+
         return clonedChecklist;
       });
 
@@ -190,15 +193,34 @@ export class Project {
     app.addClonedProject(clonedProject);
 
     // Render project card
-    clonedProject.renderProjectCard();
+    clonedProject.renderProjectCard(true);
+
+    // Render tasks (if any)
     if (clonedProject.tasks.length) {
       clonedProject.tasks.forEach((task) => {
-        console.log(clonedProject.tasks);
         task.renderTaskCard();
       });
     }
 
+    // Initialize Project listeners
+    clonedProject.initListeners();
+
     // Persist data to local storage
+    this.saveProjectState();
+  }
+  deleteExpiredTasks() {
+    // Mutate array to exclude expired tasks
+    for (let i = this.tasks.length - 1; i >= 0; i--) {
+      if (!this.tasks[i].dueDateObj) continue;
+
+      const expired = this.tasks[i].dueDateObj.getTime() - new Date().getTime() <= 0 ? true : false;
+      if (expired) this.tasks.splice(i, 1);
+    }
+
+    // Re-render task cards
+    this.clear(this.taskContainer);
+    this.tasks.forEach((task) => task.renderTaskCard());
+
     this.saveProjectState();
   }
 

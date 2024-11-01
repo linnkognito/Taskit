@@ -44,11 +44,15 @@
       padding: 0 0.5em 0 0.3em;
     }
     .checklist__body--checked-wrapper {
+      margin-top: 0.2em;
       padding: 0 0.5em 0 0.3em;
-
       background: vars.$col-primary-xlow-op;
       border-radius: vars.$br-primary;
       opacity: 0.6;
+
+      .checklist__body--checked-heading {
+        margin: 0.2em 0 0 0.3em;
+      }
     }
 
     // LIST ITEM (BODY)
