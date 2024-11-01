@@ -30,30 +30,39 @@
     .task-header__title-wrapper {
       display: flex;
       align-items: center;
-      column-gap: 0.5em;
+      column-gap: 0.1em;
 
       // CHECKBOX (HEADER) //
       .task-header__checkbox {
         height: 1.5em;
+        transition: opacity 0.2s ease; // for title edit effect
+
+        &:hover {
+          content: url(../../../public/icons/checkbox.png);
+          opacity: 0.5;
+          cursor: pointer;
+        }
+        &:active {
+          opacity: 1;
+        }
       }
-      .task-header__checkbox:hover {
-        content: url(../../../public/icons/checkbox.png);
-        opacity: 0.5;
-        cursor: pointer;
-      }
-      .task-header__checkbox:active {
-        opacity: 1;
+      .task-header__checkbox--no-hover {
+        height: 1.5em;
+        transition: opacity 0.2s ease;
+        cursor: not-allowed;
       }
 
       // TITLE (HEADER) //
       .task-header__title {
+        margin-right: 0.4em;
+        padding: 0.1em 0.5em;
         font-size: 1.25em;
-        letter-spacing: 0.1em;
+        letter-spacing: vars.$ls-title;
       }
 
       // INPUT TITLE (HEADER) //
       .task-header__input {
-        @include mixins.input-text;
+        @include mixins.input-text($fs: 1.25em);
 
         &:focus {
           @include mixins.input-text-focus;

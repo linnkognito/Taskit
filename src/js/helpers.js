@@ -3,6 +3,7 @@
 export class Helper {
   constructor() {
     this.hideAndShowEls = this.hideAndShowEls.bind(this);
+    // this.removeAndAddCls = this.removeAndAddCls.bind(this);
   }
 
   //////////////____C L A S S  M A N I P U L A T I O N____//////////////
@@ -28,6 +29,11 @@ export class Helper {
   }
   removeClass(el, cls) {
     return el.classList.remove(cls);
+  }
+  removeAndAddCls(el, cls1, cls2) {
+    console.log(el);
+    this.removeClass(el, cls1);
+    this.addClass(el, cls2);
   }
 
   //___C H E C K  F O R  C L A S S___________________________________//

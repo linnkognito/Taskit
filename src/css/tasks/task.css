@@ -29,10 +29,11 @@
 .task .task-header .task-header__title-wrapper {
   display: flex;
   align-items: center;
-  column-gap: 0.5em;
+  column-gap: 0.1em;
 }
 .task .task-header .task-header__title-wrapper .task-header__checkbox {
   height: 1.5em;
+  transition: opacity 0.2s ease;
 }
 .task .task-header .task-header__title-wrapper .task-header__checkbox:hover {
   content: url(../../../public/icons/checkbox.png);
@@ -42,15 +43,22 @@
 .task .task-header .task-header__title-wrapper .task-header__checkbox:active {
   opacity: 1;
 }
+.task .task-header .task-header__title-wrapper .task-header__checkbox--no-hover {
+  height: 1.5em;
+  transition: opacity 0.2s ease;
+  cursor: not-allowed;
+}
 .task .task-header .task-header__title-wrapper .task-header__title {
+  margin-right: 0.4em;
+  padding: 0.1em 0.5em;
   font-size: 1.25em;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 .task .task-header .task-header__title-wrapper .task-header__input {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
-  font-size: 1.35rem;
+  font-size: 1.25em;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;

@@ -20,6 +20,7 @@ export class Task {
   insertMarkup = helper.insertMarkupAdj;
   addClass = helper.addClass;
   hasClass = helper.hasClass;
+  removeAndAddCls = helper.removeAndAddCls;
   removeClass = helper.removeClass;
   hideElement = helper.hideElement;
   showElement = helper.showElement;
@@ -57,12 +58,20 @@ export class Task {
   initListeners() {
     this.taskEl.addEventListener('click', this.handleClick.bind(this));
 
-    if (this.inputTitle) this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl));
+    if (this.inputTitle) {
+      this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl));
+
+      this.inputTitle.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        this.saveTitle(this.inputTitle, this.titleEl);
+      });
+    }
   }
   handleClick(e) {
     // Map button classes to methods
     const actionMap = {
-      'task-header__title': () => this.editTitle(this.taskEl),
+      'task-header__title': () => this.editTitle(),
       'task-prio__btn': (btn) => this.setPrio(btn),
       'task-due': (btn) => this.openDueModal(btn),
       'task-footer__btn--save': () => this.saveTask(),
@@ -132,11 +141,23 @@ export class Task {
     return document.querySelector(`.task[data-id="${this.id}"][data-state="form"]`);
   }
   get inputTitle() {
-    return this.projectEl.querySelector('.task-header__input');
+    return this.taskEl.querySelector('.task-header__input');
   }
   get titleEl() {
-    return this.projectEl.querySelector('.task-header__title');
+    return this.taskEl.querySelector('.task-header__title');
   }
+  get taskCheckbox() {
+    return this.taskEl.querySelector('.task-header__checkbox, .task-header__checkbox--no-hover');
+  }
+  // get inputTitle() {
+  //   return this.projectEl.querySelector('.task-header__input');
+  // }
+  // get titleEl() {
+  //   return this.projectEl.querySelector('.task-header__title');
+  // }
+  // get taskCheckbox() {
+  //   return this.projectEl.querySelector('.task-header__checkbox, .task-header__checkbox--no-hover');
+  // }
   get descInput() {
     return this.taskForm.querySelector('#description-textarea');
   }
@@ -149,9 +170,6 @@ export class Task {
 
   get noteForm() {
     return document.querySelector('.task-form__note');
-  }
-  get checklistForm() {
-    return document.querySelector('.task-form__checklist');
   }
   get body() {
     return document.querySelector('body');
@@ -238,16 +256,17 @@ export class Task {
   }
 
   //___T I T L E_____________________________________________________//
-  editTitle(parent) {
-    // Get title elements
-    const titleEl = parent.querySelector('.task-header__title');
-    const inputEl = parent.querySelector('.task-header__input');
+  editTitle() {
+    this.hideAndShowEls(this.titleEl, this.inputTitle);
 
-    this.hideAndShowEls(titleEl, inputEl);
-    inputEl.focus();
+    if (this.taskCheckbox) {
+      this.removeAndAddCls(this.taskCheckbox, 'task-header__checkbox', 'task-header__checkbox--no-hover');
+      this.addClass(this.taskCheckbox, 'low-opacity');
+    }
 
     // Listen for blur on inputEl
-    inputEl.addEventListener('blur', () => this.saveTitle(inputEl, titleEl), { once: true });
+    this.inputTitle.focus();
+    this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl), { once: true });
   }
   saveTitle(inputEl, titleEl) {
     // Save input data
@@ -255,6 +274,11 @@ export class Task {
 
     // Hide input and show title element
     this.hideAndShowEls(inputEl, titleEl);
+
+    if (this.taskCheckbox) {
+      this.removeAndAddCls(this.taskCheckbox, 'task-header__checkbox--no-hover', 'task-header__checkbox');
+      this.removeClass(this.taskCheckbox, 'low-opacity');
+    }
 
     // Populate fields
     titleEl.textContent = this.title;

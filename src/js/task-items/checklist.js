@@ -32,8 +32,6 @@ export class Checklist extends TaskItem {
     // Map button classes to methods
     const actionMap = {
       'btn-add-li': () => this.addListItem(),
-      'btn-delete-li': (btn) => this.deleteListItem(btn),
-      'checklist__item-value': (label) => this.editListItem(label),
     };
 
     // Call the method
@@ -102,24 +100,6 @@ export class Checklist extends TaskItem {
     // Trigger save for items added in card mode
     this.task.project.saveProjectState();
   }
-  editListItem(labelEl) {
-    const inputEl = labelEl.closest('.checklist').querySelector('.checklist__item-input');
-
-    helper.hideAndShowEls(labelEl, inputEl);
-    inputEl.textContent = this.value;
-    inputEl.focus();
-  }
-  deleteListItem(btn) {
-    const listItem = btn.closest('.checklist__item');
-    if (!listItem) return;
-
-    // Remove from array
-    const i = this.items.findIndex((li) => li.id === listItem.dataset.id);
-    this.items.splice(i, 1);
-
-    // Remove element
-    listItem.remove();
-  }
 }
 
 //////////////__________L I S T  I T E M  C L A S S__________//////////////
@@ -132,40 +112,59 @@ export class ListItem {
     this.checklist = checklist;
     this.created = new Date();
     this.sort = 'created';
+    this.deleted = false;
   }
 
   //////////////________________G E T T E R S________________//////////////
   get checklistEl() {
     return this.checklist.checklist;
   }
+  get checkedItemsContainer() {
+    return this.checklistEl.querySelector('.checklist__body--checked');
+  }
   get checkboxEl() {
-    return this.checklist.liCheckbox;
+    //return this.checklist.liCheckbox;
+    return this.listItemEl.querySelector('.checklist__item-checkbox');
   }
   get labelEl() {
-    return document.querySelector(`.checklist__item-value[for="checkbox-${this.id}"]`);
+    //return document.querySelector(`.checklist__item-value[for="checkbox-${this.id}"]`);
+    return this.listItemEl.querySelector('.checklist__item-value');
   }
   get inputEl() {
-    return this.checklist.liInput;
+    //return this.checklist.liInput;
+    return this.listItemEl.querySelector('.checklist__item-input');
   }
   get listItemEl() {
-    return document.querySelector(`.checklist-item[data-id="checkbox-${this.id}"]`);
+    return document.querySelector(`.checklist__item[data-id="${this.id}"]`);
   }
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 
   initListeners() {
-    // Check list item input value //
-    this.inputEl.addEventListener('blur', (e) => this.saveListItem(e));
-
+    // Save ListItem value
+    this.inputEl.addEventListener('blur', () => this.saveListItem());
     this.inputEl.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;
       e.preventDefault();
       this.preventBlur = true;
-      this.saveListItem(e);
+      this.saveListItem();
     });
 
-    // Checked checkbox //
-    this.checkboxEl.addEventListener('click', () => this.checkedBox(this.checkboxEl));
+    // Handle clicks
+    this.listItemEl.addEventListener('click', (e) => this.handleListItemClicks(e));
+  }
+  handleListItemClicks(e) {
+    const actionMap = {
+      'checklist__item-value': (e) => this.editListItem(e),
+      //checklist__checkbox: () => this.toggleChecked(),
+      'btn-delete-li': () => this.deleteListItem(),
+    };
+
+    // Call the method
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls](el);
+    });
   }
 
   //////////////________________M E T H O D S________________//////////////
@@ -178,31 +177,54 @@ export class ListItem {
       .replace('{%LIST_ITEM_VALUE_INPUT%}', `value-${this.id}`)
       .replace('{%LIST_ITEM_VALUE%}', this.value);
   }
-  saveListItem(e) {
-    const input = e.target;
-    const value = input.value.trim();
-
+  saveListItem() {
     // Remove item if input is empty
-    if (!value) {
-      return this.checklist.deleteListItem(e);
-    }
+    let value = this.inputEl.value.trim();
+    if (!value) return;
 
-    console.log(`no early return`);
     // Update values
     this.value = value;
     this.labelEl.textContent = this.value;
 
     // Update elements
-    helper.hideAndShowEls(input, this.labelEl);
+    helper.hideAndShowEls(this.inputEl, this.labelEl);
+
+    // Enable checkbox
+    this.checkboxEl.disabled = false;
 
     // Save to local storage if created from Task Card
     this.checklist.task.project.saveProjectState();
   }
-  checkedBox(cb) {
-    this.checked = cb.checked;
+  editListItem(e) {
+    e.preventDefault;
+    this.checklist.hideAndShowEls(this.labelEl, this.inputEl);
+    this.inputEl.textContent = this.value;
+    this.inputEl.focus();
+  }
+  deleteListItem() {
+    // Prevents bug where multiple listeners trying to delete the same item
+    if (this.deleted) return;
+    this.deleted = true;
+
+    // Remove element
+    this.listItemEl.remove();
+
+    // Remove from array
+    const i = this.checklist.items.findIndex((li) => li.id === this.id);
+    this.checklist.items.splice(i, 1);
+
+    this.checklist.task.project.saveProjectState();
+  }
+  toggleChecked() {
+    console.log(`toggleChecked entered`);
+    this.checked = this.checkboxEl.checked;
 
     if (this.checked) {
-      // Move right after checked items
+      // console.log(`checked entered`);
+      // this.listItemEl.remove();
+      // this.checkedItemsContainer.insertAdjecentHTML('afterbegin', this.renderListItem());
+      // this.checkboxEl.disabled = false;
+      // this.checkboxEl.checked = true;
     }
     if (!this.checked) {
       // Move to the top of the checklist
