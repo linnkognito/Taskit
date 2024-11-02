@@ -99,6 +99,9 @@ export class Project {
   get btnAddTask() {
     return this.projectEl.querySelector('.project-card__btn-add-task');
   }
+  get completedCounter() {
+    return document.querySelector('.project-card__completed-counter');
+  }
   //#endregion
 
   //////////////________________M E T H O D S_______________//////////////
@@ -422,6 +425,7 @@ export class Project {
       newTask.dueDateObj = taskData.dueDateObj ? new Date(taskData.dueDateObj) : null;
       newTask.prio = taskData.prio;
       newTask.created = new Date(taskData.created);
+      newTask.checked = taskData.checked;
 
       // Restore checklists
       newTask.checklists = taskData.checklists.map((clData) => {

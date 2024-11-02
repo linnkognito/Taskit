@@ -315,7 +315,12 @@ export class Task {
       this.showElement(this.sortBar);
     }
 
+    // Hide sortbar if there's no Task Items
     if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
+
+    // Calculate and display number of completed tasks
+    this.project.completedCounter.textContent = '';
+    this.project.completedCounter.textContent = this.calcCompleted();
 
     this.initListeners();
   }
@@ -391,6 +396,9 @@ export class Task {
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
+  }
+  calcCompleted() {
+    return this.project.tasks.filter((task) => task.checked === true).length;
   }
 
   //___T I T L E_____________________________________________________//
