@@ -56,7 +56,8 @@ export class Project {
       'settings-clone': () => this.cloneProject(),
       'settings-delete': () => this.deleteProject(),
       'settings-delete-expired': () => this.deleteExpiredTasks(),
-      'settings-mark-complete': () => this.markAllTasksComplete(),
+      'settings-mark-complete': () => this.setCompletionStatus(true),
+      'settings-mark-incomplete': () => this.setCompletionStatus(false),
     };
 
     // Call the method
@@ -339,9 +340,9 @@ export class Project {
     // Local storage
     this.saveProjectState();
   }
-  markAllTasksComplete() {
+  setCompletionStatus(bool) {
     this.tasks.forEach((task) => {
-      task.checked = true;
+      task.checked = bool;
       task.toggleChecked(true);
     });
   }
