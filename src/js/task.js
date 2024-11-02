@@ -298,8 +298,11 @@ export class Task {
     if (this.checked) {
       this.insertMarkup(this.project.taskContainerChecked, 'afterbegin', this.populatetaskMarkup());
     }
-
-    this.insertMarkup(this.project.taskContainer, 'afterbegin', this.populatetaskMarkup());
+    if (!this.checked) {
+      this.insertMarkup(this.project.taskContainer, 'afterbegin', this.populatetaskMarkup());
+    }
+    // Apply styles
+    this.applyCheckedStatusStyles();
 
     // If there's no description, set default + styles
     if (this.description === itemMap['description'].default) {
@@ -321,6 +324,8 @@ export class Task {
     // Calculate and display number of completed tasks
     this.project.completedCounter.textContent = '';
     this.project.completedCounter.textContent = this.calcCompleted();
+
+    // Apply correct styles for checked/Unchecked Tasks
 
     this.initListeners();
   }
@@ -352,10 +357,7 @@ export class Task {
       this.taskCheckbox.setAttribute('title', 'Undo checked');
 
       // Apply styles
-      this.hideElement(this.taskBody);
-      this.hideElement(this.taskFooter);
-      this.hideElement(this.taskHeaderBtns);
-      this.addClass(this.taskEl, 'low-opacity');
+      this.applyCheckedStatusStyles();
     }
 
     // Append unchecked
@@ -365,12 +367,6 @@ export class Task {
 
       // Remove tooltip
       this.taskCheckbox.removeAttribute('title');
-
-      // Apply styles
-      this.showElement(this.taskBody);
-      this.showElement(this.taskFooter);
-      this.showDropdown(this.taskHeaderBtns);
-      this.removeClass(this.taskEl, 'low-opacity');
 
       // Put back in the same spot
       //FIX LATER Call Project method "sortTasks" or similar
@@ -393,6 +389,23 @@ export class Task {
   }
 
   //___T A S K S  H E L P E R S______________________________________//
+  applyCheckedStatusStyles() {
+    this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
+
+    if (this.checked) {
+      this.hideElement(this.taskBody);
+      this.hideElement(this.taskFooter);
+      this.hideElement(this.taskHeaderBtns);
+      this.addClass(this.taskEl, 'low-opacity');
+    }
+
+    if (!this.checked) {
+      this.showElement(this.taskBody);
+      this.showElement(this.taskFooter);
+      this.showDropdown(this.taskHeaderBtns);
+      this.removeClass(this.taskEl, 'low-opacity');
+    }
+  }
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
