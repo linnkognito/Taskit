@@ -115,6 +115,48 @@
   border-bottom-left-radius: 0.9em;
   border-bottom-right-radius: 0.9em;
 }
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5em;
+  padding: 0.5em 1em 0.1em 1em;
+  background: rgba(213, 207, 204, 0.2);
+  border: 1px solid rgba(213, 207, 204, 0.4);
+  border-radius: 0.9em;
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .project-card__task-container-heading {
+  margin: 0 0 0.2em 0.5em;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  color: rgb(213, 207, 204);
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task:hover {
+  transform: scale(1.05);
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task .task-header {
+  padding: 0.1em 0.5em;
+  background: rgba(165, 160, 158, 0.2);
+  transition: all 0.2s ease;
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task .task-header:hover {
+  background: rgb(213, 207, 204);
+  opacity: 1;
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task .task-header:active {
+  background: rgba(213, 207, 204, 0.2);
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task .task-header .task-header__checkbox {
+  transition: all 0.2s ease;
+}
+#projects .project-card .project-card__body .project-card__task-container--checked-wrapper .task .task-header .task-header__checkbox:hover {
+  content: url(../../../public/icons/checkbox-blank.png);
+  opacity: 1;
+  transform: scale(1.1);
+}
 #projects .project-card .project-card__body .project-card__btn-add-task {
   display: flex;
   justify-content: center;

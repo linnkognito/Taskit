@@ -89,6 +89,9 @@ export class Project {
   get taskContainer() {
     return this.projectEl.querySelector('.project-card__task-container');
   }
+  get taskContainerChecked() {
+    return this.projectEl.querySelector('.project-card__task-container--checked');
+  }
   get taskForm() {
     return document.querySelector(`.task[data-state="form"]`);
   }
@@ -106,12 +109,15 @@ export class Project {
     this.projects.firstElementChild.insertAdjacentHTML('afterend', markup);
 
     // Apply animation
-    helper.scaleUp(this.projectEl, 'center');
+    this.scaleUp(this.projectEl, 'center');
     this.projectEl.addEventListener(
       'animationend',
       () => {
         this.showElement(this.btnAddTask);
         this.scaleUp(this.btnAddTask, 'top');
+
+        // Ensure the button remains visible
+        this.btnAddTask.style.opacity = '1';
       },
       { once: true }
     );
@@ -306,6 +312,13 @@ export class Project {
 
     // Apply animations
     this.scaleUp(this.taskForm, 'top');
+    this.taskForm.addEventListener(
+      'animationend',
+      () => {
+        this.taskForm.style.opacity = '1'; // Ensures visibility after animation
+      },
+      { once: true }
+    );
     this.moveDown(this.taskContainer, this.taskContainer.getBoundingClientRect().height);
 
     // Create Task instance

@@ -11,6 +11,11 @@ import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
 import taskMarkup from '../components/tasks/task.html';
 import dropdownMarkup from '../components/menus/dropdown-sort-items.html';
 
+//////////////__________________I M A G E S__________________//////////////
+
+import iconBlankCb from '../../public/icons/checkbox-blank.png';
+import iconCheckedCb from '../../public/icons/checkbox.png';
+
 //////////////_______________T A S K  C L A S S_______________//////////////
 
 export class Task {
@@ -71,6 +76,7 @@ export class Task {
   handleClick(e) {
     // Map button classes to methods
     const actionMap = {
+      'task-header__checkbox': () => this.toggleChecked(),
       'task-header__title': () => this.editTitle(),
       'task-prio__btn': (btn) => this.setPrio(btn),
       'task-due': (btn) => this.openDueModal(btn),
@@ -148,22 +154,23 @@ export class Task {
   get taskCheckbox() {
     return this.taskEl.querySelector('.task-header__checkbox, .task-header__checkbox--no-hover');
   }
-  // get inputTitle() {
-  //   return this.projectEl.querySelector('.task-header__input');
-  // }
-  // get titleEl() {
-  //   return this.projectEl.querySelector('.task-header__title');
-  // }
-  // get taskCheckbox() {
-  //   return this.projectEl.querySelector('.task-header__checkbox, .task-header__checkbox--no-hover');
-  // }
+  get taskHeaderBtns() {
+    return this.taskEl.querySelector('.task-header__buttons');
+  }
+  get taskBody() {
+    return this.taskEl.querySelector('.task-body');
+  }
+  get taskFooter() {
+    return this.taskEl.querySelector('.task-footer--created');
+  }
+
   get descInput() {
     return this.taskForm.querySelector('#description-textarea');
   }
   get descriptionEl() {
     return this.taskEl.querySelector('.task-description');
   }
-  get taskContainer() {
+  get itemsContainer() {
     return this.taskEl.querySelector('.task-items-container');
   }
 
@@ -241,7 +248,7 @@ export class Task {
     item.array(this).push(newItem);
 
     // Render
-    this.insertMarkup(this.taskContainer, 'afterbegin', newItem.renderItemMarkup());
+    this.insertMarkup(this.itemsContainer, 'afterbegin', newItem.renderItemMarkup());
 
     // Apply animation & focus
     const itemEl = this.taskEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
@@ -261,6 +268,52 @@ export class Task {
 
     // Listen for blur on inputEl
     newItem.inputTitle.addEventListener('blur', () => newItem.saveTitle(newItem.inputTitle, newItem.titleEl), { once: true });
+  }
+  toggleChecked() {
+    // Prevent checkbox interaction while editing Task title
+    if (this.hasClass(this.taskCheckbox, 'task-header__checkbox--no-hover')) return;
+
+    // Toggle checked value
+    this.checked = !this.checked;
+
+    // Update checkbox attributes
+    this.taskCheckbox.dataset.checked = this.checked.toString();
+    this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
+
+    // Append checked
+    if (this.checked) {
+      // Move to checked container & apply low opacity
+      this.project.taskContainerChecked.appendChild(this.taskEl);
+
+      // Apply styles
+      this.hideElement(this.taskBody);
+      this.hideElement(this.taskFooter);
+      this.hideElement(this.taskHeaderBtns);
+      this.addClass(this.taskEl, 'low-opacity');
+    }
+
+    // Append unchecked
+    if (!this.checked) {
+      // Move back to unchecked container
+      this.project.taskContainer.appendChild(this.taskEl);
+
+      // Apply styles
+      this.showElement(this.taskBody);
+      this.showElement(this.taskFooter);
+      this.showDropdown(this.taskHeaderBtns);
+      this.removeClass(this.taskEl, 'low-opacity');
+
+      // Put back in the same spot
+      //FIX LATER Call Project method "sortTasks" or similar
+      this.project.tasks.sort((a, b) => b.created - a.created);
+      this.project.tasks.forEach((task) => {
+        if (task.checked) return;
+        this.project.taskContainer.appendChild(task.taskEl);
+      });
+    }
+
+    // Persist to local storage
+    this.project.saveProjectState();
   }
 
   //___T I T L E_____________________________________________________//
@@ -315,6 +368,11 @@ export class Task {
     this.project.saveProjectState();
   }
   renderTaskCard() {
+    // If Task is marked as checked
+    if (this.checked) {
+      this.insertMarkup(this.project.taskContainerChecked, 'afterbegin', this.populatetaskMarkup());
+    }
+
     this.insertMarkup(this.project.taskContainer, 'afterbegin', this.populatetaskMarkup());
 
     // If there's no description, set default + styles
@@ -572,11 +630,11 @@ export class Task {
     this.sort = el?.dataset.sort || 'Creation date';
     this.sortTaskItems();
 
-    this.clear(this.taskContainer);
+    this.clear(this.itemsContainer);
 
     // Render items
     this.items.forEach((item) => (markup += item.renderItemMarkup()));
-    this.insertMarkup(this.taskContainer, 'afterbegin', markup);
+    this.insertMarkup(this.itemsContainer, 'afterbegin', markup);
 
     this.items.forEach((item) => {
       // Hide input element

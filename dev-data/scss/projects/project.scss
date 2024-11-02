@@ -103,11 +103,64 @@
       border-bottom-left-radius: 0.9em;
       border-bottom-right-radius: 0.9em;
 
+      // CHECKED TASKS //
+      .project-card__task-container--checked-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.5em;
+        padding: 0.5em 1em 0.1em 1em;
+        background: vars.$col-primary-xlow-op;
+        border: 1px solid vars.$col-primary-low-op;
+        border-radius: vars.$br-primary;
+
+        .project-card__task-container-heading {
+          margin: 0 0 0.2em 0.5em;
+          font-size: 1.2rem;
+          letter-spacing: 0.05em;
+          color: vars.$col-primary;
+        }
+
+        // CHECKED TASK (MINIMIZED TASK CARD) //
+        .task {
+          transition: all 0.2s ease;
+          cursor: pointer;
+          &:hover {
+            transform: scale(1.05);
+          }
+
+          // HEADER (CHECKED TASK) //
+          .task-header {
+            padding: 0.1em 0.5em;
+            background: vars.$col-primary-dark-low-op;
+            transition: all 0.2s ease;
+            &:hover {
+              background: vars.$col-primary;
+              opacity: 1;
+            }
+            &:active {
+              background: vars.$col-primary-xlow-op;
+            }
+
+            // CHECKBOX (CHECKED TASK) //
+            .task-header__checkbox {
+              transition: all 0.2s ease;
+              &:hover {
+                content: url(../../../public/icons/checkbox-blank.png);
+                opacity: 1;
+                transform: scale(1.1);
+              }
+            }
+          }
+        } // [X] END OF CHECKED TASKS TASK CARD [X] //
+      } // [X] END OF CHECKED TASKS [X] //
+
+      // ADD TASK BUTTON //
       .project-card__btn-add-task {
         @include mixins.btn-wide();
-      }
-      .project-card__btn-add-task:hover {
-        @include mixins.btn-wide-hover();
+
+        &:hover {
+          @include mixins.btn-wide-hover();
+        }
       }
 
       // TASKS CONTAINER (BODY) //
