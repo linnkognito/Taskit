@@ -223,7 +223,7 @@ export class Task {
     return this.taskEl.querySelector('.task-sort');
   }
   get dropdown() {
-    return this.taskEl.querySelector('.dropdown-sort-items');
+    return this.projectEl.querySelector('.dropdown-sort-items');
   }
   get sortSelectionText() {
     return this.taskEl.querySelector('.task-sort__selection-text');

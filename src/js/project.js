@@ -41,6 +41,11 @@ export class Project {
 
   initListeners() {
     this.inputTitle.addEventListener('blur', () => this.saveProjectTitle());
+    this.inputTitle.addEventListener('keydown', (e) => {
+      if (e.target !== 'Enter') return;
+      this.saveProjectTitle();
+    });
+
     this.projectEl.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
