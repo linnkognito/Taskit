@@ -56,6 +56,7 @@ export class Project {
       'settings-clone': () => this.cloneProject(),
       'settings-delete': () => this.deleteProject(),
       'settings-delete-expired': () => this.deleteExpiredTasks(),
+      'settings-mark-complete': () => this.markAllTasksComplete(),
     };
 
     // Call the method
@@ -118,6 +119,7 @@ export class Project {
 
         // Ensure the button remains visible
         this.btnAddTask.style.opacity = '1';
+        this.projectEl.style.opacity = '1';
       },
       { once: true }
     );
@@ -315,7 +317,7 @@ export class Project {
     this.taskForm.addEventListener(
       'animationend',
       () => {
-        this.taskForm.style.opacity = '1'; // Ensures visibility after animation
+        this.taskForm.style.opacity = '1';
       },
       { once: true }
     );
@@ -333,6 +335,12 @@ export class Project {
 
     // Local storage
     this.saveProjectState();
+  }
+  markAllTasksComplete() {
+    this.tasks.forEach((task) => {
+      task.checked = true;
+      task.toggleChecked(true);
+    });
   }
   discardChanges() {
     return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean

@@ -79,6 +79,7 @@ export class Task {
       'task-header__checkbox': () => this.toggleChecked(),
       'task-header__title': () => this.editTitle(),
       'task-prio__btn': (btn) => this.setPrio(btn),
+      'task-description': () => this.editDescription(),
       'task-due': (btn) => this.openDueModal(btn),
       'task-footer__btn--save': () => this.saveTask(),
       'task-footer__btn--cancel': () => this.taskForm.remove(),
@@ -237,7 +238,7 @@ export class Task {
 
   //////////////________________M E T H O D S________________//////////////
 
-  //___F O R M  I T E M S_____________________________________________//
+  //___T A S K S_____________________________________________________//
   addItem(btn) {
     // Get type
     const itemType = btn.dataset.item;
@@ -253,6 +254,13 @@ export class Task {
     // Apply animation & focus
     const itemEl = this.taskEl.querySelector(`${item.element}[data-id="${newItem.id}"]`);
     this.scaleUp(itemEl, 'top');
+    itemEl.addEventListener(
+      'animationend',
+      () => {
+        itemEl.style.opacity = '1';
+      },
+      { once: true }
+    );
 
     if (this.hasClass(newItem.inputTitle, 'hidden')) {
       this.hideAndShowEls(newItem.titleEl, newItem.inputTitle);
@@ -269,88 +277,6 @@ export class Task {
     // Listen for blur on inputEl
     newItem.inputTitle.addEventListener('blur', () => newItem.saveTitle(newItem.inputTitle, newItem.titleEl), { once: true });
   }
-  toggleChecked() {
-    // Prevent checkbox interaction while editing Task title
-    if (this.hasClass(this.taskCheckbox, 'task-header__checkbox--no-hover')) return;
-
-    // Toggle checked value
-    this.checked = !this.checked;
-
-    // Update checkbox attributes
-    this.taskCheckbox.dataset.checked = this.checked.toString();
-    this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
-
-    // Append checked
-    if (this.checked) {
-      // Move to checked container & apply low opacity
-      this.project.taskContainerChecked.appendChild(this.taskEl);
-
-      // Apply styles
-      this.hideElement(this.taskBody);
-      this.hideElement(this.taskFooter);
-      this.hideElement(this.taskHeaderBtns);
-      this.addClass(this.taskEl, 'low-opacity');
-    }
-
-    // Append unchecked
-    if (!this.checked) {
-      // Move back to unchecked container
-      this.project.taskContainer.appendChild(this.taskEl);
-
-      // Apply styles
-      this.showElement(this.taskBody);
-      this.showElement(this.taskFooter);
-      this.showDropdown(this.taskHeaderBtns);
-      this.removeClass(this.taskEl, 'low-opacity');
-
-      // Put back in the same spot
-      //FIX LATER Call Project method "sortTasks" or similar
-      this.project.tasks.sort((a, b) => b.created - a.created);
-      this.project.tasks.forEach((task) => {
-        if (task.checked) return;
-        this.project.taskContainer.appendChild(task.taskEl);
-      });
-    }
-
-    // Persist to local storage
-    this.project.saveProjectState();
-  }
-
-  //___T I T L E_____________________________________________________//
-  editTitle() {
-    this.hideAndShowEls(this.titleEl, this.inputTitle);
-
-    if (this.taskCheckbox) {
-      this.removeAndAddCls(this.taskCheckbox, 'task-header__checkbox', 'task-header__checkbox--no-hover');
-      this.addClass(this.taskCheckbox, 'low-opacity');
-    }
-
-    // Listen for blur on inputEl
-    this.inputTitle.focus();
-    this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl), { once: true });
-  }
-  saveTitle(inputEl, titleEl) {
-    // Save input data
-    this.title = inputEl.value.trim() || 'Untitled';
-
-    // Hide input and show title element
-    this.hideAndShowEls(inputEl, titleEl);
-
-    if (this.taskCheckbox) {
-      this.removeAndAddCls(this.taskCheckbox, 'task-header__checkbox--no-hover', 'task-header__checkbox');
-      this.removeClass(this.taskCheckbox, 'low-opacity');
-    }
-
-    // Populate fields
-    titleEl.textContent = this.title;
-    inputEl.placeholder = this.title;
-    inputEl.value = this.title;
-
-    // Update local storage
-    this.project.saveProjectState();
-  }
-
-  //___T A S K S_____________________________________________________//
   saveTask() {
     // Update Task card values
     this.created = new Date();
@@ -401,6 +327,58 @@ export class Task {
       .replace('{%TASK_DESCRIPTION%}', this.description)
       .replace('{%TASK_CREATED%}', this.getCreationDateStr());
   }
+  toggleChecked(checkAll) {
+    // Prevent checkbox interaction while editing Task title
+    if (this.hasClass(this.taskCheckbox, 'task-header__checkbox--no-hover')) return;
+
+    // Toggle checked value
+    if (!checkAll) this.checked = !this.checked;
+
+    // Update checkbox attributes
+    this.taskCheckbox.dataset.checked = this.checked.toString();
+    this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
+
+    // Append checked
+    if (this.checked) {
+      // Move to checked container
+      this.project.taskContainerChecked.appendChild(this.taskEl);
+
+      // Add tooltip
+      this.taskCheckbox.setAttribute('title', 'Undo checked');
+
+      // Apply styles
+      this.hideElement(this.taskBody);
+      this.hideElement(this.taskFooter);
+      this.hideElement(this.taskHeaderBtns);
+      this.addClass(this.taskEl, 'low-opacity');
+    }
+
+    // Append unchecked
+    if (!this.checked) {
+      // Move back to unchecked container
+      this.project.taskContainer.appendChild(this.taskEl);
+
+      // Remove tooltip
+      this.taskCheckbox.removeAttribute('title');
+
+      // Apply styles
+      this.showElement(this.taskBody);
+      this.showElement(this.taskFooter);
+      this.showDropdown(this.taskHeaderBtns);
+      this.removeClass(this.taskEl, 'low-opacity');
+
+      // Put back in the same spot
+      //FIX LATER Call Project method "sortTasks" or similar
+      this.project.tasks.sort((a, b) => b.created - a.created);
+      this.project.tasks.forEach((task) => {
+        if (task.checked) return;
+        this.project.taskContainer.appendChild(task.taskEl);
+      });
+    }
+
+    // Persist to local storage
+    this.project.saveProjectState();
+  }
   deleteTask() {
     this.project.tasks = this.project.tasks.filter((t) => t.id !== this.id);
     this.taskEl.remove();
@@ -408,11 +386,49 @@ export class Task {
     // Update state
     this.project.saveProjectState();
   }
+
+  //___T A S K S  H E L P E R S______________________________________//
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
   }
 
+  //___T I T L E_____________________________________________________//
+  editTitle() {
+    this.hideAndShowEls(this.titleEl, this.inputTitle);
+
+    if (this.taskCheckbox) {
+      this.removeAndAddCls(this.taskCheckbox, 'task-header__checkbox', 'task-header__checkbox--no-hover');
+      this.addClass(this.taskCheckbox, 'low-opacity');
+    }
+
+    // Listen for blur on inputEl
+    this.inputTitle.focus();
+    this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl), { once: true });
+  }
+  saveTitle(inputEl, titleEl) {
+    // Save input data
+    this.title = inputEl.value.trim() || 'Untitled';
+
+    // Hide input and show title element
+    this.hideAndShowEls(inputEl, titleEl);
+
+    if (this.taskCheckbox) {
+      this.removeAndAddCls(this.taskCheckbox, 'task-header__checkbox--no-hover', 'task-header__checkbox');
+      this.removeClass(this.taskCheckbox, 'low-opacity');
+    }
+
+    // Populate fields
+    titleEl.textContent = this.title;
+    inputEl.placeholder = this.title;
+    inputEl.value = this.title;
+
+    // Update local storage
+    this.project.saveProjectState();
+  }
+
+  //___D E S C R I P T I O N_________________________________________//
+  editDescription() {}
   //___P R I O_______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons
@@ -701,6 +717,13 @@ export class Task {
     this.insertMarkup(this.sortBar, 'beforeend', dropdownMarkup);
     this.positionDropdown();
     this.scaleUp(this.dropdown, 'top');
+    this.dropdown.addEventListener(
+      'animationend',
+      () => {
+        this.dropdown.style.opacity = '1';
+      },
+      { once: true }
+    );
 
     this.initDropdownListeners();
   }
