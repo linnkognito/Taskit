@@ -337,7 +337,7 @@ export class Task {
       .replace('{%TASK_DESCRIPTION%}', this.description)
       .replace('{%TASK_CREATED%}', this.getCreationDateStr());
   }
-  toggleChecked(checkAll) {
+  toggleChecked(checkAll = false) {
     // Prevent checkbox interaction while editing Task title
     if (this.hasClass(this.taskCheckbox, 'task-header__checkbox--no-hover')) return;
 
@@ -352,22 +352,12 @@ export class Task {
     if (this.checked) {
       // Move to checked container
       this.project.taskContainerChecked.appendChild(this.taskEl);
-
-      // Add tooltip
       this.taskCheckbox.setAttribute('title', 'Undo checked');
-
-      // Apply styles
-      this.applyCheckedStatusStyles();
     }
-
     // Append unchecked
     if (!this.checked) {
-      // Move back to unchecked container
       this.project.taskContainer.appendChild(this.taskEl);
-
-      // Remove tooltip
       this.taskCheckbox.removeAttribute('title');
-
       // Put back in the same spot
       //FIX LATER Call Project method "sortTasks" or similar
       this.project.tasks.sort((a, b) => b.created - a.created);
@@ -376,6 +366,9 @@ export class Task {
         this.project.taskContainer.appendChild(task.taskEl);
       });
     }
+
+    // Apply styles
+    this.applyCheckedStatusStyles();
 
     // Persist to local storage
     this.project.saveProjectState();
