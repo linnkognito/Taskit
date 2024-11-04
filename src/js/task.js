@@ -223,7 +223,7 @@ export class Task {
     return this.taskEl.querySelector('.task-sort');
   }
   get dropdown() {
-    return this.projectEl.querySelector('.dropdown-sort-items');
+    return this.taskEl.querySelector('.dropdown-sort-items');
   }
   get sortSelectionText() {
     return this.taskEl.querySelector('.task-sort__selection-text');
@@ -262,10 +262,14 @@ export class Task {
       { once: true }
     );
 
+    // Focus on the title input element
     if (this.hasClass(newItem.inputTitle, 'hidden')) {
       this.hideAndShowEls(newItem.titleEl, newItem.inputTitle);
       newItem.inputTitle.focus();
     }
+
+    // Show Sortbar if there's >1 item
+    if (this.items.length > 1) this.showElement(this.sortBar);
 
     // Initialize Item event listeners
     newItem.initListeners();
@@ -322,11 +326,9 @@ export class Task {
     if (this.sortBar && !this.checklists.length && !this.notes.length) this.hideElement(this.sortBar);
 
     // Calculate and display number of completed tasks
-    this.project.completedCounter.textContent = '';
-    this.project.completedCounter.textContent = this.calcCompleted();
+    this.project.getCompletedTasks();
 
     // Apply correct styles for checked/Unchecked Tasks
-
     this.initListeners();
   }
   populatetaskMarkup() {
@@ -381,7 +383,7 @@ export class Task {
     this.project.saveProjectState();
   }
 
-  //___T A S K S  H E L P E R S______________________________________//
+  //___T A S K S :  H E L P E R S____________________________________//
   applyCheckedStatusStyles() {
     this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
 
@@ -402,9 +404,6 @@ export class Task {
   isChecked(task) {
     this.checked = true;
     this.project.moveChecked(task);
-  }
-  calcCompleted() {
-    return this.project.tasks.filter((task) => task.checked === true).length;
   }
 
   //___T I T L E_____________________________________________________//
@@ -653,6 +652,9 @@ export class Task {
 
   //___I T E M S______________________________________________________//
   renderItems(el = null) {
+    // Make sure Sort Dropdown isn't shown when reloading/rendering the page
+    if (this.dropdown) this.dropdown.remove();
+
     let markup = '';
     this.items = [...this.checklists, ...this.notes];
 
@@ -725,7 +727,7 @@ export class Task {
   }
   showDropdown() {
     // Avoid duplicate dropdown elements
-    if (this.dropdown) return this.animateRemove();
+    if (this.dropdown) return this.dropdown.remove();
 
     // Insert & position dropdown
     this.insertMarkup(this.sortBar, 'beforeend', dropdownMarkup);

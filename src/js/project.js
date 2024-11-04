@@ -240,6 +240,11 @@ export class Project {
 
     this.saveProjectState();
   }
+  getCompletedTasks() {
+    // Calculate and display number of completed tasks
+    this.completedCounter.textContent = '';
+    this.completedCounter.textContent = this.tasks.filter((task) => task.checked === true).length;
+  }
 
   //___P R O J E C T  T I T L E_______________________________________//
   saveProjectTitle() {
@@ -354,8 +359,6 @@ export class Project {
   discardChanges() {
     return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean
   }
-
-  //___T A S K S_______________________________________________//
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
 

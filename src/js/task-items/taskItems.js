@@ -56,6 +56,9 @@ export class TaskItem {
     this.task.removeItemById(this.id, itemType);
     itemEl.remove();
 
+    // Show Sortbar if there's >1 item
+    if (this.task.items.length < 1) this.hideElement(this.sortBar);
+
     // Update local storage data
     this.task.project.saveProjectState();
   }
