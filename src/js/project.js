@@ -71,6 +71,13 @@ export class Project {
       if (el) actionMap[cls](el);
     });
   }
+  initSortDropdownListeners() {
+    this.sortDropdownLi.forEach((li) => {
+      li.addEventListener('mouseenter', (e) => this.swapSortIcon(e.target, true));
+
+      li.addEventListener('mouseleave', (e) => this.swapSortIcon(e.target, false));
+    });
+  }
 
   //////////////_______________G E T T E R S_______________//////////////
 
@@ -108,6 +115,10 @@ export class Project {
   get completedCounter() {
     return document.querySelector('.project-card__completed-counter');
   }
+  get sortDropdownLi() {
+    return this.projectEl.querySelectorAll('.sort-dropdown__li');
+  }
+
   //#endregion
 
   //////////////________________M E T H O D S_______________//////////////
@@ -223,7 +234,7 @@ export class Project {
     clonedProject.initListeners();
 
     // Persist data to local storage
-    this.saveProjectState();
+    clonedProject.saveProjectState();
   }
   deleteExpiredTasks() {
     // Mutate array to exclude expired tasks
@@ -236,6 +247,7 @@ export class Project {
 
     // Re-render task cards
     this.clear(this.taskContainer);
+    this.clear(this.taskContainerChecked);
     this.tasks.forEach((task) => task.renderTaskCard());
 
     this.saveProjectState();
@@ -284,6 +296,7 @@ export class Project {
     }
     if (btn.title.toLowerCase().includes('sort')) {
       this.renderDropdown(dropdownSort, '.sort-dropdown');
+      this.initSortDropdownListeners();
     }
 
     // Placement
@@ -301,6 +314,13 @@ export class Project {
     this.dropdown.remove();
     this.dropdown = null;
     this.dropdownBtn = null;
+  }
+  swapSortIcon(li, hover) {
+    const iconOriginal = li.querySelector('.icon-dropdown');
+    const iconHover = li.querySelector('.icon-dropdown--hover');
+
+    if (hover) this.hideAndShowEls(iconOriginal, iconHover);
+    if (!hover) this.hideAndShowEls(iconHover, iconOriginal);
   }
   listenForClose() {
     this.dropdown.addEventListener('mouseleave', () => this.removeDropdown());

@@ -20,6 +20,7 @@ export class Checklist extends TaskItem {
     this.title = '';
     this.created = new Date();
     this.checked = false;
+    this.sortKey = 'Checklist';
 
     this.items = [];
   }
@@ -119,7 +120,6 @@ export class Checklist extends TaskItem {
     this.task.project.saveProjectState();
   }
   calcCompleted() {
-    console.log(this.items);
     return this.items.filter((li) => li.checked).length;
   }
 }
@@ -138,11 +138,13 @@ export class ListItem {
     this.checklist = checklist;
     this.created = new Date();
     this.sort = 'created';
+
     this.checked = false;
     this.deleted = false;
   }
 
   //////////////________________G E T T E R S________________//////////////
+  //#region Getters
   get checklistEl() {
     return this.checklist.checklist;
   }
@@ -170,6 +172,7 @@ export class ListItem {
   get listItemEl() {
     return document.querySelector(`.checklist__item[data-id="${this.id}"]`);
   }
+  //#endregion
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
 

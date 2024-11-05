@@ -63,6 +63,8 @@ export class Task {
   initListeners() {
     this.taskEl.addEventListener('click', this.handleClick.bind(this));
 
+    // if (this.sortBar) this.sortBar.addEventListener
+
     if (this.inputTitle) {
       this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl));
 
@@ -81,10 +83,11 @@ export class Task {
       'task-prio__btn': (btn) => this.setPrio(btn),
       'task-description': () => this.editDescription(),
       'task-due': (btn) => this.openDueModal(btn),
-      'task-footer__btn--save': () => this.saveTask(),
+      'btn-save-task': () => this.saveTask(),
       'task-footer__btn--cancel': () => this.taskForm.remove(),
       'btn-delete-task': () => this.deleteTask(),
       'task-sort__selection': () => this.showDropdown(),
+      'task-sort__swap-btn': () => this.reverseSortOrder(),
 
       'btn-add-checklist': (btn) => this.addItem(btn),
       'btn-delete-checklist': (btn) => this.triggerItemAction(btn, 'delete'),
@@ -103,19 +106,21 @@ export class Task {
     });
   }
   initDropdownListeners() {
-    this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
-    this.btnSwapSort.addEventListener('click', () => this.reverseSortOrder());
+    if (this.dropdown) {
+      // Listen for sorting changes
+      this.dropdown.addEventListener('click', (e) => this.handleDropdownClick(e));
 
-    // Listen for close
-    this.dropdown.addEventListener('mouseleave', () => this.dropdown.remove());
-    document.addEventListener('click', (e) => {
-      if (!this.dropdown || this.dropdown.contains(e.target) || this.sortSelection.contains(e.target)) return;
-      this.dropdown.remove();
-    });
+      // Listen for close
+      this.dropdown.addEventListener('mouseleave', () => this.dropdown.remove());
+      document.addEventListener('click', (e) => {
+        if (!this.dropdown || this.dropdown.contains(e.target) || this.sortSelection.contains(e.target)) return;
+        this.dropdown.remove();
+      });
+    }
   }
   handleDropdownClick(e) {
     const actionMap = {
-      'dropdown-sort-items__li': (el) => this.renderItems(el),
+      'dropdown-sort-items__li': (el) => this.updateSortOrder(el),
     };
 
     Object.keys(actionMap).forEach((cls) => {
@@ -223,7 +228,7 @@ export class Task {
     return this.taskEl.querySelector('.task-sort');
   }
   get dropdown() {
-    return this.taskEl.querySelector('.dropdown-sort-items');
+    return this.taskEl ? this.taskEl.querySelector('.dropdown-sort-items') : null;
   }
   get sortSelectionText() {
     return this.taskEl.querySelector('.task-sort__selection-text');
@@ -268,8 +273,8 @@ export class Task {
       newItem.inputTitle.focus();
     }
 
-    // Show Sortbar if there's >1 item
-    if (this.items.length > 1) this.showElement(this.sortBar);
+    // Show Sortbar (disabled in Form state)
+    if (!this.taskForm) this.showElement(this.sortBar);
 
     // Initialize Item event listeners
     newItem.initListeners();
@@ -279,7 +284,7 @@ export class Task {
     this.project.saveProjectState();
 
     // Listen for blur on inputEl
-    newItem.inputTitle.addEventListener('blur', () => newItem.saveTitle(newItem.inputTitle, newItem.titleEl), { once: true });
+    newItem.listenForTitleSave(newItem.inputTitle, newItem.titleEl, newItem);
   }
   saveTask() {
     // Update Task card values
@@ -397,7 +402,7 @@ export class Task {
     if (!this.checked) {
       this.showElement(this.taskBody);
       this.showElement(this.taskFooter);
-      this.showDropdown(this.taskHeaderBtns);
+      this.showElement(this.taskHeaderBtns);
       this.removeClass(this.taskEl, 'low-opacity');
     }
   }
@@ -651,7 +656,7 @@ export class Task {
   }
 
   //___I T E M S______________________________________________________//
-  renderItems(el = null) {
+  renderItems() {
     // Make sure Sort Dropdown isn't shown when reloading/rendering the page
     if (this.dropdown) this.dropdown.remove();
 
@@ -659,25 +664,24 @@ export class Task {
     this.items = [...this.checklists, ...this.notes];
 
     // Sort items
-    this.sort = el?.dataset.sort || 'Creation date';
     this.sortTaskItems();
-
     this.clear(this.itemsContainer);
+
+    // Show Sortbar if there's >1 item
+    this.items.length >= 1 ? this.showElement(this.sortBar) : this.hideElement(this.sortBar);
 
     // Render items
     this.items.forEach((item) => (markup += item.renderItemMarkup()));
     this.insertMarkup(this.itemsContainer, 'afterbegin', markup);
 
     this.items.forEach((item) => {
-      // Hide input element
       if (!this.hasClass(item.inputTitle, 'hidden')) {
         this.hideAndShowEls(item.inputTitle, item.titleEl);
       }
-
       item.initListeners();
     });
 
-    // If checklist: initialize list item listeners
+    // If Checklists: initialize list item listeners
     if (this.checklists.length) {
       this.checklists.forEach((cl) => {
         if (cl.items.length)
@@ -687,7 +691,7 @@ export class Task {
       });
     }
 
-    // If Note: initialize Quill:
+    // If Notes: initialize Quill
     if (this.notes.length) {
       this.notes.forEach((note) => note.initQuill());
     }
@@ -701,6 +705,14 @@ export class Task {
   }
 
   //___I T E M S :  S O R T___________________________________________//
+  updateSortOrder(sel) {
+    // Update sort property
+    this.sort = sel.dataset.sort;
+    this.sortSelectionText.textContent = this.sort;
+
+    // Re-render items
+    this.renderItems();
+  }
   sortTaskItems() {
     // Sort: Creation date
     if (this.sort === 'Creation date') {
@@ -712,14 +724,14 @@ export class Task {
     }
     // Sort: Item type
     if (this.sort === 'Item type') {
-      this.items.sort((a, b) => b.created.getTime() - a.created.getTime());
-      this.items.sort((a, b) => (a instanceof Checklist) - (b instanceof Checklist));
+      this.items.sort((a, b) => {
+        // If same Class name, use creation date as fallback
+        a.sortKey.localeCompare(b.sortKey) || b.created.getTime() - a.created.getTime();
+      });
     }
 
     // Check if reverse
     if (this.reverseSort) this.items.reverse();
-
-    this.sortSelectionText.textContent = this.sort;
   }
   reverseSortOrder() {
     this.reverseSort = !this.reverseSort;

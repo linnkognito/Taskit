@@ -22,6 +22,7 @@ export class Note extends TaskItem {
     this.title = '';
     this.note = '';
     this.editAllMode = false;
+    this.sortKey = 'Note';
 
     this.quill = null;
   }

@@ -199,13 +199,11 @@
   width: 55%;
   min-width: 50%;
   height: auto;
-  min-height: 25%;
+  padding: 1px;
   font-family: "Urbanist", sans-serif;
   font-size: 1.2rem;
   color: white;
   background: rgb(213, 207, 204);
-  border-left: 2px solid rgb(213, 207, 204);
-  border-bottom: 2px solid rgb(213, 207, 204);
   border-top: 1px solid white;
   z-index: 1000;
 }
@@ -230,6 +228,12 @@
 .dropdown-project .dropdown-project__li:active {
   color: white;
   background: rgb(213, 207, 204);
+}
+.settings-dropdown .sort-dropdown__li--title,
+.dropdown-project .sort-dropdown__li--title {
+  margin-left: 0.4em;
+  padding: 0.4em;
+  pointer-events: none;
 }
 .settings-dropdown .sort-dropdown__li,
 .dropdown-project .sort-dropdown__li {

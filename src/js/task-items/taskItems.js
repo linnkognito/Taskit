@@ -21,18 +21,28 @@ export class TaskItem {
     if (cls === 'item-title' || 'input-item-title') this.editTitle(parentEl);
   }
 
+  listenForTitleSave(inputEl, titleEl, context) {
+    inputEl.addEventListener('blur', () => context.saveTitle(inputEl, titleEl), { once: true });
+
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      context.saveTitle(inputEl, titleEl);
+    });
+  }
+
   editTitle(parent) {
     // Get title elements
     const titleEl = parent.querySelector('.item-title');
     const inputEl = parent.querySelector('.input-item-title');
 
-    // If Card: Hide title & show input
-    //if (mode === 'card')
+    // Hide title & show input
     this.hideAndShowEls(titleEl, inputEl);
+    inputEl.value = this.title;
     inputEl.focus();
 
-    // Listen for blur on inputEl
-    inputEl.addEventListener('blur', () => this.saveTitle(inputEl, titleEl), { once: true });
+    // Listen for save
+    this.listenForTitleSave(inputEl, titleEl, this);
   }
 
   saveTitle(inputEl, titleEl) {
@@ -57,7 +67,8 @@ export class TaskItem {
     itemEl.remove();
 
     // Show Sortbar if there's >1 item
-    if (this.task.items.length < 1) this.hideElement(this.sortBar);
+    this.task.renderItems();
+    //if (this.task.items.length < 1) this.hideElement(this.sortBar);
 
     // Update local storage data
     this.task.project.saveProjectState();
