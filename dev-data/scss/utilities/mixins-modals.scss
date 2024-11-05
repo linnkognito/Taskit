@@ -1,7 +1,8 @@
 @use './vars.scss';
 
 @mixin modal() {
-  position: absolute;
+  position: fixed;
+  // position: absolute;
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -9,7 +10,7 @@
   backdrop-filter: blur(0.4em);
   z-index: 100;
 }
-@mixin modal-contrainer($bg: white) {
+@mixin modal-container($bg: white) {
   height: fit-content;
   background: $bg;
   border: none;

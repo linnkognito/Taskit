@@ -204,7 +204,7 @@
   padding: 0.3em;
   line-height: 1;
   color: white;
-  background: rgba(213, 207, 204, 0.7);
+  background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;
   text-align: center;
   transition: all 0.2s ease-in;
@@ -359,6 +359,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 0.4em 0.15em 0.4em 1em;
+  font-size: 0.7rem;
   background: rgba(255, 255, 255, 0.3);
 }
 .task .task-footer--created .task-footer__created {
@@ -366,7 +367,6 @@
   align-items: center;
   width: fit-content;
   padding: 0 0.5em;
-  font-size: 0.7rem;
   color: rgba(165, 160, 158, 0.6);
   background: rgba(213, 207, 204, 0.4);
   border-radius: 0.9em;

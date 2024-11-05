@@ -94,7 +94,7 @@
 
     // LINK POPUP (FORMATTING BUTTONS) //
     .popup-insert-link {
-      @include mixins.modal-contrainer;
+      @include mixins.modal-container;
       display: flex;
       flex-direction: column;
       gap: 0.3em;

@@ -19,13 +19,19 @@ export class App {
   //////////////__________E V E N T  H A N D L E R S__________//////////////
   initListeners() {
     this.addBtn.addEventListener('click', this.handleClick.bind(this));
+    this.nav.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
     const actionMap = {
       'btn-add-project': () => this.createNewProject(),
+      'nav-btn-add-project': () => this.createNewProject(),
+      'nav-btn-all-tasks': () => this.showTaskOverview(),
+      'nav-btn-new-task': () => this.addNewTaskFromNav(),
+      'nav-btn-page-settings': () => this.openPageSettings(),
     };
 
     Object.keys(actionMap).forEach((cls) => {
+      console.log(e.target);
       const el = e.target.closest(`.${cls}`);
       if (el) actionMap[cls]();
     });
@@ -46,7 +52,7 @@ export class App {
     return document.querySelector('.add-project__body');
   }
   get nav() {
-    return document.querySelectorAll('.nav-btn');
+    return document.querySelector('nav');
   }
   get taskForm() {
     return document.querySelector(`.task[data-state="form"]`);
@@ -71,6 +77,26 @@ export class App {
   }
   addClonedProject(projectClone) {
     this.projectsArr.push(projectClone);
+  }
+  showTaskOverview() {
+    // Open modal
+    // Render tasks from Tasks array (create markup for this)
+    // From this view, the user should be able to:
+    // Delete one task
+    // Delete multiple tasks
+    // Edit task (one at the time)
+  }
+  addNewTaskFromNav() {
+    // Choose what project the task should belong to
+    // Choice 1: existing project
+    // Choice 2: new project
+    // Warn if no project is choosen
+    // Close modal and focus on new Task?
+  }
+  openPageSettings() {
+    // Opens modal with Settings
+    // Universal default sort
+    // Colors
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////

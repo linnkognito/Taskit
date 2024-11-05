@@ -1,0 +1,200 @@
+@use '../utilities/vars';
+@use '../utilities/mixins';
+
+.modal-overview {
+  @include mixins.modal;
+
+  // CONTENT WRAPPER //
+  .overview-content {
+    @include mixins.modal-container(lighten(vars.$col-primary-dark, 6%));
+    display: flex;
+    gap: 2.5em;
+    min-width: 90vw;
+    height: 90%;
+    margin: 2em;
+    padding: 1.5em;
+    border: 1px solid vars.$col-primary-dark-low-op;
+    box-shadow: 0 0 10px vars.$col-primary-dark;
+  }
+
+  .overview-header {
+    // padding-bottom: 1em;
+
+    .overview-header__heading {
+      margin: 0.2em 0.15em;
+      font-size: 5rem;
+      font-family: vars.$font-h1;
+      color: white;
+      text-shadow: 0 0 5px vars.$col-primary-dark;
+    }
+  }
+
+  .overview-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    .overview-stats__li {
+      display: flex;
+      gap: 0.8em;
+      align-items: center;
+      padding: 0.25em 1em;
+      font-size: 1.25rem;
+      letter-spacing: vars.$ls-primary;
+      background: white;
+      border-radius: vars.$br-primary;
+      box-shadow: -1px 1px 3px vars.$col-primary-dark;
+      transition: transform 0.15s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      .overview-stats__li-icon {
+        width: 1.5em;
+      }
+      .overview-stats__li-counter {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .overview-body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    flex: 1;
+    gap: 1em;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    background: white;
+    border-radius: vars.$br-primary;
+    box-shadow: vars.$box-glow;
+
+    .task-overview {
+      flex: 1 1 calc(50% - 1em);
+      flex-direction: column; // added
+      height: fit-content;
+      background: none;
+      transition: transform 0.15s ease;
+
+      &:hover {
+        box-shadow: 0 0 5px vars.$col-primary-dark-op;
+        border: none;
+        transform: scale(1.02);
+      }
+
+      // HEADER //
+      .task-header {
+        background: lighten(vars.$col-primary-dark, 7%);
+
+        .task-header__title,
+        .task-header__input {
+          font-size: 1.15rem;
+        }
+      }
+
+      // BODY //
+      .task-body {
+        display: flex;
+        align-items: center;
+        flex: 1; // added
+        padding: 0 0.9em;
+
+        // BODY TOP //
+        .task-body__top {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+          width: 100%;
+          margin-top: 0.7em;
+          padding-bottom: 0.7em;
+          background: white;
+
+          // TASK ITEM COUNTERS //
+          .task-counters {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.6em;
+
+            .task-counter {
+              display: flex;
+              gap: 0.5em;
+              align-items: center;
+              padding: 0.1em 0.5em;
+              border: 2px dashed vars.$col-primary-dark-op;
+              border-radius: vars.$br-primary;
+              transition: transform 0.15s ease-in;
+              cursor: pointer;
+
+              &:hover {
+                transform: scale(1.02);
+              }
+
+              .task-counters__icon {
+                height: 1.2rem;
+              }
+              .task-counters--num {
+                font-weight: 600;
+              }
+            }
+          }
+
+          // DESCRIPTION //
+          .task-description {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            border: 2px dashed vars.$col-primary-dark-op;
+          }
+
+          // DUE BUTTON //
+          .task-due {
+            @include mixins.due-date(lighten(vars.$col-primary-dark, 7%), 0);
+            width: 2.3em;
+            height: 2.3em;
+            border-radius: 0.7em;
+            opacity: 0.8;
+
+            .task-due-icon {
+              width: 1.5rem;
+            }
+          }
+        }
+      } // [X] END OF BODY [X]
+
+      // FOOTER //
+      .task-footer--created {
+        padding: 0.4em 0.8em 0.4em 0.9em;
+        background: lighten(vars.$col-primary-dark, 20%);
+
+        .task-footer__created {
+          color: white;
+          background: lighten(vars.$col-primary-dark, 7%);
+        }
+
+        .task-footer__switch {
+          .btn-switch-view {
+            flex: 0;
+            max-height: fit-content;
+            padding: 0 0.5em;
+            margin: 0;
+            color: vars.$col-primary-dark;
+            background: white;
+
+            border: none;
+            box-shadow: 0 0 3px vars.$col-primary-dark;
+            border-radius: vars.$br-primary;
+            cursor: pointer;
+
+            &:hover {
+              border: 1px solid vars.$col-primary-dark;
+            }
+          }
+        }
+      }
+    }
+  }
+}

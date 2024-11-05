@@ -1,0 +1,65 @@
+<div class="task task-overview" data-id="{%TASK_ID%}" data-state="card">
+  <!-- HEADER -->
+  <div class="task-header">
+    <!-- TITLE -->
+    <div class="task-header__title-wrapper">
+      <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="task-header__checkbox" data-checked="false" />
+
+      <input type="text" placeholder="Title" class="input-title task-header__input hidden" />
+      <div class="title task-header__title">{%TASK_TITLE%}</div>
+    </div>
+    <!-- BUTTONS HEADER -->
+    <div class="task-header__buttons">
+      <button class="task-header__btn btn-edit-task">
+        <img src="./public/icons/edit.png" alt="Edit task" title="Edit task" class="task-header__btn--icon" />
+      </button>
+      <button class="task-header__btn btn-delete-task">
+        <img src="./public/icons/delete.png" alt="Delete task" title="Delete task" class="task-header__btn--icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="task-body">
+    <div class="task-body__top">
+      <!-- COUNTERS -->
+      <div class="task-counters">
+        <div class="task-counter task-counter--checklist">
+          <img src="./public/icons/checklist.png" alt="Checklist icon" class="task-counters__icon" />
+          <div class="task-counters__desc">
+            <span class="task-counters--num">{%TASK_CHECKLISTS_LENGTH%}</span>
+            Checklists
+          </div>
+        </div>
+        <div class="task-counter task-counter--note">
+          <img src="./public/icons/note.png" alt="Note icon" class="task-counters__icon" />
+          <div class="task-counters__desc">
+            <span class="task-counters--num">{%TASK_NOTES_LENGTH%}</span>
+            Notes
+          </div>
+        </div>
+      </div>
+      <!-- DESCRIPTION (BODY TOP) -->
+      <div class="task-description hidden">{%TASK_DESCRIPTION%}</div>
+
+      <!-- DUE DATE (BODY TOP) -->
+      <div class="task-due task-due--icon hidden">
+        <img src="./public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="task-due-icon task-due--icon" />
+      </div>
+
+      <div class="task-due task-due--text hidden">
+        <span class="task-due__small-top"></span>
+        <span class="task-due__big"></span>
+        <span class="task-due__small-bottom"></span>
+      </div>
+    </div>
+  </div>
+  <!-- FOOTER -->
+  <div class="task-footer--created">
+    <div class="task-footer__created">Created: {%TASK_CREATED%}</div>
+    <div class="task-footer__switch hidden">
+      <button class="btn-switch-view hidden">Show details</button>
+      <button class="btn-switch-view hidden">Show stats</button>
+    </div>
+  </div>
+</div>

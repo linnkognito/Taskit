@@ -10,6 +10,7 @@ import './css/tasks/task.css';
 import './css/tasks/task-checklist.css';
 import './css/tasks/task-note.css';
 import './css/modals/modal-due.css';
+import './css/modals/modal-overview.css';
 import './css/styles.css';
 
 //////////////____________________I N I T____________________//////////////
