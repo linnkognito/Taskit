@@ -13,7 +13,22 @@ export class App {
     this.projectsArr = [];
 
     this.loadProjectsFromStorage();
-    this.addBtn.addEventListener('click', this.createNewProject.bind(this));
+    this.initListeners();
+  }
+
+  //////////////__________E V E N T  H A N D L E R S__________//////////////
+  initListeners() {
+    this.addBtn.addEventListener('click', this.handleClick.bind(this));
+  }
+  handleClick(e) {
+    const actionMap = {
+      'btn-add-project': () => this.createNewProject(),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls]();
+    });
   }
 
   //////////////________________G E T T E R S________________//////////////
@@ -31,7 +46,7 @@ export class App {
     return document.querySelector('.add-project__body');
   }
   get nav() {
-    return document.querySelectorAll('.nav-link');
+    return document.querySelectorAll('.nav-btn');
   }
   get taskForm() {
     return document.querySelector(`.task[data-state="form"]`);

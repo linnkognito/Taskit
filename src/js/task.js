@@ -42,7 +42,7 @@ export class Task {
     this.projectEl = projectEl;
 
     this.title = '';
-    this.prio = 0;
+    this.prio = 4;
     this.description = itemMap['description'].default;
     this.dueDate = null;
     this.dueTime = null;
@@ -303,12 +303,15 @@ export class Task {
     this.project.saveProjectState();
   }
   renderTaskCard() {
+    // Persist sort order
+    const placement = this.project.sort === 'created' ? 'afterbegin' : 'beforeend';
+
     // If Task is marked as checked
     if (this.checked) {
-      this.insertMarkup(this.project.taskContainerChecked, 'afterbegin', this.populatetaskMarkup());
+      this.insertMarkup(this.project.taskContainerChecked, placement, this.populatetaskMarkup());
     }
     if (!this.checked) {
-      this.insertMarkup(this.project.taskContainer, 'afterbegin', this.populatetaskMarkup());
+      this.insertMarkup(this.project.taskContainer, placement, this.populatetaskMarkup());
     }
     // Apply styles
     this.applyCheckedStatusStyles();

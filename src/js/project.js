@@ -5,6 +5,7 @@ import { Task } from './task';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 import { ListItem } from './task-items/checklist';
+import { sortByPrio, sortByDueDate, sortByAlpha, sortByCreated } from './utils/utils';
 
 //////////////_________________M A R K U P_________________//////////////
 
@@ -33,6 +34,7 @@ export class Project {
     this.title = 'Untitled Project';
     this.dropdown = null;
     this.dropdownBtn = null;
+    this.sort = 'created';
 
     this.tasks = [];
   }
@@ -73,9 +75,12 @@ export class Project {
   }
   initSortDropdownListeners() {
     this.sortDropdownLi.forEach((li) => {
+      // Icon style
       li.addEventListener('mouseenter', (e) => this.swapSortIcon(e.target, true));
-
       li.addEventListener('mouseleave', (e) => this.swapSortIcon(e.target, false));
+
+      // Sort order
+      li.addEventListener('click', () => this.sortTasks(li.dataset.sort));
     });
   }
 
@@ -118,7 +123,6 @@ export class Project {
   get sortDropdownLi() {
     return this.projectEl.querySelectorAll('.sort-dropdown__li');
   }
-
   //#endregion
 
   //////////////________________M E T H O D S_______________//////////////
@@ -246,9 +250,7 @@ export class Project {
     }
 
     // Re-render task cards
-    this.clear(this.taskContainer);
-    this.clear(this.taskContainerChecked);
-    this.tasks.forEach((task) => task.renderTaskCard());
+    this.renderTaskCards();
 
     this.saveProjectState();
   }
@@ -331,8 +333,25 @@ export class Project {
     });
   }
 
-  //___S E T T I N G S_______________________________________________//
-  // PLACEHOLDER
+  //___S O R T_______________________________________________________//
+  sortTasks(sel) {
+    // Enables reversed order on second click
+    if (this.sort === sel) this.tasks.reverse();
+
+    if (this.sort !== sel) {
+      this.sort = sel;
+      if (sel === 'prio') sortByPrio(this.tasks);
+      if (sel === 'due-date') sortByDueDate(this.tasks);
+      if (sel === 'alpha') sortByAlpha(this.tasks);
+      if (sel === 'created') sortByCreated(this.tasks);
+    }
+
+    // Re-render task cards
+    this.renderTaskCards();
+
+    // Persist to local storage
+    this.saveProjectState();
+  }
 
   //___T A S K S____________________________________________________//
   addTask() {
@@ -378,6 +397,11 @@ export class Project {
   }
   discardChanges() {
     return confirm(`A form with unsaved changes is already open.\nDo you want to discard these canges?`); // returns boolean
+  }
+  renderTaskCards() {
+    this.clear(this.taskContainer);
+    this.clear(this.taskContainerChecked);
+    this.tasks.forEach((task) => task.renderTaskCard());
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////

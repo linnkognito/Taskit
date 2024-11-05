@@ -59,13 +59,13 @@ header {
     width: 100%;
     margin: auto;
 
-    .nav-link {
+    .nav-btn {
       margin: 0 1.7em;
       font-size: 1.6rem;
       cursor: pointer;
       transition: vars.$transform-ease-in;
     }
-    .nav-link:hover {
+    .nav-btn:hover {
       transform: scale(1.1);
     }
   }
