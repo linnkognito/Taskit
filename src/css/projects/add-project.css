@@ -8,7 +8,7 @@
 .add-project {
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
-  opacity: 0.3;
+  opacity: 0.4;
   transition: opacity 0.2s ease-in;
 }
 .add-project .add-project__body {
@@ -40,7 +40,6 @@
   animation: pulse 2s ease-in-out infinite alternate;
   cursor: pointer;
 }
-
 .add-project:hover {
   opacity: 1;
 }

@@ -9,6 +9,8 @@
   background: vars.$col-primary-low-op;
   border: 1px solid vars.$col-primary-low-op;
   border-radius: 0.9em;
+  box-shadow: 0 0 5px vars.$col-primary;
+
   overflow: hidden;
   transition: transform 0.3s ease;
 

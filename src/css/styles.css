@@ -10,6 +10,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background: rgba(165, 160, 158, 0.2);
+}
+
 body,
 input,
 textarea,
@@ -42,6 +46,8 @@ header {
   font-family: "Urbanist", sans-serif;
   color: white;
   background: rgb(213, 207, 204);
+  border-bottom: 1px solid rgba(165, 160, 158, 0.2);
+  box-shadow: 0 10px 10px -5px rgb(165, 160, 158);
 }
 header h1 {
   padding: 0.1em 1em;

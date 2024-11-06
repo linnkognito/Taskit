@@ -7,6 +7,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background: vars.$col-primary-dark-low-op;
+}
 
 body,
 input,
@@ -41,6 +44,8 @@ header {
   font-family: vars.$font-body;
   color: white;
   background: vars.$col-primary;
+  border-bottom: 1px solid vars.$col-primary-dark-low-op;
+  box-shadow: 0 10px 10px -5px vars.$col-primary-dark;
 
   h1 {
     padding: 0.1em 1em;

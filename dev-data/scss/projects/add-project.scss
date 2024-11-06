@@ -5,7 +5,7 @@
 .add-project {
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
-  opacity: 0.3;
+  opacity: 0.4;
   transition: vars.$op-ease-in;
 
   .add-project__body {
@@ -14,9 +14,10 @@
     border-radius: vars.$br-primary;
     opacity: 0.5;
     transition: vars.$op-ease-in;
-  }
-  .add-project__body:hover {
-    opacity: 1;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 
   .add-project__h3 {
@@ -25,14 +26,16 @@
     border: 2px solid white;
     border-radius: vars.$br-primary;
     transition: vars.$transform-ease-in;
+
+    &:hover {
+      box-shadow: vars.$box-glow;
+      transform: scale(1.01);
+      animation: pulse 2s ease-in-out infinite alternate;
+      cursor: pointer;
+    }
   }
-  .add-project__h3:hover {
-    box-shadow: vars.$box-glow;
-    transform: scale(1.01);
-    animation: pulse 2s ease-in-out infinite alternate;
-    cursor: pointer;
+
+  &:hover {
+    opacity: 1;
   }
-}
-.add-project:hover {
-  opacity: 1;
 }

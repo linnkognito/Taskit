@@ -9,7 +9,7 @@
   column-gap: 2em;
   width: 100%;
   margin: auto;
-  padding: 2em;
+  padding: 2.2em 2em 2em;
 
   // PROJECT CARD //
   .project-card {
@@ -18,11 +18,12 @@
     flex-direction: column;
     flex: 1 1 calc(33.333% - 2em);
     max-width: calc(33.333% - 2em);
-    min-height: 30vh;
+    min-height: 50vh;
     margin-bottom: 2.5em;
     background: vars.$col-primary;
     border: 2px solid vars.$col-primary;
     border-radius: vars.$br-primary;
+    box-shadow: 0 0 10px vars.$col-primary-dark;
 
     // HEADER (PROJECT CARD) //
     .project-card__header {
@@ -99,7 +100,8 @@
     .project-card__body {
       height: 100%;
       padding: 1.5em 1.3em;
-      background: white;
+      // background: white;
+      background: lighten(vars.$col-primary-dark, 35%);
       border-bottom-left-radius: 0.9em;
       border-bottom-right-radius: 0.9em;
 

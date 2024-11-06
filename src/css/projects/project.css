@@ -10,7 +10,7 @@
   column-gap: 2em;
   width: 100%;
   margin: auto;
-  padding: 2em;
+  padding: 2.2em 2em 2em;
 }
 #projects .project-card {
   position: relative;
@@ -18,11 +18,12 @@
   flex-direction: column;
   flex: 1 1 calc(33.333% - 2em);
   max-width: calc(33.333% - 2em);
-  min-height: 30vh;
+  min-height: 50vh;
   margin-bottom: 2.5em;
   background: rgb(213, 207, 204);
   border: 2px solid rgb(213, 207, 204);
   border-radius: 0.9em;
+  box-shadow: 0 0 10px rgb(165, 160, 158);
 }
 #projects .project-card .project-card__header {
   display: flex;
@@ -75,7 +76,7 @@
   color: rgb(213, 207, 204);
 }
 #projects .project-card .project-card__header .project-card__title-input:focus::placeholder {
-  color: rgba(213, 207, 204, 0.4);
+  color: rgba(213, 207, 204, 0.5);
 }
 #projects .project-card .project-card__header .project-card__buttons {
   display: flex;
@@ -111,7 +112,7 @@
 #projects .project-card .project-card__body {
   height: 100%;
   padding: 1.5em 1.3em;
-  background: white;
+  background: rgb(250.9090909091, 250.6818181818, 250.5909090909);
   border-bottom-left-radius: 0.9em;
   border-bottom-right-radius: 0.9em;
 }
@@ -121,7 +122,7 @@
   margin-bottom: 0.5em;
   padding: 0.5em 1em 0.1em 1em;
   background: rgba(213, 207, 204, 0.2);
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
 }
 #projects .project-card .project-card__body .project-card__task-container--checked-wrapper .project-card__task-container-heading {

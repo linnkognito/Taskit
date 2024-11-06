@@ -9,8 +9,8 @@
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: rgba(213, 207, 204, 0.4);
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
+  border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
 }
 .task-card__note .task-card__note-header {
@@ -43,7 +43,7 @@
   color: rgb(213, 207, 204);
 }
 .task-card__note .task-card__note-header .task-card__note-input-title:focus::placeholder {
-  color: rgba(213, 207, 204, 0.4);
+  color: rgba(213, 207, 204, 0.5);
 }
 .task-card__note .task-card__note-header .task-card__note-buttons {
   display: flex;
@@ -76,7 +76,7 @@
   letter-spacing: 0.02em;
   color: rgb(165, 160, 158);
   background: white;
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
 }
 .task-card__note .task-card__note-body .ql-editor {
@@ -96,8 +96,8 @@
   min-width: 50%;
   margin: 1em 0;
   padding: 0.5em 1em;
-  background: rgba(213, 207, 204, 0.4);
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
+  border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
   min-width: fit-content;
 }
@@ -125,7 +125,7 @@
   color: rgb(213, 207, 204);
 }
 .task-form__note .task-form__note-header .task-form__note-input-title:focus::placeholder {
-  color: rgba(213, 207, 204, 0.4);
+  color: rgba(213, 207, 204, 0.5);
 }
 .task-form__note .task-form__note-header .task-form__note-title {
   margin-bottom: 0.1em;
@@ -164,7 +164,7 @@
   letter-spacing: 0.02em;
   color: rgb(165, 160, 158);
   background: white;
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
   position: relative;
   font-size: 1rem;
@@ -272,7 +272,7 @@
   min-width: fit-content;
   margin: 0.2em 0 0.3em 0;
   padding: 0.3em 0.3em;
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
   border-radius: 0.5em;
 }
 .note-body__formatting-buttons .btn-formatting {

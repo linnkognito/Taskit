@@ -7,9 +7,10 @@
 .task {
   width: 100%;
   margin-bottom: 1em;
-  background: rgba(213, 207, 204, 0.4);
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
+  border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
+  box-shadow: 0 0 5px rgb(213, 207, 204);
   overflow: hidden;
   transition: transform 0.3s ease;
 }
@@ -22,7 +23,7 @@
   padding: 0.5em;
   padding-right: 0.8em;
   color: white;
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
   border: 0;
   border-radius: 0.9em 0.9em 0 0;
 }
@@ -76,7 +77,7 @@
   color: rgb(213, 207, 204);
 }
 .task .task-header .task-header__title-wrapper .task-header__input:focus::placeholder {
-  color: rgba(213, 207, 204, 0.4);
+  color: rgba(213, 207, 204, 0.5);
 }
 .task .task-header .task-header__buttons {
   display: flex;
@@ -112,7 +113,7 @@
   margin-bottom: 0.7em;
   padding: 0.4em 1em;
   color: rgb(158, 158, 158);
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
 }
 .task .task-body .task-prio .task-prio__buttons {
@@ -204,7 +205,7 @@
   padding: 0.3em;
   line-height: 1;
   color: white;
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
   text-align: center;
   transition: all 0.2s ease-in;
@@ -293,7 +294,7 @@
 }
 .task .task-body .task-sort .task-sort__selection:hover {
   box-shadow: 0 0 2px rgb(165, 160, 158);
-  border: 1px solid rgba(213, 207, 204, 0.4);
+  border: 1px solid rgba(213, 207, 204, 0.5);
 }
 .task .task-body .task-sort .task-sort__selection .task-sort__selection-icon {
   width: 1em;
@@ -368,7 +369,7 @@
   width: fit-content;
   padding: 0 0.5em;
   color: rgba(165, 160, 158, 0.6);
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
   transform: all 0.2s ease-in;
 }
@@ -415,7 +416,7 @@
 }
 .dropdown-sort-items .dropdown-sort-items__li:active {
   color: white;
-  background: rgba(213, 207, 204, 0.4);
+  background: rgba(213, 207, 204, 0.5);
 }
 .dropdown-sort-items #li-created {
   padding-top: 0.5em;
