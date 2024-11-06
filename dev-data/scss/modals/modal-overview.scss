@@ -98,6 +98,7 @@
         background: white;
         border-radius: vars.$br-primary;
         box-shadow: vars.$box-glow;
+        overflow-y: auto;
 
         .overview-tasks-container {
           display: grid;
@@ -214,10 +215,12 @@
 
                     .task-data__project-name {
                       flex: 1;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
                       padding: 0.3em 0.5em;
                       font-style: italic;
                       font-weight: 400;
-                      text-align: center;
                       border: 2px solid vars.$col-primary-dark-op;
                       border-bottom-left-radius: vars.$br-primary;
                       border-bottom-right-radius: vars.$br-primary;

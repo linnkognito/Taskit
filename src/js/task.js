@@ -1,6 +1,6 @@
 //////////////____________________T A S K____________________//////////////
 
-import { helper } from '../index';
+import { app, helper } from '../index';
 import { Checklist } from './task-items/checklist';
 import { Note } from './task-items/note';
 import itemMap from './task-items/itemMap';
@@ -10,6 +10,7 @@ import itemMap from './task-items/itemMap';
 import modalDueMarkup from '../components/tasks/forms/modal-date-picker.html';
 import taskMarkup from '../components/tasks/task.html';
 import dropdownMarkup from '../components/menus/dropdown-sort-items.html';
+import taskFormMarkup from '../components/tasks/forms/task_form.html';
 
 //////////////__________________I M A G E S__________________//////////////
 
@@ -171,7 +172,7 @@ export class Task {
   }
 
   get descInput() {
-    return this.taskForm.querySelector('#description-textarea');
+    return document.querySelector('.task-description__textarea');
   }
   get descriptionEl() {
     return this.taskEl.querySelector('.task-description');
@@ -194,7 +195,13 @@ export class Task {
     return this.projectEl.querySelector('.task-add-item');
   }
   get btnsPrio() {
-    return this.projectEl.querySelectorAll('.task-prio__btn');
+    return document.querySelectorAll('.task-prio__btn');
+  }
+  // get btnsPrio() {
+  //   return this.projectEl.querySelectorAll('.task-prio__btn');
+  // }
+  get prioBtn() {
+    return this.taskForm.querySelector(`.task-prio__btn[data-prio="${this.prio}"]`);
   }
   get getDueDateElements() {
     return {
@@ -287,14 +294,28 @@ export class Task {
     newItem.listenForTitleSave(newItem.inputTitle, newItem.titleEl, newItem);
   }
   saveTask() {
+    // Check where the save is coming from
+    const savedFromModal = !!app.modal;
+
     // Update Task card values
-    this.created = new Date();
     this.title = this.inputTitle.value || 'Untitled';
     this.description = this.descInput.value.trim() || this.description;
 
-    // Swap out markup
-    this.taskForm.remove();
-    this.renderTaskCard();
+    // Save from Project card
+    if (!savedFromModal) {
+      this.created = new Date();
+      this.taskForm.remove();
+      this.renderTaskCard();
+    }
+
+    // Save from Overview → Task Form modal
+    if (savedFromModal) {
+      console.log('entered');
+      // Re-render Overview modal
+      app.modal.remove();
+      app.modalOverview.remove();
+      app.renderOverviewModal();
+    }
 
     // Mark changes as saved
     this.hasChanges = false;
@@ -391,28 +412,24 @@ export class Task {
     this.project.saveProjectState();
   }
 
+  //___T A S K S :  F O R M__________________________________________//
+  populateTaskForm() {
+    const form = this.modal.querySelector('.task[data-state="form"]');
+    form.dataset.id = this.id;
+    this.inputTitle.value = this.title;
+
+    // Prio
+    this.addClass(this.prioBtn, `prio${this.prio}-color-profile`);
+    this.setPrioColors(this.prio);
+
+    this.descInput.value = this.description;
+    this.displayDueDate(); // Check if the modal works!!!!!!!
+
+    this.renderItems();
+    this.initListeners();
+  }
+
   //___T A S K S :  H E L P E R S____________________________________//
-  applyCheckedStatusStyles() {
-    this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
-
-    if (this.checked) {
-      this.hideElement(this.taskBody);
-      this.hideElement(this.taskFooter);
-      this.hideElement(this.taskHeaderBtns);
-      this.addClass(this.taskEl, 'low-opacity');
-    }
-
-    if (!this.checked) {
-      this.showElement(this.taskBody);
-      this.showElement(this.taskFooter);
-      this.showElement(this.taskHeaderBtns);
-      this.removeClass(this.taskEl, 'low-opacity');
-    }
-  }
-  isChecked(task) {
-    this.checked = true;
-    this.project.moveChecked(task);
-  }
 
   //___T I T L E_____________________________________________________//
   editTitle() {
@@ -659,6 +676,27 @@ export class Task {
     const per = h24 >= 12 ? 'PM' : 'AM';
 
     return `${h12}:${min} ${per}`;
+  }
+  applyCheckedStatusStyles() {
+    this.taskCheckbox.src = this.checked ? iconCheckedCb : iconBlankCb;
+
+    if (this.checked) {
+      this.hideElement(this.taskBody);
+      this.hideElement(this.taskFooter);
+      this.hideElement(this.taskHeaderBtns);
+      this.addClass(this.taskEl, 'low-opacity');
+    }
+
+    if (!this.checked) {
+      this.showElement(this.taskBody);
+      this.showElement(this.taskFooter);
+      this.showElement(this.taskHeaderBtns);
+      this.removeClass(this.taskEl, 'low-opacity');
+    }
+  }
+  isChecked(task) {
+    this.checked = true;
+    this.project.moveChecked(task);
   }
 
   //___I T E M S______________________________________________________//

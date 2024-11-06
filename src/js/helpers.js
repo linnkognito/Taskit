@@ -41,6 +41,7 @@ export class Helper {
   }
 
   //////////////______________A N I M A T I O N S______________//////////////
+  //////////////______________A N I M A T I O N S______________//////////////
   scaleUp(el, startPos) {
     return requestAnimationFrame(() => {
       el.classList.add(`scale-up-${startPos}`);

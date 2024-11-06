@@ -10,7 +10,7 @@
 }
 
 // HEADER BUTTONS //
-@mixin buttons-action-bar($cls) {
+@mixin buttons-action-bar($cls, $col: white) {
   display: flex;
   gap: 0.3em;
 
@@ -19,7 +19,7 @@
     height: 2em;
     padding: 0.13em 0.06em;
     background: none;
-    border: 1px solid white;
+    border: 1px solid $col;
     border-radius: 0.5em;
     cursor: pointer;
     transition: vars.$transform-ease-in;

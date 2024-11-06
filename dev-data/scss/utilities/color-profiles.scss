@@ -1,7 +1,7 @@
 @use './vars';
 @use './mixins';
 
-.prio0-color-profile {
+.prio4-color-profile {
   @include mixins.active-prio-btn(vars.$col-primary-selected);
 }
 .prio1-color-profile {

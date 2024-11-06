@@ -8,10 +8,13 @@ import { helper } from '../index';
 import overviewModalMarkup from '../components/ui-components/modal-overview.html';
 import baseModalMarkup from '../components/ui-components/modal-base.html';
 import taskSnippetMarkup from '../components/tasks/task-snippet.html';
+import projectCardMarkup from '../components/projects/project-card.html';
+import taskFormMarkup from '../components/tasks/forms/task_form.html';
 
 //////////////_______________A P P  C L A S S _______________//////////////
 export class App {
   generateId = helper.generateId;
+  hideAndShowEls = helper.hideAndShowEls;
   addClass = helper.addClass;
   removeClass = helper.removeClass;
   hasClass = helper.hasClass;
@@ -48,18 +51,44 @@ export class App {
   }
   listenForClose() {
     // Click to close
-    this.modalOverview.addEventListener('click', (e) => {
-      if (this.hasClass(e.target, 'modal-overview')) this.closeOverviewModal();
-      if (e.target.closest('.btn-close-modal')) this.closeOverviewModal();
+    this.modal.addEventListener('click', (e) => {
+      if (this.hasClass(e.target, 'modal')) this.closeModal();
+      if (e.target.closest('.btn-close-modal')) this.closeModal();
     });
 
     // Esc to close
     document.addEventListener('keydown', this._handleEscClose);
   }
   _handleEscClose(e) {
-    if (e.key === 'Escape') this.closeOverviewModal();
+    if (e.key === 'Escape') this.closeModal();
   }
-  initOverviewListeners() {}
+  initOverviewListeners() {
+    this.modalOverview.addEventListener('click', (e) => this.handleOverviewClick(e));
+  }
+  handleOverviewClick(e) {
+    const actionMap = {
+      'task-data__project-name': (el) => this.previewProject(el),
+      'btn-edit-task': (el) => this.openTaskForm(el),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls](el);
+    });
+  }
+  initEditModeListeners(task) {
+    this.taskForm.addEventListener('click', (e) => this.handleTaskFormClick(e, task));
+  }
+  handleTaskFormClick(e, task) {
+    const actionMap = {
+      'task-prio__btn': (btn) => task.setPrio(btn),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls](el);
+    });
+  }
 
   //////////////________________G E T T E R S________________//////////////
   //#region Getters
@@ -84,9 +113,16 @@ export class App {
   get taskForm() {
     return document.querySelector(`.task[data-state="form"]`);
   }
+  get modal() {
+    return document.querySelector('.modal');
+  }
   get modalOverview() {
     return document.querySelector('.modal-overview');
   }
+  get modalBase() {
+    return document.querySelector('.modal-base');
+  }
+
   //#endregion
 
   //////////////________________M E T H O D S________________//////////////
@@ -105,9 +141,43 @@ export class App {
     // Initialize event listeners
     newProject.initListeners();
   }
-  addClonedProject(projectClone) {
-    this.projectsArr.push(projectClone);
+  addClonedProject(clone) {
+    this.projectsArr.push(clone);
   }
+  addNewTaskFromNav() {
+    // Create markup for task form modal w/ Project selection
+    // Choose what project the task should belong to
+    // Choice 1: existing project
+    // Choice 2: new project
+    // Warn if no project is choosen
+    // Close modal and focus on new Task?
+  }
+  openPageSettings() {
+    // Opens modal with Settings
+    // Universal default sort
+    // Colors
+  }
+  closeModal() {
+    if (this.modal) {
+      // Apply animation
+      this.scaleDown(this.modal, 'center');
+
+      // Remove modal after animation ends
+      this.modal.addEventListener(
+        'animationend',
+        () => {
+          // Remove modal
+          if (this.modal) this.modal.remove();
+
+          // Clear reference & remove Esc listener to avoid bugs
+          //document.removeEventListener('keydown', this._handleEscClose);
+        },
+        { once: true }
+      );
+    }
+  }
+
+  //___M O D A L_____________________________________________________//
   renderOverviewModal() {
     this.insertMarkupAdj(this.body, 'afterbegin', this.populateOverviewMarkup());
     this.scaleUp(this.modalOverview, 'center');
@@ -153,18 +223,45 @@ export class App {
       .replace('{%TASK_DESCRIPTION%}', task.description)
       .replace('{%TASK_CREATED%}', task.getCreationDateStr());
   }
-  addNewTaskFromNav() {
-    // Create markup for task form modal w/ Project selection
-    // Choose what project the task should belong to
-    // Choice 1: existing project
-    // Choice 2: new project
-    // Warn if no project is choosen
-    // Close modal and focus on new Task?
+  populateBaseModalMarkup(markup) {
+    return baseModalMarkup.replace('{%MODAL_CONTENT%}', markup);
   }
-  openPageSettings() {
-    // Opens modal with Settings
-    // Universal default sort
-    // Colors
+
+  //___M O D A L :  F O R M__________________________________________//
+  openTaskForm(el) {
+    // Avoid duplicate modals
+    if (this.modalBase) this.modalBase.remove();
+
+    const task = this.getTaskById(el.closest('.task-snippet').dataset.id);
+
+    const markup = this.populateBaseModalMarkup(taskFormMarkup);
+    this.insertMarkupAdj(this.body, 'afterbegin', markup);
+    task.populateTaskForm();
+    task.taskForm.style.width = '40%';
+
+    this.initEditModeListeners(task);
+    this.listenForClose();
+  }
+
+  //___M O D A L :  P R E V I E W____________________________________//
+  previewProject(el) {
+    // Avoid duplicate modals
+    if (this.modalBase) this.modalBase.remove();
+
+    const project = this.projectsArr.find((p) => p.id === el.dataset.id);
+    const markup = this.populateBaseModalMarkup(this.populateProjectMarkup(project));
+    this.insertMarkupAdj(this.body, 'afterbegin', markup);
+
+    // Render project Tasks
+    project.renderTaskCards();
+
+    this.hideAndShowEls(project.inputTitle, project.titleEl);
+    project.titleEl.textContent = project.title;
+
+    this.listenForClose();
+  }
+  populateProjectMarkup(p) {
+    return projectCardMarkup.replace('{%PROJECT_ID%}', p.id);
   }
 
   //___H E L P E R S_________________________________________________//
@@ -187,25 +284,13 @@ export class App {
 
     return { tasks, checklists, notes };
   }
-  closeOverviewModal() {
-    //if (this.modalOverview) this.modalOverview.remove();
-    if (this.modalOverview) {
-      // Apply animation
-      this.scaleDown(this.modalOverview, 'center');
-
-      // Remove modal after animation ends
-      this.modalOverview.addEventListener(
-        'animationend',
-        () => {
-          // Remove modal
-          if (this.modalOverview) this.modalOverview.remove();
-
-          // Clear reference & remove Esc listener to avoid bugs
-          document.removeEventListener('keydown', this._handleEscClose);
-        },
-        { once: true }
-      );
+  getTaskById(id) {
+    for (const project of this.projectsArr) {
+      const task = project.tasks.find((t) => t.id === id);
+      if (task) return task;
     }
+
+    return null;
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////

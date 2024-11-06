@@ -1,6 +1,33 @@
 @use '../utilities/mixins.scss';
+@use '../utilities/vars.scss';
 
-.modal {
+.modal-base {
   @include mixins.modal;
   align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 10000;
+
+  .modal-base__action-bar {
+    @include mixins.buttons-action-bar('modal-base');
+    position: absolute;
+    top: 1.5em;
+    right: 2.5em;
+
+    .modal-base__btn {
+      background: vars.$col-primary-dark-op;
+      border: none;
+      scale: 1.2;
+
+      &:hover {
+        background: vars.$col-primary-dark;
+        // prettier-ignore
+        box-shadow: 
+        0 0 5px white, 
+        0 0 10px rgba(255, 255, 255, 0.9), 
+        0 0 15px rgba(255, 255, 255, 0.7)
+        !important;
+        transform: scale(1.1);
+      }
+    }
+  }
 }
