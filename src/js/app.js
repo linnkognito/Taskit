@@ -3,11 +3,18 @@
 import { Project } from './project';
 import { helper } from '../index';
 
+//////////////_________________M A R K U P_________________//////////////
+
+import overviewModalMarkup from '../components/ui-components/modal-overview.html';
+import taskSnippetMarkup from '../components/tasks/task-snippet.html';
+
 //////////////_______________A P P  C L A S S _______________//////////////
 export class App {
   generateId = helper.generateId;
   addClass = helper.addClass;
   removeClass = helper.removeClass;
+  insertMarkupAdj = helper.insertMarkupAdj;
+  scaleUp = helper.scaleUp;
 
   constructor() {
     this.projectsArr = [];
@@ -22,6 +29,7 @@ export class App {
     this.nav.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
+    console.log(e.target);
     const actionMap = {
       'btn-add-project': () => this.createNewProject(),
       'nav-btn-add-project': () => this.createNewProject(),
@@ -31,10 +39,12 @@ export class App {
     };
 
     Object.keys(actionMap).forEach((cls) => {
-      console.log(e.target);
       const el = e.target.closest(`.${cls}`);
       if (el) actionMap[cls]();
     });
+  }
+  listenForClose() {
+    this.overviewModal.addEventListener('click', () => this.closeOverviewModal());
   }
 
   //////////////________________G E T T E R S________________//////////////
@@ -54,8 +64,14 @@ export class App {
   get nav() {
     return document.querySelector('nav');
   }
+  get body() {
+    return document.querySelector('body');
+  }
   get taskForm() {
     return document.querySelector(`.task[data-state="form"]`);
+  }
+  get overviewModal() {
+    return document.querySelector('.modal-overview');
   }
   //#endregion
 
@@ -79,12 +95,44 @@ export class App {
     this.projectsArr.push(projectClone);
   }
   showTaskOverview() {
-    // Open modal
-    // Render tasks from Tasks array (create markup for this)
-    // From this view, the user should be able to:
-    // Delete one task
-    // Delete multiple tasks
-    // Edit task (one at the time)
+    this.insertMarkupAdj(this.body, 'afterbegin', this.populateOverviewMarkup());
+    this.scaleUp(this.overviewModal, 'center');
+
+    this.listenForClose();
+  }
+  populateOverviewMarkup() {
+    const { tasks, checklists, notes } = this.getItemAmount();
+
+    // prettier-ignore
+    return overviewModalMarkup
+      .replace('{%OVERVIEW_TASKS_LENGTH%}', tasks)
+      .replace('{%OVERVIEW_CHECKLISTS_LENGTH%}', checklists)
+      .replace('{%OVERVIEW_NOTES_LENGTH%}', notes)
+      .replace('{%OVERVIEW_TASKS%}', this.renderTaskSnippets());
+  }
+  renderTaskSnippets() {
+    let markup = '';
+
+    this.projectsArr.forEach((project) => {
+      if (project.tasks.length) {
+        project.tasks.forEach((task) => {
+          markup += this.populateTaskSnippetMarkup(task);
+        });
+      }
+    });
+
+    return markup;
+  }
+  populateTaskSnippetMarkup(task) {
+    // prettier-ignore
+    return taskSnippetMarkup
+      .replace('{%TASK_ID%}', task.id)
+      .replace('{%TASK_TITLE%}', task.title)
+      .replace('{%TASK_CHECKLISTS_LENGTH%}', task.checklists.length)
+      .replace('{%TASK_NOTES_LENGTH%}', task.notes.length)
+      .replace('{%TASK_PROJECT%}', task.project.title)
+      .replace('{%TASK_DESCRIPTION%}', task.description)
+      .replace('{%TASK_CREATED%}', task.getCreationDateStr());
   }
   addNewTaskFromNav() {
     // Choose what project the task should belong to
@@ -97,6 +145,30 @@ export class App {
     // Opens modal with Settings
     // Universal default sort
     // Colors
+  }
+
+  //___H E L P E R S_________________________________________________//
+  getItemAmount() {
+    let tasks = 0;
+    let checklists = 0;
+    let notes = 0;
+
+    // Loop through Projects
+    this.projectsArr.forEach((project) => {
+      if (!project.tasks) return;
+      tasks = tasks + project.tasks.length;
+
+      // Loop through Tasks array
+      project.tasks.forEach((task) => {
+        if (task.checklists) checklists += task.checklists.length;
+        if (task.notes) notes += task.notes.length;
+      });
+    });
+
+    return { tasks, checklists, notes };
+  }
+  closeOverviewModal() {
+    this.overviewModal.remove();
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////

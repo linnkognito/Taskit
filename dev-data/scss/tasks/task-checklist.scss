@@ -29,7 +29,7 @@
 
     // BUTTONS (HEADER) //
     .checklist__buttons {
-      @include mixins.buttons-item-header('checklist');
+      @include mixins.buttons-action-bar('checklist');
     }
   }
 

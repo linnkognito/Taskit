@@ -449,7 +449,10 @@ export class Task {
   }
 
   //___D E S C R I P T I O N_________________________________________//
-  editDescription() {}
+  editDescription() {
+    //PLACEHOLDER
+  }
+
   //___P R I O_______________________________________________________//
   setPrio(btn) {
     // Remove active style for all Prio buttons

@@ -97,7 +97,7 @@
   box-shadow: 0 0 2px white;
   cursor: pointer;
 }
-.task .task-header .task-header__buttons .task-header__btn--icon {
+.task .task-header .task-header__buttons .task-header__btn .task-header__btn--icon {
   width: 100%;
   height: 100%;
 }

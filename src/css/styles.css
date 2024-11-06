@@ -47,6 +47,7 @@ header h1 {
   padding: 0.1em 1em;
   font-size: 4rem;
   font-family: "Arizonia", sans-serif;
+  text-shadow: 0 0 5px rgb(165, 160, 158);
   transition: transform 0.2s ease-in;
 }
 header h1:hover {

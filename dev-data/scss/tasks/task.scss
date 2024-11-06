@@ -90,15 +90,17 @@
         border-radius: 0.5em;
         cursor: pointer;
         transition: vars.$transform-ease-in;
-      }
-      .task-header__btn:hover {
-        transform: scale(1.05);
-        box-shadow: vars.$box-glow-mid;
-        cursor: pointer;
-      }
-      .task-header__btn--icon {
-        width: 100%;
-        height: 100%;
+
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: vars.$box-glow-mid;
+          cursor: pointer;
+        }
+
+        .task-header__btn--icon {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   } // [X] END OF HEADER [X]

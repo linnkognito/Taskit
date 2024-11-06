@@ -46,6 +46,7 @@ header {
     padding: 0.1em 1em;
     font-size: 4rem;
     font-family: vars.$font-h1;
+    text-shadow: 0 0 5px vars.$col-primary-dark;
     transition: vars.$transform-ease-in;
   }
   h1:hover {

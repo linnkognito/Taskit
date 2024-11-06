@@ -29,7 +29,7 @@
 
     // BUTTONS (HEADER) //
     .task-card__note-buttons {
-      @include mixins.buttons-header('card');
+      @include mixins.buttons-action-bar('task-card');
       display: flex;
       gap: 0.3em;
     }
@@ -82,7 +82,7 @@
 
     // BUTTONS (HEADER) //
     .task-form__note-buttons {
-      @include mixins.buttons-header('form');
+      @include mixins.buttons-action-bar('task-form');
     }
   } //////////////////////////////////
 

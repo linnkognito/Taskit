@@ -1,9 +1,9 @@
-<div class="task task-overview" data-id="{%TASK_ID%}" data-state="card">
+<div class="task task-snippet" data-id="{%TASK_ID%}" data-state="card">
   <!-- HEADER -->
   <div class="task-header">
     <!-- TITLE -->
     <div class="task-header__title-wrapper">
-      <img src="./public/icons/checkbox-blank.png" alt="Blank checkbox" class="task-header__checkbox" data-checked="false" />
+      <img src="../../../public/icons/checkbox-blank.png" alt="Blank checkbox" class="task-header__checkbox" data-checked="false" />
 
       <input type="text" placeholder="Title" class="input-title task-header__input hidden" />
       <div class="title task-header__title">{%TASK_TITLE%}</div>
@@ -11,10 +11,10 @@
     <!-- BUTTONS HEADER -->
     <div class="task-header__buttons">
       <button class="task-header__btn btn-edit-task">
-        <img src="./public/icons/edit.png" alt="Edit task" title="Edit task" class="task-header__btn--icon" />
+        <img src="../../../public/icons/edit.png" alt="Edit task" title="Edit task" class="task-header__btn--icon" />
       </button>
       <button class="task-header__btn btn-delete-task">
-        <img src="./public/icons/delete.png" alt="Delete task" title="Delete task" class="task-header__btn--icon" />
+        <img src="../../../public/icons/delete.png" alt="Delete task" title="Delete task" class="task-header__btn--icon" />
       </button>
     </div>
   </div>
@@ -23,20 +23,24 @@
   <div class="task-body">
     <div class="task-body__top">
       <!-- COUNTERS -->
-      <div class="task-counters">
-        <div class="task-counter task-counter--checklist">
-          <img src="./public/icons/checklist.png" alt="Checklist icon" class="task-counters__icon" />
-          <div class="task-counters__desc">
-            <span class="task-counters--num">{%TASK_CHECKLISTS_LENGTH%}</span>
+      <div class="task-data">
+        <div class="task-data__counter task-data__counter--checklist">
+          <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" />
+          <div class="task-data__desc">
+            <span class="task-data__counter--num">{%TASK_CHECKLISTS_LENGTH%}</span>
             Checklists
           </div>
         </div>
-        <div class="task-counter task-counter--note">
-          <img src="./public/icons/note.png" alt="Note icon" class="task-counters__icon" />
-          <div class="task-counters__desc">
-            <span class="task-counters--num">{%TASK_NOTES_LENGTH%}</span>
+        <div class="task-data__counter task-data__counter--note">
+          <img src="../../../public/icons/note.png" alt="Note icon" class="task-data__icon" />
+          <div class="task-data__desc">
+            <span class="task-data__counter--num">{%TASK_NOTES_LENGTH%}</span>
             Notes
           </div>
+        </div>
+        <div class="task-data__project">
+          <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" />
+          <div class="task-data__desc">{%TASK_PROJECT%}</div>
         </div>
       </div>
       <!-- DESCRIPTION (BODY TOP) -->
@@ -44,7 +48,7 @@
 
       <!-- DUE DATE (BODY TOP) -->
       <div class="task-due task-due--icon hidden">
-        <img src="./public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="task-due-icon task-due--icon" />
+        <img src="../../../public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="task-due-icon task-due--icon" />
       </div>
 
       <div class="task-due task-due--text hidden">

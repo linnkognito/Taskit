@@ -7,23 +7,21 @@
       <!-- STATS -->
       <div class="overview-stats">
         <div class="overview-stats__li">
-          <img src="./public/icons/task.png" alt="Task icon" class="overview-stats__li-icon" />
+          <img src="../../../public/icons/task.png" alt="Task icon" class="overview-stats__li-icon" />
           <div class="overview-stats__li-desc">
             <span class="overview-stats__li-counter">{%OVERVIEW_TASKS_LENGTH%}</span>
             Tasks
           </div>
         </div>
-
         <div class="overview-stats__li">
-          <img src="./public/icons/checklist.png" alt="Checklist icon" class="overview-stats__li-icon" />
+          <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="overview-stats__li-icon" />
           <div class="overview-stats__li-desc">
             <span class="overview-stats__li-counter">{%OVERVIEW_CHECKLISTS_LENGTH%}</span>
             Checklists
           </div>
         </div>
-
         <div class="overview-stats__li">
-          <img src="./public/icons/note.png" alt="Note icon" class="overview-stats__li-icon" />
+          <img src="../../../public/icons/note.png" alt="Note icon" class="overview-stats__li-icon" />
           <div class="overview-stats__li-desc">
             <span class="overview-stats__li-counter">{%OVERVIEW_NOTES_LENGTH%}</span>
             Notes
@@ -33,6 +31,18 @@
     </div>
 
     <!-- BODY -->
-    <div class="overview-body">{%OVERVIEW_TASKS%}</div>
+    <div class="overview-body-wrapper">
+      <!-- ACTION BAR -->
+      <div class="overview-action-bar">
+        <div class="action-bar__buttons">
+          <button class="action-bar__btn btn-close-modal">
+            <img src="../../../public/icons/close.png" alt="Close modal" title="Close modal" class="action-bar__btn--icon" />
+          </button>
+        </div>
+      </div>
+
+      <!-- TASK CONTAINER -->
+      <div class="overview-body">{%OVERVIEW_TASKS%}</div>
+    </div>
   </div>
 </div>
