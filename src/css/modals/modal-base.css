@@ -1,0 +1,18 @@
+/*** COLORS ****************************/
+/*** FONTS *****************************/
+/*** FONT SIZES ************************/
+/*** FONT STYLES ***********************/
+/*** EFFECTS ***************************/
+/*** BORDERS ***************************/
+.modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100%;
+  backdrop-filter: blur(0.4em);
+  z-index: 100;
+  align-items: center;
+}
+
+/*# sourceMappingURL=modal-base.css.map */

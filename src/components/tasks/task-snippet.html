@@ -24,29 +24,29 @@
     <div class="task-body__top">
       <!-- COUNTERS -->
       <div class="task-data">
+        <!-- COUNTERS -->
+        <div class="task-data__counters-container">
+          <div class="task-data__counter task-data__counter--checklist">
+            <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" />
+            <div class="task-data__desc">
+              <span class="task-data__counter--num">{%TASK_CHECKLISTS_LENGTH%}</span>
+              Checklists
+            </div>
+          </div>
+          <div class="task-data__counter task-data__counter--note">
+            <img src="../../../public/icons/note.png" alt="Note icon" class="task-data__icon" />
+            <div class="task-data__desc">
+              <span class="task-data__counter--num">{%TASK_NOTES_LENGTH%}</span>
+              Notes
+            </div>
+          </div>
+        </div>
+
         <!-- PROJECT -->
         <div class="task-data__project">
-          <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" />
-          <div class="task-data__desc">{%TASK_PROJECT%}</div>
-        </div>
-        <!-- <div class="task-data__project">
-          <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" />
-          <div class="task-data__desc">{%TASK_PROJECT%}</div>
-        </div> -->
-        <!-- COUNTERS -->
-        <div class="task-data__counter task-data__counter--checklist">
-          <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" />
-          <div class="task-data__desc">
-            <span class="task-data__counter--num">{%TASK_CHECKLISTS_LENGTH%}</span>
-            Checklists
-          </div>
-        </div>
-        <div class="task-data__counter task-data__counter--note">
-          <img src="../../../public/icons/note.png" alt="Note icon" class="task-data__icon" />
-          <div class="task-data__desc">
-            <span class="task-data__counter--num">{%TASK_NOTES_LENGTH%}</span>
-            Notes
-          </div>
+          <!-- <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="task-data__icon" /> -->
+          <div class="task-data__project-caption">Belongs to:</div>
+          <div class="task-data__project-name" data-id="{%TASK_PROJECT_ID%}">{%TASK_PROJECT%}</div>
         </div>
       </div>
       <!-- DESCRIPTION (BODY TOP) -->

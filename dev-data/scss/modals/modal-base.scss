@@ -1,0 +1,6 @@
+@use '../utilities/mixins.scss';
+
+.modal {
+  @include mixins.modal;
+  align-items: center;
+}

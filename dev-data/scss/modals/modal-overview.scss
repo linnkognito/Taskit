@@ -7,7 +7,7 @@
 
   // CONTENT WRAPPER //
   .overview-content {
-    @include mixins.modal-container(lighten(vars.$col-primary-dark, 6%));
+    @include mixins.modal-container(adjust-color(vars.$col-primary-dark, $lightness: 6%));
     display: flex;
     gap: 2.5em;
     min-width: 90vw;
@@ -89,12 +89,9 @@
       }
       // OVERVIEW BODY //
       .overview-body {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        //display: flex;
-        //flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
         gap: 1em;
-        // align-items: stretch;
         width: 100%;
         height: 100%;
         padding: 1em;
@@ -102,173 +99,212 @@
         border-radius: vars.$br-primary;
         box-shadow: vars.$box-glow;
 
-        // TASK SNIPPET //
-        .task-snippet {
-          // flex: 1 1 calc(50% - 1em);
-          // max-width: calc(50% - 1em);
-          // flex-direction: column; // added
-          height: fit-content;
-          background: none;
-          transition: transform 0.15s ease;
+        .overview-tasks-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          column-gap: 1em;
 
-          &:hover {
-            box-shadow: 0 0 5px vars.$col-primary-dark-op;
-            border: none;
-            transform: scale(1.02);
-          }
+          // TASK SNIPPET //
+          .task-snippet {
+            height: fit-content;
+            background: none;
+            transition: transform 0.15s ease;
 
-          // SMALLER SCREENS //
-          @media (max-width: 768px) {
-            .overview-body {
-              grid-template-columns: 1fr;
+            &:hover {
+              box-shadow: 0 0 5px vars.$col-primary-dark-op;
+              border: none;
+              transform: scale(1.02);
             }
-            .overview-header__heading {
-              font-size: 3rem;
-            }
-            .overview-stats__li {
-              font-size: 1rem;
-              padding: 0.2em 0.8em;
-            }
-            .task-snippet {
-              font-size: 0.9rem;
-              padding: 0.75em;
-            }
-          }
 
-          // HEADER //
-          .task-header {
-            background: lighten(vars.$col-primary-dark, 7%);
+            // HEADER //
+            .task-header {
+              background: adjust-color(vars.$col-primary-dark, $lightness: 7%);
 
-            .task-header__title,
-            .task-header__input {
-              font-size: 1.15rem;
-            }
-          } // [X] END OF HEADER [X]
+              .task-header__title,
+              .task-header__input {
+                font-size: 1.15rem;
+              }
+            } // [X] END OF HEADER [X]
 
-          // BODY //
-          .task-body {
-            display: flex;
-            align-items: center;
-            flex: 1; // added
-            padding: 0 0.9em;
-
-            // BODY TOP //
-            .task-body__top {
+            // BODY //
+            .task-body {
               display: flex;
               align-items: center;
-              gap: 0.5em;
-              width: 100%;
-              margin-top: 0.7em;
-              padding-bottom: 0.7em;
-              background: white;
+              flex: 1; // added
+              padding: 0 0.9em;
 
-              // TASK ITEM COUNTERS //
-              .task-data {
-                grid-template-columns: auto;
-                grid-template-rows: 1fr 1fr;
-                display: grid;
-                grid-template-columns: auto;
-                grid-template-rows: 1fr;
-                gap: 0.6em;
-                overflow: hidden;
+              // BODY TOP //
+              .task-body__top {
+                display: flex;
+                align-items: center;
+                gap: 0.5em;
+                width: 100%;
+                margin-top: 0.7em;
+                padding-bottom: 0.7em;
+                background: white;
 
-                @media (max-width: 900px) {
-                  // .task-data {
-                  //   //grid-template-columns: 1fr;
-                  // }
+                // TASK DATA //
+                .task-data {
+                  display: flex;
+                  gap: 0.7em;
+                  width: 100%;
+                  letter-spacing: vars.$ls-primary;
+                  overflow: hidden;
 
-                  .task-data__counter,
+                  @media (max-width: 900px) {
+                    .task-data__counter,
+                    .task-data__project {
+                      font-size: 0.85rem;
+                      padding: 0.2em 0.4em;
+                    }
+                  }
+
+                  // TASK ITEMS DATA //
+                  .task-data__counters-container {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 0 1 auto;
+                    gap: 0.5em;
+                    width: 100%;
+
+                    .task-data__counter {
+                      display: flex;
+                      flex-direction: row;
+                      flex-wrap: nowrap;
+                      gap: 0.5em;
+                      align-items: center;
+                      width: auto;
+                      min-width: fit-content;
+                      padding: 0.1em 0.5em;
+                      border: 2px dashed vars.$col-primary-dark-op;
+                      border-radius: vars.$br-primary;
+                      transition: transform 0.15s ease-in;
+                      cursor: pointer;
+
+                      &:hover {
+                        transform: scale(1.02);
+                      }
+                      .task-data__icon {
+                        height: 1.2rem;
+                      }
+                      .task-data__counter--num {
+                        font-weight: 600;
+                      }
+                    }
+                  }
+
+                  // PROJECT DATA //
                   .task-data__project {
-                    font-size: 0.85rem;
-                    padding: 0.2em 0.4em;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: auto;
+
+                    .task-data__project-caption {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      padding: 0.2em 0.7em 0.1em;
+                      font-weight: 400;
+                      color: white;
+                      background: vars.$col-primary-dark-op;
+                      border-top-left-radius: vars.$br-primary;
+                      border-top-right-radius: vars.$br-primary;
+                    }
+
+                    .task-data__project-name {
+                      flex: 1;
+                      padding: 0.3em 0.5em;
+                      font-style: italic;
+                      font-weight: 400;
+                      text-align: center;
+                      border: 2px solid vars.$col-primary-dark-op;
+                      border-bottom-left-radius: vars.$br-primary;
+                      border-bottom-right-radius: vars.$br-primary;
+                      border-top-left-radius: none;
+                      border-top-right-radius: none;
+                      overflow: hidden;
+                      cursor: pointer;
+
+                      &:hover {
+                        font-weight: 600;
+                      }
+                    }
+                  }
+                } // [X] END OF TASK DATA [X]
+
+                // DESCRIPTION //
+                .task-description {
+                  display: flex;
+                  align-items: center;
+                  font-size: 0.9rem;
+                  border: 2px dashed vars.$col-primary-dark-op;
+                }
+
+                // DUE BUTTON //
+                .task-due {
+                  @include mixins.due-date(adjust-color(vars.$col-primary-dark, $lightness: 7%), 0);
+                  width: 2.3em;
+                  height: 2.3em;
+                  border-radius: 0.7em;
+                  opacity: 0.8;
+
+                  .task-due-icon {
+                    width: 1.5rem;
                   }
                 }
+              } // [X] END OF BODY TOP [X]
+            } // [X] END OF BODY [X]
 
-                .task-data__project {
-                  font-style: italic;
-                }
-                .task-data__counter {
-                  border: 2px dashed vars.$col-primary-dark-op;
+            // FOOTER //
+            .task-footer--created {
+              padding: 0.4em 0.8em 0.4em 0.9em;
+              background: adjust-color(vars.$col-primary-dark, $lightness: 20%);
+
+              .task-footer__created {
+                color: white;
+                background: adjust-color(vars.$col-primary-dark, $lightness: 7%);
+              }
+
+              .task-footer__switch {
+                .btn-switch-view {
+                  flex: 0;
+                  max-height: fit-content;
+                  padding: 0 0.5em;
+                  margin: 0;
+                  color: vars.$col-primary-dark;
+                  background: white;
+
+                  border: none;
+                  box-shadow: 0 0 3px vars.$col-primary-dark;
                   border-radius: vars.$br-primary;
-                  transition: transform 0.15s ease-in;
-                }
-
-                .task-data__project,
-                .task-data__counter {
-                  display: flex;
-                  gap: 0.5em;
-                  align-items: center;
-                  padding: 0.1em 0.5em;
                   cursor: pointer;
 
                   &:hover {
-                    transform: scale(1.02);
-                  }
-
-                  .task-data__icon {
-                    height: 1.2rem;
-                  }
-                  .task-data__counter--num {
-                    font-weight: 600;
+                    border: 1px solid vars.$col-primary-dark;
                   }
                 }
-              } // [X] END OF TASK DATA [X]
-
-              // DESCRIPTION //
-              .task-description {
-                display: flex;
-                align-items: center;
-                font-size: 0.9rem;
-                border: 2px dashed vars.$col-primary-dark-op;
               }
-
-              // DUE BUTTON //
-              .task-due {
-                @include mixins.due-date(lighten(vars.$col-primary-dark, 7%), 0);
-                width: 2.3em;
-                height: 2.3em;
-                border-radius: 0.7em;
-                opacity: 0.8;
-
-                .task-due-icon {
-                  width: 1.5rem;
-                }
-              }
-            } // [X] END OF BODY TOP [X]
-          } // [X] END OF BODY [X]
-
-          // FOOTER //
-          .task-footer--created {
-            padding: 0.4em 0.8em 0.4em 0.9em;
-            background: lighten(vars.$col-primary-dark, 20%);
-
-            .task-footer__created {
-              color: white;
-              background: lighten(vars.$col-primary-dark, 7%);
-            }
-
-            .task-footer__switch {
-              .btn-switch-view {
-                flex: 0;
-                max-height: fit-content;
-                padding: 0 0.5em;
-                margin: 0;
-                color: vars.$col-primary-dark;
-                background: white;
-
-                border: none;
-                box-shadow: 0 0 3px vars.$col-primary-dark;
-                border-radius: vars.$br-primary;
-                cursor: pointer;
-
-                &:hover {
-                  border: 1px solid vars.$col-primary-dark;
-                }
-              }
-            }
-          } // [X] END OF FOOTER [X]
-        } // [X] END OF TASK SNIPPET [X]
+            } // [X] END OF FOOTER [X]
+          } // [X] END OF TASK SNIPPET [X]
+        } // [X] END OF TASKS CONTAINER [X]
       } // [X] END OF OVERVIEW BODY [X]
     } // [X] END OF OVERVIEW BODY WRAPPER [X]
   } // [X] END OF OVERVIEW CONTENT [X]
 } // [X] END OF OVERVIEW MODAL [X]
+
+// SMALLER SCREENS //
+@media (max-width: 800px) {
+  .task-snippet {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .overview-header__heading {
+    font-size: 3rem;
+  }
+  .overview-stats__li {
+    font-size: 1rem;
+    padding: 0.2em 0.8em;
+  }
+}

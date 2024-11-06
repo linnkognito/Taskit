@@ -6,6 +6,7 @@ import { helper } from '../index';
 //////////////_________________M A R K U P_________________//////////////
 
 import overviewModalMarkup from '../components/ui-components/modal-overview.html';
+import baseModalMarkup from '../components/ui-components/modal-base.html';
 import taskSnippetMarkup from '../components/tasks/task-snippet.html';
 
 //////////////_______________A P P  C L A S S _______________//////////////
@@ -58,6 +59,7 @@ export class App {
   _handleEscClose(e) {
     if (e.key === 'Escape') this.closeOverviewModal();
   }
+  initOverviewListeners() {}
 
   //////////////________________G E T T E R S________________//////////////
   //#region Getters
@@ -114,6 +116,7 @@ export class App {
     this.modalOverview.addEventListener('animationend', () => this.removeClass(this.modalOverview, 'scale-up-center'), { once: true });
 
     this.listenForClose();
+    this.initOverviewListeners();
   }
   populateOverviewMarkup() {
     const { tasks, checklists, notes } = this.getItemAmount();
@@ -145,11 +148,13 @@ export class App {
       .replace('{%TASK_TITLE%}', task.title)
       .replace('{%TASK_CHECKLISTS_LENGTH%}', task.checklists.length)
       .replace('{%TASK_NOTES_LENGTH%}', task.notes.length)
+      .replace('{%TASK_PROJECT_ID%}', task.project.id)
       .replace('{%TASK_PROJECT%}', task.project.title)
       .replace('{%TASK_DESCRIPTION%}', task.description)
       .replace('{%TASK_CREATED%}', task.getCreationDateStr());
   }
   addNewTaskFromNav() {
+    // Create markup for task form modal w/ Project selection
     // Choose what project the task should belong to
     // Choice 1: existing project
     // Choice 2: new project
