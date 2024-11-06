@@ -47,7 +47,7 @@
   opacity: 0;
 }
 
-@keyframes scale-down-top {
+@keyframes scale-down {
   0% {
     transform: scale(1);
     opacity: 1;
@@ -59,7 +59,13 @@
 }
 .scale-down-top {
   transform-origin: top;
-  animation: scale-down-top 0.3s ease-out forwards;
+  animation: scale-down 0.3s ease-out forwards;
+  opacity: 1;
+}
+
+.scale-down-center {
+  transform-origin: center;
+  animation: scale-down 0.3s ease-out forwards;
   opacity: 1;
 }
 

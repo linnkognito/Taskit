@@ -103,10 +103,8 @@
   box-shadow: none;
 }
 .modal-overview .overview-content .overview-body-wrapper .overview-body {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1em;
   width: 100%;
   height: 100%;
@@ -116,8 +114,6 @@
   box-shadow: 0 0 4px white;
 }
 .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet {
-  flex: 1 1 calc(50% - 1em);
-  flex-direction: column;
   height: fit-content;
   background: none;
   transition: transform 0.15s ease;
@@ -126,6 +122,22 @@
   box-shadow: 0 0 5px rgba(165, 160, 158, 0.6);
   border: none;
   transform: scale(1.02);
+}
+@media (max-width: 768px) {
+  .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .overview-body {
+    grid-template-columns: 1fr;
+  }
+  .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .overview-header__heading {
+    font-size: 3rem;
+  }
+  .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .overview-stats__li {
+    font-size: 1rem;
+    padding: 0.2em 0.8em;
+  }
+  .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-snippet {
+    font-size: 0.9rem;
+    padding: 0.75em;
+  }
 }
 .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-header {
   background: rgb(182.1818181818, 178.1363636364, 176.5181818182);
@@ -150,31 +162,47 @@
   background: white;
 }
 .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data {
-  display: flex;
-  justify-content: flex-start;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr 1fr;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr;
   gap: 0.6em;
+  overflow: hidden;
 }
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter,
+@media (max-width: 900px) {
+  .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter,
+  .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project {
+    font-size: 0.85rem;
+    padding: 0.2em 0.4em;
+  }
+}
 .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project {
+  font-style: italic;
+}
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter {
+  border: 2px dashed rgba(165, 160, 158, 0.6);
+  border-radius: 0.9em;
+  transition: transform 0.15s ease-in;
+}
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project,
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter {
   display: flex;
   gap: 0.5em;
   align-items: center;
   padding: 0.1em 0.5em;
-  border: 2px dashed rgba(165, 160, 158, 0.6);
-  border-radius: 0.9em;
-  transition: transform 0.15s ease-in;
   cursor: pointer;
 }
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter:hover,
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project:hover {
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project:hover,
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter:hover {
   transform: scale(1.02);
 }
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter .task-data__icon,
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project .task-data__icon {
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project .task-data__icon,
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter .task-data__icon {
   height: 1.2rem;
 }
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter .task-data__counter--num,
-.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project .task-data__counter--num {
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__project .task-data__counter--num,
+.modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-data .task-data__counter .task-data__counter--num {
   font-weight: 600;
 }
 .modal-overview .overview-content .overview-body-wrapper .overview-body .task-snippet .task-body .task-body__top .task-description {

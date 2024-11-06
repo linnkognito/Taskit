@@ -31,7 +31,6 @@ export class Helper {
     return el.classList.remove(cls);
   }
   removeAndAddCls(el, cls1, cls2) {
-    console.log(el);
     this.removeClass(el, cls1);
     this.addClass(el, cls2);
   }
@@ -50,6 +49,7 @@ export class Helper {
   scaleDown(el, startPos) {
     return requestAnimationFrame(() => {
       el.classList.add(`scale-down-${startPos}`);
+      console.log('scale-down animation added');
     });
   }
   moveDown(el, h) {

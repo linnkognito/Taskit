@@ -13,14 +13,17 @@ export class App {
   generateId = helper.generateId;
   addClass = helper.addClass;
   removeClass = helper.removeClass;
+  hasClass = helper.hasClass;
   insertMarkupAdj = helper.insertMarkupAdj;
   scaleUp = helper.scaleUp;
+  scaleDown = helper.scaleDown;
 
   constructor() {
     this.projectsArr = [];
 
     this.loadProjectsFromStorage();
     this.initListeners();
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   //////////////__________E V E N T  H A N D L E R S__________//////////////
@@ -29,11 +32,10 @@ export class App {
     this.nav.addEventListener('click', this.handleClick.bind(this));
   }
   handleClick(e) {
-    console.log(e.target);
     const actionMap = {
       'btn-add-project': () => this.createNewProject(),
       'nav-btn-add-project': () => this.createNewProject(),
-      'nav-btn-all-tasks': () => this.showTaskOverview(),
+      'nav-btn-all-tasks': () => this.renderOverviewModal(),
       'nav-btn-new-task': () => this.addNewTaskFromNav(),
       'nav-btn-page-settings': () => this.openPageSettings(),
     };
@@ -44,7 +46,17 @@ export class App {
     });
   }
   listenForClose() {
-    this.overviewModal.addEventListener('click', () => this.closeOverviewModal());
+    // Click to close
+    this.modalOverview.addEventListener('click', (e) => {
+      if (this.hasClass(e.target, 'modal-overview')) this.closeOverviewModal();
+      if (e.target.closest('.btn-close-modal')) this.closeOverviewModal();
+    });
+
+    // Esc to close
+    document.addEventListener('keydown', this._handleEscClose);
+  }
+  _handleEscClose(e) {
+    if (e.key === 'Escape') this.closeOverviewModal();
   }
 
   //////////////________________G E T T E R S________________//////////////
@@ -70,7 +82,7 @@ export class App {
   get taskForm() {
     return document.querySelector(`.task[data-state="form"]`);
   }
-  get overviewModal() {
+  get modalOverview() {
     return document.querySelector('.modal-overview');
   }
   //#endregion
@@ -94,9 +106,12 @@ export class App {
   addClonedProject(projectClone) {
     this.projectsArr.push(projectClone);
   }
-  showTaskOverview() {
+  renderOverviewModal() {
     this.insertMarkupAdj(this.body, 'afterbegin', this.populateOverviewMarkup());
-    this.scaleUp(this.overviewModal, 'center');
+    this.scaleUp(this.modalOverview, 'center');
+
+    // Remove animation class to prevent bugs
+    this.modalOverview.addEventListener('animationend', () => this.removeClass(this.modalOverview, 'scale-up-center'), { once: true });
 
     this.listenForClose();
   }
@@ -168,7 +183,24 @@ export class App {
     return { tasks, checklists, notes };
   }
   closeOverviewModal() {
-    this.overviewModal.remove();
+    //if (this.modalOverview) this.modalOverview.remove();
+    if (this.modalOverview) {
+      // Apply animation
+      this.scaleDown(this.modalOverview, 'center');
+
+      // Remove modal after animation ends
+      this.modalOverview.addEventListener(
+        'animationend',
+        () => {
+          // Remove modal
+          if (this.modalOverview) this.modalOverview.remove();
+
+          // Clear reference & remove Esc listener to avoid bugs
+          document.removeEventListener('keydown', this._handleEscClose);
+        },
+        { once: true }
+      );
+    }
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
