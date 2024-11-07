@@ -178,6 +178,10 @@ export class App {
         () => {
           // Remove modal
           if (this.modal) this.modal.remove();
+          console.log(
+            'Project State Before Save:',
+            this.projectsArr.map((p) => p.tasks.map((t) => t.checklists))
+          );
           this.renderProjectCards();
 
           // Clear reference & remove Esc listener to avoid bugs
@@ -189,6 +193,7 @@ export class App {
   }
   renderProjectCards() {
     this.projectsArr.forEach((p) => {
+      p.saveProjectState();
       p.renderTaskCards();
     });
   }
@@ -205,8 +210,18 @@ export class App {
     }
 
     if (itemType === 'checklists') {
-      arr.forEach((cl) => (markup += cl.renderItemMarkup()));
-      return this.renderSnippets(markup);
+      arr.forEach((cl) => {
+        markup += cl.renderItemMarkup();
+        this.renderSnippets(markup);
+      });
+
+      arr.forEach((cl) => {
+        if (cl.items.length) {
+          cl.items.forEach((li) => li.initListeners());
+        }
+      });
+
+      return;
     }
 
     if (itemType === 'notes') {

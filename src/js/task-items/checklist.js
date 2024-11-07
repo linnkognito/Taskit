@@ -276,6 +276,7 @@ export class ListItem {
     if (this.checklist.task.taskForm) return e.preventDefault();
 
     this.checked = this.checkboxEl.checked;
+    console.log(this.checked);
 
     // Moved to checked ListItems
     if (this.checked) {
