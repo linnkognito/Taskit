@@ -73,6 +73,6 @@ export class TaskItem {
     this.task.project.saveProjectState();
   }
   editItem() {
-    //
+    //PLACEHOLDER
   }
 }

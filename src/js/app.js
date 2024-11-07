@@ -178,12 +178,7 @@ export class App {
         () => {
           // Remove modal
           if (this.modal) this.modal.remove();
-          console.log(
-            'Project State Before Save:',
-            this.projectsArr.map((p) => p.tasks.map((t) => t.checklists))
-          );
           this.renderProjectCards();
-
           // Clear reference & remove Esc listener to avoid bugs
           //document.removeEventListener('keydown', this._handleEscClose);
         },
@@ -202,6 +197,7 @@ export class App {
 
     const itemType = cls.split('--')[1];
     const arr = this.getAllItemsOf(itemType);
+
     let markup = '';
 
     if (itemType === 'tasks') {
@@ -212,8 +208,8 @@ export class App {
     if (itemType === 'checklists') {
       arr.forEach((cl) => {
         markup += cl.renderItemMarkup();
-        this.renderSnippets(markup);
       });
+      this.renderSnippets(markup);
 
       arr.forEach((cl) => {
         if (cl.items.length) {
@@ -288,9 +284,9 @@ export class App {
 
     if (!itemEl) return;
 
-    const itemsArr = this.getAllItemsOf(itemType);
+    const itemsArr = this.getAllItemsOf(`${itemType}s`);
 
-    if (itemType === 'tasks') {
+    if (itemType === 'task') {
       const task = this.getTask(el);
       if (task) task.deleteTask();
     } else {
@@ -369,7 +365,7 @@ export class App {
   getAllItemsOf(itemType) {
     // prettier-ignore
     return this.projectsArr.flatMap((p) =>
-      itemType === 'tasks' ? p.tasks : p.tasks.flatMap((t) => t[itemType]));
+       itemType === 'tasks' ? p.tasks : p.tasks.flatMap((t) => t[itemType]));
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
