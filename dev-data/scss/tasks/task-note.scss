@@ -1,22 +1,22 @@
-// task-note.scss
+////////_________N O T E  S T Y L E S_________////////
 
 @use '../utilities/mixins';
 @use '../utilities/vars';
 
-.task-card__note {
+.note {
   @include mixins.item;
 
-  // HEADER ///////////////////////////
-  .task-card__note-header {
+  ///////____________H E A D E R_____________///////
+  .note__header {
     @include mixins.item-header;
 
-    // TITLE (HEADER) //
-    .task-card__note-title {
+    //__T I T L E_________________________________//
+    .note__title {
       @include mixins.item-title;
     }
 
-    // INPUT TITLE (HEADER) //
-    .task-card__note-input-title {
+    //__I N P U T  T I T L E______________________//
+    .note__input-title {
       @include mixins.input-text;
 
       &::placeholder {
@@ -27,72 +27,48 @@
       }
     }
 
-    // BUTTONS (HEADER) //
-    .task-card__note-buttons {
-      @include mixins.buttons-action-bar('task-card');
+    //__B U T T O N S_____________________________//
+    .note__buttons {
+      @include mixins.buttons-action-bar('note');
       display: flex;
       gap: 0.3em;
     }
-  } //////////////////////////////////
+  } //_______________________________ HEADER [x] _//
 
-  //  BODY ///////////////////////////
-  .task-card__note-body {
+  ///////______________B O D Y_______________///////
+  .note__body {
     @include mixins.item-body;
 
-    // QUILL FORMATTING LIBRARY STYLES //
-    .ql-editor {
-      height: 100%;
-      outline: none;
+    //__B U T T O N S :  F O R M A T T I N G______//
+    .note__formatting-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      gap: 0.3em;
+      min-width: fit-content;
+      margin: 0.2em 0 0.3em 0;
+      padding: 0.3em 0.3em;
+      background: vars.$col-primary-low-op;
+      border-radius: 0.5em;
 
-      .ql-editor--link {
-        color: vars.$col-primary;
+      .btn-formatting {
+        @include mixins.btn-tiny(vars.$col-primary);
+        width: 1.8em;
+        height: 1.8em;
+
+        .btn-formatting--icon {
+          height: 100%;
+        }
       }
-      .ql-editor--link:hover {
-        color: white;
-        background: vars.$col-primary;
+      .btn-formatting:hover {
+        @include mixins.btn-hover(1.03);
+        background: vars.$col-primary-dark-op;
       }
-    }
-  } //////////////////////////////////
-}
+      .btn-formatting--active {
+        background: vars.$col-primary-dark;
+      }
+    } //____________________ FORMATTING BTNS [x] _//
 
-// NOTE FORM //
-.task-form__note {
-  @include mixins.item;
-  min-width: fit-content;
-
-  // HEADER ///////////////////////////
-  .task-form__note-header {
-    @include mixins.item-header;
-
-    // INPUT (HEADER)
-    .task-form__note-input-title {
-      @include mixins.input-text;
-      margin-bottom: 0.1em;
-      border: none;
-    }
-    .task-form__note-input-title::placeholder {
-      @include mixins.input-text-placeholder;
-    }
-    .task-form__note-input-title:focus::placeholder {
-      @include mixins.input-text-focus-placeholder;
-    }
-    .task-form__note-title {
-      @include mixins.item-title;
-    }
-
-    // BUTTONS (HEADER) //
-    .task-form__note-buttons {
-      @include mixins.buttons-action-bar('task-form');
-    }
-  } //////////////////////////////////
-
-  //  BODY ///////////////////////////
-  .task-form__note-body {
-    @include mixins.item-body;
-    position: relative;
-    font-size: 1rem;
-
-    // LINK POPUP (FORMATTING BUTTONS) //
+    //__P O P U P :  L I N K______________________//
     .popup-insert-link {
       @include mixins.modal-container;
       display: flex;
@@ -121,7 +97,7 @@
         box-shadow: 0 0 0.1em vars.$col-primary-dark;
       }
 
-      // FOOTER (POPUP) //
+      // POPUP BUTTONS //
       .popup-insert-link__buttons {
         display: flex;
         justify-content: end;
@@ -146,36 +122,9 @@
           @include mixins.btn-hover;
         }
       }
-    }
+    } //__________________________ POPUP LINK [x] _//
 
-    // // FORMATTING BUTTONS (BODY) //
-    // .note-body__formatting-buttons {
-    //   display: flex;
-    //   justify-content: space-evenly;
-    //   gap: 0.3em;
-    //   min-width: fit-content;
-    //   margin: 0.2em 0 0.3em 0;
-    //   padding: 0.3em 0.3em;
-    //   background: vars.$col-primary-low-op;
-    //   border-radius: 0.5em;
-
-    //   .btn-formatting {
-    //     @include mixins.btn-tiny(vars.$col-primary);
-    //     width: 1.8em;
-    //     height: 1.8em;
-
-    //     .btn-formatting--icon {
-    //       height: 100%;
-    //     }
-    //   }
-    //   .btn-formatting:hover {
-    //     @include mixins.btn-hover(1.03);
-    //     background: vars.$col-primary-dark-op;
-    //   }
-    //   .btn-formatting--active {
-    //     background: vars.$col-primary-dark;
-    //   }
-    // }
+    //__E D I T O R_______________________________//
     .note-editor {
       width: 100%;
       min-height: 5em;
@@ -188,14 +137,15 @@
       outline: none;
       cursor: text;
       overflow-y: auto;
-    }
-    .note-editor:focus {
-      color: vars.$col-secondary;
-      border: 1px dashed vars.$col-primary-dark;
-      outline: none;
-    }
 
-    // QUILL FORMATTING LIBRARY STYLES //
+      &:focus {
+        color: vars.$col-secondary;
+        border: 1px dashed vars.$col-primary-dark;
+        outline: none;
+      }
+    } //_____________________________ EDITOR [x] _//
+
+    //__Q U I L L  E D I T O R____________________//
     .ql-editor {
       height: 100%;
       outline: none;
@@ -207,38 +157,76 @@
         color: white;
         background: vars.$col-primary;
       }
-    }
-  } //////////////////////////////////
-}
-.task-form__note--active {
-  box-shadow: 0 0 5px vars.$col-primary-dark;
-}
+    } //______________________ QUILL EDITOR [x] _//
+  } //___________________________ NOTE BODY [x] _//
+} //__________________________________ NOTE [x] _//
 
-// FORMATTING BUTTONS (BODY) //
-.note-body__formatting-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 0.3em;
-  min-width: fit-content;
-  margin: 0.2em 0 0.3em 0;
-  padding: 0.3em 0.3em;
-  background: vars.$col-primary-low-op;
-  border-radius: 0.5em;
+//#region Discarded
+// NOTE FORM //
+// .task-form__note {
+//   @include mixins.item;
+//   min-width: fit-content;
 
-  .btn-formatting {
-    @include mixins.btn-tiny(vars.$col-primary);
-    width: 1.8em;
-    height: 1.8em;
+//   // HEADER //
+//   .task-form__note-header {
+//     @include mixins.item-header;
 
-    .btn-formatting--icon {
-      height: 100%;
-    }
-  }
-  .btn-formatting:hover {
-    @include mixins.btn-hover(1.03);
-    background: vars.$col-primary-dark-op;
-  }
-  .btn-formatting--active {
-    background: vars.$col-primary-dark;
-  }
-}
+//     // INPUT (HEADER)
+//     .task-form__note-input-title {
+//       @include mixins.input-text;
+//       margin-bottom: 0.1em;
+//       border: none;
+//     }
+//     .task-form__note-input-title::placeholder {
+//       @include mixins.input-text-placeholder;
+//     }
+//     .task-form__note-input-title:focus::placeholder {
+//       @include mixins.input-text-focus-placeholder;
+//     }
+//     .task-form__note-title {
+//       @include mixins.item-title;
+//     }
+
+//     // BUTTONS (HEADER) //
+//     .task-form__note-buttons {
+//       @include mixins.buttons-action-bar('task-form');
+//     }
+//   }
+
+//   //  BODY //
+//   .task-form__note-body {
+//     @include mixins.item-body;
+//     position: relative;
+//     font-size: 1rem;
+
+//     // // FORMATTING BUTTONS (BODY) //
+//     // .note-body__formatting-buttons {
+//     //   display: flex;
+//     //   justify-content: space-evenly;
+//     //   gap: 0.3em;
+//     //   min-width: fit-content;
+//     //   margin: 0.2em 0 0.3em 0;
+//     //   padding: 0.3em 0.3em;
+//     //   background: vars.$col-primary-low-op;
+//     //   border-radius: 0.5em;
+
+//     //   .btn-formatting {
+//     //     @include mixins.btn-tiny(vars.$col-primary);
+//     //     width: 1.8em;
+//     //     height: 1.8em;
+
+//     //     .btn-formatting--icon {
+//     //       height: 100%;
+//     //     }
+//     //   }
+//     //   .btn-formatting:hover {
+//     //     @include mixins.btn-hover(1.03);
+//     //     background: vars.$col-primary-dark-op;
+//     //   }
+//     //   .btn-formatting--active {
+//     //     background: vars.$col-primary-dark;
+//     //   }
+//     // }
+//   } //////////////////////////////////
+// }
+//#endregion

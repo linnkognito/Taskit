@@ -1,30 +1,30 @@
-<div class="note task-card__note" data-id="{%NOTE_ID%}" data-type="note" data-mode="card">
-  <div class="task-card__note-header">
+<div class="note" data-id="{%NOTE_ID%}" data-type="note" data-mode="card">
+  <div class="note__header">
     <!-- TITLE -->
-    <div class="item-title task-card__note-title">{%NOTE_TITLE%}</div>
-    <input type="text" class="input-item-title task-card__note-input-title hidden" placeholder="Add note" />
+    <div class="item-title note__title">{%NOTE_TITLE%}</div>
+    <input type="text" class="input-item-title note__input-title hidden" placeholder="Add note" />
 
     <!-- BUTTONS (HEADER) -->
-    <div class="task-card__note-buttons">
-      <button class="task-card__btn btn-edit-note">
-        <img src="../../../../public/icons/edit.png" alt="Edit note" title="Edit note" class="task-card__btn--icon" />
+    <div class="note__buttons">
+      <button class="note__btn btn-edit-note">
+        <img src="../../../../public/icons/edit.png" alt="Edit note" title="Edit note" class="note__btn--icon" />
       </button>
-      <button class="task-card__btn btn-delete-note">
-        <img src="../../../../public/icons/delete.png" alt="Delete note" title="Delete note" class="task-card__btn--icon" />
+      <button class="note__btn btn-delete-note">
+        <img src="../../../../public/icons/delete.png" alt="Delete note" title="Delete note" class="note__btn--icon" />
       </button>
-      <button class="task-card__btn edit-all-mode btn-save-edits hidden">
-        <img src="../../../../public/icons/save.png" alt="Save edits" title="Save edits" class="task-card__btn--icon" />
+      <button class="note__btn edit-all-mode btn-save-edits hidden">
+        <img src="../../../../public/icons/save.png" alt="Save edits" title="Save edits" class="note__btn--icon" />
       </button>
-      <button class="task-card__btn edit-all-mode btn-cancel-edits hidden">
-        <img src="../../../../public/icons/cancel.png" alt="Cancel edits" title="Cancel edits" class="task-card__btn--icon" />
+      <button class="note__btn edit-all-mode btn-cancel-edits hidden">
+        <img src="../../../../public/icons/cancel.png" alt="Cancel edits" title="Cancel edits" class="note__btn--icon" />
       </button>
     </div>
   </div>
 
   <!-- CONTENT -->
-  <div class="task-card__note-body">
+  <div class="note__body">
     <!-- FORMATTING BUTTONS -->
-    <div class="note-body__formatting-buttons hidden">
+    <div class="note__formatting-buttons">
       <button class="btn-formatting btn-bold">
         <img src="../../../../public/icons/bold.png" alt="Apply bold" title="Bold" class="btn-formatting--icon" />
       </button>
@@ -43,12 +43,23 @@
         <img src="../../../../public/icons/link.png" alt="Create link" title="Create  link" class="btn-formatting--icon btn-link-icon" />
         <img src="../../../../public/icons/link-off.png" alt="Remove link" title="Remove link" class="btn-formatting--icon btn-link-off-icon hidden" />
       </button>
+
+      <!-- INSERT LINK POPUP -->
+      <div class="popup-insert-link hidden">
+        <label for="url" class="popup-insert-link__label">Insert URL:</label>
+        <input type="text" name="url" placeholder="" class="popup-insert-link__input" required />
+
+        <div class="popup-insert-link__buttons">
+          <button class="btn-popup btn-cancel">Cancel</button>
+          <button class="btn-popup btn-apply">Apply</button>
+        </div>
+      </div>
     </div>
 
     <!-- NOTE CONTENT -->
-    <div class="task-card__note-content">{%NOTE_CONTENT%}</div>
+    <div class="note__content">{%NOTE_CONTENT%}</div>
     <!-- EDITOR -->
-    <div id="note-editor" class="note-editor hidden"></div>
+    <div id="note__editor" class="note__editor hidden"></div>
     <!-- </div> -->
   </div>
 </div>

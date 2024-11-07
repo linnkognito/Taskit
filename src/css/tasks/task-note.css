@@ -4,7 +4,7 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-.task-card__note {
+.note {
   width: 100%;
   min-width: 50%;
   margin: 1em 0;
@@ -13,13 +13,13 @@
   border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
 }
-.task-card__note .task-card__note-header {
+.note .note__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 0.3em;
 }
-.task-card__note .task-card__note-header .task-card__note-title {
+.note .note__header .note__title {
   margin-bottom: 0.1em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
@@ -27,7 +27,7 @@
   letter-spacing: 0.05em;
   color: white;
 }
-.task-card__note .task-card__note-header .task-card__note-input-title {
+.note .note__header .note__input-title {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
@@ -39,19 +39,19 @@
   border-radius: 0.9em;
   outline: none;
 }
-.task-card__note .task-card__note-header .task-card__note-input-title::placeholder {
+.note .note__header .note__input-title::placeholder {
   color: rgb(213, 207, 204);
 }
-.task-card__note .task-card__note-header .task-card__note-input-title:focus::placeholder {
+.note .note__header .note__input-title:focus::placeholder {
   color: rgba(213, 207, 204, 0.5);
 }
-.task-card__note .task-card__note-header .task-card__note-buttons {
+.note .note__header .note__buttons {
   display: flex;
   gap: 0.3em;
   display: flex;
   gap: 0.3em;
 }
-.task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn {
+.note .note__header .note__buttons .note__btn {
   width: 2em;
   height: 2em;
   padding: 0.13em 0.06em;
@@ -61,16 +61,16 @@
   cursor: pointer;
   transition: transform 0.2s ease-in;
 }
-.task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn:hover {
+.note .note__header .note__buttons .note__btn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 2px white;
   cursor: pointer;
 }
-.task-card__note .task-card__note-header .task-card__note-buttons .task-card__btn--icon {
+.note .note__header .note__buttons .note__btn--icon {
   width: 100%;
   height: 100%;
 }
-.task-card__note .task-card__note-body {
+.note .note__body {
   padding: 0.5em 1em;
   font-size: 1rem;
   letter-spacing: 0.02em;
@@ -79,97 +79,43 @@
   border: 1px solid rgba(213, 207, 204, 0.5);
   border-radius: 0.9em;
 }
-.task-card__note .task-card__note-body .ql-editor {
-  height: 100%;
-  outline: none;
-}
-.task-card__note .task-card__note-body .ql-editor .ql-editor--link {
-  color: rgb(213, 207, 204);
-}
-.task-card__note .task-card__note-body .ql-editor .ql-editor--link:hover {
-  color: white;
-  background: rgb(213, 207, 204);
-}
-
-.task-form__note {
-  width: 100%;
-  min-width: 50%;
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  background: rgba(213, 207, 204, 0.5);
-  border: 1px solid rgba(213, 207, 204, 0.5);
-  border-radius: 0.9em;
+.note .note__body .note__formatting-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0.3em;
   min-width: fit-content;
+  margin: 0.2em 0 0.3em 0;
+  padding: 0.3em 0.3em;
+  background: rgba(213, 207, 204, 0.5);
+  border-radius: 0.5em;
 }
-.task-form__note .task-form__note-header {
+.note .note__body .note__formatting-buttons .btn-formatting {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding-bottom: 0.3em;
-}
-.task-form__note .task-form__note-header .task-form__note-input-title {
-  width: 100%;
-  margin-right: 0.4em;
-  padding: 0.1em 0.5em;
-  font-size: 1.35rem;
-  font-family: "Urbanist", sans-serif;
-  color: rgb(158, 158, 158);
-  letter-spacing: 0.05em;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.1em 0.6em;
+  background: rgb(213, 207, 204);
+  transition: transform 0.2s ease-in;
   border: none;
   border-radius: 0.9em;
-  outline: none;
-  margin-bottom: 0.1em;
-  border: none;
-}
-.task-form__note .task-form__note-header .task-form__note-input-title::placeholder {
-  color: rgb(213, 207, 204);
-}
-.task-form__note .task-form__note-header .task-form__note-input-title:focus::placeholder {
-  color: rgba(213, 207, 204, 0.5);
-}
-.task-form__note .task-form__note-header .task-form__note-title {
-  margin-bottom: 0.1em;
-  padding: 0.1em 0.5em;
-  font-size: 1.25rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  color: white;
-}
-.task-form__note .task-form__note-header .task-form__note-buttons {
-  display: flex;
-  gap: 0.3em;
-}
-.task-form__note .task-form__note-header .task-form__note-buttons .task-form__btn {
-  width: 2em;
-  height: 2em;
-  padding: 0.13em 0.06em;
-  background: none;
-  border: 1px solid white;
   border-radius: 0.5em;
-  cursor: pointer;
-  transition: transform 0.2s ease-in;
+  width: 1.8em;
+  height: 1.8em;
 }
-.task-form__note .task-form__note-header .task-form__note-buttons .task-form__btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 2px white;
-  cursor: pointer;
-}
-.task-form__note .task-form__note-header .task-form__note-buttons .task-form__btn--icon {
-  width: 100%;
+.note .note__body .note__formatting-buttons .btn-formatting .btn-formatting--icon {
   height: 100%;
 }
-.task-form__note .task-form__note-body {
-  padding: 0.5em 1em;
-  font-size: 1rem;
-  letter-spacing: 0.02em;
-  color: rgb(165, 160, 158);
-  background: white;
-  border: 1px solid rgba(213, 207, 204, 0.5);
-  border-radius: 0.9em;
-  position: relative;
-  font-size: 1rem;
+.note .note__body .note__formatting-buttons .btn-formatting:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+  background: rgba(165, 160, 158, 0.6);
 }
-.task-form__note .task-form__note-body .popup-insert-link {
+.note .note__body .note__formatting-buttons .btn-formatting--active {
+  background: rgb(165, 160, 158);
+}
+.note .note__body .popup-insert-link {
   height: fit-content;
   background: white;
   border: none;
@@ -185,10 +131,10 @@
   box-shadow: 0 0 0.5em rgb(165, 160, 158);
   z-index: 10000;
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__label {
+.note .note__body .popup-insert-link .popup-insert-link__label {
   margin-left: 0.6em;
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__input {
+.note .note__body .popup-insert-link .popup-insert-link__input {
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
@@ -204,34 +150,34 @@
   outline: none;
   border: 1px solid rgb(213, 207, 204);
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__input:focus {
+.note .note__body .popup-insert-link .popup-insert-link__input:focus {
   box-shadow: 0 0 0.1em rgb(165, 160, 158);
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__buttons {
+.note .note__body .popup-insert-link .popup-insert-link__buttons {
   display: flex;
   justify-content: end;
   gap: 0.2em;
   padding: 0.3em 0.5em 0 0;
   width: 100%;
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__buttons .btn-popup {
+.note .note__body .popup-insert-link .popup-insert-link__buttons .btn-popup {
   padding: 0 0.5em;
   font-size: 0.8rem;
   background: rgba(213, 207, 204, 0.7);
   border: none;
   border-radius: 0.9em;
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__buttons .btn-apply:hover {
+.note .note__body .popup-insert-link .popup-insert-link__buttons .btn-apply:hover {
   background: rgb(215, 232, 221);
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__buttons .btn-cancel:hover {
+.note .note__body .popup-insert-link .popup-insert-link__buttons .btn-cancel:hover {
   background: rgb(232, 214, 214);
 }
-.task-form__note .task-form__note-body .popup-insert-link .popup-insert-link__buttons .btn-popup:hover {
+.note .note__body .popup-insert-link .popup-insert-link__buttons .btn-popup:hover {
   transform: scale(1.02);
   cursor: pointer;
 }
-.task-form__note .task-form__note-body .note-editor {
+.note .note__body .note-editor {
   width: 100%;
   min-height: 5em;
   max-height: 10em;
@@ -244,62 +190,21 @@
   cursor: text;
   overflow-y: auto;
 }
-.task-form__note .task-form__note-body .note-editor:focus {
+.note .note__body .note-editor:focus {
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(165, 160, 158);
   outline: none;
 }
-.task-form__note .task-form__note-body .ql-editor {
+.note .note__body .ql-editor {
   height: 100%;
   outline: none;
 }
-.task-form__note .task-form__note-body .ql-editor .ql-editor--link {
+.note .note__body .ql-editor .ql-editor--link {
   color: rgb(213, 207, 204);
 }
-.task-form__note .task-form__note-body .ql-editor .ql-editor--link:hover {
+.note .note__body .ql-editor .ql-editor--link:hover {
   color: white;
   background: rgb(213, 207, 204);
-}
-
-.task-form__note--active {
-  box-shadow: 0 0 5px rgb(165, 160, 158);
-}
-
-.note-body__formatting-buttons {
-  display: flex;
-  justify-content: space-evenly;
-  gap: 0.3em;
-  min-width: fit-content;
-  margin: 0.2em 0 0.3em 0;
-  padding: 0.3em 0.3em;
-  background: rgba(213, 207, 204, 0.5);
-  border-radius: 0.5em;
-}
-.note-body__formatting-buttons .btn-formatting {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 1.5em;
-  height: 1.5em;
-  padding: 0.1em 0.6em;
-  background: rgb(213, 207, 204);
-  transition: transform 0.2s ease-in;
-  border: none;
-  border-radius: 0.9em;
-  border-radius: 0.5em;
-  width: 1.8em;
-  height: 1.8em;
-}
-.note-body__formatting-buttons .btn-formatting .btn-formatting--icon {
-  height: 100%;
-}
-.note-body__formatting-buttons .btn-formatting:hover {
-  transform: scale(1.03);
-  cursor: pointer;
-  background: rgba(165, 160, 158, 0.6);
-}
-.note-body__formatting-buttons .btn-formatting--active {
-  background: rgb(165, 160, 158);
 }
 
 /*# sourceMappingURL=task-note.css.map */

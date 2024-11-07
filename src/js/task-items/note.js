@@ -126,16 +126,16 @@ export class Note extends TaskItem {
     return document.querySelector('.ql-editor');
   }
   get editorContainer() {
-    return document.querySelector('.note-editor');
+    return document.querySelector('.note__editor');
   }
   get noteContent() {
-    return this.noteEl.querySelector('.task-card__note-content');
+    return this.noteEl.querySelector('.note__content');
   }
   get linkInput() {
     return this.popupLink.querySelector('.popup-insert-link__input');
   }
   get toolbar() {
-    return document.querySelector('.note-body__formatting-buttons');
+    return document.querySelector('.note__formatting-buttons');
   }
   get buttons() {
     return this.toolbar.querySelectorAll('.btn-formatting');
