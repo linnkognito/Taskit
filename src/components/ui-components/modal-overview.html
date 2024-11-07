@@ -6,21 +6,21 @@
 
       <!-- STATS -->
       <div class="overview-stats">
-        <div class="overview-stats__li">
+        <div class="overview-stats__li overview-stats__li--tasks">
           <img src="../../../public/icons/task.png" alt="Task icon" class="overview-stats__li-icon" />
           <div class="overview-stats__li-desc">
             <span class="overview-stats__li-counter">{%OVERVIEW_TASKS_LENGTH%}</span>
             Tasks
           </div>
         </div>
-        <div class="overview-stats__li">
+        <div class="overview-stats__li overview-stats__li--checklists">
           <img src="../../../public/icons/checklist.png" alt="Checklist icon" class="overview-stats__li-icon" />
           <div class="overview-stats__li-desc">
             <span class="overview-stats__li-counter">{%OVERVIEW_CHECKLISTS_LENGTH%}</span>
             Checklists
           </div>
         </div>
-        <div class="overview-stats__li">
+        <div class="overview-stats__li overview-stats__li--notes">
           <img src="../../../public/icons/note.png" alt="Note icon" class="overview-stats__li-icon" />
           <div class="overview-stats__li-desc">
             <span class="overview-stats__li-counter">{%OVERVIEW_NOTES_LENGTH%}</span>
@@ -43,7 +43,7 @@
 
       <!-- TASK CONTAINER -->
       <div class="overview-body">
-        <div class="overview-tasks-container">{%OVERVIEW_TASKS%}</div>
+        <div class="overview-items-container">{%OVERVIEW_TASKS%}</div>
       </div>
     </div>
   </div>

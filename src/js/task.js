@@ -259,6 +259,7 @@ export class Task {
     // Create item instance
     const newItem = item.createInstance(this.generateId(), this);
     item.array(this).push(newItem);
+    // app.items.push(newItem);
 
     // Render
     this.insertMarkup(this.itemsContainer, 'afterbegin', newItem.renderItemMarkup());

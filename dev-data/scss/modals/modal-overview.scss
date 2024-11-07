@@ -52,6 +52,10 @@
         &:hover {
           transform: scale(1.05);
         }
+        &:active {
+          box-shadow: -1px 1px 7px white;
+          transform: scale(1.07);
+        }
         .overview-stats__li-icon {
           width: 1.5em;
         }
@@ -100,21 +104,36 @@
         box-shadow: vars.$box-glow;
         overflow-y: auto;
 
-        .overview-tasks-container {
+        // ITEMS CONTAINER //
+        .overview-items-container {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          column-gap: 1em;
+          gap: 1em;
 
           // TASK SNIPPET //
           .task-snippet {
+            position: relative;
             height: fit-content;
+            margin: 0;
             background: none;
-            transition: transform 0.15s ease;
+            transition: box-shadow 0.2s ease;
 
-            &:hover {
-              box-shadow: 0 0 5px vars.$col-primary-dark-op;
-              border: none;
-              transform: scale(1.02);
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              border-radius: inherit;
+              box-shadow: 0 0 10px vars.$col-primary-dark;
+              opacity: 0;
+              transition: opacity 0.2s ease;
+              pointer-events: none;
+            }
+
+            &:hover::before {
+              opacity: 1;
             }
 
             // HEADER //
@@ -167,6 +186,7 @@
                     flex: 0 1 auto;
                     gap: 0.5em;
                     width: 100%;
+                    padding: 0.1em;
 
                     .task-data__counter {
                       display: flex;
@@ -290,7 +310,32 @@
               }
             } // [X] END OF FOOTER [X]
           } // [X] END OF TASK SNIPPET [X]
-        } // [X] END OF TASKS CONTAINER [X]
+
+          // CHECKLIST SNIPPET //
+          .checklist {
+            height: fit-content;
+            margin: 0;
+            background: vars.$col-overview-bg;
+            box-shadow: 0 0 5px vars.$col-primary-dark;
+
+            .checklist__body--checked-wrapper,
+            .btn-add-li {
+              display: none;
+            }
+
+            .checklist__body {
+              height: 100%;
+            }
+          }
+
+          // NOTE SNIPPET //
+          .note {
+            height: fit-content;
+            margin: 0;
+            background: vars.$col-overview-bg;
+            box-shadow: 0 0 5px vars.$col-primary-dark;
+          }
+        } // [X] END OF ITEMS CONTAINER [X]
       } // [X] END OF OVERVIEW BODY [X]
     } // [X] END OF OVERVIEW BODY WRAPPER [X]
   } // [X] END OF OVERVIEW CONTENT [X]

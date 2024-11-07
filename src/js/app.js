@@ -13,6 +13,7 @@ import taskFormMarkup from '../components/tasks/forms/task_form.html';
 
 //////////////_______________A P P  C L A S S _______________//////////////
 export class App {
+  clear = helper.clear;
   generateId = helper.generateId;
   hideAndShowEls = helper.hideAndShowEls;
   addClass = helper.addClass;
@@ -69,11 +70,17 @@ export class App {
     const actionMap = {
       'task-data__project-name': (el) => this.previewProject(el),
       'btn-edit-task': (el) => this.openTaskForm(el),
+      'btn-delete-task': (el, cls) => this.deleteSnippet(el, cls),
+      'btn-delete-checklist': (el, cls) => this.deleteSnippet(el, cls),
+
+      'overview-stats__li--tasks': (el, cls) => this.displaySnippets(el, cls),
+      'overview-stats__li--checklists': (el, cls) => this.displaySnippets(el, cls),
+      'overview-stats__li--notes': (el, cls) => this.displaySnippets(el, cls),
     };
 
     Object.keys(actionMap).forEach((cls) => {
       const el = e.target.closest(`.${cls}`);
-      if (el) actionMap[cls](el);
+      if (el) actionMap[cls](el, cls);
     });
   }
   initEditModeListeners(task) {
@@ -122,6 +129,9 @@ export class App {
   get modalBase() {
     return document.querySelector('.modal-base');
   }
+  get overviewItemsContainer() {
+    return this.modalOverview.querySelector('.overview-items-container');
+  }
 
   //#endregion
 
@@ -168,6 +178,7 @@ export class App {
         () => {
           // Remove modal
           if (this.modal) this.modal.remove();
+          this.renderProjectCards();
 
           // Clear reference & remove Esc listener to avoid bugs
           //document.removeEventListener('keydown', this._handleEscClose);
@@ -175,6 +186,36 @@ export class App {
         { once: true }
       );
     }
+  }
+  renderProjectCards() {
+    this.projectsArr.forEach((p) => {
+      p.renderTaskCards();
+    });
+  }
+  displaySnippets(el, cls) {
+    this.clear(this.overviewItemsContainer);
+
+    const itemType = cls.split('--')[1];
+    const arr = this.getAllItemsOf(itemType);
+    let markup = '';
+
+    if (itemType === 'tasks') {
+      arr.forEach((task) => (markup += this.populateTaskSnippetMarkup(task)));
+      return this.renderSnippets(markup);
+    }
+
+    if (itemType === 'checklists') {
+      arr.forEach((cl) => (markup += cl.renderItemMarkup()));
+      return this.renderSnippets(markup);
+    }
+
+    if (itemType === 'notes') {
+      arr.forEach((note) => (markup += note.renderItemMarkup()));
+      return this.renderSnippets(markup);
+    }
+  }
+  renderSnippets(markup) {
+    this.insertMarkupAdj(this.overviewItemsContainer, 'afterbegin', markup);
   }
 
   //___M O D A L_____________________________________________________//
@@ -226,13 +267,31 @@ export class App {
   populateBaseModalMarkup(markup) {
     return baseModalMarkup.replace('{%MODAL_CONTENT%}', markup);
   }
+  deleteSnippet(el, cls) {
+    const itemType = cls.split('-').pop();
+    const itemEl = el.closest(`.${itemType}`);
+
+    if (!itemEl) return;
+
+    const itemsArr = this.getAllItemsOf(itemType);
+
+    if (itemType === 'tasks') {
+      const task = this.getTask(el);
+      if (task) task.deleteTask();
+    } else {
+      const taskItem = itemsArr.find((ti) => ti.id === itemEl.dataset.id);
+      if (taskItem) taskItem.deleteItem(el, itemType);
+    }
+
+    itemEl.remove();
+  }
 
   //___M O D A L :  F O R M__________________________________________//
   openTaskForm(el) {
     // Avoid duplicate modals
     if (this.modalBase) this.modalBase.remove();
 
-    const task = this.getTaskById(el.closest('.task-snippet').dataset.id);
+    const task = this.getTask(el);
 
     const markup = this.populateBaseModalMarkup(taskFormMarkup);
     this.insertMarkupAdj(this.body, 'afterbegin', markup);
@@ -284,13 +343,18 @@ export class App {
 
     return { tasks, checklists, notes };
   }
-  getTaskById(id) {
+  getTask(el) {
     for (const project of this.projectsArr) {
-      const task = project.tasks.find((t) => t.id === id);
+      const task = project.tasks.find((t) => t.id === el.closest('.task-snippet').dataset.id);
       if (task) return task;
     }
 
     return null;
+  }
+  getAllItemsOf(itemType) {
+    // prettier-ignore
+    return this.projectsArr.flatMap((p) =>
+      itemType === 'tasks' ? p.tasks : p.tasks.flatMap((t) => t[itemType]));
   }
 
   //////////////__________L O C A L  S T O R A G E_________//////////////
