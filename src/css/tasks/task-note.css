@@ -21,6 +21,7 @@
 }
 .note .note__header .note__title {
   margin-bottom: 0.1em;
+  margin-right: 0.4em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-weight: 500;
@@ -31,13 +32,14 @@
   width: 100%;
   margin-right: 0.4em;
   padding: 0.1em 0.5em;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-family: "Urbanist", sans-serif;
   color: rgb(158, 158, 158);
   letter-spacing: 0.05em;
   border: none;
   border-radius: 0.9em;
   outline: none;
+  margin-bottom: 0.1em;
 }
 .note .note__header .note__input-title::placeholder {
   color: rgb(213, 207, 204);
@@ -71,7 +73,7 @@
   height: 100%;
 }
 .note .note__body {
-  padding: 0.5em 1em;
+  padding: 0.5em;
   font-size: 1rem;
   letter-spacing: 0.02em;
   color: rgb(165, 160, 158);
@@ -80,6 +82,7 @@
   border-radius: 0.9em;
 }
 .note .note__body .note__formatting-buttons {
+  position: relative;
   display: flex;
   justify-content: space-evenly;
   gap: 0.3em;
@@ -120,10 +123,10 @@
   background: white;
   border: none;
   border-radius: 0.9em;
+  position: absolute;
   display: flex;
   flex-direction: column;
   gap: 0.3em;
-  position: absolute;
   width: 100%;
   min-width: fit-content;
   padding: 1em;
@@ -177,7 +180,7 @@
   transform: scale(1.02);
   cursor: pointer;
 }
-.note .note__body .note-editor {
+.note .note__body .note__editor {
   width: 100%;
   min-height: 5em;
   max-height: 10em;
@@ -190,7 +193,7 @@
   cursor: text;
   overflow-y: auto;
 }
-.note .note__body .note-editor:focus {
+.note .note__body .note__editor:focus {
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(165, 160, 158);
   outline: none;

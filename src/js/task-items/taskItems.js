@@ -72,7 +72,4 @@ export class TaskItem {
     // Update local storage data
     this.task.project.saveProjectState();
   }
-  editItem() {
-    //PLACEHOLDER
-  }
 }

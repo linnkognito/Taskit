@@ -12,7 +12,7 @@
 
     .checklist__title {
       @include mixins.item-title;
-      margin-right: 0.4em;
+      // margin-right: 0.4em;
     }
     .checklist__input-title {
       @include mixins.input-text(vars.$col-secondary, 1.25em);

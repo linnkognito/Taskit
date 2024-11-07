@@ -39,72 +39,94 @@ export class Note extends TaskItem {
     });
   }
   initListeners() {
-    // Click on note editor area
     this.editorContainer.addEventListener('click', () => this.focusTextCursor());
 
-    this.btnLink.addEventListener('mouseenter', () => {
-      this.toggleLinkIcon();
-    });
-    this.toolbar.addEventListener('click', (e) => {
-      const btn = e.target.closest('.btn-formatting');
-      if (!btn) return;
-      this.formatText(btn);
-    });
-    if (this.popupLink)
-      this.popupLink.addEventListener('click', (e) => {
-        const apply = e.target.closest('.btn-apply');
-        const cancel = e.target.closest('.btn-cancel');
-        if (!apply && !cancel) return;
+    this.toolbar.addEventListener('click', (e) => this.handleToolbarClick(e));
 
-        if (apply) return this.formatLink();
-        if (cancel) return this.hideElement(this.popupLink);
-      });
+    this.btnLink.addEventListener('mouseenter', () => this.toggleLinkIcon());
 
-    document.addEventListener('focusout', (e) => {
-      if (this.editAllMode) return;
+    this.noteEl.addEventListener('click', (e) => this.handleClick(e));
 
-      const input = e.target.closest('.title-input');
-      const note = e.target.closest('.ql-editor');
-
-      // if (input) return this.saveTitle(e.target);
-      if (note) return this.saveNote(e.target);
+    this.noteBody.addEventListener('focusout', () => {
+      if (!this.hasClass(this.editor, 'hidden')) this.saveNote();
     });
     // HEADER BTNS CLICKED
-    this.noteEl.addEventListener('click', (e) => {
-      // ENTER EDIT ALL MODE
-      if (e.target.closest('.btn-edit-note')) {
-        this.editAllMode = true;
-        this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
-        this.editAll([
-          { el: this.titleEl, type: 'title' },
-          { el: this.noteContent, type: 'note' },
-        ]);
-      }
+    // this.noteEl.addEventListener('click', (e) => {
+    //   // ENTER EDIT ALL MODE
+    //   if (e.target.closest('.btn-edit-note')) {
+    //     this.editAllMode = true;
+    //     this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
+    //     this.editAll([
+    //       { el: this.titleEl, type: 'title' },
+    //       { el: this.noteContent, type: 'note' },
+    //     ]);
+    //   }
 
-      // SAVE & EXIT EDIT ALL MODE
-      if (e.target.closest('.btn-save-edits')) {
-        // this.saveTitle(this.titleEl);
-        this.saveNote(this.editor);
-        this.editAllMode = false;
-        this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
-      }
+    //   // SAVE & EXIT EDIT ALL MODE
+    //   if (e.target.closest('.btn-save-edits')) {
+    //     // this.saveTitle(this.titleEl);
+    //     this.saveNote(this.editor);
+    //     this.editAllMode = false;
+    //     this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
+    //   }
 
-      // CANCEL EDIT ALL MODE
-      if (e.target.closest('.btn-cancel-edits')) {
-        const userConfirmed = confirm('Cancel editing? All unsaved changes will be lost.');
-        if (userConfirmed) {
-          this.editAllMode = false;
-          this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
-          this.hideAndShowEls(this.titleEl, this.titleEl);
-          this.hideAndShowEls(this.editorContainer, this.noteContent);
-          this.hideElement(this.toolbar);
-        }
-      }
+    //   // CANCEL EDIT ALL MODE
+    //   if (e.target.closest('.btn-cancel-edits')) {
+    //     const userConfirmed = confirm('Cancel editing? All unsaved changes will be lost.');
+    //     if (userConfirmed) {
+    //       this.editAllMode = false;
+    //       this.toggleEditModeBtns(this.noteEl, '.task-card__btn');
+    //       this.hideAndShowEls(this.titleEl, this.titleEl);
+    //       this.hideAndShowEls(this.editorContainer, this.noteContent);
+    //       this.hideElement(this.toolbar);
+    //     }
+    //   }
+    // });
+  }
+  handleClick(e) {
+    const actionMap = {
+      note__content: () => this.editNote(),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls]();
     });
-    // EDIT SINGLE ELEMENT
-    this.noteEl.addEventListener('click', (e) => {
-      // NOTE CLICKED
-      if (e.target.closest('.task-card__note-content')) return this.editElement(e.target.closest('.task-card__note-content'), 'note');
+  }
+  handleToolbarClick(e) {
+    const btn = e.target.closest('.btn-formatting');
+    if (!btn) return;
+
+    const textFormatClasses = ['btn-bold', 'btn-italic', 'btn-underline', 'btn-strikethrough'];
+
+    const actionMap = {
+      'btn-link': () => this.toggleLinkFormatting(),
+      formatting: () => this.formatText(btn),
+    };
+
+    // Clicked Link button
+    if (this.hasClass(btn, 'btn-link')) {
+      return actionMap['btn-link']();
+    }
+
+    // Clicked any other button
+    if (textFormatClasses.some((cls) => this.hasClass(btn, cls))) {
+      actionMap['formatting']();
+    }
+  }
+  initPopupListeners() {
+    if (!this.popupLink) return;
+    this.popupLink.addEventListener('click', (e) => this.handlePopupClick(e));
+  }
+  handlePopupClick(e) {
+    const actionMap = {
+      'btn-apply': () => this.formatLink(),
+      'btn-cancel': () => this.hideElement(this.popupLink),
+    };
+
+    Object.keys(actionMap).forEach((cls) => {
+      const el = e.target.closest(`.${cls}`);
+      if (el) actionMap[cls]();
     });
   }
 
@@ -122,6 +144,9 @@ export class Note extends TaskItem {
   get noteHeaderBtns() {
     return this.noteEl.querySelectorAll('.task-card__btn');
   }
+  get noteBody() {
+    return this.noteEl.querySelector('.note__body');
+  }
   get editor() {
     return document.querySelector('.ql-editor');
   }
@@ -135,7 +160,7 @@ export class Note extends TaskItem {
     return this.popupLink.querySelector('.popup-insert-link__input');
   }
   get toolbar() {
-    return document.querySelector('.note__formatting-buttons');
+    return this.noteEl.querySelector('.note__formatting-buttons');
   }
   get buttons() {
     return this.toolbar.querySelectorAll('.btn-formatting');
@@ -152,27 +177,23 @@ export class Note extends TaskItem {
 
   editAll(elements) {
     elements.forEach((el) => {
-      this.editElement(el.el, el.type);
+      this.editNote(el.el, el.type);
     });
   }
-  editElement(el, type) {
-    let input = el.nextElementSibling;
-    this.hideAndShowEls(el, input);
+  editNote() {
+    this.hideAndShowEls(this.noteContent, this.editorContainer);
+    this.showElement(this.toolbar);
 
-    if (type === 'note') {
-      this.showElement(this.toolbar);
+    // Reinitialize Quill
+    this.quill = new Quill(this.editorContainer, {
+      theme: null,
+    });
 
-      // Reinitialize Quill
-      this.quill = new Quill(this.noteEl.querySelector('.note-editor'), {
-        theme: null,
-      });
+    // Clear & populate editor
+    this.clearClipboard();
+    this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
 
-      // Clear & populate editor
-      this.clearClipboard();
-      this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
-    }
-
-    input.focus();
+    this.editor.focus();
   }
   renderItemMarkup() {
     // prettier-ignore
@@ -181,20 +202,13 @@ export class Note extends TaskItem {
       .replace('{%NOTE_TITLE%}', this.title)
       .replace('{%NOTE_CONTENT%}', this.note);
   }
-  saveNote(noteInput) {
-    // Grab note value
-    const content = this.quill.root.innerHTML;
-
-    // Update note property to new value
-    this.note = content;
-
-    // Insert new value
+  saveNote() {
+    this.note = this.quill.root.innerHTML;
     if (this.noteContent) this.noteContent.innerHTML = this.note;
 
-    //if (e.target.closest('.task-card__note')) {
-    if (noteInput.closest('.task-card__note')) {
+    if (this.noteEl) {
       this.hideElement(this.toolbar);
-      this.hideAndShowEls(this.editor, this.noteContent);
+      this.hideAndShowEls(this.editorContainer, this.noteContent);
     }
   }
 
@@ -252,18 +266,6 @@ export class Note extends TaskItem {
     const current = this.quill.getFormat(selection);
     const isApplied = current[type];
 
-    // Link formatting
-    if (type === 'link') {
-      // Toggle off if link already exists
-      const url = current.link;
-      if (url) return this.quill.format('link', false);
-
-      // Open popup
-      this.showElement(this.popupLink);
-      this.linkInput.focus();
-      return;
-    }
-
     // Text formatting
     this.quill.format(type, !isApplied);
     this.toggleFormatBtn(btn, !isApplied);
@@ -287,9 +289,26 @@ export class Note extends TaskItem {
     const length = this.quill.getLength();
     this.quill.setSelection(length, length);
   }
+  toggleLinkFormatting() {
+    //if (!this.popupLink || this.btnLink) return;
+
+    // Toggle off if link already exists
+    const url = current.link;
+    if (url) return this.quill.format('link', false);
+
+    // Open popup
+    this.showElement(this.popupLink);
+    this.linkInput.focus();
+
+    // Positioning
+    const btnRect = this.btnLink.getBoundingClientRect();
+    this.popupLink.style.top = `${btnRect.bottom}px`;
+    this.popupLink.style.left = `${btnRect.right}px`;
+
+    this.initPopupListeners();
+  }
 
   //////////////________________H E L P E R S________________//////////////
-
   toggleFormatBtn(btn, bool) {
     return btn.classList.toggle('btn-formatting--active', bool);
   }
@@ -301,6 +320,12 @@ export class Note extends TaskItem {
     }
     if (!this.editAllMode) {
       buttons.forEach((btn) => (this.hasClass(btn, 'edit-all-mode') ? this.hideElement(btn) : this.showElement(btn)));
+    }
+  }
+  hideEditor() {
+    if (!this.hasClass(this.editor, 'hidden')) {
+      this.hideAndShowEls(this.editorContainer, this.noteContent);
+      this.hideElement(this.toolbar);
     }
   }
   isLink() {

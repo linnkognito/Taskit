@@ -21,12 +21,12 @@
 }
 .checklist .checklist__header .checklist__title {
   margin-bottom: 0.1em;
+  margin-right: 0.4em;
   padding: 0.1em 0.5em;
   font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0.05em;
   color: white;
-  margin-right: 0.4em;
 }
 .checklist .checklist__header .checklist__input-title {
   width: 100%;

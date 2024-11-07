@@ -1,0 +1,65 @@
+<div class="task-card" data-id="{%TASKCARD_ID%}">
+  <!-- HEADER -->
+  <div class="task-card__header">
+    <div class="task-card__title-wrapper">
+      <img src="../../../public/icons/checkbox-blank.png" alt="Blank checkbox" class="checkbox" />
+      <div class="title task-card__title">{%TASKCARD_TITLE%}</div>
+    </div>
+    <div class="task-card__buttons">
+      <button class="task-card__btn btn-edit-task">
+        <img src="../../../public/icons/edit.png" alt="Edit task" title="Edit task" class="task-card__btn--icon" />
+      </button>
+      <button class="task-card__btn btn-delete">
+        <img src="../../../public/icons/delete.png" alt="Delete task" title="Delete task" class="task-card__btn--icon" />
+      </button>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="task-card__body">
+    <!-- PREVIEW / BODY TOP -->
+    <div class="task-card__body-top">
+      <!-- DESCRIPTION (BODY TOP) -->
+      <div class="task-card__description">{%TASKCARD_DESCRIPTION%}</div>
+
+      <!-- DUE DATE (BODY TOP) -->
+      <div class="btn-due-date hidden">
+        <img src="../../../public/icons/calendar.png" title="Add due date (optional)" alt="Due date button" class="icon-calendar" />
+      </div>
+
+      <div class="due-date">
+        <span class="due-date--small-top"></span>
+        <span class="due-date--big"></span>
+        <span class="due-date--small-bottom"></span>
+      </div>
+    </div>
+
+    <!-- ADD ITEM BUTTONS -->
+    <div class="task-card__add-item-buttons">
+      <button class="btn-add-item btn-add-checklist" data-item="checklist">Add checklist</button>
+      <button class="btn-add-item btn-add-note" data-item="note">Add note</button>
+    </div>
+
+    <!-- SORT ITEMS BUTTON -->
+    <div class="task-card__sort-items hidden">
+      <div class="sort-items-label">Sort by:</div>
+      <button class="btn-active-selection">
+        <span class="btn-active-selection--text">Creation date</span>
+        <img src="../../../public/icons/arrow-down--col-sec.png" alt="Expand dropdown arrow" class="icon-active-selection" />
+      </button>
+      <button class="btn-swap-sort-order" title="Swap sort order">
+        <img src="../../../public/icons/sort-swap.png" alt="Swap sort order" title="Swap sort order" class="icon-swap">
+      </button>
+    </div>
+
+      <!-- ITEMS (BODY) -->
+      <div class="task-card__container"></div>
+
+      <!-- FOOTER -->
+      <div class="task-card__footer">
+        <div class="task-card__creation-date">Created: {%TASKCARD_CREATED%}</div>
+        <img src="../../../public/icons/arrow-dropdown.png" alt="Expand button" class="expand-btn" />
+      </div>
+    </div>
+  </div>
+</div>

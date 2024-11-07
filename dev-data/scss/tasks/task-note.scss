@@ -1,8 +1,7 @@
-////////_________N O T E  S T Y L E S_________////////
-
 @use '../utilities/mixins';
 @use '../utilities/vars';
 
+////////_________N O T E  S T Y L E S_________////////
 .note {
   @include mixins.item;
 
@@ -17,7 +16,8 @@
 
     //__I N P U T  T I T L E______________________//
     .note__input-title {
-      @include mixins.input-text;
+      @include mixins.input-text($fs: 1.25rem);
+      margin-bottom: 0.1em;
 
       &::placeholder {
         @include mixins.input-text-placeholder;
@@ -37,10 +37,11 @@
 
   ///////______________B O D Y_______________///////
   .note__body {
-    @include mixins.item-body;
+    @include mixins.item-body($pad: 0.5em);
 
     //__B U T T O N S :  F O R M A T T I N G______//
     .note__formatting-buttons {
+      position: relative;
       display: flex;
       justify-content: space-evenly;
       gap: 0.3em;
@@ -71,10 +72,10 @@
     //__P O P U P :  L I N K______________________//
     .popup-insert-link {
       @include mixins.modal-container;
+      position: absolute;
       display: flex;
       flex-direction: column;
       gap: 0.3em;
-      position: absolute;
       width: 100%;
       min-width: fit-content;
       padding: 1em;
@@ -125,7 +126,7 @@
     } //__________________________ POPUP LINK [x] _//
 
     //__E D I T O R_______________________________//
-    .note-editor {
+    .note__editor {
       width: 100%;
       min-height: 5em;
       max-height: 10em;
