@@ -73,9 +73,9 @@ export class App {
       'btn-delete-task': (el, cls) => this.deleteSnippet(el, cls),
       'btn-delete-checklist': (el, cls) => this.deleteSnippet(el, cls),
 
-      'overview-stats__li--tasks': (el, cls) => this.displaySnippets(el, cls),
-      'overview-stats__li--checklists': (el, cls) => this.displaySnippets(el, cls),
-      'overview-stats__li--notes': (el, cls) => this.displaySnippets(el, cls),
+      'overview-stats__li--tasks': (_, cls) => this.displaySnippets(cls),
+      'overview-stats__li--checklists': (_, cls) => this.displaySnippets(cls),
+      'overview-stats__li--notes': (_, cls) => this.displaySnippets(cls),
     };
 
     Object.keys(actionMap).forEach((cls) => {
@@ -192,7 +192,7 @@ export class App {
       p.renderTaskCards();
     });
   }
-  displaySnippets(el, cls) {
+  displaySnippets(cls) {
     this.clear(this.overviewItemsContainer);
 
     const itemType = cls.split('--')[1];
