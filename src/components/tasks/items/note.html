@@ -6,9 +6,6 @@
 
     <!-- BUTTONS (HEADER) -->
     <div class="note__buttons">
-      <button class="note__btn btn-edit-note">
-        <img src="../../../../public/icons/edit.png" alt="Edit note" title="Edit note" class="note__btn--icon" />
-      </button>
       <button class="note__btn btn-delete-note">
         <img src="../../../../public/icons/delete.png" alt="Delete note" title="Delete note" class="note__btn--icon" />
       </button>
@@ -24,7 +21,7 @@
   <!-- CONTENT -->
   <div class="note__body">
     <!-- FORMATTING BUTTONS -->
-    <div class="note__formatting-buttons">
+    <div class="note__formatting-buttons hidden">
       <button class="btn-formatting btn-bold">
         <img src="../../../../public/icons/bold.png" alt="Apply bold" title="Bold" class="btn-formatting--icon" />
       </button>
@@ -57,9 +54,9 @@
     </div>
 
     <!-- NOTE CONTENT -->
-    <div class="note__content hidden">{%NOTE_CONTENT%}</div>
+    <div class="note__content">{%NOTE_CONTENT%}</div>
     <!-- EDITOR -->
-    <div id="note__editor" class="note__editor"></div>
+    <div id="note__editor" class="note__editor hidden"></div>
     <!-- </div> -->
   </div>
 </div>

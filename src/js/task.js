@@ -278,15 +278,23 @@ export class Task {
     // Focus on the title input element
     if (this.hasClass(newItem.inputTitle, 'hidden')) {
       this.hideAndShowEls(newItem.titleEl, newItem.inputTitle);
-      newItem.inputTitle.focus();
     }
+    newItem.inputTitle.focus();
 
     // Show Sortbar (disabled in Form state)
     if (!this.taskForm) this.showElement(this.sortBar);
 
     // Initialize Item event listeners
     newItem.initListeners();
-    if (newItem instanceof Note) newItem.initQuill();
+
+    // If Note: initialize Quill & display editor
+    if (newItem instanceof Note) {
+      newItem.initQuill();
+
+      // Show editor
+      this.hideAndShowEls(newItem.noteContent, newItem.editorContainer);
+      this.showElement(newItem.toolbar);
+    }
 
     this.hasChanges = true;
     this.project.saveProjectState();
