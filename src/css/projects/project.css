@@ -185,13 +185,6 @@
   transition: transform 0.3s ease;
 }
 
-.scale-up-center {
-  transform-origin: center;
-  animation: scale-up-center 0.3s ease-out forwards;
-  transform: scale(0);
-  opacity: 0;
-}
-
 .settings-dropdown,
 .dropdown-project {
   position: absolute;

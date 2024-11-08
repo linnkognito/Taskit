@@ -173,14 +173,6 @@
   } // [X] END OF BODY [X] //
 } // [X] END OF PROJECT CARD [X] //
 
-// ANIMATION //
-.scale-up-center {
-  transform-origin: center;
-  animation: scale-up-center 0.3s ease-out forwards;
-  transform: scale(0);
-  opacity: 0;
-}
-
 // DROPDOWNS //
 .settings-dropdown,
 .dropdown-project {

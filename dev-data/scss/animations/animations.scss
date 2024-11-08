@@ -30,12 +30,24 @@
   0% {
     transform: scale(0);
     opacity: 0;
+    transform-origin: center;
   }
   100% {
     transform: scale(1);
     opacity: 1;
   }
 }
+.scale-up-center {
+  animation: scale-up-center 0.3s ease-out;
+  animation-fill-mode: none; // Preserves final state
+  opacity: 0; // Initial state
+}
+// .scale-up-center {
+//   transform-origin: center;
+//   animation: scale-up-center 0.3s ease-out forwards;
+//   transform: scale(0);
+//   opacity: 0;
+// }
 
 //___T O P_________________________________________________________//
 @keyframes scale-up-top {

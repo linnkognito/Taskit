@@ -1,27 +1,32 @@
 //////////////____________________N O T E____________________//////////////
 
+import { helper } from '../../index';
+import { TaskItem } from './taskItems';
 import Quill from 'quill';
 import './linkBlot';
+import itemMap from './itemMap';
 
 //////////////__________________M A R K U P__________________//////////////
 
-import { helper } from '../../index';
-import { TaskItem } from './taskItems';
 import noteMarkup from '../../components/tasks/items/note.html';
 
 //////////////_______________N O T E  C L A S S_______________//////////////
 
 export class Note extends TaskItem {
-  hideElement = helper.hideElement;
-  showElement = helper.showElement;
-  hideAndShowEls = helper.hideAndShowEls;
+  addClass = helper.addClass;
   hasClass = helper.hasClass;
+  removeClass = helper.removeClass;
+  showElement = helper.showElement;
+  hideElement = helper.hideElement;
+  hideAndShowEls = helper.hideAndShowEls;
+  scaleUp = helper.scaleUp;
+  scaleDown = helper.scaleDown;
+  clear = helper.clear;
 
   constructor(id, task) {
     super(id, task);
     this.title = '';
     this.note = '';
-    this.editAllMode = false;
     this.sortKey = 'Note';
 
     this.quill = null;
@@ -35,7 +40,7 @@ export class Note extends TaskItem {
     this.quill.on('text-change', () => this.updateToolbar());
   }
   initListeners() {
-    //this.editorContainer.addEventListener('click', () => this.focusTextCursor());
+    this.editorContainer.addEventListener('click', () => this.focusTextCursor());
 
     this.toolbar.addEventListener('click', (e) => this.handleToolbarClick(e));
 
@@ -102,10 +107,10 @@ export class Note extends TaskItem {
     return this.noteEl.querySelector('.note__body');
   }
   get editor() {
-    return document.querySelector('.ql-editor');
+    return this.noteEl.querySelector('.ql-editor');
   }
   get editorContainer() {
-    return document.querySelector('.note__editor');
+    return this.noteEl.querySelector('.note__editor');
   }
   get noteContent() {
     return this.noteEl.querySelector('.note__content');
@@ -136,27 +141,31 @@ export class Note extends TaskItem {
       .replace('{%NOTE_CONTENT%}', this.note);
   }
   saveNote() {
-    this.note = this.quill.root.innerHTML;
-    if (this.noteContent) this.noteContent.innerHTML = this.note;
+    this.note = this.quill.root.textContent.trim() ? this.quill.root.innerHTML : itemMap['note'].default;
 
-    if (this.noteEl) {
-      this.hideElement(this.toolbar);
-      this.hideAndShowEls(this.editorContainer, this.noteContent);
-    }
+    this.clear(this.noteContent);
+    this.noteContent.innerHTML = this.note;
+
+    this.hideElement(this.toolbar);
+    this.hideAndShowEls(this.editorContainer, this.noteContent);
 
     this.task.project.saveProjectState();
   }
   editNote() {
-    this.hideAndShowEls(this.noteContent, this.editorContainer);
     this.showElement(this.toolbar);
+    this.hideAndShowEls(this.noteContent, this.editorContainer);
 
     // Clear & populate editor
     this.clearClipboard();
-    this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
+    if (!this.isDefaultNote()) {
+      this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
+    }
 
-    //this.editor.focus();
-    this.quill.enable(true);
+    // this.quill.enable(true);
     this.quill.focus();
+  }
+  isDefaultNote() {
+    return this.note === itemMap['note'].default;
   }
 
   //___Q U I L L_____________________________________________________//
@@ -247,32 +256,11 @@ export class Note extends TaskItem {
       this.toggleFormatBtn(btn, !!isApplied);
     });
   }
-  // focusTextCursor() {
-  //   this.quill.focus();
-  //   const length = this.quill.getLength();
-  //   this.quill.setSelection(length, length);
-  // }
-  // toggleLinkFormatting() {
-  //   //if (!this.popupLink || this.btnLink) return;
-  //   const selection = this.quill.getSelection();
-  //   if (!selection) return;
-
-  //   // Toggle off if link already exists
-  //   const current = this.quill.getFormat(selection);
-  //   const url = current.link;
-  //   if (url) return this.quill.format('link', false);
-
-  //   // Open popup
-  //   this.showElement(this.popupLink);
-  //   this.linkInput.focus();
-
-  //   // Positioning
-  //   const btnRect = this.btnLink.getBoundingClientRect();
-  //   this.popupLink.style.top = `${btnRect.bottom}px`;
-  //   this.popupLink.style.left = `${btnRect.right}px`;
-
-  //   this.initPopupListeners();
-  // }
+  focusTextCursor() {
+    this.quill.focus();
+    const length = this.quill.getLength();
+    this.quill.setSelection(length, length);
+  }
 
   //////////////________________H E L P E R S________________//////////////
   toggleFormatBtn(btn, bool) {

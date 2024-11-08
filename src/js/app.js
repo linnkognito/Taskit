@@ -53,8 +53,8 @@ export class App {
   listenForClose() {
     // Click to close
     this.modal.addEventListener('click', (e) => {
-      if (this.hasClass(e.target, 'modal')) this.closeModal();
-      if (e.target.closest('.btn-close-modal')) this.closeModal();
+      if (this.hasClass(e.target, 'modal')) this.closeModal(e);
+      if (e.target.closest('.btn-close-modal')) this.closeModal(e);
     });
 
     // Esc to close
@@ -167,7 +167,7 @@ export class App {
     // Universal default sort
     // Colors
   }
-  closeModal() {
+  closeModal(e) {
     if (this.modal) {
       // Apply animation
       this.scaleDown(this.modal, 'center');
@@ -177,10 +177,21 @@ export class App {
         'animationend',
         () => {
           // Remove modal
-          if (this.modal) this.modal.remove();
-          this.renderProjectCards();
+
+          // If Overview Modal
+          if (e.target.closest('.modal-overview')) {
+            this.modal.remove();
+            this.renderProjectCards();
+          }
+
+          // If preview modal
+          if (e.target.closest('.modal-base')) {
+            this.modalBase.remove();
+            this.displaySnippets(false);
+          }
+
           // Clear reference & remove Esc listener to avoid bugs
-          //document.removeEventListener('keydown', this._handleEscClose);
+          document.removeEventListener('keydown', this._handleEscClose);
         },
         { once: true }
       );
@@ -195,12 +206,13 @@ export class App {
   displaySnippets(cls) {
     this.clear(this.overviewItemsContainer);
 
-    const itemType = cls.split('--')[1];
-    const arr = this.getAllItemsOf(itemType);
+    const itemType = cls ? cls.split('--')[1] : false;
+    // If itemType is false, get Tasks as default
+    const arr = this.getAllItemsOf(itemType || 'tasks');
 
     let markup = '';
 
-    if (itemType === 'tasks') {
+    if (!itemType || itemType === 'tasks') {
       arr.forEach((task) => (markup += this.populateTaskSnippetMarkup(task)));
       return this.renderSnippets(markup);
     }

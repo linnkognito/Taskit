@@ -3,7 +3,6 @@
 export class Helper {
   constructor() {
     this.hideAndShowEls = this.hideAndShowEls.bind(this);
-    // this.removeAndAddCls = this.removeAndAddCls.bind(this);
   }
 
   //////////////____C L A S S  M A N I P U L A T I O N____//////////////
@@ -41,7 +40,7 @@ export class Helper {
   }
 
   //////////////______________A N I M A T I O N S______________//////////////
-  //////////////______________A N I M A T I O N S______________//////////////
+
   scaleUp(el, startPos) {
     return requestAnimationFrame(() => {
       el.classList.add(`scale-up-${startPos}`);
@@ -50,7 +49,6 @@ export class Helper {
   scaleDown(el, startPos) {
     return requestAnimationFrame(() => {
       el.classList.add(`scale-down-${startPos}`);
-      console.log('scale-down animation added');
     });
   }
   moveDown(el, h) {

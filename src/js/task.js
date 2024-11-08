@@ -152,6 +152,9 @@ export class Task {
   get taskForm() {
     return document.querySelector(`.task[data-id="${this.id}"][data-state="form"]`);
   }
+  get taskSnippet() {
+    return document.querySelector(`.task-snippet[data-id="${this.id}"]`);
+  }
   get inputTitle() {
     return this.taskEl.querySelector('.task-header__input');
   }
@@ -197,9 +200,6 @@ export class Task {
   get btnsPrio() {
     return document.querySelectorAll('.task-prio__btn');
   }
-  // get btnsPrio() {
-  //   return this.projectEl.querySelectorAll('.task-prio__btn');
-  // }
   get prioBtn() {
     return this.taskForm.querySelector(`.task-prio__btn[data-prio="${this.prio}"]`);
   }
@@ -319,7 +319,6 @@ export class Task {
 
     // Save from Overview → Task Form modal
     if (savedFromModal) {
-      console.log('entered');
       // Re-render Overview modal
       app.modal.remove();
       app.modalOverview.remove();
@@ -718,6 +717,7 @@ export class Task {
 
     // Sort items
     this.sortTaskItems();
+
     this.clear(this.itemsContainer);
 
     // Show Sortbar if there's >1 item

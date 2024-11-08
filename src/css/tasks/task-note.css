@@ -180,7 +180,8 @@
   transform: scale(1.02);
   cursor: pointer;
 }
-.note .note__body .note__editor {
+.note .note__body .note__editor,
+.note .note__body .note__content {
   width: 100%;
   min-height: 5em;
   max-height: 10em;
@@ -193,7 +194,8 @@
   cursor: text;
   overflow-y: auto;
 }
-.note .note__body .note__editor:focus {
+.note .note__body .note__editor:focus,
+.note .note__body .note__content:focus {
   color: rgb(158, 158, 158);
   border: 1px dashed rgb(165, 160, 158);
   outline: none;
