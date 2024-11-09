@@ -717,7 +717,6 @@ export class Task {
 
     // Sort items
     this.sortTaskItems();
-
     this.clear(this.itemsContainer);
 
     // Show Sortbar if there's >1 item

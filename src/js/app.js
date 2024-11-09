@@ -72,6 +72,9 @@ export class App {
       'btn-edit-task': (el) => this.openTaskForm(el),
       'btn-delete-task': (el, cls) => this.deleteSnippet(el, cls),
       'btn-delete-checklist': (el, cls) => this.deleteSnippet(el, cls),
+      'btn-delete-note': (el, cls) => this.deleteSnippet(el, cls),
+      checklist__title: (el, cls) => this.editItemTitle(el, cls),
+      note__title: (el, cls) => this.editItemTitle(el, cls),
 
       'overview-stats__li--tasks': (_, cls) => this.displaySnippets(cls),
       'overview-stats__li--checklists': (_, cls) => this.displaySnippets(cls),
@@ -204,19 +207,16 @@ export class App {
     });
   }
   displaySnippets(cls) {
-    this.clear(this.overviewItemsContainer);
-
     const itemType = cls ? cls.split('--')[1] : false;
-    // If itemType is false, get Tasks as default
-    const arr = this.getAllItemsOf(itemType || 'tasks');
-
     let markup = '';
+    const arr = this.getAllItemsOf(itemType || 'tasks'); // default = Tasks
+
+    this.clear(this.overviewItemsContainer);
 
     if (!itemType || itemType === 'tasks') {
       arr.forEach((task) => (markup += this.populateTaskSnippetMarkup(task)));
       return this.renderSnippets(markup);
     }
-
     if (itemType === 'checklists') {
       arr.forEach((cl) => {
         markup += cl.renderItemMarkup();
@@ -231,10 +231,14 @@ export class App {
 
       return;
     }
-
     if (itemType === 'notes') {
       arr.forEach((note) => (markup += note.renderItemMarkup()));
-      return this.renderSnippets(markup);
+      this.renderSnippets(markup);
+
+      arr.forEach((note) => {
+        this.hideAndShowEls(note.inputTitle, note.titleEl);
+        note.initListeners();
+      });
     }
   }
   renderSnippets(markup) {
@@ -307,6 +311,15 @@ export class App {
     }
 
     itemEl.remove();
+  }
+  // FIX LATER
+  editItemTitle(el, cls) {
+    const itemType = cls.split('__')[0];
+    const itemEl = el.closest(`.${itemType}`);
+    const itemArr = this.getAllItemsOf(`${itemType}s`);
+    const item = itemArr.find((item) => item.id === itemEl.dataset.id);
+
+    item.editTitle(itemEl);
   }
 
   //___M O D A L :  F O R M__________________________________________//
