@@ -48,9 +48,21 @@ export class Note extends TaskItem {
 
     this.noteEl.addEventListener('click', (e) => this.handleClick(e));
 
-    this.noteBody.addEventListener('focusout', (e) => {
-      if (!this.noteBody.contains(e.relatedTarget)) this.saveNote();
+    let shouldSaveNote = true;
+    document.addEventListener('mousedown', (e) => {
+      shouldSaveNote = !this.noteBody.contains(e.target);
+
+      if (shouldSaveNote) {
+        this.noteBody.addEventListener('focusout', () => {
+          this.saveNote();
+          shouldSaveNote = true;
+        });
+      }
     });
+
+    // this.noteBody.addEventListener('focusout', (e) => {
+    //   if (!this.noteBody.contains(e.relatedTarget)) this.saveNote();
+    // });
   }
   handleClick(e) {
     const actionMap = {
@@ -161,7 +173,7 @@ export class Note extends TaskItem {
       this.quill.clipboard.dangerouslyPasteHTML(0, this.note);
     }
 
-    // this.quill.enable(true);
+    this.quill.enable(true);
     this.quill.focus();
   }
   isDefaultNote() {
@@ -258,8 +270,14 @@ export class Note extends TaskItem {
   }
   focusTextCursor() {
     this.quill.focus();
-    const length = this.quill.getLength();
-    this.quill.setSelection(length, length);
+
+    // Make sure there's no selection
+    const range = this.quill.getSelection();
+
+    if (!range || range === 0) {
+      const length = this.quill.getLength();
+      this.quill.setSelection(length, length);
+    }
   }
 
   //////////////________________H E L P E R S________________//////////////

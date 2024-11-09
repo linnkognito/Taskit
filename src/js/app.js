@@ -76,9 +76,11 @@ export class App {
       checklist__title: (el, cls) => this.editItemTitle(el, cls),
       note__title: (el, cls) => this.editItemTitle(el, cls),
 
-      'overview-stats__li--tasks': (_, cls) => this.displaySnippets(cls),
-      'overview-stats__li--checklists': (_, cls) => this.displaySnippets(cls),
-      'overview-stats__li--notes': (_, cls) => this.displaySnippets(cls),
+      'task-data__counter--checklists': (el, cls) => this.displaySnippets(el, cls, true),
+      'task-data__counter--notes': (el, cls) => this.displaySnippets(el, cls, true),
+      'overview-stats__li--tasks': (_, cls) => this.displaySnippets(_, cls),
+      'overview-stats__li--checklists': (_, cls) => this.displaySnippets(_, cls),
+      'overview-stats__li--notes': (_, cls) => this.displaySnippets(_, cls),
     };
 
     Object.keys(actionMap).forEach((cls) => {
@@ -206,21 +208,34 @@ export class App {
       p.renderTaskCards();
     });
   }
-  displaySnippets(cls) {
+  displaySnippets(el, cls, taskSpecific = false) {
     const itemType = cls ? cls.split('--')[1] : false;
     let markup = '';
     const arr = this.getAllItemsOf(itemType || 'tasks'); // default = Tasks
 
     this.clear(this.overviewItemsContainer);
 
+    // Display Tasks
     if (!itemType || itemType === 'tasks') {
       arr.forEach((task) => (markup += this.populateTaskSnippetMarkup(task)));
       return this.renderSnippets(markup);
     }
+
+    // Display Checklists
     if (itemType === 'checklists') {
-      arr.forEach((cl) => {
-        markup += cl.renderItemMarkup();
-      });
+      // Get all checklists
+      if (!taskSpecific) {
+        arr.forEach((cl) => {
+          markup += cl.renderItemMarkup();
+        });
+      }
+      // Get task specific Checklists
+      if (taskSpecific) {
+        this.getTask(el).checklists.forEach((cl) => {
+          markup += cl.renderItemMarkup();
+        });
+      }
+
       this.renderSnippets(markup);
 
       arr.forEach((cl) => {
@@ -231,14 +246,29 @@ export class App {
 
       return;
     }
+
+    // Display notes
     if (itemType === 'notes') {
-      arr.forEach((note) => (markup += note.renderItemMarkup()));
+      // Get all Notes
+      if (!taskSpecific) {
+        arr.forEach((note) => (markup += note.renderItemMarkup()));
+      }
+      // Get Task specific Notes
+      if (taskSpecific) {
+        this.getTask(el).notes.forEach((cl) => {
+          markup += cl.renderItemMarkup();
+        });
+      }
+
       this.renderSnippets(markup);
 
       arr.forEach((note) => {
         this.hideAndShowEls(note.inputTitle, note.titleEl);
         note.initListeners();
+        note.initQuill();
       });
+
+      return;
     }
   }
   renderSnippets(markup) {
@@ -312,7 +342,6 @@ export class App {
 
     itemEl.remove();
   }
-  // FIX LATER
   editItemTitle(el, cls) {
     const itemType = cls.split('__')[0];
     const itemEl = el.closest(`.${itemType}`);
