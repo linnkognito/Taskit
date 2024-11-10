@@ -129,10 +129,10 @@
   cursor: pointer;
 }
 .modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-cancel:hover {
-  background: rgb(232, 214, 214);
+  background: rgb(215, 195, 195);
 }
 .modal-due-date .due-date__container .due-date__footer .due-date__footer--buttons .btn-save:hover {
-  background: rgb(215, 232, 221);
+  background: rgb(200, 215, 205);
 }
 
 /*# sourceMappingURL=modal-due.css.map */

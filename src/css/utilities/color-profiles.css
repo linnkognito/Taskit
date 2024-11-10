@@ -12,14 +12,14 @@
 }
 
 .prio1-btn-color-profile {
-  background: rgb(208, 175, 175) !important;
+  background: rgb(180, 155, 155) !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);
 }
 
 .prio2-btn-color-profile {
-  background: rgb(176, 209, 187) !important;
+  background: rgb(165, 195, 175) !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);
@@ -30,6 +30,304 @@
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);
+}
+
+.prio4-color-profile {
+  background: rgba(213, 207, 204, 0.5);
+  border: 1px solid rgba(213, 207, 204, 0.5);
+  box-shadow: 0 0 5px rgb(213, 207, 204);
+}
+.prio4-color-profile .task-header,
+.prio4-color-profile .task-prio {
+  background: rgba(213, 207, 204, 0.5);
+}
+.prio4-color-profile .task-description {
+  width: 100%;
+  padding: 0.35em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(213, 207, 204);
+  border-radius: 0.9em;
+}
+.prio4-color-profile .task-due {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(213, 207, 204, 0.5);
+  border-radius: 0.9em;
+}
+.prio4-color-profile .task-due:hover {
+  background: rgb(213, 207, 204);
+}
+.prio4-color-profile .task-due--text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(213, 207, 204, 0.7);
+  border-radius: 0.9em;
+}
+.prio4-color-profile .task-add-item__btn {
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+  color: rgb(158, 158, 158);
+  background: rgba(213, 207, 204, 0.7);
+  border: none;
+  border-radius: 0.9em;
+  transition: all 0.2s ease-in;
+}
+.prio4-color-profile .task-add-item__btn:hover {
+  background: rgb(213, 207, 204);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+.prio4-color-profile .task-footer--created {
+  background: rgba(255, 255, 255, 0.3);
+}
+.prio4-color-profile .task-footer__created {
+  color: rgba(165, 160, 158, 0.6);
+  background: rgba(213, 207, 204, 0.5);
+}
+.prio4-color-profile .task-footer__created:hover {
+  color: rgb(165, 160, 158);
+  background: rgba(213, 207, 204, 0.7);
+}
+
+.prio3-color-profile {
+  background: rgb(193, 211, 228);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 5px rgb(213, 207, 204);
+}
+.prio3-color-profile .task-header {
+  background: rgb(193, 211, 228);
+}
+.prio3-color-profile .task-prio {
+  background: rgba(204, 223, 240, 0.5);
+}
+.prio3-color-profile .task-description {
+  width: 100%;
+  padding: 0.35em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(150, 170, 197);
+  border-radius: 0.9em;
+}
+.prio3-color-profile .task-due {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(204, 223, 240, 0.5);
+  border-radius: 0.9em;
+}
+.prio3-color-profile .task-due:hover {
+  background: rgb(193, 211, 228);
+}
+.prio3-color-profile .task-due--text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(204, 223, 240, 0.5);
+  border-radius: 0.9em;
+}
+.prio3-color-profile .task-add-item__btn {
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+  color: white;
+  background: rgb(193, 211, 228);
+  border: none;
+  border-radius: 0.9em;
+  transition: all 0.2s ease-in;
+}
+.prio3-color-profile .task-add-item__btn:hover {
+  background: rgb(150, 170, 197);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+.prio3-color-profile .task-footer--created {
+  background: rgba(255, 255, 255, 0.3);
+}
+.prio3-color-profile .task-footer__created {
+  color: white;
+  background: rgb(193, 211, 228);
+}
+.prio3-color-profile .task-footer__created:hover {
+  color: white;
+  background: rgb(150, 170, 197);
+}
+
+.prio2-color-profile {
+  background: rgb(200, 215, 205);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 5px rgb(213, 207, 204);
+}
+.prio2-color-profile .task-header {
+  background: rgb(200, 215, 205);
+}
+.prio2-color-profile .task-prio {
+  background: rgba(200, 215, 205, 0.5);
+}
+.prio2-color-profile .task-description {
+  width: 100%;
+  padding: 0.35em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(160, 170, 165);
+  border-radius: 0.9em;
+}
+.prio2-color-profile .task-due {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(200, 215, 205, 0.5);
+  border-radius: 0.9em;
+}
+.prio2-color-profile .task-due:hover {
+  background: rgb(200, 215, 205);
+}
+.prio2-color-profile .task-due--text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(200, 215, 205, 0.5);
+  border-radius: 0.9em;
+}
+.prio2-color-profile .task-add-item__btn {
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+  color: white;
+  background: rgb(200, 215, 205);
+  border: none;
+  border-radius: 0.9em;
+  transition: all 0.2s ease-in;
+}
+.prio2-color-profile .task-add-item__btn:hover {
+  background: rgb(160, 170, 165);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+.prio2-color-profile .task-footer--created {
+  background: rgba(255, 255, 255, 0.3);
+}
+.prio2-color-profile .task-footer__created {
+  color: white;
+  background: rgb(200, 215, 205);
+}
+.prio2-color-profile .task-footer__created:hover {
+  color: white;
+  background: rgb(160, 170, 165);
+}
+
+.prio1-color-profile {
+  background: rgb(215, 195, 195);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 5px rgb(213, 207, 204);
+}
+.prio1-color-profile .task-header {
+  background: rgb(215, 195, 195);
+}
+.prio1-color-profile .task-prio {
+  background: rgba(215, 195, 195, 0.5);
+}
+.prio1-color-profile .task-description {
+  width: 100%;
+  padding: 0.35em 0.6em;
+  font-size: 1rem;
+  font-style: italic;
+  color: rgb(158, 158, 158);
+  border: 1px dashed rgb(155, 130, 130);
+  border-radius: 0.9em;
+}
+.prio1-color-profile .task-due {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(215, 195, 195, 0.5);
+  border-radius: 0.9em;
+}
+.prio1-color-profile .task-due:hover {
+  background: rgb(215, 195, 195);
+}
+.prio1-color-profile .task-due--text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  justify-content: center;
+  align-items: center;
+  min-width: 20%;
+  padding: 0.3em;
+  line-height: 1;
+  color: white;
+  background: rgba(215, 195, 195, 0.5);
+  border-radius: 0.9em;
+}
+.prio1-color-profile .task-add-item__btn {
+  padding: 0.5em;
+  letter-spacing: 0.05em;
+  color: white;
+  background: rgb(215, 195, 195);
+  border: none;
+  border-radius: 0.9em;
+  transition: all 0.2s ease-in;
+}
+.prio1-color-profile .task-add-item__btn:hover {
+  background: rgb(155, 130, 130);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+.prio1-color-profile .task-footer--created {
+  background: rgba(255, 255, 255, 0.3);
+}
+.prio1-color-profile .task-footer__created {
+  color: white;
+  background: rgb(215, 195, 195);
+}
+.prio1-color-profile .task-footer__created:hover {
+  color: white;
+  background: rgb(155, 130, 130);
 }
 
 /*# sourceMappingURL=color-profiles.css.map */

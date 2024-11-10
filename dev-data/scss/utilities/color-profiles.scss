@@ -14,34 +14,201 @@
   @include mixins.active-prio-btn(vars.$col-prio3-selected);
 }
 
+.prio4-color-profile {
+  background: vars.$col-primary-low-op;
+  border: 1px solid vars.$col-primary-low-op;
+  box-shadow: 0 0 5px vars.$col-primary;
+
+  .task-header,
+  .task-prio {
+    background: vars.$col-primary-low-op;
+  }
+
+  .task-description {
+    @include mixins.description;
+  }
+  .task-due {
+    @include mixins.due-date(vars.$col-primary-low-op);
+
+    &:hover {
+      background: vars.$col-primary;
+    }
+  }
+  .task-due--text {
+    @include mixins.due-date();
+  }
+  .task-add-item__btn {
+    @include mixins.btn-medium;
+
+    &:hover {
+      @include mixins.btn-medium-hover;
+    }
+  }
+
+  .task-footer--created {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .task-footer__created {
+    color: vars.$col-primary-dark-op;
+    background: vars.$col-primary-low-op;
+
+    &:hover {
+      color: vars.$col-primary-dark;
+      background: vars.$col-primary-op;
+    }
+  }
+}
+.prio3-color-profile {
+  background: vars.$col-prio3;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 5px vars.$col-primary;
+
+  .task-header {
+    background: vars.$col-prio3;
+  }
+  .task-prio {
+    background: vars.$col-prio3-light;
+  }
+
+  .task-description {
+    @include mixins.description($bdr-col: vars.$col-prio3-dark);
+  }
+  .task-due {
+    @include mixins.due-date($bg: vars.$col-prio3-light);
+
+    &:hover {
+      background: vars.$col-prio3;
+    }
+  }
+
+  .task-due--text {
+    @include mixins.due-date($bg: vars.$col-prio3-light);
+  }
+
+  .task-add-item__btn {
+    @include mixins.btn-medium(white, vars.$col-prio3);
+
+    &:hover {
+      @include mixins.btn-medium-hover($bg: vars.$col-prio3-dark);
+    }
+  }
+
+  .task-footer--created {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .task-footer__created {
+    color: white;
+    background: vars.$col-prio3;
+
+    &:hover {
+      color: white;
+      background: vars.$col-prio3-dark;
+    }
+  }
+}
+.prio2-color-profile {
+  background: vars.$col-prio2;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow: 0 0 5px vars.$col-primary;
+
+  .task-header {
+    background: vars.$col-prio2;
+  }
+  .task-prio {
+    background: vars.$col-prio2-light;
+  }
+
+  .task-description {
+    @include mixins.description($bdr-col: vars.$col-prio2-dark);
+  }
+  .task-due {
+    @include mixins.due-date($bg: vars.$col-prio2-light);
+
+    &:hover {
+      background: vars.$col-prio2;
+    }
+  }
+
+  .task-due--text {
+    @include mixins.due-date($bg: vars.$col-prio2-light);
+  }
+
+  .task-add-item__btn {
+    @include mixins.btn-medium(white, vars.$col-prio2);
+
+    &:hover {
+      @include mixins.btn-medium-hover($bg: vars.$col-prio2-dark);
+    }
+  }
+
+  .task-footer--created {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .task-footer__created {
+    color: white;
+    background: vars.$col-prio2;
+
+    &:hover {
+      color: white;
+      background: vars.$col-prio2-dark;
+    }
+  }
+}
+.prio1-color-profile {
+  background: vars.$col-prio1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow: 0 0 5px vars.$col-primary;
+
+  .task-header {
+    background: vars.$col-prio1;
+  }
+  .task-prio {
+    background: vars.$col-prio1-light;
+  }
+
+  .task-description {
+    @include mixins.description($bdr-col: vars.$col-prio1-dark);
+  }
+  .task-due {
+    @include mixins.due-date($bg: vars.$col-prio1-light);
+
+    &:hover {
+      background: vars.$col-prio1;
+    }
+  }
+
+  .task-due--text {
+    @include mixins.due-date($bg: vars.$col-prio1-light);
+  }
+
+  .task-add-item__btn {
+    @include mixins.btn-medium(white, vars.$col-prio1);
+
+    &:hover {
+      @include mixins.btn-medium-hover($bg: vars.$col-prio1-dark);
+    }
+  }
+
+  .task-footer--created {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .task-footer__created {
+    color: white;
+    background: vars.$col-prio1;
+
+    &:hover {
+      color: white;
+      background: vars.$col-prio1-dark;
+    }
+  }
+}
+
 // $prio1-color-profile: (
 // 'primary': vars.$col-prio1,
 // 'light': vars.$col-prio1-light,
 // 'x-light': vars.$col-prio1-xlight,
 // 'dark': vars.$col-prio1-dark,
 // 'selected': vars.$col-prio1-selected,
-// );
-
-// $prio2-color-profile: (
-// 'primary': vars.$col-prio2,
-// 'light': vars.$col-prio2-light,
-// 'x-light': vars.$col-prio2-xlight,
-// 'dark': vars.$col-prio2-dark,
-// 'selected': vars.$col-prio2-selected,
-// );
-
-// $prio3-color-profile: (
-// 'primary': vars.$col-prio3,
-// 'light': vars.$col-prio3-light,
-// 'x-light': vars.$col-prio3-xlight,
-// 'dark': vars.$col-prio3-dark,
-// 'selected': vars.$col-prio3-selected,
-// );
-
-// $default-color-profile: (
-// 'primary': vars.$col-primary,
-// 'light': vars.$col-primary-op,
-// 'x-light': vars.$col-primary-low-op,
-// 'dark': vars.$col-primary-dark,
-// 'selected': vars.$col-primary-selected,
 // );

@@ -171,10 +171,10 @@
   border-radius: 0.9em;
 }
 .note .note__body .popup-insert-link .popup-insert-link__buttons .btn-apply:hover {
-  background: rgb(215, 232, 221);
+  background: rgb(200, 215, 205);
 }
 .note .note__body .popup-insert-link .popup-insert-link__buttons .btn-cancel:hover {
-  background: rgb(232, 214, 214);
+  background: rgb(215, 195, 195);
 }
 .note .note__body .popup-insert-link .popup-insert-link__buttons .btn-popup:hover {
   transform: scale(1.02);

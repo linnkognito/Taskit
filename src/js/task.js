@@ -43,7 +43,7 @@ export class Task {
     this.projectEl = projectEl;
 
     this.title = '';
-    this.prio = 4;
+    this.prio = 1;
     this.description = itemMap['description'].default;
     this.dueDate = null;
     this.dueTime = null;
@@ -134,8 +134,6 @@ export class Task {
     this.modal.addEventListener('click', this.handleModalClick.bind(this));
   }
   handleModalClick(e) {
-    const { container } = this.getDueDateElements;
-
     const actionMap = {
       'modal-due-date': () => this.applyAnimationTo(this.modal, 'down', 'center'),
       'btn-cancel': () => this.applyAnimationTo(this.modal, 'down', 'center'),

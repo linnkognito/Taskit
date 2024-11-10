@@ -356,11 +356,7 @@ export class Project {
   //___T A S K S____________________________________________________//
   addTask() {
     // Check if there's already an open form
-    if (this.taskForm) {
-      // FIX LATER
-      // if (this.hasUnsavedChanges() && !this.discardChanges()) return;
-      this.taskForm.remove();
-    }
+    if (this.taskForm) this.taskForm.remove();
 
     // Insert markup
     this.projectBody.insertAdjacentHTML('afterbegin', taskFormMarkup);
@@ -381,6 +377,7 @@ export class Project {
     this.tasks.push(newTask);
 
     document.querySelector('.task[data-state="form"]').dataset.id = newTask.id;
+    this.addClass(newTask.taskEl, `prio${newTask.prio}-color-profile`);
     newTask.inputTitle.focus();
 
     // Initialize event listeners of Task instance
