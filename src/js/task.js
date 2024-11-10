@@ -130,16 +130,24 @@ export class Task {
       }
     });
   }
-  triggerItemAction(el, action, cls) {
-    const itemEl = el.closest('.checklist, .note');
-    if (!itemEl) return;
+  initDueModalListeners() {
+    this.modal.addEventListener('click', this.handleModalClick.bind(this));
+  }
+  handleModalClick(e) {
+    const { container } = this.getDueDateElements;
 
-    const itemId = itemEl.dataset.id;
-    const itemType = itemEl.dataset.type;
-    const item = this.findById(itemId, itemType);
+    const actionMap = {
+      'modal-due-date': () => this.applyAnimationTo(this.modal, 'down', 'center'),
+      'btn-cancel': () => this.applyAnimationTo(this.modal, 'down', 'center'),
+      'btn-save': () => this.saveDueDate(),
+      clear: (e) => this.clearDueDateInput(e),
+    };
 
-    if (action === 'delete') item.deleteItem(itemEl, itemType);
-    if (action === 'edit') item.activateEdit(cls, itemEl);
+    Object.keys(actionMap).forEach((cls) => {
+      if (this.hasClass(e.target, cls)) {
+        actionMap[cls](e);
+      }
+    });
   }
 
   //////////////________________G E T T E R S________________//////////////
@@ -371,6 +379,7 @@ export class Task {
     //prettier-ignore
     return taskMarkup
       .replace('{%TASK_ID%}', this.id)
+      .replace('{%TASK_COLOR_PROFILE%}', `prio${this.prio}-color-profile`)
       .replace('{%TASK_TITLE%}', this.title)
       .replace('{%TASK_DESCRIPTION%}', this.description)
       .replace('{%TASK_CREATED%}', this.getCreationDateStr());
@@ -426,7 +435,7 @@ export class Task {
     this.inputTitle.value = this.title;
 
     // Prio
-    this.addClass(this.prioBtn, `prio${this.prio}-color-profile`);
+    this.addClass(this.prioBtn, `prio${this.prio}-btn-color-profile`);
     this.setPrioColors(this.prio);
 
     this.descInput.value = this.description;
@@ -479,22 +488,28 @@ export class Task {
 
   //___P R I O_______________________________________________________//
   setPrio(btn) {
-    // Remove active style for all Prio buttons
-    this.btnsPrio.forEach((btnEl) => {
-      this.removeClass(btnEl, `prio${btnEl.dataset.prio}-color-profile`);
-    });
-
     this.prio = btn.dataset.prio;
-    this.addClass(btn, `prio${this.prio}-color-profile`);
-    this.setPrioColors(this.prio);
+    this.setPrioColors(btn);
 
     this.hasChanges = true;
 
     // Update local storage
     this.project.saveProjectState();
   }
-  setPrioColors() {
-    // PLACEHOLDER
+  setPrioColors(btn) {
+    // Remove active style for all Prio buttons
+    this.btnsPrio.forEach((btnEl) => {
+      this.removeClass(btnEl, `prio${btnEl.dataset.prio}-btn-color-profile`);
+    });
+
+    // Remove current color profile
+    for (let i = 1; i <= 4; i++) {
+      this.removeClass(this.taskEl, `prio${i}-color-profile`);
+    }
+
+    // Apply selected color profile
+    this.addClass(btn, `prio${this.prio}-btn-color-profile`);
+    this.addClass(this.taskEl, `prio${this.prio}-color-profile`);
   }
 
   //___D U E  D A T E________________________________________________//
@@ -518,23 +533,7 @@ export class Task {
 
     this.initDueModalListeners();
   }
-  initDueModalListeners() {
-    this.modal.addEventListener('click', this.handleModalClick.bind(this));
-  }
-  handleModalClick(e) {
-    const actionMap = {
-      'modal-due-date': () => this.modal.remove(),
-      'btn-cancel': () => this.modal.remove(),
-      'btn-save': () => this.saveDueDate(),
-      clear: (e) => this.clearDueDateInput(e),
-    };
 
-    Object.keys(actionMap).forEach((cls) => {
-      if (this.hasClass(e.target, cls)) {
-        actionMap[cls](e);
-      }
-    });
-  }
   saveDueDate() {
     // For readability
     const inputDate = this.inputDueDate.value;
@@ -710,6 +709,20 @@ export class Task {
     this.checked = true;
     this.project.moveChecked(task);
   }
+  applyAnimationTo(el, dir, startPos) {
+    dir === 'up' ? this.scaleUp(el, startPos) : this.scaleDown(el, startPos);
+
+    el.addEventListener(
+      'animationend',
+      () => {
+        if (dir === 'up') this.addClass(el, `scale-${dir}-${startPos}`);
+        if (dir === 'down') this.removeClass(el, `scale-${dir}-${startPos}`);
+
+        el.remove();
+      },
+      { once: true }
+    );
+  }
 
   //___I T E M S______________________________________________________//
   renderItems() {
@@ -758,6 +771,17 @@ export class Task {
   removeItemById(id, item) {
     // Filters out item from array
     this[`${item}s`] = this[`${item}s`].filter((item) => item.id !== id);
+  }
+  triggerItemAction(el, action, cls) {
+    const itemEl = el.closest('.checklist, .note');
+    if (!itemEl) return;
+
+    const itemId = itemEl.dataset.id;
+    const itemType = itemEl.dataset.type;
+    const item = this.findById(itemId, itemType);
+
+    if (action === 'delete') item.deleteItem(itemEl, itemType);
+    if (action === 'edit') item.activateEdit(cls, itemEl);
   }
 
   //___I T E M S :  S O R T___________________________________________//

@@ -4,28 +4,28 @@
 /*** FONT STYLES ***********************/
 /*** EFFECTS ***************************/
 /*** BORDERS ***************************/
-.prio4-color-profile {
+.prio4-btn-color-profile {
   background: rgb(209, 184, 176) !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);
 }
 
-.prio1-color-profile {
+.prio1-btn-color-profile {
   background: rgb(208, 175, 175) !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);
 }
 
-.prio2-color-profile {
+.prio2-btn-color-profile {
   background: rgb(176, 209, 187) !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
   transform: scale(1.1);
 }
 
-.prio3-color-profile {
+.prio3-btn-color-profile {
   background: rgb(166, 189, 209) !important;
   border: 1px solid white;
   box-shadow: 0 0 5px white;
