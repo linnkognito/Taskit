@@ -50,19 +50,17 @@ export class Note extends TaskItem {
 
     let shouldSaveNote = true;
     document.addEventListener('mousedown', (e) => {
-      shouldSaveNote = !this.noteBody.contains(e.target);
-
-      if (shouldSaveNote) {
-        this.noteBody.addEventListener('focusout', () => {
-          this.saveNote();
-          shouldSaveNote = true;
-        });
-      }
+      if (this.noteEl && this.noteBody && this.editor) shouldSaveNote = !this.noteBody.contains(e.target);
     });
 
-    // this.noteBody.addEventListener('focusout', (e) => {
-    //   if (!this.noteBody.contains(e.relatedTarget)) this.saveNote();
-    // });
+    this.noteBody.addEventListener(
+      'focusout',
+      () => {
+        if (shouldSaveNote) this.saveNote();
+        shouldSaveNote = true;
+      },
+      { once: true }
+    );
   }
   handleClick(e) {
     const actionMap = {

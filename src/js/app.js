@@ -69,8 +69,11 @@ export class App {
   handleOverviewClick(e) {
     const actionMap = {
       'task-data__project-name': (el) => this.previewProject(el),
+
+      'task-header__checkbox': (el) => this.getTask(el).toggleChecked(el),
       'btn-edit-task': (el) => this.openTaskForm(el),
       'btn-delete-task': (el, cls) => this.deleteSnippet(el, cls),
+
       'btn-delete-checklist': (el, cls) => this.deleteSnippet(el, cls),
       'btn-delete-note': (el, cls) => this.deleteSnippet(el, cls),
       checklist__title: (el, cls) => this.editItemTitle(el, cls),
@@ -103,6 +106,7 @@ export class App {
   }
 
   //////////////________________G E T T E R S________________//////////////
+
   //#region Getters
   get projects() {
     return document.querySelector('#projects');

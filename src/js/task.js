@@ -64,8 +64,6 @@ export class Task {
   initListeners() {
     this.taskEl.addEventListener('click', this.handleClick.bind(this));
 
-    // if (this.sortBar) this.sortBar.addEventListener
-
     if (this.inputTitle) {
       this.inputTitle.addEventListener('blur', () => this.saveTitle(this.inputTitle, this.titleEl));
 
@@ -205,6 +203,7 @@ export class Task {
   }
   get getDueDateElements() {
     return {
+      container: document.querySelector('.due-date__container'),
       calendarBtn: this.taskEl.querySelector('.task-due--icon'),
       dueDateEl: this.taskEl.querySelector('.task-due--text'),
       smallTextTop: this.taskEl.querySelector('.task-due__small-top'),
@@ -505,6 +504,11 @@ export class Task {
 
     // Render modal
     this.insertMarkup(this.body, 'afterbegin', modalDueMarkup);
+
+    // Apply animation
+    const { container } = this.getDueDateElements;
+    this.scaleUp(container, 'center');
+    container.addEventListener('animationend', () => this.removeClass(container, 'scale-up-center'), { once: true });
 
     // If user previously entered values → populate input fields
     if (this.dueDateObj) {

@@ -43,7 +43,7 @@ export class Checklist extends TaskItem {
     });
   }
 
-  //////////////_______________G E T T E R S_______________//////////////
+  //////////////________________G E T T E R S________________//////////////
   //#region GETTERS
   get checklist() {
     return document.querySelector(`.checklist[data-id="${this.id}"]`);
@@ -74,7 +74,7 @@ export class Checklist extends TaskItem {
   }
   //#endregion
 
-  //////////////________________M E T H O D S________________//////////////
+  //////////////________________M E T H O D S_______________//////////////
 
   //___C H E C K L I S T_____________________________________________//
   renderItemMarkup() {
